@@ -1,0 +1,13 @@
+.main_page{
+    /* % 부모가 자식 width 설정가능  */
+    /* % 부모가 자식 height 설정가능  */
+    width: 700px;
+    height: 780px;
+    background-color: #fcf5e0;
+    margin: 0 auto;
+
+}
+/*.gg{*/
+/*    height: 1100px;*/
+/*    background-color: #de4d4d;*/
+/*}*/
