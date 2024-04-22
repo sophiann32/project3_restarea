@@ -12,7 +12,7 @@ import {
     BarController,
 } from 'chart.js';
 import {Bar} from 'react-chartjs-2';
-// import faker from 'Faker';
+
 
 function colorize(opaque) {
     return (ctx) => {
@@ -20,8 +20,8 @@ function colorize(opaque) {
         const c = v < -50 ? '#5db648'
 
             : v < 0 ? '#73dc84'
-                : v < 50 ? '#f55563'
-                    : '#bb2e2e';
+                : v < 50 ? '#f88c98'
+                    : '#f35050';
 
         return opaque ? c : v;
     };
@@ -49,10 +49,8 @@ function ChartLineCombo({ stations }) {
         price = stations.map((station) => station.price);
     }
     // console.log(price)
-    const combinedData = labels.map((label, index) => (`${label} : ${price[index]}`));
-    // const maxDataValue = 15; // 최대 데이터 값
-    // let minDataValue = Math.min(mostNegativeValue, options.suggestedMin);
-    // let maxDataValue = Math.max(mostPositiveValue, options.suggestedMax);
+    const combinedData = labels.map((label, index) => (`${label} : ${price[index] + '원'}`));
+
 
     const chartdata = {
 
@@ -93,6 +91,15 @@ function ChartLineCombo({ stations }) {
             }
         ],};
         const options= {
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Line Chart'
+                }
+            },
             scales: {
                 'y': {
                     display: true,
@@ -100,27 +107,30 @@ function ChartLineCombo({ stations }) {
                     min: 1700, // 최소값 설정
                     max: 1800, // 최대값 설정
                     ticks: {
-                        stepSize: 10} // 간격 설정
+                        stepSize: 10,
+                        callback: function (value){
+                            return value+'원';
+                        }
+                    } // 간격 설정
                 },
                 'y1': {
                     display: true,
-                    position: 'right',
-                    suggestedMin: -20, // 오른쪽 y 축의 최소값
-                    suggestedMax: 20, // 오른쪽 y 축의 최대값
-                    ticks: {
-                        // Include a dollar sign in the ticks
-                        callback: function (value, index, ticks) {
-                            return value + '원';
-                        }
-                    }
 
+                    position: 'right',
+                    suggestedMin: -10, // 오른쪽 y 축의 최소값
+                    suggestedMax: 10, // 오른쪽 y 축의 최대값
+                    ticks: {
+                        stepSize: 2,
+                        // Include a dollar sign in the ticks
+                        callback: function (value) {
+                            return value + '원';
+                        },
+                    }
                 },
             }
-
     };
+
     return (<Bar data={chartdata} options={options} />);
 }
-
-
 
 export default ChartLineCombo;
