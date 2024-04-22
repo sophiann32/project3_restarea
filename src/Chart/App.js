@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {Routes, Route, Outlet} from 'react-router-dom';
 import ChartDonut from './routes/ChartDonut.js';
-import Detail from "./history/07_라우팅/07_Nested_라우팅/1_일반라우팅/routes/Detail";
+import ChartLineCombo from "./routes/ChartLineCombo";
+
 function App() {
   const [stations, setStations] = useState([]);
 
@@ -19,7 +20,7 @@ function App() {
   }, []);    return (
 
         <Routes>
-
+            <Route path="/chartlinecombo" element={ <ChartLineCombo stations={stations}/> } />
 
             <Route path="/chart" element={ <ChartDonut stations={stations}/> } />
         </Routes>
