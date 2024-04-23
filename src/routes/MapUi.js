@@ -14,8 +14,12 @@ function MapUi() {
     // console.log(testList)
     return (
         <>
+            {/*<div id={styles.change}>*/}
+
+            {/*</div>*/}
+
             <div id={styles.change}>
-                <aside className={styles.aside}>
+                <div className={styles.aside}>
 
                     <button id={styles.list1} onClick={
                         () => {
@@ -34,7 +38,7 @@ function MapUi() {
                     }></button>
 
 
-                </aside>
+                </div>
                 {/*<section className={styles.section}><My_location/></section>*/}
                 {/*////////////////////////////////////////////////////////////////////////*/}
                 {
@@ -42,11 +46,6 @@ function MapUi() {
                         list1 == 2 ? <section className={styles.section}><ChangeOverlay2/></section> :
                             <section className={styles.section}><MapInfo/></section>
                 }
-
-
-
-
-
 
 
 

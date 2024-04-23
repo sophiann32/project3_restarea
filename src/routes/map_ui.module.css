@@ -1,61 +1,75 @@
+/*#change{*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background-color: #b377d7;*/
+/*    !*display: grid;*!*/
+/*    grid-template-areas:     !* !!핵심!!*!*/
+/*            "aside section"*/
+/*            ;*/
+/*    grid-template-columns: 30% 70% ;*/
+/*    !*자식width*!*/
+/*    grid-template-rows: 1000px;*/
+/*    !*자식height*!*/
+/*}*/
+/*#change{*/
+/*    width: 200px;*/
+/*    height: 400px;*/
+
+/*}*/
 #change{
-    width: 100%;
-    height: 100%;
-    background-color: #b377d7;
-    display: grid;
-    grid-template-areas:      /* !!핵심!!*/
-            "aside section"
-            ;
-    grid-template-columns: 30% 70% ;
-    /*자식width*/
-    grid-template-rows: 780px;
-    /*자식height*/
+    background-color: #041621;
 }
 
-
-.aside{
-    /* % 부모가 자식 width 설정가능  */
-    /* % 부모가 자식 height 설정가능  */
-    background-color: #9de085;
-    grid-area: aside;
-
-}
-.section{
-    /* % 부모가 자식 width 설정가능  */
-    /* % 부모가 자식 height 설정가능  */
-    background-color: #fff67f;
-    grid-area: section;
-
-}
-#list1{
-    width: 100%;
-    height: 50px;
-    background-color: #e37474;
-    line-height: 50px;
-    text-align: center;
+.aside {
+    position: absolute; /* 또는 fixed, 만약 스크롤 시에도 고정되길 원한다면 */
+    top: 300px; /* 뷰포트 상단으로부터의 거리 */
+    left: 60px; /* 뷰포트 왼쪽으로부터의 거리 */
+    width: 300px; /* 사이드바 너비 */
+    height: 400px;
+    padding: 20px; /* 사이드바 내부 패딩 */
+    background-color: #03111A;
+    border-radius: 20px;
+    z-index: 2; /* 다른 내용물 위에 오도록 z-index 설정 */
+    overflow-y: auto; /* 내용이 많을 경우 스크롤바 표시 */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
 }
 
-/*미디어쿼리*/
-@media (max-width: 1300px){   /*0 부터 1220까지 (노트북) */
-    /*1200으로 딱맞추면 중간에 살짝 스크롤이 생김*/
-    /*#change {*/
-    /*    width: 96%;*/
-    /*}*/
+.section {
+    width: calc(100% - 40px - 200px); /* 총 너비에서 aside 너비와 여백을 제외 */
+    margin-left: 120px; /* aside 너비와 여백을 고려한 왼쪽 마진 */
+    height: 100vh; /* 뷰포트 높이를 전체 채움 */
+    background-color: #090909;
+    position: relative; /* z-index를 위해 position 설정 필요 */
+    z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
 }
-@media (max-width: 768px){   /*0 부터 768까지  (테블릿) */
-    /*#change {*/
-    /*    width: 100%;*/
-    /*}*/
+
+/* 반응형 미디어 쿼리 */
+@media (max-width: 768px) {
+    .aside {
+        /* 중간 크기의 뷰포트에 맞춤 */
+        width: 150px; /* 사이드바 너비를 줄임 */
+        padding: 15px; /* 패딩을 줄임 */
+    }
+    .section {
+        width: calc(100% - 30px - 150px); /* 새로운 aside 너비에 맞춤 */
+        margin-left: 180px; /* 새로운 aside 너비와 패딩에 맞춤 */
+    }
 }
-@media (max-width: 480px){   /*0 부터 480까지  (모바일) */
-    #change{
-        grid-template-areas:      /* !!핵심!!*/
-        "aside"
-        "section "
-    ;
-        grid-template-columns: 100% ;
-        /*자식width*/
-        grid-template-rows: 100px 480px;
-        /*자식height*/
+
+@media (max-width: 480px) {
+    .aside {
+        /* 가장 작은 뷰포트에 맞춤 */
+        width: 100%; /* 화면 전체 너비를 차지하도록 함 */
+        height: auto; /* 내용에 맞게 높이를 조정 */
+        position: fixed; /* 화면 하단에 고정 */
+        bottom: 0;
+        left: 0;
+        border-radius: 0; /* 둥근 모서리 제거 */
+        padding: 10px; /* 패딩 줄임 */
+        z-index: 3; /* 내용 위에 오도록 z-index를 높임 */
+    }
+    .section {
+        margin-left: 0; /* aside가 전체 너비를 차지하므로 마진을 제거 */
+        width: 100%; /* 화면 전체 너비를 사용 */
     }
 }
