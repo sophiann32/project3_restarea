@@ -1,4 +1,3 @@
-
 import './App.css';
 import Mymap from "./kako_map/map";
 import My_location from "./kako_map/my_location";

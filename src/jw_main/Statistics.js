@@ -16,7 +16,9 @@ function Statistics(){
                 <div className={styles.box1}>
                     <div className={styles.smallbox1}>
 
-            <button onClick={
+
+
+                        <button onClick={
                             () => {
                                 axios.get('http://localhost:5000/oill')
                                     // 응답을 then의 콜백함수로 받을수 있다.
@@ -41,10 +43,13 @@ function Statistics(){
                         }> (OpenApi자료) 파이참 oill 데이터 키면 콘솔에 데이터가 한글로 찍힘
                         </button>
 
+
+
                     </div>
                 </div>
                 <div className={styles.box2}>
                     <div className={styles.smallbox2}>
+
                         <button onClick={
                             () => {
                                 axios.get('http://localhost:5000/oill')
