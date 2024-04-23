@@ -1,74 +1,76 @@
-import React, { useRef, useState } from "react";
-import { Map, MapTypeControl } from "react-kakao-maps-sdk";
-import useKakaoLoader from "./useKakaoLoader";
+import { useState } from "react"
+import { Map, MapTypeId } from "react-kakao-maps-sdk"
+import useKakaoLoader from "./useKakaoLoader"
 
-export default function MapInfo() {
-    /* global kakao */
-    useKakaoLoader();
-    const mapRef = useRef(null);
-    const [info, setInfo] = useState("");
-
-    const getInfo = () => {
-        const map = mapRef.current;
-        if (!map) return;
-
-        const center = map.getCenter();
-
-        // 지도의 현재 레벨을 얻어옵니다
-        const level = map.getLevel();
-
-        // 지도타입을 얻어옵니다
-        const mapTypeId = map.getMapTypeId();
-
-        // 지도의 현재 영역을 얻어옵니다
-        const bounds = map.getBounds();
-
-        // 영역의 남서쪽 좌표를 얻어옵니다
-        const swLatLng = bounds.getSouthWest();
-
-        // 영역의 북동쪽 좌표를 얻어옵니다
-        const neLatLng = bounds.getNorthEast();
-
-        let message = "지도 중심좌표는 위도 " + center.getLat() + ", <br>";
-        message += "경도 " + center.getLng() + " 이고 <br>";
-        message += "지도 레벨은 " + level + " 입니다 <br> <br>";
-        message += "지도 타입은 " + mapTypeId + " 이고 <br> ";
-        message +=
-            "지도의 남서쪽 좌표는 " +
-            swLatLng.getLat() +
-            ", " +
-            swLatLng.getLng() +
-            " 이고 <br>";
-        message +=
-            "북동쪽 좌표는 " +
-            neLatLng.getLat() +
-            ", " +
-            neLatLng.getLng() +
-            " 입니다";
-        setInfo(message);
-    };
+export default function GasStation() {
+    useKakaoLoader()
+    const [overlayMapTypeId, setOverlayMapTypeId] = useState({
+        TRAFFIC: false,
+        BICYCLE: false,
+        TERRAIN: false,
+        USE_DISTRICT: false,
+    })
 
     return (
-        <Map // 지도를 표시할 Container
-            center={{ lat: 33.450701, lng: 126.570667 }}
-            style={{
-                // 지도의 크기
-                width: "100%",
-                height: "75%",
-            }}
-            level={3} // 지도의 확대 레벨
-            ref={mapRef}
-        >
-            <MapTypeControl position={"TOPRIGHT"} />
-            <button id="getInfoBtn" onClick={getInfo}>
-                맵정보 가져오기
-            </button>
-            <p
-                id="info"
-                dangerouslySetInnerHTML={{
-                    __html: info,
+        <>
+            <Map // 지도를 표시할 Container
+                id="map"
+                center={{
+                    // 지도의 중심좌표
+                    lat: 37.57319,
+                    lng: 126.96658,
                 }}
-            />
-        </Map>
-    );
+                style={{
+                    width: "100%",
+                    height: "90%",
+                }}
+                level={7}
+            >
+                {overlayMapTypeId.TRAFFIC && <MapTypeId type={"TRAFFIC"} />}
+                {overlayMapTypeId.BICYCLE && <MapTypeId type={"BICYCLE"} />}
+                {overlayMapTypeId.TERRAIN && <MapTypeId type={"TERRAIN"} />}
+                {overlayMapTypeId.USE_DISTRICT && <MapTypeId type={"USE_DISTRICT"} />}
+            </Map>
+            <p>
+                <input
+                    type="checkbox"
+                    id="chkUseDistrict"
+                    onChange={(e) =>
+                        setOverlayMapTypeId((p) => ({
+                            ...p,
+                            USE_DISTRICT: e.target.checked,
+                        }))
+                    }
+                />
+                {" 지적편집도 정보 보기 "}
+                <input
+                    type="checkbox"
+                    id="chkTerrain"
+                    onChange={(e) =>
+                        setOverlayMapTypeId((p) => ({ ...p, TERRAIN: e.target.checked }))
+                    }
+                />
+                {" 지형정보 보기 "}
+                <input
+                    type="checkbox"
+                    id="chkTraffic"
+                    onChange={(e) =>
+                        setOverlayMapTypeId((p) => ({ ...p, TRAFFIC: e.target.checked }))
+                    }
+                />
+                {" 교통정보 보기 "}
+                <input
+                    type="checkbox"
+                    id="chkBicycle"
+                    onChange={(e) =>
+                        setOverlayMapTypeId((p) => ({
+                            ...p,
+                            BICYCLE: e.target.checked,
+                        }))
+                    }
+                />
+                {" 자전거도로 정보 보기 "}
+            </p>
+        </>
+    )
 }

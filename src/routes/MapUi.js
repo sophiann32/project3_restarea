@@ -2,9 +2,8 @@ import {React,useState,useEffect} from 'react';
 import Elec_station from "../kako_map/elec_station";
 
 import styles from './map_ui.module.css'
-import ChangeOverlay2 from "../kako_map/map_type";
-import MapInfo from "../kako_map/gas_station";
-import GasStation from "../kako_map/map_type";
+import MapInfo from "../kako_map/map_info";
+import GasStation from "../kako_map/gas_station";
 
 
 function MapUi() {
