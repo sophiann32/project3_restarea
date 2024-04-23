@@ -1,7 +1,7 @@
 
 import './App.css';
 import Mymap from "./kako_map/map";
-import My_Location from "./kako_map/my_location";
+import elec_info from "./kako_map/elec_station";
 import {useEffect, useState} from "react";
 import {Routes, Route} from 'react-router-dom'
 import axios from "axios";

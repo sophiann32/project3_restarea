@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 
-function My_Location() {
+function Elec_station() {
     const [state, setState] = useState({
         center: { lat: 33.450701, lng: 126.570667 },
         matchingChargerData: [],
@@ -140,4 +140,4 @@ function My_Location() {
     );
 }
 
-export default My_Location;
+export default Elec_station;
