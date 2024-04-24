@@ -1,76 +1,123 @@
-import { useState } from "react"
-import { Map, MapTypeId } from "react-kakao-maps-sdk"
-import useKakaoLoader from "./useKakaoLoader"
 
-export default function GasStation() {
-    useKakaoLoader()
-    const [overlayMapTypeId, setOverlayMapTypeId] = useState({
-        TRAFFIC: false,
-        BICYCLE: false,
-        TERRAIN: false,
-        USE_DISTRICT: false,
-    })
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Map, MapMarker, MapInfoWindow } from "react-kakao-maps-sdk";
+
+
+
+function Popup({ station, onClose }) {
+    if (!station) return null; // 선택된 주유소가 없다면 팝업을 렌더링하지 않음
+
+    // 팝업창 위치와 크기 설정
+    const popupStyle = {
+        position: 'absolute',
+        bottom: '150px', // 마커 위치에 따라 조절 필요
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '200px',
+        padding: '15px',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        backgroundColor: '#fff',
+        fontSize: '12px',
+        textAlign: 'center',
+        zIndex: 100,
+    };
 
     return (
-        <>
-            <Map // 지도를 표시할 Container
-                id="map"
-                center={{
-                    // 지도의 중심좌표
-                    lat: 37.57319,
-                    lng: 126.96658,
-                }}
-                style={{
-                    width: "100%",
-                    height: "90%",
-                }}
-                level={7}
-            >
-                {overlayMapTypeId.TRAFFIC && <MapTypeId type={"TRAFFIC"} />}
-                {overlayMapTypeId.BICYCLE && <MapTypeId type={"BICYCLE"} />}
-                {overlayMapTypeId.TERRAIN && <MapTypeId type={"TERRAIN"} />}
-                {overlayMapTypeId.USE_DISTRICT && <MapTypeId type={"USE_DISTRICT"} />}
-            </Map>
-            <p>
-                <input
-                    type="checkbox"
-                    id="chkUseDistrict"
-                    onChange={(e) =>
-                        setOverlayMapTypeId((p) => ({
-                            ...p,
-                            USE_DISTRICT: e.target.checked,
-                        }))
-                    }
+        <div style={popupStyle}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <span style={{ fontWeight: 'bold' }}>{station.name}</span>
+                <img
+                    src={`img/brand-icons/${station.brand}.png`}
+                    alt={station.brand}
+                    style={{ width: '40px', height: '40px' }}
                 />
-                {" 지적편집도 정보 보기 "}
-                <input
-                    type="checkbox"
-                    id="chkTerrain"
-                    onChange={(e) =>
-                        setOverlayMapTypeId((p) => ({ ...p, TERRAIN: e.target.checked }))
-                    }
-                />
-                {" 지형정보 보기 "}
-                <input
-                    type="checkbox"
-                    id="chkTraffic"
-                    onChange={(e) =>
-                        setOverlayMapTypeId((p) => ({ ...p, TRAFFIC: e.target.checked }))
-                    }
-                />
-                {" 교통정보 보기 "}
-                <input
-                    type="checkbox"
-                    id="chkBicycle"
-                    onChange={(e) =>
-                        setOverlayMapTypeId((p) => ({
-                            ...p,
-                            BICYCLE: e.target.checked,
-                        }))
-                    }
-                />
-                {" 자전거도로 정보 보기 "}
-            </p>
-        </>
-    )
+            </div>
+            <div style={{ margin: '10px 0' }}>
+                <p><strong>가격:</strong> {station.price}원</p>
+                <p><strong>거리:</strong> {station.distance}m</p>
+            </div>
+            <button onClick={onClose} style={{
+                cursor: 'pointer',
+                backgroundColor: '#f00',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '5px',
+                padding: '5px 10px',
+                margin: '5px 0'
+            }}>
+                닫기
+            </button>
+        </div>
+    );
 }
+// =================================================================================================================
+
+
+function GasStation() {
+    const [state, setState] = useState({
+        center: { lat: 33.450701, lng: 126.570667 },
+        stations: [],
+        errMsg: null,
+        isLoading: true,
+        selectedStation: null,
+    });
+
+    useEffect(() => {
+        const fetchStations = (position) => {
+            const { latitude, longitude } = position.coords;
+            axios.post('http://localhost:5000/get-stations', { latitude, longitude })
+                .then(response => {
+                    setState(prev => ({
+                        ...prev,
+                        center: { lat: latitude, lng: longitude },
+                        stations: response.data,
+                        isLoading: false
+                    }));
+                })
+                .catch(error => {
+                    setState(prev => ({
+                        ...prev,
+                        errMsg: '주유소 정보를 가져오는데 실패했습니다.',
+                        isLoading: false
+                    }));
+                });
+        };
+
+        navigator.geolocation.getCurrentPosition(fetchStations, (err) => {
+            setState(prev => ({ ...prev, errMsg: err.message, isLoading: false }));
+        });
+    }, []);
+
+    const onMarkerClick = (station) => {
+        setState(prev => ({ ...prev, selectedStation: station }));
+    };
+
+    const closeInfoWindow = () => {
+        setState(prev => ({ ...prev, selectedStation: null }));
+    };
+
+
+    return (
+        <div style={{ width: "100%", height: "100%", position: 'relative' }}> {/* 팝업을 위한 상대 위치 설정 */}
+            <Map center={state.center} style={{ width: "100%", height: "100%" }} level={3}>
+                <MapMarker position={state.center} />
+                {!state.isLoading && state.stations.map(station => (
+                    <MapMarker
+                        key={station.name}
+                        position={{ lat: station.latitude, lng: station.longitude }}
+                        image={{
+                            src: "img/fuel.png", // Replace with actual marker image path
+                            size: { width: 24, height: 35 },
+                        }}
+                        onClick={() => onMarkerClick(station)}
+                    />
+                ))}
+            </Map>
+            <Popup station={state.selectedStation} onClose={closeInfoWindow} />
+        </div>
+    );
+}
+
+export default GasStation;

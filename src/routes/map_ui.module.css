@@ -202,8 +202,6 @@
     /* 아이콘 스타일 */
     width: 70px; /* 혹은 실제 아이콘 크기에 맞게 조절 */
     height: 100px;
-    background-color: #e0e0e0; /* 예시 색상 */
-    border-radius: 40%; /* 원형으로 */
     display: flex;
     align-items: center;
     margin-left: 65px;
@@ -214,7 +212,6 @@
     /* 아이콘 스타일 */
     width: 70px; /* 혹은 실제 아이콘 크기에 맞게 조절 */
     height: 100px;
-    background-color: #e0e0e0; /* 예시 색상 */
     border-radius: 40%; /* 원형으로 */
     display: flex;
     align-items: center;
