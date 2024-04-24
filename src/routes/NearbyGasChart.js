@@ -1,9 +1,11 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function ChartDonut({ stations }) {
+function App( ) {
     ChartJS.register(ArcElement, Tooltip, Legend);
+    const [stations, setStations] = useState([]);
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -17,15 +19,16 @@ function ChartDonut({ stations }) {
         ],
     });
 
-    const handleLegendClick = (event, legendItem, legend) => {
-        console.log('Legend Clicked:', legendItem);
-    };
-     const handleChartClick = (event, elements) => {
-         if (elements.length) {
-             const firstElement = elements[0];
-             console.log('Element Clicked:', firstElement);
-         }
-     };
+    useEffect(() => {
+        axios.get('http://127.0.0.1:5000/api/avgAllPrice')
+            .then(response => {
+                console.log(response.data);
+                setStations(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data: ', error);
+            })
+    }, []);
     const legendTitle = {
         display: true,
         text: '전기차 충전 가능 슬롯 수 ',
@@ -37,16 +40,27 @@ function ChartDonut({ stations }) {
     };
     // 차트 옵션 설정
     const options = {
-        onClick : handleChartClick,
+        // onClick : handleChartClick,
         plugins: {
             legend: {
                 position: 'top',
                 title: legendTitle, // 범례 제목 적용
-                onClick: handleLegendClick
+                // onClick: handleLegendClick
             },
         },
     };
-       useEffect(() => {
+
+    // const handleLegendClick = (event, legendItem, legend) => {
+    //     console.log('Legend Clicked:', legendItem);
+    // };
+    //  const handleChartClick = (event, elements) => {
+    //      if (elements.length) {
+    //          const firstElement = elements[0];
+    //          console.log('Element Clicked:', firstElement);
+    //      }
+    //  };
+
+    useEffect(() => {
         let labels = [];
         if (stations.length > 0) {
             labels = stations.map((station) => station.name);
@@ -54,9 +68,6 @@ function ChartDonut({ stations }) {
         const EmptyParkingLot = labels.map(() => Math.floor(Math.random() * 10));
         const combinedData = labels.map((label) => (`${label}`));
         const backgroundColors = labels.map((_, index) => `hsl(${200 + index * 30}, 90%, ${85 - index * 3}%)`);
-
-
-
         setChartData({
             labels: combinedData,
             datasets: [
@@ -98,4 +109,4 @@ function ChartDonut({ stations }) {
     );
 }
 
-export default ChartDonut;
+export default App;

@@ -14,18 +14,18 @@ import {
 import {Bar} from 'react-chartjs-2';
 
 
-function colorize(opaque) {
-    return (ctx) => {
-        const v = ctx.parsed.y;
-        const c = v < -50 ? '#5db648'
-
-            : v < 0 ? '#73dc84'
-                : v < 50 ? '#f88c98'
-                    : '#f35050';
-
-        return opaque ? c : v;
-    };
-}
+// function colorize(opaque) {
+//     return (ctx) => {
+//         const v = ctx.parsed.y;
+//         const c = v < -50 ? '#5db648'
+//
+//             : v < 0 ? '#73dc84'
+//                 : v < 50 ? '#f88c98'
+//                     : '#f35050';
+//
+//         return opaque ? c : v;
+//     };
+// }
 function ChartLineCombo({ stations }) {
     ChartJS.register(
         LinearScale,
@@ -50,8 +50,6 @@ function ChartLineCombo({ stations }) {
     }
     // console.log(price)
     const combinedData = labels.map((label, index) => (`${label} : ${price[index] + '원'}`));
-
-
     const chartdata = {
 
         labels: combinedData,
@@ -67,7 +65,7 @@ function ChartLineCombo({ stations }) {
 
             {
                 type: 'bar',
-                label: '평균 가격',
+                label: '현 위치 주유소 가격',
                 backgroundColor: 'rgb(174,178,217)',
                 data: price.map((price) => parseInt(price)),
                 borderColor: 'white',
@@ -78,34 +76,39 @@ function ChartLineCombo({ stations }) {
 
             {
                 type: 'bar',
-                label: '전날 유가 차이',
-                data: [3, 6, -5],
+                label: '40L 충전시 가격',
+                data: price.map((price) => parseInt(price)*40),
                 yAxisID: 'y1',
                 elements: {
                     bar: {
-                        backgroundColor: colorize(false),
-                        borderColor: colorize(true),
+                        backgroundColor: 'rgb(180,215,163)',
+                        borderColor: 'white',
                         borderWidth: 2
                     }
                 }
             }
         ],};
-        const options= {
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Chart.js Line Chart'
-                }
-            },
+    const legendTitle = {
+        display: true,
+        text: '현 위치 유가정보,40L 충전시 가격',
+        padding: 20, // 제목과 범례 사이의 간격 조절
+        font: {
+            size: 16, // 폰트 크기 설정
+            weight: 'bold', // 폰트 굵기 설정
+        }
+    };
+    const options= {
+        plugins: {
+            legend: {
+                title: legendTitle, // 범례 제목 적용
+            }
+        },
             scales: {
                 'y': {
                     display: true,
                     position: 'left',
-                    min: 1700, // 최소값 설정
-                    max: 1800, // 최대값 설정
+                    min: 900, // 최소값 설정
+                    max: 2500, // 최대값 설정
                     ticks: {
                         stepSize: 10,
                         callback: function (value){
@@ -117,11 +120,10 @@ function ChartLineCombo({ stations }) {
                     display: true,
 
                     position: 'right',
-                    suggestedMin: -10, // 오른쪽 y 축의 최소값
-                    suggestedMax: 10, // 오른쪽 y 축의 최대값
+                    min: 36000, // 최소값 설정
+                    max: 100000, // 최대값 설정
                     ticks: {
-                        stepSize: 2,
-                        // Include a dollar sign in the ticks
+                        stepSize: 500,
                         callback: function (value) {
                             return value + '원';
                         },

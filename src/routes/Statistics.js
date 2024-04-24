@@ -1,9 +1,8 @@
 import {React,useState} from 'react';
 import styles from './statistics.module.css'
 import axios from "axios";
-
-
-
+import NationalGasPricesChart from './NationalGasPricesChart.js';
+// import NearbyGasChart from './NearbyGasChart.js';
 
 function Statistics(){
 
@@ -15,7 +14,6 @@ function Statistics(){
             <div className={styles.statistics}>
                 <div className={styles.box1}>
                     <div className={styles.smallbox1}>
-
 
 
                         <button onClick={
@@ -42,7 +40,6 @@ function Statistics(){
                             }
                         }> (OpenApi자료) 파이참 oill 데이터 키면 콘솔에 데이터가 한글로 찍힘
                         </button>
-
 
 
                     </div>
@@ -83,12 +80,16 @@ function Statistics(){
 
 
                     </div>
-
                 </div>
                 <div className={styles.box3}>
-                    <div className={styles.smallbox3}></div>
-
+                    <div className={styles.smallbox3}>
+                        <NationalGasPricesChart/>
+                        {/*<NearbyGasChart/>*/}
+                    </div>
                 </div>
+
+
+
 
             </div>
 

@@ -52,8 +52,11 @@ function ChartDonut({ stations }) {
             labels = stations.map((station) => station.name);
         }
         const EmptyParkingLot = labels.map(() => Math.floor(Math.random() * 10));
-        const combinedData = labels.map((label, index) => (`${label} : ${EmptyParkingLot[index]}개`));
+        const combinedData = labels.map((label) => (`${label}`));
         const backgroundColors = labels.map((_, index) => `hsl(${200 + index * 30}, 90%, ${85 - index * 3}%)`);
+
+
+
         setChartData({
             labels: combinedData,
             datasets: [
