@@ -14,7 +14,8 @@ function Popup({ station, onClose }) {
         bottom: '150px', // 마커 위치에 따라 조절 필요
         left: '50%',
         transform: 'translateX(-50%)',
-        width: '200px',
+        width: '300px',
+        height:'200px',
         padding: '15px',
         border: '1px solid #ccc',
         borderRadius: '5px',
@@ -27,11 +28,11 @@ function Popup({ station, onClose }) {
     return (
         <div style={popupStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <span style={{ fontWeight: 'bold' }}>{station.name}</span>
+                <span style={{ fontWeight: 'bold',marginTop:'15px',fontSize:'20px',marginLeft:'50px' }}>{station.name}</span>
                 <img
                     src={`img/brand-icons/${station.brand}.png`}
                     alt={station.brand}
-                    style={{ width: '40px', height: '40px' }}
+                    style={{ width: '50px', height: '50px' }}
                 />
             </div>
             <div style={{ margin: '10px 0' }}>

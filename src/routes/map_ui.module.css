@@ -1,20 +1,3 @@
-/*#change{*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    background-color: #b377d7;*/
-/*    !*display: grid;*!*/
-/*    grid-template-areas:     !* !!핵심!!*!*/
-/*            "aside section"*/
-/*            ;*/
-/*    grid-template-columns: 30% 70% ;*/
-/*    !*자식width*!*/
-/*    grid-template-rows: 1000px;*/
-/*    !*자식height*!*/
-/*}*/
-/*#change{*/
-/*    width: 200px;*/
-/*    height: 400px;*/
-
 /*}*/
 #change{
     background-color: #041621;
