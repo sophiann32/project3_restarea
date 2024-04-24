@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Map, MapTypeId } from "react-kakao-maps-sdk"
 import useKakaoLoader from "./useKakaoLoader"
 
-export default function ChangeOverlay2() {
+export default function GasStation() {
     useKakaoLoader()
     const [overlayMapTypeId, setOverlayMapTypeId] = useState({
         TRAFFIC: false,
