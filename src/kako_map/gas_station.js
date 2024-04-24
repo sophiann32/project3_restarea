@@ -56,67 +56,60 @@ function Popup({ station, onClose }) {
 // =================================================================================================================
 
 
-function GasStation() {
+function GasStation({ radius, stations }) {
     const [state, setState] = useState({
         center: { lat: 33.450701, lng: 126.570667 },
-        stations: [],
         errMsg: null,
         isLoading: true,
         selectedStation: null,
     });
 
     useEffect(() => {
-        const fetchStations = (position) => {
+        navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords;
-            axios.post('http://localhost:5000/get-stations', { latitude, longitude })
-                .then(response => {
-                    setState(prev => ({
-                        ...prev,
-                        center: { lat: latitude, lng: longitude },
-                        stations: response.data,
-                        isLoading: false
-                    }));
-                })
-                .catch(error => {
-                    setState(prev => ({
-                        ...prev,
-                        errMsg: '주유소 정보를 가져오는데 실패했습니다.',
-                        isLoading: false
-                    }));
-                });
-        };
-
-        navigator.geolocation.getCurrentPosition(fetchStations, (err) => {
+            setState(prev => ({
+                ...prev,
+                center: { lat: latitude, lng: longitude },
+                isLoading: false
+            }));
+        }, (err) => {
             setState(prev => ({ ...prev, errMsg: err.message, isLoading: false }));
         });
     }, []);
 
+    // 지도상에서 주유소 마커를 클릭했을 때 호출될 함수
     const onMarkerClick = (station) => {
         setState(prev => ({ ...prev, selectedStation: station }));
     };
 
+    // 팝업을 닫는 함수
     const closeInfoWindow = () => {
         setState(prev => ({ ...prev, selectedStation: null }));
     };
 
+    // radius와 stations props를 기반으로 지도에 표시할 주유소를 필터링합니다.
+    const filteredStations = stations.filter(station => station.distance <= radius);
 
     return (
-        <div style={{ width: "100%", height: "100%", position: 'relative' }}> {/* 팝업을 위한 상대 위치 설정 */}
+        <div style={{ width: "100%", height: "100%", position: 'relative' }}>
             <Map center={state.center} style={{ width: "100%", height: "100%" }} level={3}>
-                <MapMarker position={state.center} />
-                {!state.isLoading && state.stations.map(station => (
+                {!state.isLoading && filteredStations.map(station => (
                     <MapMarker
                         key={station.name}
                         position={{ lat: station.latitude, lng: station.longitude }}
                         image={{
-                            src: "img/fuel.png", // Replace with actual marker image path
+                            src: "img/fuel.png", // 실제 마커 이미지 경로로 대체
                             size: { width: 24, height: 35 },
                         }}
                         onClick={() => onMarkerClick(station)}
                     />
                 ))}
+                {/* ... 팝업 관련 로직은 상황에 따라 적용 */}
             </Map>
-            <Popup station={state.selectedStation} onClose={closeInfoWindow} />
+            {/* selectedStation이 있는 경우에만 Popup을 렌더링합니다. */}
+            {state.selectedStation && (
+                <Popup station={state.selectedStation} onClose={closeInfoWindow} />
+            )}
         </div>
     );
 }

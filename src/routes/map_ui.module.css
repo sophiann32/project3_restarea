@@ -16,6 +16,25 @@
     overflow-y: auto; /* 내용이 많을 경우 스크롤바 표시 */
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
 }
+.aside::-webkit-scrollbar {
+    width: 20px; /* 스크롤바 너비 */
+}
+
+.aside::-webkit-scrollbar-track {
+    background: #f1f1f1; /* 스크롤바 트랙 배경색 */
+}
+
+.aside::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #FFAFAF; /* 스크롤바의 색상 */
+
+    border-radius: 10px;
+}
+
+.aside::-webkit-scrollbar-thumb:hover {
+    background: rgba(33, 122, 244, .1); /* 스크롤바 호버 시 색상 */
+}
+
 
 .markings {
     display: flex;
@@ -96,18 +115,18 @@
 }
 
 /* 스크롤바 스타일 (옵션) */
-.gasStationList::-webkit-scrollbar {
-    height: 8px;
-}
+/*.gasStationList::-webkit-scrollbar {*/
+/*    height: 8px;*/
+/*}*/
 
-.gasStationList::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 4px;
-}
+/*.gasStationList::-webkit-scrollbar-thumb {*/
+/*    background: #555;*/
+/*    border-radius: 4px;*/
+/*}*/
 
-.gasStationList::-webkit-scrollbar-track {
-    background: #000;
-}
+/*.gasStationList::-webkit-scrollbar-track {*/
+/*    background: #000;*/
+/*}*/
 
 /*===========================사이드바 밑에 버튼============================================*/
 .buttonContainer {

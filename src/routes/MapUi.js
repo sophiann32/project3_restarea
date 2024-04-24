@@ -1,21 +1,41 @@
-import {React,useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Elec_station from "../kako_map/elec_station";
-
 import styles from './map_ui.module.css'
 import MapInfo from "../kako_map/map_info";
 import GasStation from "../kako_map/gas_station";
-
-
 function MapUi() {
 
     let[list1,setList1] = useState(1)
     const [radius, setRadius] = useState(1); // 기본값은 1km
     const [gasStations, setGasStations] = useState([
-        { name: '주유소 A', price: 1500, distance: 0.5 },
-        { name: '주유소 B', price: 1450, distance: 0.8 },
-        // ... 더미 데이터 추가 ...
-        { name: '주유소 T', price: 1570, distance: 1.2 },
+        // { name: '주유소 A', price: 1500, distance: 0.5 },
+        // { name: '주유소 B', price: 1450, distance: 0.8 },
+        // // ... 더미 데이터 추가 ...
+        // { name: '주유소 T', price: 1570, distance: 1.2 },
     ]);
+
+    const fetchStationsWithRadius = (radiusValue) => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+            // API 요청 URL과 요청 바디에 반경(radius) 값을 추가합니다.
+            axios.post('http://localhost:5000/get-stations', {
+                latitude,
+                longitude,
+                radius: radiusValue
+            })
+                .then(response => {
+                    // 응답 데이터로 주유소 상태를 업데이트합니다.
+                    setGasStations(response.data);
+                })
+                .catch(error => {
+                    console.error('주유소 정보를 가져오는데 실패했습니다.', error);
+                });
+        }, err => console.error(err));
+    };
+    useEffect(() => {
+        fetchStationsWithRadius(radius);
+    }, [radius]);
 
     // 정렬 함수들
     const sortByPrice = () => {
@@ -68,19 +88,27 @@ function MapUi() {
                     </div>
                     {/* 주유소 리스트 */}
                     <ul className={styles.gasStationList}>
-                        {gasStations.map((station, index) => (
-                            <li key={index}>
-                                <span>{station.name}</span> -
-                                <span>{station.price}원</span> -
-                                <span>{station.distance}km</span>
-                            </li>
-                        ))}
+                        {gasStations.length > 0 ? (
+                            gasStations.map((station, index) => (
+                                <li key={index}>
+                                    <span>{station.name}</span> -
+                                    <span>{station.price}원</span> -
+                                    <span>{station.distance}km</span>
+                                </li>
+                            ))
+                        ) : (
+                            <li>선택한 범위 내에 주유소가 없습니다.</li>
+                        )}
                     </ul>
 
 
                 </div>
                 {
-                    list1 == 1 ? <section className={styles.section}><GasStation/></section> :
+                    list1 === 1 ? (
+                            <section className={styles.section}>
+                                <GasStation radius={radius} stations={gasStations}/>
+                            </section>
+                        ) :
                         list1 == 2 ? <section className={styles.section}><Elec_station/></section> :
                             <section className={styles.section}><MapInfo/></section>
                 }

@@ -30,7 +30,7 @@ function Elec_station() {
     }, []);
 
     const fetchStations = (latitude, longitude) => {
-        axios.post('http://localhost:5000/find-stations', { latitude, longitude })
+        axios.post('http://localhost:3001/find-stations', { latitude, longitude })
             .then(response => {
                 const { dbData, matchingChargerData } = response.data;
                 setState(prev => ({
@@ -52,7 +52,7 @@ function Elec_station() {
         switch (stat) {
             case '2': return '/img/green_marker.png';
             case '3': return '/img/orange_marker.png';
-            default: return '/img/default_elec.png';
+            default: return '/img/elc.png';
         }
     };
 
