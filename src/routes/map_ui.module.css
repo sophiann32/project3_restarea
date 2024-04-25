@@ -82,22 +82,30 @@
 }
 .sortButtons {
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     margin-bottom: 10px;
 }
 
 .sortButtons button {
+    background-color: transparent;
+    color: #ffc400;
+    border: 2px solid #007BFF;
     padding: 5px 10px;
-    background-color: #ddd;
-    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
     cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .sortButtons button:hover {
-    background-color: #ccc;
+    background-color: #e72f2f;
 }
 
-/* 기존 CSS 스타일 외에 추가된 CSS */
+
 .gasStationList {
     width: 400px;
     display: flex;

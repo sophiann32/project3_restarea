@@ -134,7 +134,8 @@ function GasStation({ radius, stations }) {
         setState(prev => ({ ...prev, selectedStation: station }));
     };
 
-    const filteredStations = stations.filter(station => station.distance <= radius);
+    const filteredStations = stations.filter(station => station.distance <= radius * 1000);
+
 
     return (
         <div style={{ width: "100%", height: "100%", position: 'relative' }}>
@@ -158,17 +159,21 @@ function GasStation({ radius, stations }) {
                            }}
                 />
                 <UserLocationPopup center={state.center} />
-                {!state.isLoading && filteredStations.map(station => (
-                    <MapMarker
-                        key={station.name}
-                        position={{ lat: station.latitude, lng: station.longitude }}
-                        image={{
-                            src: "img/fuel.png", // 실제 마커 이미지 경로로 대체
-                            size: { width: 24, height: 35 },
-                        }}
-                        onClick={() => onMarkerClick(station)}
-                    />
-                ))}
+                {!state.isLoading && filteredStations.map(station => {
+                    console.log("마커 위치:", station.latitude, station.longitude); // 로그 추가
+                    return (
+                        <MapMarker
+                            key={station.name}
+                            position={{ lat: station.latitude, lng: station.longitude }}
+                            image={{
+                                src: "img/fuel.png", // 실제 마커 이미지 경로로 대체
+                                size: { width: 24, height: 35 },
+                            }}
+                            onClick={() => onMarkerClick(station)}
+                        />
+                    );
+                })}
+
             </Map>
             {state.selectedStation && (
                 <Popup station={state.selectedStation} onClose={closeInfoWindow} />

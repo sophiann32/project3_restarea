@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Elec_station from "../kako_map/elec_station";
 import styles from './map_ui.module.css'
@@ -11,33 +11,43 @@ function convertMetersToKilometers(meters) {
 
 function MapUi() {
 
-    let[list1,setList1] = useState(1)
+    let [list1, setList1] = useState(1)
     const [radius, setRadius] = useState(1); // 기본값은 1km
-    const [gasStations, setGasStations] = useState([
-        // { name: '주유소 A', price: 1500, distance: 0.5 },
-        // { name: '주유소 B', price: 1450, distance: 0.8 },
-        // // ... 더미 데이터 추가 ...
-        // { name: '주유소 T', price: 1570, distance: 1.2 },
-    ]);
+    const [gasStations, setGasStations] = useState([]);
+    const [gasStationCount, setGasStationCount] = useState(0); // 주유소 개수를 저장하는 상태
+    const [selectedSort, setSelectedSort] = useState(''); // 버튼 상태 저장하는 스테이트
 
     const fetchStationsWithRadius = (radiusValue) => {
         navigator.geolocation.getCurrentPosition(position => {
-            const { latitude, longitude } = position.coords;
-            // API 요청 URL과 요청 바디에 반경(radius) 값을 추가합니다.
+            const {latitude, longitude} = position.coords;
             axios.post('http://localhost:5000/get-stations', {
                 latitude,
                 longitude,
-                radius: radiusValue
+                radius: radiusValue * 1000
             })
                 .then(response => {
-                    // 응답 데이터로 주유소 상태를 업데이트합니다.
-                    setGasStations(response.data);
+                    console.log('API 응답 데이터:', response.data);
+                    setGasStationCount(response.data.length)
+                    if (response.data.length === 0) {
+                        // 데이터가 없는 경우 상태를 업데이트하여 주변에 주유소가 없다고 표시
+                        setGasStations([]);
+
+                    } else {
+                        // 응답 데이터로 주유소 상태를 업데이트합니다.
+                        setGasStations(response.data);
+                    }
                 })
                 .catch(error => {
                     console.error('주유소 정보를 가져오는데 실패했습니다.', error);
+                    setGasStations([]); // 에러 발생 시 상태를 비워줌
+                    setGasStationCount(0); // 에러 발생 시 0 표시
                 });
-        }, err => console.error(err));
+        }, err => {
+            console.error(err);
+            setGasStations([]); // 위치 정보를 가져오는데 실패한 경우
+        });
     };
+
     useEffect(() => {
         fetchStationsWithRadius(radius);
     }, [radius]);
@@ -46,11 +56,13 @@ function MapUi() {
     const sortByPrice = () => {
         const sortedStations = [...gasStations].sort((a, b) => a.price - b.price);
         setGasStations(sortedStations);
+        setSelectedSort('price');
     };
 
     const sortByDistance = () => {
         const sortedStations = [...gasStations].sort((a, b) => a.distance - b.distance);
         setGasStations(sortedStations);
+        setSelectedSort('distance');
     };
 
 
@@ -61,12 +73,14 @@ function MapUi() {
             <div id={styles.change}>
                 <div className={styles.aside}>
 
+
                     <div className={styles.markings}>
                         <span className={styles.mark}>1km</span>
                         <span className={styles.mark}>3km</span>
                         <span className={styles.mark}>5km</span>
                     </div>
                     {/* 슬라이더 */}
+
                     <input
                         type="range"
                         id="radiusSlider"
@@ -79,6 +93,7 @@ function MapUi() {
                         className={styles.slider}
                         list="tickmarks"
                     />
+
                     {/* 눈금에 대한 리스트 정의 */}
                     <datalist id="tickmarks">
                         <option value="1" label="1km">1km</option>
@@ -87,10 +102,24 @@ function MapUi() {
                     </datalist>
 
                     {/* 정렬 버튼 */}
-                    <div className={styles.sortButtons}>
-                        <button onClick={sortByPrice}>가격순 정렬</button>
-                        <button onClick={sortByDistance}>거리순 정렬</button>
+                    <div className={styles.change}>
+                        <div className={styles.sortButtons}>
+                            <button onClick={sortByPrice}
+                                style={selectedSort === 'price' ? {backgroundColor: '#e72f2f'} : null}>
+                                가격순
+                            </button>
+                            <button onClick={sortByDistance}
+                                style={selectedSort === 'distance' ? {backgroundColor: '#e72f2f'} : null}>
+                                거리순
+                            </button>
+                        </div>
                     </div>
+                    <h3 style={{
+                        color: 'white',
+                        position: 'absolute',
+                        left: '310px',
+                        top: '75px'
+                    }}> {gasStationCount}개</h3>
                     {/* 주유소 리스트 */}
                     <ul className={styles.gasStationList}>
                         {gasStations.length > 0 ? (
