@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Map, MapMarker, MapInfoWindow } from "react-kakao-maps-sdk";
-
+import { Map, MapMarker, CustomOverlayMap  } from "react-kakao-maps-sdk";
 
 
 function Popup({ station, onClose }) {
@@ -53,8 +52,25 @@ function Popup({ station, onClose }) {
         </div>
     );
 }
-// =================================================================================================================
+// =================================주유소 세부정보 팝업창 ===================================================================
+function UserLocationPopup({ center }) {
+    const popupStyle = {
+        padding: '5px',
+        borderRadius: '1px',
+        height: '20px',
+    };
 
+    return (
+        <CustomOverlayMap
+            position={center}
+            yAnchor={2.5} // 팝업창을 마커의 하단에 위치하게 조정
+        >
+            <div style={popupStyle}>
+                <h4>내 위치</h4>
+            </div>
+        </CustomOverlayMap>
+    );
+}
 
 function GasStation({ radius, stations }) {
     const [state, setState] = useState({
@@ -93,6 +109,15 @@ function GasStation({ radius, stations }) {
     return (
         <div style={{ width: "100%", height: "100%", position: 'relative' }}>
             <Map center={state.center} style={{ width: "100%", height: "100%" }} level={3}>
+                {/*유저의 현재 위치를 나타내는 마커 추가 */}
+            <MapMarker position={state.center}
+                       image={{
+                           src:"img/my_location.png", // 사용자 위치를 나타내는 아이콘
+                           size: {width: 24, height: 35},
+                           options: { className: 'marker-animation' } // 애니메이션 클래스 적용
+                       }}
+                       />
+                <UserLocationPopup center={state.center} />
                 {!state.isLoading && filteredStations.map(station => (
                     <MapMarker
                         key={station.name}

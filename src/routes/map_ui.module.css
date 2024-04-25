@@ -99,10 +99,12 @@
 
 /* 기존 CSS 스타일 외에 추가된 CSS */
 .gasStationList {
+    width: 400px;
     display: flex;
     flex-wrap: wrap;
     list-style: none;
-    margin-left: 70px;
+    margin-left: 10px;
+
 }
 
 .gasStationList li {
@@ -111,7 +113,7 @@
     color: white; /* 글자색 설정 */
     padding: 10px; /* 내부 패딩 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
-    border-bottom: 1px solid white;
+    font-size: 13px;
 }
 
 /* 스크롤바 스타일 (옵션) */
