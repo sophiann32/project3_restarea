@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Map, MapMarker, CustomOverlayMap,Circle  } from "react-kakao-maps-sdk";
+import {isVisible} from "@testing-library/user-event/dist/utils";
 
 
 function Popup({ station, onClose }) {
@@ -86,6 +87,7 @@ function getZoomLevel(radius) {
     }
 }
 // ====================================줌 레벨 설정 함수=====================================================================
+
 function GasStation({ radius, stations }) {
     const [state, setState] = useState({
         center: { lat: 33.450701, lng: 126.570667 },
@@ -93,6 +95,7 @@ function GasStation({ radius, stations }) {
         errMsg: null,
         isLoading: true,
         selectedStation: null,
+        isVisible: true  // isVisible 상태 추가
     });
 
     useEffect(() => {
@@ -106,54 +109,54 @@ function GasStation({ radius, stations }) {
         }, (err) => {
             setState(prev => ({ ...prev, errMsg: err.message, isLoading: false }));
         });
+
+        const interval = setInterval(() => {
+            setState(prev => ({ ...prev, isVisible: !prev.isVisible }));
+        }, 1000);
+
+        return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
         const newZoomLevel = getZoomLevel(radius);
-        console.log('변경되는 줌 레벨:', newZoomLevel)
+        console.log('변경되는 줌 레벨:', newZoomLevel);
         setState(prev => ({
             ...prev,
             zoomLevel: newZoomLevel
         }));
-    }, [radius]); // 의존성 배열에 radius 추가
+    }, [radius]);
 
-    // 지도상에서 주유소 마커를 클릭했을 때 호출될 함수
-    const onMarkerClick = (station) => {
-        setState(prev => ({ ...prev, selectedStation: station }));
-    };
-
-    // 팝업을 닫는 함수
     const closeInfoWindow = () => {
         setState(prev => ({ ...prev, selectedStation: null }));
     };
 
-    // radius와 stations props를 기반으로 지도에 표시할 주유소를 필터링
+    const onMarkerClick = (station) => {
+        setState(prev => ({ ...prev, selectedStation: station }));
+    };
+
     const filteredStations = stations.filter(station => station.distance <= radius);
 
     return (
         <div style={{ width: "100%", height: "100%", position: 'relative' }}>
             <Map center={state.center} style={{ width: "100%", height: "100%" }}
                  level={state.zoomLevel}
-                 key={state.zoomLevel}
-            >
+                 key={state.zoomLevel}>
                 <Circle
                     center={state.center}
                     radius={parseInt(radius) * 1000} // km to meters
                     strokeWeight={2} // 선의 두께
                     strokeColor={'#75B8FA'} // 선의 색깔
-                    strokeOpacity={0.7} // 선의 불투명도
+                    strokeOpacity={state.isVisible ? 0.7 : 0} // 선의 불투명도
                     fillColor={'#e5effc'} // 채우기 색깔
-                    fillOpacity={0.5} // 채우기 불투명도
+                    fillOpacity={state.isVisible ? 0.5 : 0} // 채우기 불투명도
                 />
-
-                {/*유저의 현재 위치를 나타내는 마커 추가 */}
-            <MapMarker position={state.center}
-                       image={{
-                           src:"img/my_location.png", // 사용자 위치를 나타내는 아이콘
-                           size: {width: 24, height: 35},
-                           options: { className: 'marker-animation' } // 애니메이션 클래스 적용
-                       }}
-                       />
+                <MapMarker position={state.center}
+                           image={{
+                               src:"img/my_location.png", // 사용자 위치를 나타내는 아이콘
+                               size: {width: 24, height: 35},
+                               options: { className: 'marker-animation' } // 애니메이션 클래스 적용
+                           }}
+                />
                 <UserLocationPopup center={state.center} />
                 {!state.isLoading && filteredStations.map(station => (
                     <MapMarker
@@ -166,9 +169,7 @@ function GasStation({ radius, stations }) {
                         onClick={() => onMarkerClick(station)}
                     />
                 ))}
-                {/* ... 팝업 관련 로직은 상황에 따라 적용 */}
             </Map>
-            {/* selectedStation이 있는 경우에만 Popup을 렌더링 */}
             {state.selectedStation && (
                 <Popup station={state.selectedStation} onClose={closeInfoWindow} />
             )}
