@@ -4,6 +4,11 @@ import Elec_station from "../kako_map/elec_station";
 import styles from './map_ui.module.css'
 import MapInfo from "../kako_map/map_info";
 import GasStation from "../kako_map/gas_station";
+
+function convertMetersToKilometers(meters) {
+    return (meters / 1000).toFixed(2); // 미터를 킬로미터로 변환 후, 소수점 둘째 자리까지 표현
+}
+
 function MapUi() {
 
     let[list1,setList1] = useState(1)
@@ -93,14 +98,13 @@ function MapUi() {
                                 <li key={index}>
                                     <span>{station.name}</span> -
                                     <span>{station.price}원</span> -
-                                    <span>{station.distance}km</span>
+                                    <span>{convertMetersToKilometers(station.distance)}km</span>
                                 </li>
                             ))
                         ) : (
                             <li>선택한 범위 내에 주유소가 없습니다.</li>
                         )}
                     </ul>
-
 
                 </div>
                 {
