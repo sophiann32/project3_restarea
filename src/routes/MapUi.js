@@ -16,6 +16,8 @@ function MapUi() {
     const [gasStations, setGasStations] = useState([]);
     const [gasStationCount, setGasStationCount] = useState(0); // 주유소 개수를 저장하는 상태
     const [selectedSort, setSelectedSort] = useState(''); // 버튼 상태 저장하는 스테이트
+    const [fuelType, setFuelType] = useState('B027'); // 초기값은 휘발유
+
 
     const fetchStationsWithRadius = (radiusValue) => {
         navigator.geolocation.getCurrentPosition(position => {
@@ -23,11 +25,13 @@ function MapUi() {
             axios.post('http://localhost:5000/get-stations', {
                 latitude,
                 longitude,
-                radius: radiusValue * 1000
+                radius: radiusValue * 1000,
+                prodcd: fuelType
             })
                 .then(response => {
                     console.log('API 응답 데이터:', response.data);
                     setGasStationCount(response.data.length)
+                    setGasStations(response.data);
                     if (response.data.length === 0) {
                         // 데이터가 없는 경우 상태를 업데이트하여 주변에 주유소가 없다고 표시
                         setGasStations([]);
@@ -50,7 +54,7 @@ function MapUi() {
 
     useEffect(() => {
         fetchStationsWithRadius(radius);
-    }, [radius]);
+    }, [radius, fuelType]);
 
     // 정렬 함수들
     const sortByPrice = () => {
@@ -105,11 +109,11 @@ function MapUi() {
                     <div className={styles.change}>
                         <div className={styles.sortButtons}>
                             <button onClick={sortByPrice}
-                                style={selectedSort === 'price' ? {backgroundColor: '#e72f2f'} : null}>
+                                    style={selectedSort === 'price' ? {backgroundColor: '#e72f2f'} : null}>
                                 가격순
                             </button>
                             <button onClick={sortByDistance}
-                                style={selectedSort === 'distance' ? {backgroundColor: '#e72f2f'} : null}>
+                                    style={selectedSort === 'distance' ? {backgroundColor: '#e72f2f'} : null}>
                                 거리순
                             </button>
                         </div>
@@ -134,7 +138,6 @@ function MapUi() {
                             <li>선택한 범위 내에 주유소가 없습니다.</li>
                         )}
                     </ul>
-
                 </div>
                 {
                     list1 === 1 ? (
@@ -145,6 +148,38 @@ function MapUi() {
                         list1 == 2 ? <section className={styles.section}><Elec_station/></section> :
                             <section className={styles.section}><MapInfo/></section>
                 }
+                <div className={styles.radioContainer}>
+                    <label>
+                        <input type="radio" name="fuelType" value="B027"
+                               checked={fuelType === 'B027'} onChange={() => setFuelType('B027')}/>
+                        <span className={styles.checkmark}></span>
+                        휘발유
+                    </label>
+                    <label>
+                        <input type="radio" name="fuelType" value="D047"
+                               checked={fuelType === 'D047'} onChange={() => setFuelType('D047')}/>
+                        <span className={styles.checkmark}></span>
+                        경유
+                    </label>
+                    <label>
+                        <input type="radio" name="fuelType" value="B034"
+                               checked={fuelType === 'B034'} onChange={() => setFuelType('B034')}/>
+                        <span className={styles.checkmark}></span>
+                        고급 휘발유
+                    </label>
+                    <label>
+                        <input type="radio" name="fuelType" value="C004"
+                               checked={fuelType === 'C004'} onChange={() => setFuelType('C004')}/>
+                        <span className={styles.checkmark}></span>
+                        실내등유
+                    </label>
+                    <label>
+                        <input type="radio" name="fuelType" value="K015"
+                               checked={fuelType === 'K015'} onChange={() => setFuelType('K015')}/>
+                        <span className={styles.checkmark}></span>
+                        자동차 부탄
+                    </label>
+                </div>
 
                 <div className={styles.buttonContainer}>
                     <button
@@ -188,18 +223,6 @@ function MapUi() {
         </>
     )
 }
-
-// function MapUiList1() {
-//     return (
-//         <>
-//         <div id={styles.list}>
-//                 근처 주유소 찾기
-//
-//             </div>
-//
-//         </>
-//     )
-// }
 
 
 export default MapUi

@@ -108,6 +108,8 @@ function GasStation({ radius, stations }) {
             }));
         }, (err) => {
             setState(prev => ({ ...prev, errMsg: err.message, isLoading: false }));
+        },{
+            enableHighAccuracy: true //  정확도 향상
         });
 
         const interval = setInterval(() => {
