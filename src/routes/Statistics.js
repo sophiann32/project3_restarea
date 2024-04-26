@@ -2,7 +2,7 @@ import {React,useState} from 'react';
 import styles from './statistics.module.css'
 import axios from "axios";
 import NationalGasPricesChart from './NationalGasPricesChart.js';
-// import NearbyGasChart from './NearbyGasChart.js';
+import NearbyGasChart from './NearbyGasChart.js';
 
 function Statistics(){
 
@@ -14,8 +14,6 @@ function Statistics(){
             <div className={styles.statistics}>
                 <div className={styles.box1}>
                     <div className={styles.smallbox1}>
-
-
                         <button onClick={
                             () => {
                                 axios.get('http://localhost:5000/oill')
@@ -84,7 +82,7 @@ function Statistics(){
                 <div className={styles.box3}>
                     <div className={styles.smallbox3}>
                         <NationalGasPricesChart/>
-                        {/*<NearbyGasChart/>*/}
+                        <NearbyGasChart/>
                     </div>
                 </div>
 

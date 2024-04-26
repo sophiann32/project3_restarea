@@ -2,9 +2,6 @@ import {React,useState} from 'react';
 import styles from './statistics.module.css'
 import axios from "axios";
 
-
-
-
 function Statistics(){
 
     let[oilPrice,setOilPrice] = useState('주유가격')
@@ -15,8 +12,6 @@ function Statistics(){
             <div className={styles.statistics}>
                 <div className={styles.box1}>
                     <div className={styles.smallbox1}>
-
-
 
                         <button onClick={
                             () => {

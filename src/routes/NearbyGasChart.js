@@ -20,7 +20,7 @@ function App( ) {
     });
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/avgAllPrice')
+        axios.get('http://127.0.0.1:5000/api/gas-stations')
             .then(response => {
                 console.log(response.data);
                 setStations(response.data);
@@ -50,22 +50,14 @@ function App( ) {
         },
     };
 
-    // const handleLegendClick = (event, legendItem, legend) => {
-    //     console.log('Legend Clicked:', legendItem);
-    // };
-    //  const handleChartClick = (event, elements) => {
-    //      if (elements.length) {
-    //          const firstElement = elements[0];
-    //          console.log('Element Clicked:', firstElement);
-    //      }
-    //  };
+
 
     useEffect(() => {
         let labels = [];
         if (stations.length > 0) {
             labels = stations.map((station) => station.name);
         }
-        const EmptyParkingLot = labels.map(() => Math.floor(Math.random() * 10));
+        const EmptyParkingLot = labels.map(() => Math.floor(Math.random() * 3));
         const combinedData = labels.map((label) => (`${label}`));
         const backgroundColors = labels.map((_, index) => `hsl(${200 + index * 30}, 90%, ${85 - index * 3}%)`);
         setChartData({
@@ -83,7 +75,12 @@ function App( ) {
     useEffect(() => {
         const interval = setInterval(() => {
             setChartData((prevChartData) => {
-                const newData = prevChartData.datasets[0].data.map(value => value + Math.floor(Math.random() * 1.1));
+                const newData = prevChartData.datasets[0].data.map((value) => {
+                    // 이전 데이터 값에 약간의 변화를 줌 (-2부터 2까지 랜덤한 값)
+                    let newValue = value + Math.floor(Math.random() * 5) - 2; // -2, -1, 0, 1, 2 중에서 랜덤으로 선택
+                    newValue = Math.min(Math.max(newValue, 0), 7); // 값이 0보다 작으면 0으로, 10보다 크면 10으로 설정
+                    return newValue;
+                });
                 return {
                     ...prevChartData,
                     datasets: [
@@ -94,7 +91,7 @@ function App( ) {
                     ]
                 };
             });
-        }, 1000);
+        }, 6000);
 
         return () => clearInterval(interval); // 컴포넌트가 소멸될 때 해당 인터벌을 정리
     }, []);
