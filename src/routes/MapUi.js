@@ -17,6 +17,8 @@ function MapUi() {
     const [gasStationCount, setGasStationCount] = useState(0); // 주유소 개수를 저장하는 상태
     const [selectedSort, setSelectedSort] = useState(''); // 버튼 상태 저장하는 스테이트
     const [fuelType, setFuelType] = useState('B027'); // 초기값은 휘발유
+    const [chargingStations, setChargingStations] = useState([]); // 충전소 데이터 저장하는 상태
+    const [chargingStationCount, setChargingStationCount] = useState(0); // 충전소 개수 저장하는 상태
 
 
     const fetchStationsWithRadius = (radiusValue) => {
@@ -52,9 +54,40 @@ function MapUi() {
         });
     };
 
+
+    const fetchChargingStations = () => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const {latitude, longitude} = position.coords;
+            axios.post('http://localhost:3001/find-stations', {
+                latitude,
+                longitude
+            }).then(response => {
+                console.log('충전소 데이터:', response.data); // 로그 추가
+                setChargingStations(response.data.dbData); // 수정: dbData로 접근
+                setChargingStationCount(response.data.dbData.length); // 수정: dbData의 길이 사용
+            }).catch(error => {
+                console.error('충전소 정보를 가져오는데 실패했습니다.', error);
+                setChargingStations([]);
+                setChargingStationCount(0);
+            });
+        }, error => {
+            console.error(error);
+            setChargingStations([]);
+            setChargingStationCount(0);
+        });
+    };
+
     useEffect(() => {
         fetchStationsWithRadius(radius);
     }, [radius, fuelType]);
+
+    useEffect(() => {
+        if (list1 === 1) {
+            fetchStationsWithRadius(radius);
+        } else if (list1 === 2) {
+            fetchChargingStations();
+        }
+    }, [list1, radius]);
 
     // 정렬 함수들
     const sortByPrice = () => {
@@ -108,25 +141,25 @@ function MapUi() {
                     {/* 정렬 버튼 */}
                     <div className={styles.change}>
                         <div className={styles.sortButtons}>
+                            {list1 === 1 && (
                             <button onClick={sortByPrice}
                                     style={selectedSort === 'price' ? {backgroundColor: '#e72f2f'} : null}>
                                 가격순
                             </button>
+                                )}
                             <button onClick={sortByDistance}
                                     style={selectedSort === 'distance' ? {backgroundColor: '#e72f2f'} : null}>
                                 거리순
                             </button>
                         </div>
                     </div>
-                    <h3 style={{
-                        color: 'white',
-                        position: 'absolute',
-                        left: '310px',
-                        top: '75px'
-                    }}> {gasStationCount}개</h3>
-                    {/* 주유소 리스트 */}
+                    <h3 style={{color: 'white', position: 'absolute', left: '310px', top: '75px'}}>
+                        {list1 === 1 ? gasStationCount : chargingStationCount}개
+                    </h3>
+
+                    {/* 주유소 또는 충전소 리스트 */}
                     <ul className={styles.gasStationList}>
-                        {gasStations.length > 0 ? (
+                        {list1 === 1 && gasStations.length > 0 ? (
                             gasStations.map((station, index) => (
                                 <li key={index}>
                                     <span>{station.name}</span> -
@@ -134,8 +167,15 @@ function MapUi() {
                                     <span>{convertMetersToKilometers(station.distance)}km</span>
                                 </li>
                             ))
+                        ) : list1 === 2 && chargingStations.length > 0 ? (
+                            chargingStations.map((station, index) => (
+                                <li key={index}>
+                                    <span>{station.statNm}</span> -
+                                    <span>{station.addr}</span>
+                                </li>
+                            ))
                         ) : (
-                            <li>선택한 범위 내에 주유소가 없습니다.</li>
+                            <li>선택한 범위 내에 정보가 없습니다.</li>
                         )}
                     </ul>
                 </div>
@@ -144,10 +184,12 @@ function MapUi() {
                             <section className={styles.section}>
                                 <GasStation radius={radius} stations={gasStations}/>
                             </section>
-                        ) :
-                        list1 == 2 ? <section className={styles.section}><Elec_station/></section> :
+                        ) :  list1 == 2 ? (
+                            <section className={styles.section}><Elec_station/></section>
+                        ) : (
                             <section className={styles.section}><MapInfo/></section>
-                }
+                    )}
+                {list1 === 1 && (
                 <div className={styles.radioContainer}>
                     <label>
                         <input type="radio" name="fuelType" value="B027"
@@ -180,18 +222,17 @@ function MapUi() {
                         자동차 부탄
                     </label>
                 </div>
+                    )}
 
                 <div className={styles.buttonContainer}>
                     <button
                         className={`${styles.button} ${list1 === 1 ? styles.buttonActive : ''}`}
-                        onClick={() => setList1(1)}
-                    >
+                        onClick={() => setList1(1)}>
                         주유소
                     </button>
                     <button
                         className={`${styles.button} ${list1 === 2 ? styles.buttonActive : ''}`}
-                        onClick={() => setList1(2)}
-                    >
+                        onClick={() => setList1(2)}>
                         충전소
                     </button>
                 </div>
@@ -222,6 +263,8 @@ function MapUi() {
 
         </>
     )
+
+
 }
 
 
