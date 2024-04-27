@@ -97,8 +97,9 @@ function GasStation({ radius, stations }) {
         selectedStation: null,
         isVisible: true  // isVisible 상태 추가
     });
-
-    useEffect(() => {
+    // 위치 정보를 업데이트하는 함수
+    const updateLocation = () => {
+        setState(prev => ({ ...prev, isLoading: true })); // 로딩 상태 활성화
         navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords;
             setState(prev => ({
@@ -106,18 +107,21 @@ function GasStation({ radius, stations }) {
                 center: { lat: latitude, lng: longitude },
                 isLoading: false
             }));
-        }, (err) => {
+        }, err => {
             setState(prev => ({ ...prev, errMsg: err.message, isLoading: false }));
-        },{
-            enableHighAccuracy: true //  정확도 향상
+        }, {
+            enableHighAccuracy: true
         });
+    };
 
-        const interval = setInterval(() => {
-            setState(prev => ({ ...prev, isVisible: !prev.isVisible }));
-        }, 1000);
 
-        return () => clearInterval(interval);
+    useEffect(() => {
+        updateLocation();
     }, []);
+
+
+
+
 
     useEffect(() => {
         const newZoomLevel = getZoomLevel(radius);

@@ -231,15 +231,15 @@
     display: none;
 }
 
-.radioContainer input:checked ~ .checkmark:after {
-    display: block;
-    top: 8px;
-    left: 7.7px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: yellow;
-}
+/*.radioContainer input:checked ~ .checkmark:after {*/
+/*    display: block;*/
+/*    top: 8px;*/
+/*    left: 7.7px;*/
+/*    width: 10px;*/
+/*    height: 10px;*/
+/*    border-radius: 50%;*/
+/*    background: yellow;*/
+/*}*/
 /*==========================================================================================*/
 
 
