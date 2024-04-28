@@ -83,10 +83,12 @@ function Elec_station({ locations, radius }) {
         selectedStation: null,
         chargersInfo: {},
         userLocation: null,
-        radius: radius // 반경 상태 추가
+        radius: radius, // 반경 상태 추가
+        isLoading: false
     });
 
     useEffect(() => {
+        setState(prev => ({ ...prev, isLoading: true}));
         const chargersInfo = locations.reduce((acc, station) => {
             if (!acc[station.statId]) {
                 acc[station.statId] = {
@@ -105,11 +107,25 @@ function Elec_station({ locations, radius }) {
             return acc;
         }, {});
 
-        setState(prev => ({
-            ...prev,
-            chargersInfo
-        }));
+
+        setState(prev => ({ ...prev, chargersInfo, isLoading: false })); // 로딩 종료
     }, [locations]);
+
+    // 로딩 인디케이터 스타일
+    const loadingOverlayStyle = {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        fontSize: '24px',
+        zIndex: 1000
+    };
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -149,47 +165,53 @@ function Elec_station({ locations, radius }) {
             selectedStation: null
         }));
     };
-
     return (
-        <Map center={state.center} style={{ width: "100%", height: "100%" }} level={state.zoomLevel}>
-            {state.userLocation && (
-                <>
-                    <MapMarker
-                        position={state.userLocation}
-                        image={{ src: '/img/my_location.png', size: { width: 24, height: 35 } }}
-                    />
-                    <CustomOverlayMap position={state.userLocation} yAnchor={2.0}>
-                        <div style={{ padding: '5px', borderRadius: '1px', height: '20px', fontWeight: 'bold' }}>
-                            내 위치
-                        </div>
-                    </CustomOverlayMap>
-                    <Circle
-                        center={state.userLocation}
-                        radius={state.radius}
-                        strokeWeight={2}
-                        strokeColor={'#75B8FA'}
-                        strokeOpacity={0.7}
-                        fillColor={'#e5effc'}
-                        fillOpacity={0.5}
-                    />
-                </>
+        <>
+            {state.isLoading && (
+                <div style={loadingOverlayStyle}>
+                    불러오는 중...
+                </div>
             )}
-            {locations.map((station) => (
-                <React.Fragment key={`${station.statId}-${station.chgerId}`}>
-                    <MapMarker
-                        position={{ lat: parseFloat(station.lat), lng: parseFloat(station.lng) }}
-                        image={{
-                            src: station.stat === "2" ? '/img/live.png' : '/img/elc.png', // 충전 가능 시 초록색 마커
-                            size: { width: 24, height: 35 }
-                        }}
-                        onClick={() => onMarkerClick(station.statId)}
-                    />
-                </React.Fragment>
-            ))}
-            {state.selectedStation && (
-                <ElecStationPopup station={state.selectedStation} onClose={closeInfoWindow} />
-            )}
-        </Map>
+            <Map center={state.center} style={{ width: "100%", height: "100%" }} level={state.zoomLevel}>
+                {state.userLocation && (
+                    <>
+                        <MapMarker
+                            position={state.userLocation}
+                            image={{ src: '/img/my_location.png', size: { width: 24, height: 35 } }}
+                        />
+                        <CustomOverlayMap position={state.userLocation} yAnchor={2.0}>
+                            <div style={{ padding: '5px', borderRadius: '1px', height: '20px', fontWeight: 'bold' }}>
+                                내 위치
+                            </div>
+                        </CustomOverlayMap>
+                        <Circle
+                            center={state.userLocation}
+                            radius={state.radius}
+                            strokeWeight={2}
+                            strokeColor={'#75B8FA'}
+                            strokeOpacity={0.7}
+                            fillColor={'#e5effc'}
+                            fillOpacity={0.5}
+                        />
+                    </>
+                )}
+                {locations.map((station) => (
+                    <React.Fragment key={`${station.statId}-${station.chgerId}`}>
+                        <MapMarker
+                            position={{ lat: parseFloat(station.lat), lng: parseFloat(station.lng) }}
+                            image={{
+                                src: station.stat === "2" ? '/img/live.png' : '/img/elc.png',
+                                size: { width: 24, height: 35 }
+                            }}
+                            onClick={() => onMarkerClick(station.statId)}
+                        />
+                    </React.Fragment>
+                ))}
+                {state.selectedStation && (
+                    <ElecStationPopup station={state.selectedStation} onClose={closeInfoWindow} />
+                )}
+            </Map>
+        </>
     );
 }
 
