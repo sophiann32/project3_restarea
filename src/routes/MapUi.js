@@ -1,26 +1,31 @@
+// React 및 관련 훅과 axios를 임포트함
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+
+// 컴포넌트 및 스타일시트 파일 임포트
 import Elec_station from "../kako_map/elec_station";
 import styles from './map_ui.module.css'
 import MapInfo from "../kako_map/map_info";
 import GasStation from "../kako_map/gas_station";
 
+// 미터 단위를 킬로미터로 변환하는 함수
 function convertMetersToKilometers(meters) {
     return (meters / 1000).toFixed(2); // 미터를 킬로미터로 변환 후, 소수점 둘째 자리까지 표현
 }
 
+// MapUi 컴포넌트 정의
 function MapUi() {
-
+    // 여러 상태 변수 선언
     let [list1, setList1] = useState(1)
-    const [radius, setRadius] = useState(1); // 기본값은 1km
-    const [gasStations, setGasStations] = useState([]);
+    const [radius, setRadius] = useState(1); // 검색 반경 초기값을 1km로 설정
+    const [gasStations, setGasStations] = useState([]); // 주유소 데이터를 저장할 상태
     const [gasStationCount, setGasStationCount] = useState(0); // 주유소 개수를 저장하는 상태
-    const [selectedSort, setSelectedSort] = useState(''); // 버튼 상태 저장하는 스테이트
-    const [fuelType, setFuelType] = useState('B027'); // 초기값은 휘발유
-    const [chargingStations, setChargingStations] = useState([]); // 충전소 데이터 저장하는 상태
-    const [chargingStationCount, setChargingStationCount] = useState(0); // 충전소 개수 저장하는 상태
+    const [selectedSort, setSelectedSort] = useState(''); // 선택된 정렬 방식을 저장하는 상태
+    const [fuelType, setFuelType] = useState('B027'); // 연료 유형의 초기값 설정 (휘발유)
+    const [chargingStations, setChargingStations] = useState([]); // 충전소 데이터 저장 상태
+    const [chargingStationCount, setChargingStationCount] = useState(0); // 충전소 개수 저장 상태
 
-
+    // 주유소 정보를 반경에 따라 가져오는 함수
     const fetchStationsWithRadius = (radiusValue) => {
         navigator.geolocation.getCurrentPosition(position => {
             const {latitude, longitude} = position.coords;
@@ -54,10 +59,7 @@ function MapUi() {
         });
     };
 
-
-
-
-
+    // 충전소 정보를 가져오는 비동기 함수
     const fetchChargingStations = async () => {
         try {
             const position = await new Promise((resolve, reject) => {
@@ -84,11 +86,12 @@ function MapUi() {
         }
     };
 
-
+    // 컴포넌트 마운트 후 반경과 연료 유형에 따라 주유소 정보를 가져오도록 설정
     useEffect(() => {
         fetchStationsWithRadius(radius);
     }, [radius, fuelType]);
 
+    // list1 상태가 변경될 때마다 주유소 또는 충전소 정보를 가져오도록 설정
     useEffect(() => {
         if (list1 === 1) {
             fetchStationsWithRadius(radius);
@@ -97,7 +100,7 @@ function MapUi() {
         }
     }, [list1, radius]);
 
-    // 정렬 함수들
+    // 주유소 정보를 가격 또는 거리 순으로 정렬하는 함수들
     const sortByPrice = () => {
         const sortedStations = [...gasStations].sort((a, b) => a.price - b.price);
         setGasStations(sortedStations);
@@ -110,22 +113,17 @@ function MapUi() {
         setSelectedSort('distance');
     };
 
-
+    // 컴포넌트가 렌더링할 JSX 구조
     return (
         <>
-
-
             <div id={styles.change}>
                 <div className={styles.aside}>
-
-
+                    {/* 반경 선택 슬라이더 */}
                     <div className={styles.markings}>
                         <span className={styles.mark}>1km</span>
                         <span className={styles.mark}>3km</span>
                         <span className={styles.mark}>5km</span>
                     </div>
-                    {/* 슬라이더 */}
-
                     <input
                         type="range"
                         id="radiusSlider"
@@ -138,35 +136,33 @@ function MapUi() {
                         className={styles.slider}
                         list="tickmarks"
                     />
-
                     {/* 눈금에 대한 리스트 정의 */}
                     <datalist id="tickmarks">
                         <option value="1" label="1km">1km</option>
                         <option value="3" label="3km">3km</option>
                         <option value="5" label="5km">5km</option>
                     </datalist>
-
                     {/* 정렬 버튼 */}
                     <div className={styles.change}>
                         <div className={styles.sortButtons}>
                             {list1 === 1 && (
-                            <button onClick={sortByPrice}
-                                    style={selectedSort === 'price' ? {backgroundColor: '#e72f2f'} : null}>
-                                가격순
-                            </button>
-                                )}
+                                <button onClick={sortByPrice}
+                                        style={selectedSort === 'price' ? {backgroundColor: '#e72f2f'} : null}>
+                                    가격순
+                                </button>
+                            )}
                             {list1 === 1 && (
-                            <button onClick={sortByDistance}
-                                    style={selectedSort === 'distance' ? {backgroundColor: '#e72f2f'} : null}>
-                                거리순
-                            </button>
-                                )}
+                                <button onClick={sortByDistance}
+                                        style={selectedSort === 'distance' ? {backgroundColor: '#e72f2f'} : null}>
+                                    거리순
+                                </button>
+                            )}
                         </div>
                     </div>
+                    {/* 선택된 주유소 또는 충전소의 개수를 표시 */}
                     <h3 style={{color: 'white', position: 'absolute', left: '290px', top: '55px'}}>
                         {list1 === 1 ? gasStationCount : chargingStationCount}개
                     </h3>
-
                     {/* 주유소 또는 충전소 리스트 */}
                     <ul style={{position: 'relative',right:'20px',top:'20px'}} className={styles.gasStationList}>
                         {list1 === 1 && gasStations.length > 0 ? (
@@ -189,6 +185,7 @@ function MapUi() {
                         )}
                     </ul>
                 </div>
+                {/* 주유소 또는 충전소를 지도에 표시하는 섹션 */}
                 {
                     list1 === 1 ? (
                         <section className={styles.section}>
@@ -202,42 +199,42 @@ function MapUi() {
                     ) : (
                         <section className={styles.section}><MapInfo/></section>
                     )}
-
+                {/* 연료 유형 선택 라디오 버튼 */}
                 {list1 === 1 && (
-                <div className={styles.radioContainer}>
-                    <label>
-                        <input type="radio" name="fuelType" value="B027"
-                               checked={fuelType === 'B027'} onChange={() => setFuelType('B027')}/>
-                        <span className={styles.checkmark}></span>
-                        휘발유
-                    </label>
-                    <label>
-                        <input type="radio" name="fuelType" value="D047"
-                               checked={fuelType === 'D047'} onChange={() => setFuelType('D047')}/>
-                        <span className={styles.checkmark}></span>
-                        경유
-                    </label>
-                    <label>
-                        <input type="radio" name="fuelType" value="B034"
-                               checked={fuelType === 'B034'} onChange={() => setFuelType('B034')}/>
-                        <span className={styles.checkmark}></span>
-                        고급 휘발유
-                    </label>
-                    <label>
-                        <input type="radio" name="fuelType" value="C004"
-                               checked={fuelType === 'C004'} onChange={() => setFuelType('C004')}/>
-                        <span className={styles.checkmark}></span>
-                        실내등유
-                    </label>
-                    <label>
-                        <input type="radio" name="fuelType" value="K015"
-                               checked={fuelType === 'K015'} onChange={() => setFuelType('K015')}/>
-                        <span className={styles.checkmark}></span>
-                        자동차 부탄
-                    </label>
-                </div>
-                    )}
-
+                    <div className={styles.radioContainer}>
+                        <label>
+                            <input type="radio" name="fuelType" value="B027"
+                                   checked={fuelType === 'B027'} onChange={() => setFuelType('B027')}/>
+                            <span className={styles.checkmark}></span>
+                            휘발유
+                        </label>
+                        <label>
+                            <input type="radio" name="fuelType" value="D047"
+                                   checked={fuelType === 'D047'} onChange={() => setFuelType('D047')}/>
+                            <span className={styles.checkmark}></span>
+                            경유
+                        </label>
+                        <label>
+                            <input type="radio" name="fuelType" value="B034"
+                                   checked={fuelType === 'B034'} onChange={() => setFuelType('B034')}/>
+                            <span className={styles.checkmark}></span>
+                            고급 휘발유
+                        </label>
+                        <label>
+                            <input type="radio" name="fuelType" value="C004"
+                                   checked={fuelType === 'C004'} onChange={() => setFuelType('C004')}/>
+                            <span className={styles.checkmark}></span>
+                            실내등유
+                        </label>
+                        <label>
+                            <input type="radio" name="fuelType" value="K015"
+                                   checked={fuelType === 'K015'} onChange={() => setFuelType('K015')}/>
+                            <span className={styles.checkmark}></span>
+                            자동차 부탄
+                        </label>
+                    </div>
+                )}
+                {/* 주유소와 충전소 전환 버튼 */}
                 <div className={styles.buttonContainer}>
                     <button
                         className={`${styles.button} ${list1 === 1 ? styles.buttonActive : ''}`}
@@ -250,36 +247,28 @@ function MapUi() {
                         충전소
                     </button>
                 </div>
-
-
             </div>
-
-
+            {/* 아이콘과 버튼을 포함한 선택 바 */}
             <div className={styles.select_bar}>
                 <div className={styles.select_item}>
                     <img src="/img/fuel.png" alt="Icon 1" className={styles.icon}/>
                     <p className={styles.text}>내 주변 주유소</p>
                     <button className={styles.button1}>주유소</button>
                 </div>
-
                 <div className={styles.select_item}>
                     <img src="/img/elc.png" alt="Icon 2" className={styles.icon}/>
                     <p className={styles.text}>내 주변 충전소</p>
                     <button className={styles.button2}>충전소</button>
                 </div>
-
                 <div className={styles.select_item}>
                     <img src="/img/live.png" className={styles.icon2}/>
                     <p className={styles.text2}>충전가능한 충전소보기</p>
                     <button className={styles.button3}>충전가능한 충전소</button>
                 </div>
             </div>
-
         </>
     )
-
-
 }
 
-
+// 컴포넌트를 내보내서 다른 곳에서 사용할 수 있게 함
 export default MapUi

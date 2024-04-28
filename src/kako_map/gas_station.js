@@ -25,10 +25,11 @@ function Popup({ station, onClose }) {
         zIndex: 100,
     };
 
+    // 팝업 내용 반환
     return (
         <div style={popupStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <span style={{ fontWeight: 'bold',marginTop:'15px',fontSize:'20px',marginLeft:'50px' }}>{station.name}</span>
+                <span style={{ fontWeight: 'bold', marginTop: '15px', fontSize: '20px', marginLeft: '50px' }}>{station.name}</span>
                 <img
                     src={`img/brand-icons/${station.brand}.png`}
                     alt={station.brand}
@@ -53,7 +54,7 @@ function Popup({ station, onClose }) {
         </div>
     );
 }
-// =================================주유소 세부정보 팝업창 ===================================================================
+// 사용자 위치 팝업창 컴포넌트
 function UserLocationPopup({ center }) {
     const popupStyle = {
         padding: '5px',
@@ -61,10 +62,11 @@ function UserLocationPopup({ center }) {
         height: '20px',
     };
 
+    // 사용자 위치에 팝업창 표시
     return (
         <CustomOverlayMap
             position={center}
-            yAnchor={2.5} // 팝업창을 마커의 하단에 위치하게 조정
+            yAnchor={2.5} // 팝업창을 마커 하단에 위치시킴
         >
             <div style={popupStyle}>
                 <h4>내 위치</h4>
@@ -72,22 +74,18 @@ function UserLocationPopup({ center }) {
         </CustomOverlayMap>
     );
 }
-// ================================유저 위치 마커 =========================================================================
 
+// 줌 레벨 설정 함수
 function getZoomLevel(radius) {
     switch (parseInt(radius, 10)) {
-        case 1:
-            return 4;
-        case 3:
-            return 6;
-        case 5:
-            return 7;
-        default:
-            return 3;
+        case 1: return 4;
+        case 3: return 6;
+        case 5: return 7;
+        default: return 3;
     }
 }
-// ====================================줌 레벨 설정 함수=====================================================================
 
+// 주유소 정보를 지도에 표시하는 컴포넌트
 function GasStation({ radius, stations }) {
     const [state, setState] = useState({
         center: { lat: 33.450701, lng: 126.570667 },
@@ -97,7 +95,8 @@ function GasStation({ radius, stations }) {
         selectedStation: null,
         isVisible: true  // isVisible 상태 추가
     });
-    // 위치 정보를 업데이트하는 함수
+
+    // 위치 정보 업데이트 함수
     const updateLocation = () => {
         setState(prev => ({ ...prev, isLoading: true })); // 로딩 상태 활성화
         navigator.geolocation.getCurrentPosition(position => {
@@ -132,14 +131,17 @@ function GasStation({ radius, stations }) {
         }));
     }, [radius]);
 
+    // 정보창 닫기 함수
     const closeInfoWindow = () => {
         setState(prev => ({ ...prev, selectedStation: null }));
     };
 
+    // 마커 클릭 이벤트 핸들러
     const onMarkerClick = (station) => {
         setState(prev => ({ ...prev, selectedStation: station }));
     };
 
+    // 반경 내의 주유소만 필터링
     const filteredStations = stations.filter(station => station.distance <= radius * 1000);
 
 

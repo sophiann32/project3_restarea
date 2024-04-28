@@ -1,7 +1,10 @@
+// React와 여러 필요한 모듈들을 가져옴
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker, CustomOverlayMap, Circle } from "react-kakao-maps-sdk";
 
+// 날짜 및 시간을 보기 좋게 포맷하는 함수 정의
 function formatDateTime(dateTimeStr) {
+    // 날짜와 시간 정보를 부분적으로 추출
     const year = dateTimeStr.substring(0, 4);
     const month = dateTimeStr.substring(4, 6);
     const day = dateTimeStr.substring(6, 8);
@@ -9,12 +12,16 @@ function formatDateTime(dateTimeStr) {
     const minute = dateTimeStr.substring(10, 12);
     const second = dateTimeStr.substring(12, 14);
 
+    // 추출된 정보를 기반으로 문자열을 조합하여 반환
     return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분 ${second}초`;
 }
 
+// 충전소 정보를 표시하는 팝업 컴포넌트
 function ElecStationPopup({ station, onClose }) {
+    // 팝업을 표시할 스테이션이 없으면 아무 것도 렌더링하지 않음
     if (!station) return null;
 
+    // 팝업 스타일을 지정
     const popupStyle = {
         position: 'absolute',
         bottom: '150px',
@@ -31,15 +38,17 @@ function ElecStationPopup({ station, onClose }) {
         zIndex: 100,
     };
 
-    function ToTwoDecimal(kiometers) {
-        return kiometers.toFixed(2); //
+    // 킬로미터 값을 소수점 둘째자리까지 포맷
+    function ToTwoDecimal(kilometers) {
+        return kilometers.toFixed(2);
     }
 
-
+    // 팝업에 표시될 날짜를 포맷
     const formattedDate = formatDateTime(station.lastUpdated);
-    // 거리 정보를 포맷팅합니다. 예를 들어, meters 단위를 kilometers로 변환할 수 있습니다.
+    // 거리 정보를 포맷
     const distanceKm = ToTwoDecimal(station.distance);
 
+    // 팝업 컴포넌트의 JSX를 반환
     return (
         <div style={popupStyle}>
             <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '10px'}}>
@@ -50,10 +59,10 @@ function ElecStationPopup({ station, onClose }) {
                 <p><strong>총 충전기 수:</strong> {station.total}</p>
                 <p><strong>충전 가능:</strong> {station.available}</p>
                 <p><strong>상태 갱신 일시:</strong> {formattedDate}</p>
-                <p><strong>거리:</strong> {distanceKm}km</p> {/* 거리 정보 추가 */}
-        </div>
-    <button onClick={onClose} style={{
-        cursor: 'pointer',
+                <p><strong>거리:</strong> {distanceKm}km</p>
+            </div>
+            <button onClick={onClose} style={{
+                cursor: 'pointer',
                 backgroundColor: '#f00',
                 color: '#fff',
                 border: 'none',
@@ -67,6 +76,7 @@ function ElecStationPopup({ station, onClose }) {
     );
 }
 
+// 반경에 따른 지도의 줌 레벨을 결정하는 함수
 function getZoomLevel(radius) {
     switch (parseInt(radius, 10)) {
         case 1: return 4;
@@ -76,17 +86,20 @@ function getZoomLevel(radius) {
     }
 }
 
+// 전기차 충전소 위치를 지도에 표시하는 컴포넌트
 function Elec_station({ locations, radius }) {
+    // 내부 상태를 관리하기 위한 useState
     const [state, setState] = useState({
-        center: { lat: 37.5665, lng: 126.9780 },
-        zoomLevel: getZoomLevel(radius),
-        selectedStation: null,
-        chargersInfo: {},
-        userLocation: null,
-        radius: radius, // 반경 상태 추가
-        isLoading: false
+        center: { lat: 37.5665, lng: 126.9780 }, // 지도의 중심 위치 초기값
+        zoomLevel: getZoomLevel(radius), // 지도의 초기 줌 레벨
+        selectedStation: null, // 선택된 충전소 정보
+        chargersInfo: {}, // 충전소 정보를 저장하는 객체
+        userLocation: null, // 사용자의 위치 정보
+        radius: radius, // 검색 반경
+        isLoading: false // 로딩 상태
     });
 
+    // 충전소 정보를 기반으로 상태를 업데이트하는 useEffect
     useEffect(() => {
         setState(prev => ({ ...prev, isLoading: true}));
         const chargersInfo = locations.reduce((acc, station) => {
@@ -107,9 +120,9 @@ function Elec_station({ locations, radius }) {
             return acc;
         }, {});
 
-
         setState(prev => ({ ...prev, chargersInfo, isLoading: false })); // 로딩 종료
     }, [locations]);
+
 
     // 로딩 인디케이터 스타일
     const loadingOverlayStyle = {
@@ -144,14 +157,16 @@ function Elec_station({ locations, radius }) {
         );
     }, []);
 
+    // 반경 정보가 변경될 때마다 줌 레벨을 업데이트하는 useEffect
     useEffect(() => {
         setState(prev => ({
             ...prev,
             zoomLevel: getZoomLevel(radius),
-            radius: radius * 1000 // radius 값을 미터로 변환하여 저장
+            radius: radius * 1000 // 반경을 미터로 변환하여 저장
         }));
     }, [radius]);
 
+    // 마커 클릭 이벤트를 처리하는 함수
     const onMarkerClick = (statId) => {
         setState(prev => ({
             ...prev,
@@ -159,12 +174,15 @@ function Elec_station({ locations, radius }) {
         }));
     };
 
+    // 정보창을 닫는 함수
     const closeInfoWindow = () => {
         setState(prev => ({
             ...prev,
             selectedStation: null
         }));
     };
+
+    // 컴포넌트의 렌더링 결과를 반환
     return (
         <>
             {state.isLoading && (
@@ -215,4 +233,5 @@ function Elec_station({ locations, radius }) {
     );
 }
 
+// 컴포넌트를 내보내어 다른 곳에서도 사용할 수 있게 함
 export default Elec_station;
