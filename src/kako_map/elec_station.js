@@ -1,141 +1,194 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
+import { Map, MapMarker, CustomOverlayMap, Circle } from "react-kakao-maps-sdk";
 
-function Elec_station() {
+function formatDateTime(dateTimeStr) {
+    const year = dateTimeStr.substring(0, 4);
+    const month = dateTimeStr.substring(4, 6);
+    const day = dateTimeStr.substring(6, 8);
+    const hour = dateTimeStr.substring(8, 10);
+    const minute = dateTimeStr.substring(10, 12);
+    const second = dateTimeStr.substring(12, 14);
+
+    return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분 ${second}초`;
+}
+
+function ElecStationPopup({ station, onClose }) {
+    if (!station) return null;
+
+    const popupStyle = {
+        position: 'absolute',
+        bottom: '150px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '300px',
+        height: '200px',
+        padding: '15px',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        backgroundColor: '#fff',
+        fontSize: '12px',
+        textAlign: 'center',
+        zIndex: 100,
+    };
+
+    function ToTwoDecimal(kiometers) {
+        return kiometers.toFixed(2); //
+    }
+
+
+    const formattedDate = formatDateTime(station.lastUpdated);
+    // 거리 정보를 포맷팅합니다. 예를 들어, meters 단위를 kilometers로 변환할 수 있습니다.
+    const distanceKm = ToTwoDecimal(station.distance);
+
+    return (
+        <div style={popupStyle}>
+            <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '10px'}}>
+                <span style={{fontWeight: 'bold', margin: '0px 60px', fontSize: '20px'}}>{station.stationName}</span>
+            </div>
+            <div style={{marginTop: '20px'}}>
+                <p><strong>주소:</strong> {station.address}</p>
+                <p><strong>총 충전기 수:</strong> {station.total}</p>
+                <p><strong>충전 가능:</strong> {station.available}</p>
+                <p><strong>상태 갱신 일시:</strong> {formattedDate}</p>
+                <p><strong>거리:</strong> {distanceKm}km</p> {/* 거리 정보 추가 */}
+        </div>
+    <button onClick={onClose} style={{
+        cursor: 'pointer',
+                backgroundColor: '#f00',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '5px',
+                padding: '5px 10px',
+                margin: '5px 0'
+            }}>
+                닫기
+            </button>
+        </div>
+    );
+}
+
+function getZoomLevel(radius) {
+    switch (parseInt(radius, 10)) {
+        case 1: return 4;
+        case 3: return 6;
+        case 5: return 7;
+        default: return 3;
+    }
+}
+
+function Elec_station({ locations, radius }) {
     const [state, setState] = useState({
-        center: { lat: 33.450701, lng: 126.570667 },
-        matchingChargerData: [],
-        locations: [],
-        errMsg: null,
-        isLoading: true,
-        showOverlayId: null
+        center: { lat: 37.5665, lng: 126.9780 },
+        zoomLevel: getZoomLevel(radius),
+        selectedStation: null,
+        chargersInfo: {},
+        userLocation: null,
+        radius: radius // 반경 상태 추가
     });
 
     useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const newPos = { lat: position.coords.latitude, lng: position.coords.longitude };
-                    setState(prev => ({ ...prev, center: newPos, isLoading: false }));
-                    fetchStations(newPos.lat, newPos.lng);
-                },
-                (err) => {
-                    setState(prev => ({ ...prev, errMsg: err.message, isLoading: false }));
-                }
-            );
-        } else {
-            setState(prev => ({ ...prev, errMsg: "Geolocation을 사용할 수 없어요.", isLoading: false }));
-        }
-    }, []);
+        const chargersInfo = locations.reduce((acc, station) => {
+            if (!acc[station.statId]) {
+                acc[station.statId] = {
+                    total: 0,
+                    available: 0,
+                    stationName: station.statNm,
+                    address: station.addr,
+                    lastUpdated: station.statUpdDt,
+                    distance: station.distance
+                };
+            }
+            acc[station.statId].total += 1;
+            if (station.stat === "2") {
+                acc[station.statId].available += 1;
+            }
+            return acc;
+        }, {});
 
-    const fetchStations = (latitude, longitude) => {
-        axios.post('http://localhost:3001/find-stations', { latitude, longitude })
-            .then(response => {
-                const { dbData, matchingChargerData } = response.data;
-                setState(prev => ({
-                    ...prev,
-                    locations: dbData,
-                    matchingChargerData: matchingChargerData,
-                    isLoading: false
-                }));
-            })
-            .catch(error => {
-                setState(prev => ({ ...prev, errMsg: '충전소 정보를 가져오는데 실패했습니다.', isLoading: false }));
-            });
-    };
-
-    const getMarkerImage = (stat, isMatched) => {
-        if (isMatched) {
-            return '/img/matched_marker.png';
-        }
-        switch (stat) {
-            case '2': return '/img/green_marker.png';
-            case '3': return '/img/orange_marker.png';
-            default: return '/img/elc.png';
-        }
-    };
-
-    const toggleOverlay = (statId) => {
         setState(prev => ({
             ...prev,
-            showOverlayId: prev.showOverlayId === statId ? null : statId
+            chargersInfo
+        }));
+    }, [locations]);
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                setState(prev => ({
+                    ...prev,
+                    userLocation: { lat: latitude, lng: longitude },
+                    center: { lat: latitude, lng: longitude }
+                }));
+            },
+            (error) => {
+                console.error("Geolocation error:", error);
+            },
+            { enableHighAccuracy: true }
+        );
+    }, []);
+
+    useEffect(() => {
+        setState(prev => ({
+            ...prev,
+            zoomLevel: getZoomLevel(radius),
+            radius: radius * 1000 // radius 값을 미터로 변환하여 저장
+        }));
+    }, [radius]);
+
+    const onMarkerClick = (statId) => {
+        setState(prev => ({
+            ...prev,
+            selectedStation: prev.chargersInfo[statId]
         }));
     };
 
-    const getChargerStatusMessage = (stat) => {
-        switch (stat) {
-            case '1': return '통신 이상';
-            case '2': return '충전 가능';
-            case '3': return '충전 중';
-            case '4': return '운영 중지';
-            case '5': return '점검 중';
-            case '9': return '상태 미확인';
-            default: return '정보 없음';
-        }
+    const closeInfoWindow = () => {
+        setState(prev => ({
+            ...prev,
+            selectedStation: null
+        }));
     };
 
     return (
-        <Map center={state.center} style={{ width: "100%", height: "100%" }} level={3}>
-            {!state.isLoading && (
-                <MapMarker position={state.center} image={{ src: '/img/current_location.png', size: { width: 40, height: 40 } }}>
-                    <div style={{ padding: "5px", color: "#000" }}>
-                        {state.errMsg ? state.errMsg : "현재 위치"}
-                    </div>
-                </MapMarker>
+        <Map center={state.center} style={{ width: "100%", height: "100%" }} level={state.zoomLevel}>
+            {state.userLocation && (
+                <>
+                    <MapMarker
+                        position={state.userLocation}
+                        image={{ src: '/img/my_location.png', size: { width: 24, height: 35 } }}
+                    />
+                    <CustomOverlayMap position={state.userLocation} yAnchor={2.0}>
+                        <div style={{ padding: '5px', borderRadius: '1px', height: '20px', fontWeight: 'bold' }}>
+                            내 위치
+                        </div>
+                    </CustomOverlayMap>
+                    <Circle
+                        center={state.userLocation}
+                        radius={state.radius}
+                        strokeWeight={2}
+                        strokeColor={'#75B8FA'}
+                        strokeOpacity={0.7}
+                        fillColor={'#e5effc'}
+                        fillOpacity={0.5}
+                    />
+                </>
             )}
-            {state.locations.map(loc => {
-                const isMatched = state.matchingChargerData.some(charger => charger.statId === loc.statId);
-                return (
-                    <React.Fragment key={loc.statId}>
-                        <MapMarker
-                            position={{ lat: loc.lat, lng: loc.lng }}
-                            image={{
-                                src: getMarkerImage(loc.stat, isMatched),
-                                size: { width: 40, height: 40 }
-                            }}
-                            onClick={() => toggleOverlay(loc.statId)}
-                        />
-                        {state.showOverlayId === loc.statId && (
-                            <CustomOverlayMap position={{ lat: loc.lat, lng: loc.lng }}>
-                                <div style={{
-                                    padding: "15px",
-                                    background: "rgba(255, 255, 255, 0.9)",
-                                    border: "1px solid #ddd",
-                                    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
-                                    borderRadius: "10px",
-                                    fontSize: "13px",
-                                    maxWidth: "300px",
-                                    lineHeight: "1.4",
-                                    fontFamily: "'Noto Sans KR', sans-serif"
-                                }}>
-                                    <button onClick={() => toggleOverlay(null)} style={{
-                                        position: "absolute",
-                                        top: "10px",
-                                        right: "10px",
-                                        cursor: "pointer",
-                                        border: "none",
-                                        background: "#fff",
-                                        borderRadius: "50%",
-                                        width: "24px",
-                                        height: "24px",
-                                        lineHeight: "24px",
-                                        textAlign: "center",
-                                        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
-                                        fontSize: "16px",
-                                        fontWeight: "bold",
-                                        color: "#333"
-                                    }}>&times;</button>
-                                    <strong>{loc.statNm}</strong><br />
-                                    {loc.addr}<br />
-                                    <span>상태: {getChargerStatusMessage(loc.stat)}</span><br />
-                                    <span>Distance: {loc.distance.toFixed(2)} km</span>
-                                </div>
-                            </CustomOverlayMap>
-                        )}
-                    </React.Fragment>
-                );
-            })}
+            {locations.map((station) => (
+                <React.Fragment key={`${station.statId}-${station.chgerId}`}>
+                    <MapMarker
+                        position={{ lat: parseFloat(station.lat), lng: parseFloat(station.lng) }}
+                        image={{
+                            src: station.stat === "2" ? '/img/live.png' : '/img/elc.png', // 충전 가능 시 초록색 마커
+                            size: { width: 24, height: 35 }
+                        }}
+                        onClick={() => onMarkerClick(station.statId)}
+                    />
+                </React.Fragment>
+            ))}
+            {state.selectedStation && (
+                <ElecStationPopup station={state.selectedStation} onClose={closeInfoWindow} />
+            )}
         </Map>
     );
 }

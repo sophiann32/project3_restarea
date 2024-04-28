@@ -55,27 +55,35 @@ function MapUi() {
     };
 
 
-    const fetchChargingStations = () => {
-        navigator.geolocation.getCurrentPosition(position => {
-            const {latitude, longitude} = position.coords;
-            axios.post('http://localhost:3001/find-stations', {
-                latitude,
-                longitude
-            }).then(response => {
-                console.log('충전소 데이터:', response.data); // 로그 추가
-                setChargingStations(response.data.dbData); // 수정: dbData로 접근
-                setChargingStationCount(response.data.dbData.length); // 수정: dbData의 길이 사용
-            }).catch(error => {
-                console.error('충전소 정보를 가져오는데 실패했습니다.', error);
-                setChargingStations([]);
-                setChargingStationCount(0);
+
+
+
+    const fetchChargingStations = async () => {
+        try {
+            const position = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
             });
-        }, error => {
-            console.error(error);
+
+            const { latitude, longitude } = position.coords;
+            const response = await axios.post('http://localhost:3001/find-stations', {
+                latitude,
+                longitude,
+                radius: radius * 1000 // 미터 단위로 변환하여 서버로 전송
+            });
+
+            console.log('충전소 데이터임', response.data);
+            // 매칭된 충전소 데이터만 상태에 저장
+            setChargingStations(response.data.matchingChargerData);
+            setChargingStationCount(response.data.matchingChargerData.length);
+
+        } catch (error) {
+            console.error('충전소 정보를 가져오는데 실패했음.', error);
+            // 위치 가져오기 실패 또는 Axios 요청 실패 처리
             setChargingStations([]);
             setChargingStationCount(0);
-        });
+        }
     };
+
 
     useEffect(() => {
         fetchStationsWithRadius(radius);
@@ -147,18 +155,20 @@ function MapUi() {
                                 가격순
                             </button>
                                 )}
+                            {list1 === 1 && (
                             <button onClick={sortByDistance}
                                     style={selectedSort === 'distance' ? {backgroundColor: '#e72f2f'} : null}>
                                 거리순
                             </button>
+                                )}
                         </div>
                     </div>
-                    <h3 style={{color: 'white', position: 'absolute', left: '310px', top: '75px'}}>
+                    <h3 style={{color: 'white', position: 'absolute', left: '290px', top: '55px'}}>
                         {list1 === 1 ? gasStationCount : chargingStationCount}개
                     </h3>
 
                     {/* 주유소 또는 충전소 리스트 */}
-                    <ul className={styles.gasStationList}>
+                    <ul style={{position: 'relative',right:'20px',top:'20px'}} className={styles.gasStationList}>
                         {list1 === 1 && gasStations.length > 0 ? (
                             gasStations.map((station, index) => (
                                 <li key={index}>
@@ -181,14 +191,18 @@ function MapUi() {
                 </div>
                 {
                     list1 === 1 ? (
-                            <section className={styles.section}>
-                                <GasStation radius={radius} stations={gasStations}/>
-                            </section>
-                        ) :  list1 == 2 ? (
-                            <section className={styles.section}><Elec_station/></section>
-                        ) : (
-                            <section className={styles.section}><MapInfo/></section>
+                        <section className={styles.section}>
+                            <GasStation radius={radius} stations={gasStations}/>
+                        </section>
+                    ) : list1 === 2 ? (
+                        <section className={styles.section}>
+                            <Elec_station locations={chargingStations} radius={radius} />
+
+                        </section>
+                    ) : (
+                        <section className={styles.section}><MapInfo/></section>
                     )}
+
                 {list1 === 1 && (
                 <div className={styles.radioContainer}>
                     <label>
