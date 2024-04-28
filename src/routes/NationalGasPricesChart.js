@@ -4,50 +4,33 @@ import {
     LinearScale,
     CategoryScale,
     BarElement,
-    PointElement,
-    LineElement,
     Legend,
     Tooltip,
-    LineController,
     BarController,
 } from 'chart.js';
-import {Bar} from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import axios from 'axios';
 
+// 전역 폰트 설정
+ChartJS.defaults.font.family = 'GmarketSans';
+ChartJS.defaults.font.size = 14;
+ChartJS.defaults.font.style = 'normal';
 
-function colorize(opaque) {
-    return (ctx) => {
-        const v = ctx.parsed.y;
-        const c = v < -50 ? '#5db648'
-            : v < 0 ? '#73dc84'
-                : v < 50 ? '#f88c98'
-                    : '#f35050';
-
-        return opaque ? c : v;
-    };
-}
 function App() {
-
     ChartJS.register(
         LinearScale,
         CategoryScale,
         BarElement,
-        PointElement,
-        LineElement,
         Legend,
         Tooltip,
-        LineController,
         BarController
     );
 
     const [stations, setStations] = useState([]);
-    const [labels, setLabels] = useState([]);
-    const [price, setPrice] = useState([]);
 
     useEffect(() => {
         axios.get('http://127.0.0.1:5000/api/avgAllPrice')
             .then(response => {
-                console.log(response.data);
                 setStations(response.data);
             })
             .catch(error => {
@@ -55,101 +38,83 @@ function App() {
             })
     }, []);
 
-    useEffect(() => {
-        if (stations.length > 0) {
-            const stationLabels = stations.map(station => station.name);
-            setLabels(stationLabels);
+    const labels = stations.map(station => station.name);
+    const price = stations.map(station => station.price);
 
-            const stationPrices = stations.map(station => station.price);
-            setPrice(stationPrices);
-        }
-    }, [stations]);
-
-
-    // console.log(price)
-    const combinedData = labels.map((label, index) => (`${label} : ${price[index] + '원'}`));
     const chartdata = {
-
-        labels: combinedData,
+        labels,
         datasets: [
-
             {
                 type: 'bar',
-                label: '평균 가격',
+                label: '실시간 전국 평균 유가',
                 backgroundColor: 'rgb(174,178,217)',
-                data: price.map((price) => parseInt(price)),
+                data: price.map(price => parseInt(price, 10)),
                 borderColor: 'white',
                 borderWidth: 2,
-                yAxisID: 'y'
-
-            },
-
-            {
-                type: 'bar',
-                label: '전날 유가 차이',
-                data: [3, 6, -5],
-                yAxisID: 'y1',
-                elements: {
-                    bar: {
-                        backgroundColor: colorize(false),
-                        borderColor: colorize(true),
-                        borderWidth: 2
-                    }
-                }
+                yAxisID: 'y',
+                barPercentage: 0.7
             }
         ]
     };
-    const legendTitle = {
-        display: true,
-        text: '전국 평균 유가,전날 가격 차이',
-        padding: 20, // 제목과 범례 사이의 간격 조절
-        font: {
-            size: 16, // 폰트 크기 설정
-            weight: 'bold', // 폰트 굵기 설정
+
+    const options = {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    font: {
+                        size: 16,
+                        weight: 'bold',
+                    }
+                }
+            },
+            tooltip: {
+                bodyFont: {
+                    size: 15,
+                },
+                callbacks: {
+                    title: function () {
+                        return ''; // 타이틀을 비우거나 비활성화
+                    },
+                    label: function (context) {
+                        // 여기서는 context.label을 반환하는 대신 원하는 텍스트를 직접 반환할 수 있습니다.
+                        return `${context.label.split(" : ")[0]}: ${context.parsed.y}원`;
+                        // return `${context.parsed.y}원`;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    font: {
+                        weight: 'bold',
+                        size: 15,
+                    }
+                }
+            },
+            'y': {
+                display: true,
+                position: 'left',
+                min: 900,
+                max: 2000,
+                ticks: {
+                    stepSize: 20,
+                    color: '#333',
+                    font: {
+                        size: 15,
+                    }
+                },
+                grid: {
+                    color: '#e5e5e5',
+                    borderDash: [5, 5],
+                    drawBorder: false,
+                }
+            }
         }
     };
 
-
-    const options= {
-            plugins: {
-                legend: {
-                    title: legendTitle, // 범례 제목 적용
-                    // onClick: (event, legendItem, legend) => {
-                    //     // 클릭 이벤트 핸들링
-                    //     console.log('Legend Clicked:', legendItem);
-                    // }
-                }
-            },
-            scales: {
-                'y': {
-                    display: true,
-                    position: 'left',
-                    min: 700, // 최소값 설정
-                    max: 2300, // 최대값 설정
-                    ticks: {
-                        stepSize: 10,
-                        callback: function (value){
-                            return value+'원';
-                        }
-                    } // 간격 설정
-                },
-                'y1': {
-                    display: true,
-                    position: 'right',
-                    suggestedMin: -30, // 오른쪽 y 축의 최소값
-                    suggestedMax: 30, // 오른쪽 y 축의 최대값
-                    ticks: {
-                        stepSize: 2,
-                        // Include a dollar sign in the ticks
-                        callback: function (value) {
-                            return value + '원';
-                        },
-                    }
-                },
-            }
-        };
-
-    return (<Bar data={chartdata} options={options} />);
+    return <Bar data={chartdata} options={options} width={600} height={460}/>;
 }
 
 export default App;

@@ -54,14 +54,7 @@ function ChartLineCombo({ stations }) {
 
         labels: combinedData,
         datasets: [
-            // {
-            //     type: 'line',
-            //     label: 'Dataset 1',
-            //     borderColor: 'rgb(255, 99, 132)',
-            //     borderWidth: 2,
-            //     fill: false,
-            //     data: price.map((price) => parseInt(price)),
-            // },
+
 
             {
                 type: 'bar',
