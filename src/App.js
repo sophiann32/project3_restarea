@@ -27,13 +27,12 @@ function App() {
                       <Route path="/" element={<MainPage/>}/>
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
-<<<<<<< HEAD
                       <Route path="/chatbot" element={<chatbot/>}/>
 
 =======
                       <Route path="/board" element={<Board/>}/>
                       <Route path="/login" element={<Login/>}/>
->>>>>>> master
+
                   </Routes>
                   <link to="/chatbot"></link>
 
