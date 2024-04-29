@@ -1,6 +1,7 @@
 import {React,useState} from 'react';
 import './login.css'; // CSS 파일을 import 합니다.
 import axios from 'axios'
+import { Link, useNavigate   } from 'react-router-dom';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,6 +32,7 @@ import axios from 'axios'
 function Login(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // useNavigate 훅 사용
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // 폼 기본 동작 방지
@@ -61,7 +63,7 @@ function Login(props) {
             });
 
             // 서버로부터의 응답 처리
-
+            navigate('/');
             console.log('console위치 catch 전 : '+ username)
 
         } catch (error) {

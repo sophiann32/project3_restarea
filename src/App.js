@@ -13,13 +13,30 @@ import Statistics from "./routes/Statistics";
 
 import Board from "./board/BoardMain"
 import Login from "./board/Login"
+import DetailPost from "./board/DetailPost"
+import CreatePost from "./board/Create";
+
+
+
+// Axios 글로벌 설정
+axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.withCredentials = true;
+
 
 function App() {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loginId, setLoginId] = useState('');
+    const [userName, setUserName] = useState('');
+    const [userRealName, setUserRealName] = useState('');
+
+
+
   return (
       <div className="App">
           <div id="wrap">
 
-          <Header/>
+          <Header isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>
 
               <div id="change">
 
@@ -27,8 +44,13 @@ function App() {
                       <Route path="/" element={<MainPage/>}/>
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
-                      <Route path="/board" element={<Board/>}/>
-                      <Route path="/login" element={<Login/>}/>
+                      <Route path="/board" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
+                      <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
+                      <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} loginId={loginId} setLoginId={setLoginId}
+                                                           setUserName={setUserName} userName={userName} userRealName={userRealName} setUserRealName={setUserRealName}/>}/>
+
+                      <Route  path="/detailPost/:id" element={<DetailPost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
+                      <Route  path="/create" element={<CreatePost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                   </Routes>
 
               </div>

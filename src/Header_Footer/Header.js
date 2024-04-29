@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 
-function Header() {
+function Header(props) {
     const [isMenuOpen, setMenuOpen] = useState(false);
 
     return (
@@ -25,9 +25,11 @@ function Header() {
                     </ul>
                 </div>
                 <div className={styles.login_box}>
+                    {props.isLoggedIn == true ? <div>반갑습니다.{props.userRealName}</div> :
                     <Link to="/login">
                         <span>LOGIN</span>
                     </Link>
+                    }
                 </div>
             </nav>
         </div>
