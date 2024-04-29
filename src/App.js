@@ -1,4 +1,3 @@
-
 import './App.css';
 import Mymap from "./kako_map/map";
 import elec_info from "./kako_map/elec_station";
