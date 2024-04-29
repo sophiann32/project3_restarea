@@ -1,12 +1,12 @@
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; /* 상단부터 정렬 */
-    height: 100vh;
-    margin: 0;
-    padding-top: 20px; /* 상단 여백 추가 */
-}
+/*body {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    justify-content: flex-start; !* 상단부터 정렬 *!*/
+/*    height: 100vh;*/
+/*    margin: 0;*/
+/*    padding-top: 20px; !* 상단 여백 추가 *!*/
+/*}*/
 
 /* 폼 요소 스타일 */
 form {
