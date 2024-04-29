@@ -12,6 +12,9 @@ import MainPage from "./routes/MainPage.js";
 import MapUi from "./routes/MapUi.js";
 import Statistics from "./routes/Statistics";
 
+import Board from "./board/BoardMain"
+import Login from "./board/Login"
+
 function App() {
   return (
       <div className="App">
@@ -25,6 +28,8 @@ function App() {
                       <Route path="/" element={<MainPage/>}/>
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
+                      <Route path="/board" element={<Board/>}/>
+                      <Route path="/login" element={<Login/>}/>
                   </Routes>
 
               </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Header.module.css';
+import { Link } from 'react-router-dom';
 
 function Header() {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -18,13 +19,15 @@ function Header() {
                     <ul>
                         <li><a href='/map'>내 위치</a></li>
                         <li><a href='/sub'>통계</a></li>
-                        <li><a href='/sub'>리뷰 게시판</a></li>
+                        <li>
+                            <Link to="/board">리뷰 게시판</Link>
+                        </li>
                     </ul>
                 </div>
                 <div className={styles.login_box}>
-                    <a href='/'>
+                    <Link to="/login">
                         <span>LOGIN</span>
-                    </a>
+                    </Link>
                 </div>
             </nav>
         </div>
