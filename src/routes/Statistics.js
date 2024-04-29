@@ -1,46 +1,47 @@
-import {React, useState} from 'react';
-import styles from './statistics.module.css'
+import React, { useState, useEffect } from 'react';
+import styles from './statistics.module.css';
 import axios from "axios";
 import NationalGasPricesChart from './NationalGasPricesChart.js';
 import NearbyGasChart from './NearbyGasChart.js';
-import EV_ChargingSlots from './EV_ChargingSlots.js'
+import EV_ChargingSlots from './EV_ChargingSlots.js';
 import Chart7 from "./Chart7";
 
-
 function Statistics() {
-    //
-    // let[oilPrice,setOilPrice] = useState('주유가격')
-    // let[oilPrice1,setOilPrice1] = useState('주유가격')
+    const [locationData, setLocationData] = useState(null);
+
+    // 위치 정보를 가져오고 데이터를 로드하는 함수
+    const fetchLocationAndData = () => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+            axios.post('http://localhost:5000/api/gas-stations', {
+                latitude,
+                longitude
+            })
+                .then(response => {
+                    setLocationData(response.data);
+                    console.log('넘어온 데이터:', response.data);
+                })
+                .catch(error => {
+                    console.error('데이터 에러:', error);
+                });
+        }, error => {
+            console.error('Error getting location:', error);
+        });
+    };
+
+    // 컴포넌트 마운트 시 자동으로 위치 정보를 불러오고 데이터를 요청
+    useEffect(() => {
+        fetchLocationAndData();
+    }, []);
 
     return (
         <>
             <div className={styles.statistics}>
                 <div className={styles.box1}>
                     <div className={styles.smallbox1}>
-                        <button onClick={
-                            () => {
-                                axios.get('http://localhost:5000/oill')
-                                    // 응답을 then의 콜백함수로 받을수 있다.
-                                    // 받은 데이터는 인자를 임의로 작명하여 확인 가능
-                                    .then((response) => {
-                                        // console.log(response)  // 전체 데이터
-                                        // console.log(response.data) // 실 데이터
-                                        // [[배열 요소1], [배열요소2]] ==> 하나의 배열로 병합
-                                        // concat등의 메소드 활용가능
-                                        let shoesCopy = response.data
-                                        // 추가 작업
-                                        console.log(shoesCopy)
-                                        // return setOilPrice(shoesCopy[0].PRICE)
-                                        // 리턴값을 set변수  를 바꿔서  useState를 이용할수있께 해야함
-
-                                    })
-                                    // 응답에 실패한 경우, 예외처리 코드 정의
-                                    .catch(() => {
-                                        console.log('실패함');
-                                    })
-                            }
-                        }> (OpenApi자료) 파이참 oill 데이터 키면 콘솔에 데이터가 한글로 찍힘
-                        </button>
+                        {/*<button onClick={fetchLocationAndData}>*/}
+                        {/*    Refresh Location and Data*/}
+                        {/*</button>*/}
                     </div>
                 </div>
                 <div className={styles.box2}>
@@ -55,18 +56,13 @@ function Statistics() {
                             <Chart7/>
                         </div>
                         <div className={styles.smallbox3}>
-                            <NearbyGasChart/>
+                            <NearbyGasChart data={locationData}/>
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
         </>
-    )
+    );
 }
 
-
-export default Statistics
-
+export default Statistics;

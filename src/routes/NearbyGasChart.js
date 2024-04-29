@@ -3,19 +3,14 @@ import axios from 'axios';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-function NearbyGasChart() {
-  const [stations, setStations] = useState([]);
+function NearbyGasChart({ data }) {
+    const [stations, setStations] = useState([]);
 
-  useEffect(() => {
-    axios.get('http://127.0.0.1:5000/api/gas-stations')  // Flask 서버의 주소 입력
-        .then(response => {
-          console.log(response.data); // 데이터가 콘솔에 출력됩니다.
-          setStations(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching data: ', error);
-        })
-  }, []);
+    useEffect(() => {
+        if (data) {
+            setStations(data);
+        }
+    }, [data]);
 
     ChartJS.register(ArcElement, Tooltip, Legend);
 
