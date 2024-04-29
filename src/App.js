@@ -25,7 +25,10 @@ function App() {
                       <Route path="/" element={<MainPage/>}/>
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
+                      <Route path="/chatbot" element={<chatbot/>}/>
+
                   </Routes>
+                  <link to="/chatbot"></link>
 
               </div>
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<html>
+<head>
+    <title>내 위치 찾기</title>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=20ac4207d76ea15340bb52ffec56a5e8&libraries=services"></script>
+</head>
+<body>
+<div id="map" style="width:500px;height:400px;"></div>
+<script>
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude,
+                lon = position.coords.longitude;
+
+            var locPosition = new kakao.maps.LatLng(lat, lon),
+                message = '<div style="padding:5px;">You are here!</div>';
+
+            displayMarker(locPosition, message);
+
+            // 서버로 위치 데이터를 전송
+            $.ajax({
+                url: '/get_gas_stations',  // Flask 서버의 엔드포인트 URL
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({latitude: lat, longitude: lon}),
+                success: function(response) {
+                    console.log("주유소 정보:", response);
+                    // 여기에서 주유소 정보를 페이지에 표시하는 로직을 추가
+                },
+                error: function(xhr, status, error) {
+                    alert("Error: " + error);
+                }
+            });
+
+        }, function(error) {
+            console.log("Geolocation failed: " + error.message);
+        });
+    } else {
+        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+            message = 'Geolocation is not supported by your browser.';
+        displayMarker(locPosition, message);
+    }
+
+    function displayMarker(locPosition, message) {
+        var marker = new kakao.maps.Marker({ map: map, position: locPosition });
+        var infowindow = new kakao.maps.InfoWindow({ content: message, removable: true });
+        infowindow.open(map, marker);
+        map.setCenter(locPosition);
+    }
+</script>
+
+</body>
+</html>

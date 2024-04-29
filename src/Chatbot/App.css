@@ -1,0 +1,163 @@
+:root {
+  --primary-color: #4A90E2; /* 주요 색상 */
+  --secondary-color: #FAFAFA; /* 보조 색상 */
+  --accent-color: #FFC107; /* 악센트 색상 */
+  --accent-color-dark: #E6B306; /* 어두운 악센트 색상 */
+  --text-color: #333; /* 기본 텍스트 색상 */
+  --bg-color: #F0F2F5; /* 배경 색상 */
+  --font-family: 'Arial', sans-serif; /* 글꼴 */
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: var(--font-family);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+.App-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 20px 0;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.chat-container {
+  background-color: white;
+  margin: 20px;
+  height: 50vh;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.message {
+  margin: 5px 10px;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  max-width: 100%;
+  word-wrap: break-word; /* 긴 텍스트가 박스를 벗어나는 것을 방지 */
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.user {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+  border-top-right-radius: 2px; /* 대화 풍선 모양 조절 */
+}
+
+.bot {
+  background-color: #f8f8f8;
+  color: black;
+  align-self: flex-start;
+  border-top-left-radius: 2px; /* 대화 풍선 모양 조절 */
+}
+
+button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px ;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: var(--accent-color-dark);
+}
+
+.input-area {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* 버튼 사이의 간격을 20px로 설정 */
+  margin-top: 20px; /* 채팅 박스와의 간격 */
+}
+.App-header {
+  background-color: #282c34;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #FFD700;
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.theme-toggle-button {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #282c34;
+  border: none;
+  color: white;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: white; }
+}
+
+.typing-effect {
+  font-size: calc(10px + 2vmin);
+  color: white;
+  border-right: 2px solid white;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+.theme-toggle-button {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #282c34;
+  border: none;
+  color: white;
+  font-size: 16px;
+  margin-top: 10px;
+}
+:root {
+  --primary-color-dark: #282c34; /* 다크 모드의 주요 색상 */
+  --primary-color-light: #4A90E2; /* 라이트 모드의 주요 색상 */
+  --text-color-dark: #FFFFFF; /* 다크 모드의 텍스트 색상 */
+  --text-color-light: #333; /* 라이트 모드의 텍스트 색상 */
+  --bg-color-dark: #333; /* 다크 모드의 배경 색상 */
+  --bg-color-light: #F0F2F5; /* 라이트 모드의 배경 색상 */
+}
+
+body.dark {
+  --primary-color: var(--primary-color-dark);
+  --text-color: var(--text-color-dark);
+  --bg-color: var(--bg-color-dark);
+}
+
+body.light {
+  --primary-color: var(--primary-color-light);
+  --text-color: var(--text-color-light);
+  --bg-color: var(--bg-color-light);
+}
