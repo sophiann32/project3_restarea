@@ -1,24 +1,37 @@
-import React from 'react';
-import styles from './Header.module.css'
+import React, { useState } from 'react';
+import styles from './Header.module.css';
+import { Link } from 'react-router-dom';
 
-// style={{ textDecoration: 'none'} }
+function Header() {
+    const [isMenuOpen, setMenuOpen] = useState(false);
 
-function Header(){
-    return(
-        <>
-            <div className={styles.nav_wrap}>
+    return (
+        <div className={styles.nav_wrap}>
             <nav className={styles.nav}>
                 <div className={styles.logo}><a href='/'><span>STOP</span>SCAN</a></div>
-                <div className={styles.manu_box}>
+                <button
+                    className={styles.menu_button}
+                    onClick={() => setMenuOpen(!isMenuOpen)}
+                >
+                    &#9776;
+                </button>
+                <div className={`${styles.menu_box} ${isMenuOpen ? styles.menu_open : ''}`}>
                     <ul>
-                        <il><a href='/map'>내 위치</a></il>
-                        <il><a href='/sub'>통계</a></il>
+                        <li><a href='/map'>내 위치</a></li>
+                        <li><a href='/sub'>통계</a></li>
+                        <li>
+                            <Link to="/board">리뷰 게시판</Link>
+                        </li>
                     </ul>
                 </div>
+                <div className={styles.login_box}>
+                    <Link to="/login">
+                        <span>LOGIN</span>
+                    </Link>
+                </div>
             </nav>
-            </div>
-        </>
-    )
+        </div>
+    );
 }
 
 export default Header;

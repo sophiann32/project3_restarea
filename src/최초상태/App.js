@@ -1,6 +1,7 @@
+
 import './App.css';
 import Mymap from "./kako_map/map";
-import elec_info from "./kako_map/elec_station";
+import My_location from "./kako_map/my_location";
 import {useEffect, useState} from "react";
 import {Routes, Route} from 'react-router-dom'
 import axios from "axios";
@@ -10,9 +11,6 @@ import Footer from "./Header_Footer/Footer";
 import MainPage from "./routes/MainPage.js";
 import MapUi from "./routes/MapUi.js";
 import Statistics from "./routes/Statistics";
-
-import Board from "./board/BoardMain"
-import Login from "./board/Login"
 
 function App() {
   return (
@@ -27,15 +25,7 @@ function App() {
                       <Route path="/" element={<MainPage/>}/>
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
-<<<<<<< HEAD
-                      <Route path="/chatbot" element={<chatbot/>}/>
-
-=======
-                      <Route path="/board" element={<Board/>}/>
-                      <Route path="/login" element={<Login/>}/>
->>>>>>> master
                   </Routes>
-                  <link to="/chatbot"></link>
 
               </div>
 

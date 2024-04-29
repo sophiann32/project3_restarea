@@ -41,8 +41,54 @@ function Statistics() {
                             }
                         }> (OpenApi자료) 파이참 oill 데이터 키면 콘솔에 데이터가 한글로 찍힘
                         </button>
+
+
                     </div>
                 </div>
+                {/*<div className={styles.box2}>*/}
+                {/*    <div className={styles.smallbox2}>*/}
+                {/*        <NationalGasPricesChart/>*/}
+                {/*        <div className={styles.smallbox3}>*/}
+                {/*            <EV_ChargingSlots/>*/}
+                {/*            /!*<NearbyGasChart/>*!/*/}
+                {/*        </div>*/}
+
+                {/*            <button onClick={*/}
+                {/*                () => {*/}
+                {/*                    axios.get('http://localhost:5000/oill')*/}
+                {/*                        .then((response) => {*/}
+                {/*                            let shoesCopy = response.data*/}
+                {/*                            return setOilPrice(shoesCopy[0].PRICE)*/}
+                {/*                        })*/}
+                {/*                        .catch(() => {*/}
+                {/*                            console.log('실패함');*/}
+                {/*                        })*/}
+                {/*                }*/}
+                {/*            }>고급휘발유*/}
+                {/*            </button>*/}
+                {/*            고급 휘발유 가격: {oilPrice}*/}
+                {/*            <br/>*/}
+
+                {/*            <button onClick={*/}
+                {/*                () => {*/}
+                {/*                    axios.get('http://localhost:5000/oill')*/}
+                {/*                        .then((response) => {*/}
+                {/*                            let shoesCopy = response.data*/}
+                {/*                            return setOilPrice1(shoesCopy[1].PRICE)*/}
+                {/*                        })*/}
+                {/*                        .catch(() => {*/}
+                {/*                            console.log('실패함');*/}
+                {/*                        })*/}
+                {/*                }*/}
+                {/*            }>휘발유*/}
+                {/*            </button>*/}
+                {/*            휘발유 가격: {oilPrice1}*/}
+
+
+                {/*    </div>*/}
+                {/*</div>*/}
+                {/*<div className={styles.box3}>*/}
+                {/*</div>*/}
                 <div className={styles.box2}>
                     <div className={styles.chartContainer}>
                         <div className={styles.smallbox2}>
@@ -51,6 +97,7 @@ function Statistics() {
                         <div className={styles.smallbox3}>
                             <EV_ChargingSlots/>
                         </div>
+
                         <div className={styles.smallbox2}>
                             <Chart7/>
                         </div>

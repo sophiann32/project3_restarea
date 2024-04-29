@@ -1,0 +1,53 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    cursor: pointer; /* 정렬을 위해 커서 타입 변경 */
+}
+
+/*.post-link {*/
+.postLink {
+    text-decoration: none; /* 기본 링크 스타일 무시 */
+    color: #e81111;
+}
+
+.post-link:hover {
+    text-decoration: underline;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pagingContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.paging-container a {
+    margin: 0 5px;
+}
+
+/* 검색 조건을 가운데 정렬 */
+#searchContainer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#searchContainer label,
+#searchContainer select,
+#searchContainer input[type="text"],
+#searchContainer button {
+    margin-right: 10px;
+}
