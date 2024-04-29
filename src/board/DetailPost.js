@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './detailPost.css'
+import styles from './detailPost.module.css'
 
 import {useParams, Link } from 'react-router-dom'; // React Router가 필요합니다.
 

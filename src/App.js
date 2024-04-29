@@ -20,7 +20,9 @@ import CreatePost from "./board/Create";
 
 // Axios 글로벌 설정
 axios.defaults.baseURL = 'http://localhost:3001';
+// axios.defaults.withCredentials = false;
 axios.defaults.withCredentials = true;
+
 
 
 function App() {

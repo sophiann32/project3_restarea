@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate   } from 'react-router-dom';
-// import './create.css'
+import styles from'./create.module.css'
 
 
 function CreatePost(props) {

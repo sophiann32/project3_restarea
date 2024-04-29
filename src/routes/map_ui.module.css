@@ -83,6 +83,7 @@
 .sortButtons {
     display: flex;
     /*justify-content: space-between;*/
+    width: 200px;
     margin-bottom: 10px;
 }
 
