@@ -55,6 +55,7 @@ function RestAreaDetail() {
                     }
                 })
                 .catch(error => console.error('Error fetching data: ', error));
+            setZoomLevel(12);  // 노선이 변경될 때 마다 줌 레벨을 12로 설정
         }
     }, [selectedRoute]);
 
