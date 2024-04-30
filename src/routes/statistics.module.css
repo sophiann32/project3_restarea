@@ -62,8 +62,8 @@
     margin-bottom: 10px;
     padding: 10px 17px;
     display: block;
-    border: 1px solid rgba(93, 89, 89, 0.45);
-}
+    /*border: 1px solid rgba(93, 89, 89, 0.45);*/
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;}
 
 .box3{
     padding: 1rem;
@@ -81,8 +81,8 @@
     display: block;
     border: 1px solid #E6E9ED;
     width: 500px;
-    border: 1px solid rgba(93, 89, 89, 0.45);
-}
+    /*border: 1px solid rgba(93, 89, 89, 0.45);*/
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;}
 /* 모바일 화면에서 적용되는 스타일 */
 @media screen and (max-width: 768px) {
     .chartContainer {
