@@ -10,7 +10,7 @@ th, td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #fdbfbf;
     width: 200px;
     text-align: center;
 }
@@ -81,7 +81,7 @@ th {
     text-align: center;
 }
 
-/* 버튼 스타일 정의 */
+ 버튼 스타일 정의
 .button {
     display: inline-block;
     background-color: #4CAF50;

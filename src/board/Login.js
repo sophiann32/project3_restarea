@@ -1,5 +1,5 @@
 import {React,useState} from 'react';
-import './login.css'; // CSS 파일을 import 합니다.
+import styles from './login.module.css'; // CSS 파일을 import 합니다.
 import axios from 'axios'
 import { Link, useNavigate   } from 'react-router-dom';
 
