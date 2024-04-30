@@ -77,7 +77,6 @@ function App() {
                         return ''; // 타이틀을 비우거나 비활성화
                     },
                     label: function (context) {
-                        // 여기서는 context.label을 반환하는 대신 원하는 텍스트를 직접 반환할 수 있습니다.
                         return `${context.label.split(" : ")[0]}: ${context.parsed.y}원`;
                         // return `${context.parsed.y}원`;
                     }

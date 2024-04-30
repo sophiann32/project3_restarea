@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './statistics.module.css';
 import axios from "axios";
-import NationalGasPricesChart from './NationalGasPricesChart.js';
-import NearbyGasChart from './NearbyGasChart.js';
-import EV_ChargingSlots from './EV_ChargingSlots.js';
-import Chart7 from "./Chart7";
+import NationalGasPricesChart from './Chart/NationalGasPricesChart.js';
+import NearbyGasChart from './Chart/NearbyGasChart.js';
+import EV_ChargingSlots from './Chart/EV_ChargingSlots.js';
+import Chart7 from "./Chart/Chart7";
 
 function Statistics() {
     const [locationData, setLocationData] = useState(null);

@@ -65,6 +65,16 @@ function ChartDonut(props) {
             ],
         });
     }, [stations]);
+
+    const legendTitle = {
+        display: true,
+        text: '내 주변 전기차 충전 가능 한 곳',
+        font: {
+            size: 16, // 폰트 크기 설정
+            weight: 'bold', // 폰트 굵기 설정
+        }
+
+    };
     const handleChartClick = (event, elements) => {
         if (!elements || elements.length === 0) {
             return; // elements가 undefined이거나 길이가 0이면 함수 종료
@@ -78,16 +88,6 @@ function ChartDonut(props) {
             window.open('http://localhost:3000/map', '_blank');
         }
     };
-    const legendTitle = {
-        display: true,
-        text: '내 주변 전기차 충전 가능 한 곳',
-        padding: 20, // 제목과 범례 사이의 간격 조절
-        font: {
-            size: 16, // 폰트 크기 설정
-            weight: 'bold', // 폰트 굵기 설정
-        }
-    };
-
     const options = {
         plugins: {
             tooltip: {
@@ -101,12 +101,14 @@ function ChartDonut(props) {
                     }
                 }
             },
+            // labels:{   padding: 20},
             legend: {
+
                 position: 'top',
                 title: legendTitle // 범례 제목 적용
             },
         },
-        onClick: handleChartClick,
+        onClick: handleChartClick
     };
     useEffect(() => {
         const interval = setInterval(() => {

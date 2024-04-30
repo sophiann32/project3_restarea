@@ -96,10 +96,10 @@ function ChartLine() {
             'y': {
                 display: true,
                 position: 'left',
-                Min: 1300, // 데이터에 따라 조정 가능
-                suggestedMax: 2000, // 데이터의 최대값에 따라 조정 가능
+                Min: 1300,
+                suggestedMax: 2000,
                 ticks: {
-                    stepSize: 100, // 데이터의 범위에 따라 적절한 틱 간격 설정
+                    stepSize: 100,
                     callback: function (value) {
                         return value + '원';
                     }
