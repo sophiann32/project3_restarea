@@ -11,7 +11,10 @@ function RestArea() {
     const [modalOpen, setModalOpen] = useState(false);
 
     const normalizeName = (name) => {
-        return name.replace(/휴게소$/, '').trim();
+        return name.replace(/휴게소|주유소|정류장|터미널/g, '') // 여러 가능한 접미사 제거
+            // .replace(/[^\w\s]|_/g, '') // 특수문자 제거
+            // .replace(/\s+/g, ' ') // 중복 공백 제거
+            .trim() // 앞뒤 공백 제거
     };
 
     useEffect(() => {
@@ -19,33 +22,57 @@ function RestArea() {
             axios.get(`http://localhost:5000/restareas?route=${selectedRoute}`)
                 .then(response => {
                     const areas = response.data;
-                    return axios.get(`http://localhost:5000/facilities?routeNm=${selectedRoute}`)
-                        .then(response => {
-                            const facilityData = response.data;
-                            // facilityData.list가 배열인지 확인
-                            if (!facilityData || !Array.isArray(facilityData.list)) {
-                                console.error('Expected facilityData.list to be an array, but received:', facilityData);
-                                return; // 배열이 아니면 함수 종료
-                            }
-                            // facilities 데이터를 restAreas에 매핑
-                            const updatedAreas = areas.map(area => {
-                                const facility = facilityData.list.find(f => normalizeName(f.serviceAreaName) === normalizeName(area.휴게소명));
-                                return {
-                                    ...area,
-                                    convenience: facility ? facility.convenience : '정보 없음'
-                                };
-                            });
-                            setRestAreas(updatedAreas);
-                        });
+                    // 브랜드 정보 가져오기
+                    axios.get(`http://localhost:5000/restbrands?routeNm=${selectedRoute}`)
+                        .then(brandResponse => {
+                            const brandData = brandResponse.data.list; // 배열로 가정
+                            // 연료 가격 정보 가져오기
+                            axios.get(`http://localhost:5000/fuelprices?routeNm=${selectedRoute}`)
+                                .then(fuelResponse => {
+                                    const fuelData = fuelResponse.data.list; // 배열로 가정
+                                    console.log('연로데이터',fuelData);
+                                    // facilities 정보 가져오기
+                                    axios.get(`http://localhost:5000/facilities?routeNm=${selectedRoute}`)
+                                        .then(facilityResponse => {
+                                            const facilityData = facilityResponse.data;
+                                            if (!facilityData || !Array.isArray(facilityData.list)) {
+                                                console.error('Expected facilityData.list to be an array, but received:', facilityData);
+                                                return; // 배열이 아니면 함수 종료
+                                            }
+                                            // 데이터 매핑 및 저장
+                                            const updatedAreas = areas.map(area => {
+                                                const normalizedAreaName = normalizeName(area.휴게소명);
+                                                const facility = facilityData.list.find(f => normalizeName(f.serviceAreaName) === normalizedAreaName);
+                                                const brand = brandData.find(b => normalizeName(b.stdRestNm) === normalizedAreaName);
+                                                const fuel = fuelData.find(f => normalizeName(f.serviceAreaName) === normalizedAreaName);
+                                                return {
+                                                    ...area,
+                                                    convenience: facility ? facility.convenience : '정보 없음',
+                                                    brandInfo: brand ? {
+                                                        brdName: brand.brdName,
+                                                        stime: brand.stime,
+                                                        etime: brand.etime,
+                                                        brdDesc: brand.brdDesc,
+                                                        lsttmAltrDttm: brand.lsttmAltrDttm
+                                                    } : null,
+                                                    fuelPrices: fuel ? {
+                                                        diselPrice: fuel.diselPrice.replace('원', ''),
+                                                        gasolinePrice: fuel.gasolinePrice.replace('원', ''),
+                                                        lpgPrice: fuel.lpgPrice.replace('원', ''),
+                                                        telNo: fuel.telNo
+                                                    } : null
+                                                };
+                                            });
+                                            setRestAreas(updatedAreas);
+                                        });
+                                });
+                        })
                 })
                 .catch(error => console.error('Error fetching data: ', error));
         } else {
             setRestAreas([]);
         }
     }, [selectedRoute]);
-
-
-
     const handleAreaClick = (area) => {
         setSelectedRestArea(area);
         setModalOpen(true);
@@ -121,11 +148,26 @@ function RestArea() {
                 <Modal isOpen={modalOpen} onClose={handleCloseModal}>
                     <div>
                         <h2>{selectedRestArea ? selectedRestArea.휴게소명 : '휴게소 이름'}</h2>
-                        <p>위치: {selectedRestArea ? selectedRestArea.위치 : '휴게소 위치 정보'}</p>
-                        <p>서비스: {selectedRestArea ? selectedRestArea.서비스 : '기본 서비스 정보'}</p>
-                        <p>연락처: {selectedRestArea ? selectedRestArea.연락처 : '연락처 정보'}</p>
+                        {selectedRestArea && selectedRestArea.brandInfo && (
+                            <>
+                                <h3>브랜드 정보: {selectedRestArea.brandInfo.brdName}</h3>
+                                <p>영업시간: {`${selectedRestArea.brandInfo.stime} ~ ${selectedRestArea.brandInfo.etime}`}</p>
+                                <p>브랜드 소개: {selectedRestArea.brandInfo.brdDesc}</p>
+                                <p>최종 수정 일시: {selectedRestArea.brandInfo.lsttmAltrDttm}</p>
+                            </>
+                        )}
+                        {selectedRestArea && selectedRestArea.fuelPrices && (
+                            <>
+                                <h3>연료 가격 정보</h3>
+                                <p>휘발유 가격: {selectedRestArea.fuelPrices.gasolinePrice}원</p>
+                                <p>경유 가격: {selectedRestArea.fuelPrices.diselPrice}원</p>
+                                <p>LPG 가격: {selectedRestArea.fuelPrices.lpgPrice !== 'X' ? `${selectedRestArea.fuelPrices.lpgPrice}원` : 'LPG 미판매'}</p>
+                                <p>전화번호: {selectedRestArea.fuelPrices.telNo}</p>
+                            </>
+                        )}
                     </div>
                 </Modal>
+
                 <section className={styles.restAreaMap}>
                     <RestAreaDetail selectedRoute={selectedRoute} restAreas={restAreas}/>
                 </section>
