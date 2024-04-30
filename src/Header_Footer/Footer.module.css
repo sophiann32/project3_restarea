@@ -1,10 +1,42 @@
 .footer{
     /* % 부모가 자식 width 설정가능  */
     /* % 부모가 자식 height 설정가능  */
-    background-color: #b566e1;
+    background-color: #7c7c7c;
     width: 100%;
-    height: 300px;
+    height: 200px;
+    text-align: center;
+    padding-top: 80px;
+    margin: 0 auto;
+}
+.footer_div1{
+    font-weight: bold;
 
+}
+.footer_ul{
+    /*height: 30px;*/
+    list-style: none;
+    display: flex;
+    /*margin: 0 auto;*/
+    width: fit-content;
+    /*background-color: #fff;*/
+    margin: 15px auto;
+}
+.footer_ul{
+
+    /*margin: 0 auto; !* 좌우 여백을 자동으로 설정하여 가운데 정렬 *!*/
+    width: fit-content; /* 리스트의 너비를 내용에 맞게 조절 */
+}
+.footer_ul li{
+    border-left: 3px solid #000000;
+    text-align: center;
+    font-size: 20px;
+
+    padding-left: 15px;
+    padding-right: 15px;
+    /*height: 30px;*/
+}
+li:first-child{
+    border-left: none;
 }
 
 @media (max-width: 1300px){   /*0 부터 1220까지 (노트북) */
