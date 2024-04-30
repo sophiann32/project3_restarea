@@ -29,7 +29,17 @@ function Board({ userRealName, posts, startPage, currentPage, endPage, totalPage
 
     ////////
     useEffect(()=>{
-        axios.get('http://localhost:3001/boardMain' )
+        // const urlParams  = new URLSearchParams(window.location.search);
+        // const reqData ={
+        //     params: {
+        //         searchType : urlParams.get("searchType"),
+        //         searchInput : urlParams.get("searchInput")
+        //     }
+        // }
+
+        // console.log(reqData)
+        // axios.get('http://localhost:3001/boardMain', reqData)
+        axios.get('http://localhost:3001/boardMain')
             .then(res=>{
                 console.log('데이터확인 : '+ res.data.currentPage)
                 console.log(res)

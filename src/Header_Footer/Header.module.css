@@ -35,7 +35,7 @@
     display: flex;
     align-items: center;
 }
-ul {
+.menu_box ul {
     list-style: none;
     display: flex;
     padding: 0;
@@ -43,7 +43,7 @@ ul {
     margin-right: 45px;
 }
 
-li {
+.menu_box ul li {
     font-size: 15px;
     margin-right: 25px;
     line-height: 70px;
