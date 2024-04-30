@@ -25,6 +25,7 @@ function ChartLine() {
         Tooltip,
         LineController,
         BarController
+
     );
 
     const [oilData, setOilData] = useState({});
@@ -55,7 +56,14 @@ function ChartLine() {
             // 'K015': '자동차부탄',
         };
         const excludedOilTypes = ['K015']; // 자동차부탄 제외
-        const labels = oilData['B027'].map(item => item.date);
+        const formatDate = (dateString) => {
+            const year = dateString.slice(0, 4);
+            const month = dateString.slice(4, 6);
+            const day = dateString.slice(6, 8);
+            return `${month}/${day}`;
+        };
+        const labels = oilData['B027'].map(item => formatDate(item.date));
+
         const datasets = Object.keys(oilData)
             .filter(oilType => !excludedOilTypes.includes(oilType))
             .map((label,index) => {
@@ -86,7 +94,9 @@ function ChartLine() {
         }
     };
 
+
     const options = {
+
         plugins: {
             legend: {
                 title: legendTitle,
@@ -94,12 +104,15 @@ function ChartLine() {
         },
         scales: {
             'y': {
+                beginAtZero: false,
                 display: true,
                 position: 'left',
-                Min: 1300,
-                suggestedMax: 2000,
+                min: Math.min(...chartData.datasets.map(dataset => dataset.minValue)),
+                max: Math.max(...chartData.datasets.map(dataset => dataset.maxValue)+50),
                 ticks: {
-                    stepSize: 100,
+                    min: Math.min(...chartData.datasets.map(dataset => dataset.minValue)),
+                    max: Math.max(...chartData.datasets.map(dataset => dataset.maxValue)) + 50,
+                    stepSize: 1,
                     callback: function (value) {
                         return value + '원';
                     }
@@ -109,10 +122,12 @@ function ChartLine() {
     };
 
     return (
+
         <div style={{width: '100%', maxWidth: '400px', margin: 'auto'}}>
-            <Bar data={chartData} options={options} width={400} height={460} />
+
+            <Bar data={chartData} id="myChart" options={options} width={400} height={460}/>
         </div>
     );
 }
 
-    export default ChartLine;
+export default ChartLine;
