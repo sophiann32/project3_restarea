@@ -19,9 +19,9 @@ function Header(props) {
                     <ul>
                         <li><a href='/map'>내 위치</a></li>
                         <li><a href='/sub'>통계</a></li>
-                        <li>
+                        <li><a href='/restArea'>휴게소</a></li>
                             <Link to="/board">리뷰 게시판</Link>
-                        </li>
+
                     </ul>
                 </div>
                 <div className={styles.login_box}>
