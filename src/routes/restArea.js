@@ -22,57 +22,63 @@ function RestArea() {
             axios.get(`http://localhost:5000/restareas?route=${selectedRoute}`)
                 .then(response => {
                     const areas = response.data;
-                    // 브랜드 정보 가져오기
-                    axios.get(`http://localhost:5000/restbrands?routeNm=${selectedRoute}`)
-                        .then(brandResponse => {
-                            const brandData = brandResponse.data.list; // 배열로 가정
-                            // 연료 가격 정보 가져오기
-                            axios.get(`http://localhost:5000/fuelprices?routeNm=${selectedRoute}`)
-                                .then(fuelResponse => {
-                                    const fuelData = fuelResponse.data.list; // 배열로 가정
-                                    console.log('연로데이터',fuelData);
-                                    // facilities 정보 가져오기
-                                    axios.get(`http://localhost:5000/facilities?routeNm=${selectedRoute}`)
-                                        .then(facilityResponse => {
-                                            const facilityData = facilityResponse.data;
-                                            if (!facilityData || !Array.isArray(facilityData.list)) {
-                                                console.error('Expected facilityData.list to be an array, but received:', facilityData);
-                                                return; // 배열이 아니면 함수 종료
-                                            }
-                                            // 데이터 매핑 및 저장
-                                            const updatedAreas = areas.map(area => {
-                                                const normalizedAreaName = normalizeName(area.휴게소명);
-                                                const facility = facilityData.list.find(f => normalizeName(f.serviceAreaName) === normalizedAreaName);
-                                                const brand = brandData.find(b => normalizeName(b.stdRestNm) === normalizedAreaName);
-                                                const fuel = fuelData.find(f => normalizeName(f.serviceAreaName) === normalizedAreaName);
-                                                return {
-                                                    ...area,
-                                                    convenience: facility ? facility.convenience : '정보 없음',
-                                                    brandInfo: brand ? {
-                                                        brdName: brand.brdName,
-                                                        stime: brand.stime,
-                                                        etime: brand.etime,
-                                                        brdDesc: brand.brdDesc,
-                                                        lsttmAltrDttm: brand.lsttmAltrDttm
-                                                    } : null,
-                                                    fuelPrices: fuel ? {
-                                                        diselPrice: fuel.diselPrice.replace('원', ''),
-                                                        gasolinePrice: fuel.gasolinePrice.replace('원', ''),
-                                                        lpgPrice: fuel.lpgPrice.replace('원', ''),
-                                                        telNo: fuel.telNo
-                                                    } : null
-                                                };
-                                            });
-                                            setRestAreas(updatedAreas);
-                                        });
-                                });
-                        })
-                })
-                .catch(error => console.error('Error fetching data: ', error));
+                    // 연료, 브랜드, 음식 정보 동시에 가져오기
+                    Promise.all([
+                        axios.get(`http://localhost:5000/restbrands?routeNm=${selectedRoute}`),
+                        axios.get(`http://localhost:5000/fuelprices?routeNm=${selectedRoute}`),
+                        axios.get(`http://localhost:5000/facilities?routeNm=${selectedRoute}`),
+                        axios.get(`http://localhost:5000/bestfoods?routeNm=${selectedRoute}`)
+                    ]).then(([brandResponse, fuelResponse, facilityResponse, bestFoodResponse]) => {
+                        const brandData = brandResponse.data.list;
+                        const fuelData = fuelResponse.data.list;
+                        const facilityData = facilityResponse.data;
+                        const bestFoodData = bestFoodResponse.data.list;
+
+                        if (!facilityData || !Array.isArray(facilityData.list)) {
+                            console.error('Expected facilityData.list to be an array, but received:', facilityData);
+                            return;
+                        }
+
+                        const updatedAreas = areas.map(area => {
+                            const normalizedAreaName = normalizeName(area.휴게소명);
+                            const facility = facilityData.list.find(f => normalizeName(f.serviceAreaName) === normalizedAreaName);
+                            const brand = brandData.find(b => normalizeName(b.stdRestNm) === normalizedAreaName);
+                            const fuel = fuelData.find(f => normalizeName(f.serviceAreaName) === normalizedAreaName);
+                            const bestFoods = bestFoodData.filter(f => normalizeName(f.stdRestNm) === normalizedAreaName);
+
+                            return {
+                                ...area,
+                                convenience: facility ? facility.convenience : '정보 없음',
+                                brandInfo: brand ? {
+                                    brdName: brand.brdName,
+                                    stime: brand.stime,
+                                    etime: brand.etime,
+                                    brdDesc: brand.brdDesc,
+                                    lsttmAltrDttm: brand.lsttmAltrDttm
+                                } : null,
+                                fuelPrices: fuel ? {
+                                    diselPrice: fuel.diselPrice.replace('원', ''),
+                                    gasolinePrice: fuel.gasolinePrice.replace('원', ''),
+                                    lpgPrice: fuel.lpgPrice.replace('원', ''),
+                                    telNo: fuel.telNo
+                                } : null,
+                                bestFoods: bestFoods.map(food => ({
+                                    foodNm: food.foodNm,
+                                    foodCost: food.foodCost,
+                                    lsttmAltrDttm: food.lsttmAltrDttm
+                                }))
+                            };
+                        });
+                        setRestAreas(updatedAreas);
+                    }).catch(error => {
+                        console.error('Error fetching data: ', error);
+                    });
+                });
         } else {
             setRestAreas([]);
         }
     }, [selectedRoute]);
+
     const handleAreaClick = (area) => {
         setSelectedRestArea(area);
         setModalOpen(true);
@@ -163,6 +169,14 @@ function RestArea() {
                                 <p>경유 가격: {selectedRestArea.fuelPrices.diselPrice}원</p>
                                 <p>LPG 가격: {selectedRestArea.fuelPrices.lpgPrice !== 'X' ? `${selectedRestArea.fuelPrices.lpgPrice}원` : 'LPG 미판매'}</p>
                                 <p>전화번호: {selectedRestArea.fuelPrices.telNo}</p>
+                            </>
+                        )}
+                        {selectedRestArea && selectedRestArea.bestFoods && selectedRestArea.bestFoods.length > 0 && (
+                            <>
+                                <h3>인기 음식</h3>
+                                {selectedRestArea.bestFoods.map((food, index) => (
+                                    <p key={index}>{food.foodNm} - {food.foodCost}원 (업데이트: {food.lsttmAltrDttm})</p>
+                                ))}
                             </>
                         )}
                     </div>
