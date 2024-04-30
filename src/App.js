@@ -15,7 +15,7 @@ import Board from "./board/BoardMain"
 import Login from "./board/Login"
 import DetailPost from "./board/DetailPost"
 import CreatePost from "./board/Create";
-
+import RestArea from "./routes/restArea";
 
 
 // Axios 글로벌 설정
@@ -44,6 +44,7 @@ function App() {
                       <Route path="/" element={<MainPage/>}/>
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
+                      <Route path="/restArea" element={<RestArea/>}/>
                       <Route path="/board" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} loginId={loginId} setLoginId={setLoginId}
