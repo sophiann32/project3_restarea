@@ -1,15 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './restArea.module.css';
+import axios from 'axios';
 import RestAreaDetail from "../kako_map/restAreaDetail";
+import Modal from '../Modal/Modal';
 
 function RestArea() {
     const [selectedRoute, setSelectedRoute] = useState('');
+    const [restAreas, setRestAreas] = useState([]);
+    const [selectedRestArea, setSelectedRestArea] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const normalizeName = (name) => {
+        return name.replace(/휴게소$/, '').trim();
+    };
+
+    useEffect(() => {
+        if (selectedRoute) {
+            axios.get(`http://localhost:5000/restareas?route=${selectedRoute}`)
+                .then(response => {
+                    const areas = response.data;
+                    return axios.get(`http://localhost:5000/facilities?routeNm=${selectedRoute}`)
+                        .then(response => {
+                            const facilityData = response.data;
+                            // facilityData.list가 배열인지 확인
+                            if (!facilityData || !Array.isArray(facilityData.list)) {
+                                console.error('Expected facilityData.list to be an array, but received:', facilityData);
+                                return; // 배열이 아니면 함수 종료
+                            }
+                            // facilities 데이터를 restAreas에 매핑
+                            const updatedAreas = areas.map(area => {
+                                const facility = facilityData.list.find(f => normalizeName(f.serviceAreaName) === normalizeName(area.휴게소명));
+                                return {
+                                    ...area,
+                                    convenience: facility ? facility.convenience : '정보 없음'
+                                };
+                            });
+                            setRestAreas(updatedAreas);
+                        });
+                })
+                .catch(error => console.error('Error fetching data: ', error));
+        } else {
+            setRestAreas([]);
+        }
+    }, [selectedRoute]);
+
+
+
+    const handleAreaClick = (area) => {
+        setSelectedRestArea(area);
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
+
 
     return (
         <>
             <div id={styles.main}>
                 <div className={styles.restAreaTab}>
                     <select value={selectedRoute} onChange={e => setSelectedRoute(e.target.value)}>
+                        <option value="">노선을 선택하세요</option>
                         <option value="">노선을 선택하세요</option>
                         <option value="동해선">동해선</option>
                         <option value="중부내륙선">중부내륙선</option>
@@ -58,10 +110,24 @@ function RestArea() {
                         <option value="서울양양선(서울-춘천)">서울양양선(서울-춘천)</option>
                         <option value="서울외곽순환선">서울외곽순환선</option>
                     </select>
+                    <ul>
+                        {restAreas.map((area, index) => (
+                            <li key={index} className={styles.restAreaItem} onClick={() => handleAreaClick(area)}>
+                                {`${area.휴게소명} - ${area.convenience}`}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
+                <Modal isOpen={modalOpen} onClose={handleCloseModal}>
+                    <div>
+                        <h2>{selectedRestArea ? selectedRestArea.휴게소명 : '휴게소 이름'}</h2>
+                        <p>위치: {selectedRestArea ? selectedRestArea.위치 : '휴게소 위치 정보'}</p>
+                        <p>서비스: {selectedRestArea ? selectedRestArea.서비스 : '기본 서비스 정보'}</p>
+                        <p>연락처: {selectedRestArea ? selectedRestArea.연락처 : '연락처 정보'}</p>
+                    </div>
+                </Modal>
                 <section className={styles.restAreaMap}>
-                    {/* RestAreaDetail에 선택된 노선명을 props로 전달 */}
-                    <RestAreaDetail selectedRoute={selectedRoute} />
+                    <RestAreaDetail selectedRoute={selectedRoute} restAreas={restAreas}/>
                 </section>
             </div>
         </>
@@ -69,3 +135,4 @@ function RestArea() {
 }
 
 export default RestArea;
+

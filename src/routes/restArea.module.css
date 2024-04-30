@@ -16,8 +16,43 @@
 .restAreaTab{
     background: white;
     grid-area: restAreaTab;
-
+    overflow-y: auto; /* 내용이 많을 경우 스크롤바 표시 */
 }
+
+.restAreaTab::-webkit-scrollbar {
+    width: 20px; /* 스크롤바 너비 */
+}
+
+
+
+
 .restAreaMap{
     grid-area: restAreaMap;
+}
+
+
+/*.restAreaList {*/
+/*    list-style: none;*/
+/*    padding: 0;*/
+/*    margin: 20px 0;*/
+/*    background-color: #f0f0f0;*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 8px;*/
+/*}*/
+
+.restAreaItem {
+    list-style-type: none;
+    padding:  20px;
+    margin-right: 45px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.restAreaItem:last-child {
+    border-bottom: none;
+}
+
+.restAreaItem:hover {
+    background-color: #e9e9e9;
 }

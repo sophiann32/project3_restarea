@@ -1,43 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import Modal from '../Modal/Modal';
 
-
-function Modal({ isOpen, onClose, children }) {
-    if (!isOpen) return null;
-
-    return (
-        <div style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: 'white',
-            padding: '20px',
-            zIndex: 1000,
-            borderRadius: '8px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            width: '300px'
-        }}>
-            <button onClick={onClose} style={{
-                position: 'absolute',
-                right: '130px',
-                top: '180px',
-                width: '80px',
-                borderRadius: '5px',
-                fontSize: '24px',
-                cursor: 'pointer',
-            }}>
-
-            </button>
-            {children}
-        </div>
-    );
-}
-
-
-
-function RestAreaDetail({ selectedRoute }) {  // props로 selectedRoute 받음
+// function Modal({ isOpen, onClose, children }) {
+//     if (!isOpen) return null;
+//
+//     return (
+//         <div style={{
+//             position: 'fixed',
+//             top: '50%',
+//             left: '50%',
+//             transform: 'translate(-50%, -50%)',
+//             backgroundColor: 'white',
+//             padding: '20px',
+//             zIndex: 1000,
+//             borderRadius: '8px',
+//             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+//             width: '300px'
+//         }}>
+//             <button onClick={onClose} style={{
+//                 position: 'absolute',
+//                 right: '130px',
+//                 top: '180px',
+//                 width: '80px',
+//                 borderRadius: '5px',
+//                 fontSize: '24px',
+//                 cursor: 'pointer',
+//             }}>
+//
+//             </button>
+//             {children}
+//         </div>
+//     );
+// }
+//
+function RestAreaDetail({ selectedRoute }) {
     const [position, setPosition] = useState({ lat: 36.5, lng: 127.5 });
     const [zoomLevel, setZoomLevel] = useState(12);
     const [restAreas, setRestAreas] = useState([]);
@@ -59,9 +57,6 @@ function RestAreaDetail({ selectedRoute }) {  // props로 selectedRoute 받음
         }
     }, [selectedRoute]); // selectedRoute 변경 시 업데이트
 
-    // 여기서부터는 이전 코드와 동일
-    const mapStyle = { width: "100%", height: "900px" };
-
     const handleMarkerClick = area => {
         setSelectedRestArea(area);
         setModalOpen(true);
@@ -69,7 +64,7 @@ function RestAreaDetail({ selectedRoute }) {  // props로 selectedRoute 받음
 
     return (
         <div>
-            <Map center={position} level={zoomLevel} style={mapStyle}>
+            <Map center={position} level={zoomLevel} style={{ width: "100%", height: "900px" }}>
                 {restAreas.map((area, index) => (
                     <MapMarker key={index} position={{ lat: area.위도, lng: area.경도 }}
                                onClick={() => handleMarkerClick(area)}>
@@ -81,20 +76,9 @@ function RestAreaDetail({ selectedRoute }) {  // props로 selectedRoute 받음
                 <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
                     <h2>{selectedRestArea.휴게소명}</h2>
                     <p>전화번호: {selectedRestArea.휴게소전화번호}</p>
-                    <div style={{position:'relative',bottom:'110px',left:'80px',display:'flex',  justifyContent: 'center' }}>
-                    {selectedRestArea.주유소유무 === 'Y' && (
-                        <p><img src="/img/fuel_icon.png" alt="주유소"    style={{ width: '45px', height: '45px',marginRight:'5px'}}  /> </p>
-                    )}
-                    {selectedRestArea.LPG충전소유무 === 'Y' && (
-                        <p><img src="/img/lpg_icon.png" alt="LPG 충전소" style={{ width: '45px', height: '45px',marginRight:'5px' }}/></p>
-                    )}
-                    {selectedRestArea.쉼터유무 === 'Y' && (
-                        <p><img src="/img/shelter_icon.png" alt="쉼터" style={{ width: '45px', height: '45px' }} /> </p>
-                    )}
-                        </div>
+                    {/* Additional info */}
                 </Modal>
             )}
-
         </div>
     );
 }
