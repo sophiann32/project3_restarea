@@ -28,8 +28,7 @@ function App() {
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
                       <Route path="/chatbot" element={<chatbot/>}/>
-
-=======
+                      
                       <Route path="/board" element={<Board/>}/>
                       <Route path="/login" element={<Login/>}/>
 

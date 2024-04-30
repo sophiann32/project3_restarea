@@ -18,8 +18,7 @@ body {
 
 .App-header {
   background-color: var(--primary-color);
-  color: white;
-  padding: 20px 0;
+  padding: 10px 0;
   width: 100%;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
@@ -71,12 +70,12 @@ button {
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
-  margin: 10px ;
   transition: background-color 0.3s;
 }
 
 button:hover {
   background-color: var(--accent-color-dark);
+  transform: scale(1.1); /* 호버 시 버튼 확대 */
 }
 
 .input-area {
@@ -86,15 +85,14 @@ button:hover {
   margin-top: 20px; /* 채팅 박스와의 간격 */
 }
 .App-header {
-  background-color: #282c34;
-  min-height: 20vh;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 0;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: #FFD700;
-  animation: fadeIn 2s;
+  justify-content: space-between; /* 항목들을 양 끝으로 정렬 */
+  align-items: center; /* 중앙 정렬 */
 }
 
 @keyframes fadeIn {
@@ -103,13 +101,33 @@ button:hover {
 }
 
 .theme-toggle-button {
-  cursor: pointer;
-  padding: 10px 20px;
-  background-color: #282c34;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;  /* 너비 줄이기 */
+  height: 40px; /* 높이 줄이기 */
+  background-color: var(--accent-color);
   border: none;
   color: white;
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 10px; /* 글자 크기 줄이기 */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin: 10px; /* 여백 추가 */
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--accent-color-dark);
+  transform: scale(1.1);
+}
+
+.toggle-label, .toggle-state {
+  margin: 0; /* 기본 마진 제거 */
+  line-height: 1; /* 줄 간격 기본값 */
+}
+
+.toggle-label {
+  font-weight: bold; /* 라벨을 굵게 표시 */
 }
 
 @keyframes typing {
