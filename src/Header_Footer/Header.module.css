@@ -67,7 +67,21 @@ li a {
     color: #555;
 }
 
+/* 헤더 전체 스타일에 영향을 미치는 클래스 추가 */
+.nav_wrap.restAreaActive {
+    background-color: white;
+}
 
+.nav_wrap.restAreaActive .logo a,
+.nav_wrap.restAreaActive li a,
+.nav_wrap.restAreaActive .login_box a {
+    color: black; /* 검정색으로 변경 */
+}
+
+/* 활성 링크에 대한 스타일 */
+.nav_wrap.restAreaActive .active {
+    color: black;
+}
 
 
 
