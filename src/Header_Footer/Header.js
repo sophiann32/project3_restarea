@@ -19,6 +19,7 @@ function Header(props) {
                 </button>
                 <div className={`${styles.menu_box} ${isMenuOpen ? styles.menu_open : ''}`}>
                     <ul>
+
                         <li><NavLink to="/map">내 위치</NavLink></li>
                         <li><NavLink to="/sub">통계</NavLink></li>
                         <li><NavLink to="/restArea">휴게소</NavLink></li>
@@ -30,7 +31,7 @@ function Header(props) {
                         <NavLink to="/login">
                             <span>LOGIN</span>
                         </NavLink>
-                    }
+
                 </div>
             </nav>
         </div>
