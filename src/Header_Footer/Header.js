@@ -20,13 +20,17 @@ function Header(props) {
                         <li><a href='/map'>내 위치</a></li>
                         <li><a href='/sub'>통계</a></li>
                         <li><a href='/restArea'>휴게소</a></li>
-                            <Link to="/board">리뷰 게시판</Link>
+                        <li><Link to="/map">내 위치</Link></li>
+                        <li><Link to="/sub">통계</Link></li>
+                        <li><Link to="/restArea">휴게소</Link></li>
+                        <li><Link to="/board">리뷰 게시판</Link></li>
+
 
                     </ul>
                 </div>
                 <div className={styles.login_box}>
                     {props.isLoggedIn == true ? <div>반갑습니다.{props.userRealName}</div> :
-                    <Link to="/login">
+                        <Link to="/login">
                         <span>LOGIN</span>
                     </Link>
                     }
