@@ -31,6 +31,7 @@ function Header(props) {
                         <NavLink to="/login">
                             <span>LOGIN</span>
                         </NavLink>
+                    }
 
                 </div>
             </nav>
