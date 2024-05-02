@@ -89,8 +89,8 @@ li a {
 @media (max-width: 1300px){   /*0 부터 1220까지 (노트북) */
     /*1200으로 딱맞추면 중간에 살짝 스크롤이 생김*/
     .nav {
-        max-width: 100%;
-        padding: 0 10px;
+        /*max-width: 100%;*/
+        /*padding: 0 10px;*/
     }
 }
 @media (max-width: 768px){   /*0 부터 768까지  (테블릿) */
@@ -103,14 +103,14 @@ li a {
     }
 
     .menu_box {
-        position: absolute;
-        top: 100px;
-        left: 0;
-        right: 0;
-        background-color: #86bcff;
-        flex-direction: column;
-        align-items: center;
-        display: none;
+        /*position: absolute;*/
+        /*top: 100px;*/
+        /*left: 0;*/
+        /*right: 0;*/
+        /*background-color: #86bcff;*/
+        /*flex-direction: column;*/
+        /*align-items: center;*/
+        /*display: none;*/
     }
 
     .menu_box.menu_open {
@@ -125,4 +125,20 @@ li a {
         width: 100%;
         text-align: center;
     }
+    /*/////*/
+    .nav{
+        height: 500px;
+        display: block;
+    }
+    .logo{
+        display: block;
+    }
+
+    .login_box{
+        display: block;
+    }
+    .menu_open{
+        display: none;
+    }
+
 }

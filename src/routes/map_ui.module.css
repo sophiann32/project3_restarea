@@ -5,16 +5,25 @@
 
 .aside {
     position: absolute; /* 또는 fixed, 만약 스크롤 시에도 고정되길 원한다면 */
-    top: 330px; /* 뷰포트 상단으로부터의 거리 */
-    left: 130px; /* 뷰포트 왼쪽으로부터의 거리 */
-    width: 350px; /* 사이드바 너비 */
+    /*top: 330px; !* 뷰포트 상단으로부터의 거리 *!*/
+    /*left: 130px; !* 뷰포트 왼쪽으로부터의 거리 *!*/
+    /*width: 350px; !* 사이드바 너비 *!*/
+    /*height: 350px;*/
+    top: 30%; /* 뷰포트 상단으로부터의 거리 */
+    left: 0; /* 뷰포트 왼쪽으로부터의 거리 */
+    width: 470px; /* 사이드바 너비 */
     height: 350px;
-    padding: 20px; /* 사이드바 내부 패딩 */
-    background-color: #03111A;
+
+
+
+
+
+    padding: 5px; /* 사이드바 내부 패딩 */
+    background-color: #383838;
     border-radius: 20px;
     z-index: 2; /* 다른 내용물 위에 오도록 z-index 설정 */
     overflow-y: auto; /* 내용이 많을 경우 스크롤바 표시 */
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+    box-shadow: 4px 4px 25px rgba(0, 0, 0, 55); /* 그림자 효과 */
 }
 .aside::-webkit-scrollbar {
     width: 20px; /* 스크롤바 너비 */
