@@ -20,7 +20,8 @@ function Statistics(){
 
                         <button onClick={
                             () => {
-                                axios.get('http://localhost:5000/api/Search')
+                                // axios.get('http://localhost:5000/api/Search')
+                                axios.get('http://127.0.0.1:5000/api/avgAllPrice')
                                     // 응답을 then의 콜백함수로 받을수 있다.
                                     // 받은 데이터는 인자를 임의로 작명하여 확인 가능
                                     .then((response) => {
@@ -52,10 +53,10 @@ function Statistics(){
 
                         <button onClick={
                             () => {
-                                axios.get('http://localhost:5000/api/Search')
+                                axios.get('http://localhost:5000/api/avgAllPrice')
                                     .then((response) => {
                                         let shoesCopy = response.data
-                                        return setOilPrice(shoesCopy[0].GIS_X_COOR)
+                                        return setOilPrice(shoesCopy[0])
 
 
                                     })
