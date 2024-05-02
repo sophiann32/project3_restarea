@@ -46,6 +46,11 @@ function App() {
                       <Route path="/" element={<MainPage/>}/>
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
+
+                      <Route path="/board" element={<Board/>}/>
+                      <Route path="/login" element={<Login/>}/>
+
+
                       <Route path="/restArea" element={<RestArea/>}/>
                       <Route path="/board" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
@@ -54,7 +59,9 @@ function App() {
 
                       <Route  path="/detailPost/:id" element={<DetailPost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route  path="/create" element={<CreatePost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
+
                   </Routes>
+                  <link to="/chatbot"></link>
 
               </div>
 
