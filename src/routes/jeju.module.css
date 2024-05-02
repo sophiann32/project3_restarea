@@ -14,7 +14,7 @@
 
 .categoryButtons {
     display: grid;
-    grid-template-columns: repeat(2, calc(20% - 10px));
+    grid-template-columns: repeat(2, calc(30% - 10px));
     gap: 20px;
     border-radius: 10px;
 }

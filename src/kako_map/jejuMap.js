@@ -1,4 +1,3 @@
-// JejuMap.js
 import React from 'react';
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styles from './jejuMap.module.css';
@@ -22,7 +21,7 @@ function JejuMap({ spots, selectedSpot, onSelectSpot }) {
             <div className={styles.tourList}>
                 {spots.map(spot => (
                     <div key={spot.CONTENTS_ID} className={styles.tourItem} onClick={() => onSelectSpot(spot)}>
-                        <img src={spot.THUMBNAIL_PATH} alt={spot.TITLE} style={{width: "100px", height: "100px"}}/>
+                        <img src={spot.THUMBNAIL_PATH} alt={spot.TITLE} style={{ width: "100px", height: "100px" }} />
                         <h3>{spot.TITLE}</h3>
                         <p>{spot.ROAD_ADDRESS}</p>
                         <p>{spot.PHONE_NO}</p>
@@ -32,5 +31,6 @@ function JejuMap({ spots, selectedSpot, onSelectSpot }) {
         </div>
     );
 }
+
 
 export default JejuMap;
