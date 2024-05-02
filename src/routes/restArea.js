@@ -4,7 +4,7 @@ import axios from 'axios';
 import RestAreaDetail from "../kako_map/restAreaDetail";
 import Modal from '../Modal/Modal';
 
-function RestArea() {
+function RestArea( ) {
     const [selectedRoute, setSelectedRoute] = useState('');
     const [restAreas, setRestAreas] = useState([]);
     const [selectedRestArea, setSelectedRestArea] = useState(null);
