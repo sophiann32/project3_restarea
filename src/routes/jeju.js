@@ -4,6 +4,16 @@ import styles from './jeju.module.css';
 import JejuMap from '../kako_map/jejuMap';
 
 function Jeju(){
+    useEffect(() => {
+        axios.get('/api/charging-stations-jeju')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data: ', error);
+            });
+    }, []);
+
     return (
         <>
             <div id={styles.mainJ}>
@@ -13,7 +23,7 @@ function Jeju(){
                 </section>
             </div>
         </>
-    )
+    );
 }
 
 export default Jeju;
