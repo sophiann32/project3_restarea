@@ -5,7 +5,7 @@ import JejuMap from '../kako_map/jejuMap';
 
 function Jeju(){
     useEffect(() => {
-        axios.get('/api/charging-stations-jeju')
+        axios.get('http://localhost:5000/api/charging-stations-jeju')
             .then(response => {
                 console.log(response.data);
             })
