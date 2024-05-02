@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { useNavigate } from 'react-router-dom';
 
 const LocationTracker = () => {
     const [stations, setStations] = useState([]);
@@ -75,17 +76,15 @@ function ChartDonut(props) {
         }
 
     };
+    const navigate = useNavigate();
     const handleChartClick = (event, elements) => {
         if (!elements || elements.length === 0) {
-            return; // elements가 undefined이거나 길이가 0이면 함수 종료
+            return;
         }
         if (elements.length > 0) {
-            // const clickedElementIndex = elements[0].index;
+            // const clickedElementIndex = elements[0]._index;
             // const clickedData = chartData.labels[clickedElementIndex];
-            // 클릭한 슬라이스의 데이터를 활용하여 다른 창으로 이동하는 로직 작성
-            // 예: 새로운 창 열기 또는 특정 URL로 이동
-            // window.open(`/map/${clickedData}`, '_blank');
-            window.open('http://localhost:3000/map', '_blank');
+            navigate(`/map`);
         }
     };
     const options = {
