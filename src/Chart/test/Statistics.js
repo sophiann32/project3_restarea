@@ -22,8 +22,7 @@ function Statistics(){
                             () => {
                                 axios.get('http://localhost:5000/api/Search')
                                 // axios.get('http://localhost:5000/api/avgAllPrice')
-                                    // 응답을 then의 콜백함수로 받을수 있다.
-                                    // 받은 데이터는 인자를 임의로 작명하여 확인 가능
+
                                     .then((response) => {
                                         // console.log(response)  // 전체 데이터
                                         // console.log(response.data) // 실 데이터
