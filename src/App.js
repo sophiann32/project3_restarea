@@ -16,6 +16,7 @@ import Login from "./board/Login"
 import DetailPost from "./board/DetailPost"
 import CreatePost from "./board/Create";
 import RestArea from "./routes/restArea";
+import Chatbot from "./chatbot/chat";
 
 
 // Axios 글로벌 설정
@@ -59,7 +60,7 @@ function App() {
 
                       <Route  path="/detailPost/:id" element={<DetailPost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route  path="/create" element={<CreatePost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
-
+                      <Route  path="/chatbot" element={<Chatbot isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                   </Routes>
                   <link to="/chatbot"></link>
 

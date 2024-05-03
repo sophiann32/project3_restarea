@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css';
+import './chat.css';
 import { FaMicrophone } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
-function App() {
+function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [fuelStations, setFuelStations] = useState([]);
     const [chargingStations, setChargingStations] = useState([]);
@@ -84,7 +85,7 @@ function App() {
         try {
             const response = await axios({
                 method: 'post',
-                url: 'http://localhost:5000/get_gas_stations',
+                url: 'http://localhost:5000/get_gas_stations22',
                 data: { latitude, longitude, type }
             });
 
@@ -130,6 +131,7 @@ function App() {
     const handleMessage = (message) => {
         setMessages(messages => [...messages, {id: Date.now(), text: message, sender: 'user'}]);
         speak(message);
+
         if (message.includes('주유소')) {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(position => {
@@ -153,7 +155,30 @@ function App() {
                 speak(botResponse.text);
             }
         }
+        if (message.includes('로그인 페이지로 이동하기')) {
+            const loginUrl = "http://localhost:3000/login";
+            const botResponse = {
+                id: Date.now(),
+                text: `로그인 페이지로 이동하려면 여기를 클릭하세요.`,
+                sender: 'bot',
+                url: loginUrl // URL을 메시지 객체에 추가
+            };
+            setMessages(messages => [...messages, botResponse]);
+            speak("로그인 페이지 링크를 보냈습니다.");
+        }
+        if (message.includes('통계 차트 보러가기')) {
+            const statsUrl = "http://localhost:3000/sub";
+            const botResponse = {
+                id: Date.now(),
+                text: `통계 차트 페이지로 이동하려면 여기를 클릭하세요.`,
+                sender: 'bot',
+                url: statsUrl
+            };
+            setMessages(messages => [...messages, botResponse]);
+            speak("통계 차트 페이지 링크를 보냈습니다.");
+        }
     };
+
 
     const handleGeolocationError = (error) => {
         let errorMessage = '';
@@ -183,12 +208,16 @@ function App() {
     return (
         <div className={"APP"}>
             <header>
-                <h1>챳밧</h1>
+                <h1>채팅로보트 임니다</h1>
             </header>
             <div className="chat-container">
                 {messages.map(msg => (
                     <div key={msg.id} className={`message ${msg.sender}`}>
-                        {msg.text}
+                        {msg.url ? (
+                            <Link to={msg.url}>{msg.text}</Link>
+                        ) : (
+                            msg.text
+                        )}
                     </div>
                 ))}
             </div>
@@ -215,6 +244,8 @@ function App() {
             <div className="user-input">
                 <button onClick={() => handleMessage('내 주변 최저가 주유소 찾기')}>내 주변 최저가 주유소 찾기</button>
                 <button onClick={() => handleMessage('내 주변 전기차 충전소 찾기')}>내 주변 전기차 충전소 찾기</button>
+                <button onClick={() => handleMessage('로그인 페이지로 이동하기')}>로그인 페이지로 이동하기</button>
+                <button onClick={() => handleMessage('통계 차트 보러가기')}>통계 차트 보러가기</button>
                 <div className="tooltip">
                     <button className="voice-button" onClick={handleSpeech} disabled={isListening}>
                         <FaMicrophone/>
@@ -230,4 +261,4 @@ function App() {
     );
 }
 
-export default App;
+export default Chatbot;
