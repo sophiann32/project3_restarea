@@ -57,7 +57,7 @@ function ChartLine() {
         };
         const excludedOilTypes = ['K015']; // 자동차부탄 제외
         const formatDate = (dateString) => {
-            const year = dateString.slice(0, 4);
+            // const year = dateString.slice(0, 4);
             const month = dateString.slice(4, 6);
             const day = dateString.slice(6, 8);
             return `${month}/${day}`;
@@ -69,9 +69,11 @@ function ChartLine() {
             .map((label,index) => {
                 const data = oilData[label].map(item => item.price);
                 return {
+                    type: 'line',
                     label: oilNames[label],
-                    backgroundColor: 'rgb(255,176,176)',
+                    borderColor: 'rgb(255,176,176)',
                     data: data,
+                    fill: false,
                     hidden: index !== 0,
 
                 };
