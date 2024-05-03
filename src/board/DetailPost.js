@@ -21,7 +21,7 @@ function DetailPost(props) {
     return (
         <body>
         <div>
-            <p>{detailPostData.userRealName}님 </p>
+            <p>{detailPostData.userRealName}님 ???</p>
             {/*<p>{props.userRealName}님 </p>*/}
         </div>
         <table>

@@ -48,8 +48,7 @@ function App() {
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
 
-                      <Route path="/board" element={<Board/>}/>
-                      <Route path="/login" element={<Login/>}/>
+
 
 
                       <Route path="/restArea" element={<RestArea/>}/>
