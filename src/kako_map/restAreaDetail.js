@@ -43,6 +43,10 @@ function RestAreaDetail({ selectedRoute }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedRestArea, setSelectedRestArea] = useState(null);
 
+///////// hover 용 ////////
+    const [isOpen, setIsOpen] = useState(false)
+///////// hover 용 ////////
+
     useEffect(() => {
         if (selectedRoute) {
             axios.get(`http://localhost:5000/restareas?route=${selectedRoute}`)
@@ -67,10 +71,18 @@ function RestAreaDetail({ selectedRoute }) {
         <div>
             <Map center={position} level={zoomLevel} style={{ width: "100%", height: "900px" }}>
                 {restAreas.map((area, index) => (
+
+
                     <MapMarker key={index} position={{ lat: area.위도, lng: area.경도 }}
                                onClick={() => handleMarkerClick(area)}>
                         <div className={styles.marker}>{area.휴게소명}</div>
                     </MapMarker>
+
+
+
+
+
+
                 ))}
             </Map>
             {selectedRestArea && (
