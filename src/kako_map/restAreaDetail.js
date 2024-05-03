@@ -4,38 +4,7 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import Modal from '../Modal/Modal';
 import styles from './restAreaDetail.module.css'
 
-// function Modal({ isOpen, onClose, children }) {
-//     if (!isOpen) return null;
-//
-//     return (
-//         <div style={{
-//             position: 'fixed',
-//             top: '50%',
-//             left: '50%',
-//             transform: 'translate(-50%, -50%)',
-//             backgroundColor: 'white',
-//             padding: '20px',
-//             zIndex: 1000,
-//             borderRadius: '8px',
-//             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-//             width: '300px'
-//         }}>
-//             <button onClick={onClose} style={{
-//                 position: 'absolute',
-//                 right: '130px',
-//                 top: '180px',
-//                 width: '80px',
-//                 borderRadius: '5px',
-//                 fontSize: '24px',
-//                 cursor: 'pointer',
-//             }}>
-//
-//             </button>
-//             {children}
-//         </div>
-//     );
-// }
-//
+
 function RestAreaDetail({ selectedRoute }) {
     const [position, setPosition] = useState({ lat: 36.5, lng: 127.5 });
     const [zoomLevel, setZoomLevel] = useState(12);

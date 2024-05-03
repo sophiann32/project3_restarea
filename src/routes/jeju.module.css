@@ -1,0 +1,42 @@
+#mainJ{
+    width: 100%;
+    height: 100%;
+    background-color: #FEF7F0;
+    display: grid;
+    grid-template-areas:      /* !!핵심!!*/
+            "jejuMap jejuTab"
+;
+    grid-template-columns: 35% 65% ;
+    /*자식width*/
+    grid-template-rows: 900px;
+    /*자식height*/
+}
+
+.categoryButtons {
+    display: grid;
+    grid-template-columns: repeat(2, calc(30% - 10px));
+    gap: 20px;
+    border-radius: 10px;
+}
+
+.categoryButton {
+    background-color: #4CAF50; /* 초록색 배경 */
+    border: none;
+    color: white;
+    /*padding: 60px;*/
+    text-align: center;
+    width: 250px;
+    height: 150px;
+    margin: 50px 0px 0px 0px ;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 20px; /* 버튼 모서리 둥글게 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* 그림자 효과 */
+    transition: background-color 0.3s; /* 마우스 오버 효과 */
+    transform: translateX(400px)
+}
+
+
+.categoryButton:hover {
+    background-color: #45a049; /* 마우스 오버 시 색 변경 */
+}

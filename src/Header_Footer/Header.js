@@ -23,6 +23,7 @@ function Header(props) {
                         <li><NavLink to="/sub">통계</NavLink></li>
                         <li><NavLink to="/restArea">휴게소</NavLink></li>
                         <li><NavLink to="/board">리뷰 게시판</NavLink></li>
+                        <li><NavLink to="/jeju">제주</NavLink></li>
                     </ul>
                 </div>
                 <div className={styles.login_box}>
