@@ -1,16 +1,60 @@
 #mainJ2 {
-    background-color: #FEF7F0;
-    display: grid;
+    background-color: white;
+    /*display: grid;*/
     height: 100%;
-    grid-template-rows: 45% 55%; /* Two rows of equal height */
-    margin-left: 140px; /* Adds left margin to the grid container */
-    border: 1px solid black;
+    /*grid-template-rows: 45% 55%; !* Two rows of equal height *!*/
 }
 .mapSpace {
+    height: 85%;
     background-color: blue;
 }
 
-.tourList {
-    background-color: #21391B;
-    overflow-y: auto;
+
+
+.tourList::-webkit-scrollbar {
+    width: 10px; /* 수직 스크롤의 너비 */
+}
+
+/* 스크롤바 추적기(스크롤바의 스크롤 위치를 나타내는 부분) */
+.tourList::-webkit-scrollbar-thumb {
+    background-color: #888; /* 추적기의 배경색 */
+    border-radius: 5px; /* 추적기의 모서리 둥글기 */
+}
+
+/* 스크롤바 활성화(추적기에 마우스를 가져다 놓았을 때) */
+.tourList::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* 활성화된 추적기의 배경색 */
+}
+
+
+.categoryButtons {
+    display: grid;
+    justify-content: center;
+    vertical-align: middle;
+    grid-template-columns: repeat(8, calc(10% - 10px));
+    gap: 5px;
+    border-radius: 10px;
+}
+
+.categoryButton {
+    background-color: #4CAF50; /* 기본 색상 */
+    background-size: cover; /* 버튼 전체 영역을 채움 */
+    background-position: center; /* 배경 이미지를 중앙에 위치 */
+    border: none;
+    color: white;
+    text-align: center;
+    width: 100px;
+    height: 80px;
+    margin: 25px 0px 0px 0px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background-color 0.3s;
+}
+
+
+
+.categoryButton:hover {
+    background-color: #45a049; /* 마우스 오버 시 색 변경 */
 }
