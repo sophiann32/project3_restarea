@@ -1,44 +1,92 @@
 #mainJ{
-    width: 100%;
-    height: 100%;
+    /*width: 100%;*/
+    /*height: 100%;*/
     background-color: #FEF7F0;
     display: grid;
     grid-template-areas:      /* !!핵심!!*/
-            "jejuMap jejuTab"
+            "jejuTab jejuMap"
 ;
-    grid-template-columns: 35% 65% ;
+    grid-template-columns: 45% 55% ;
     /*자식width*/
     grid-template-rows: 900px;
     /*자식height*/
 }
+.topNav{
+    display: flex;
+    vertical-align: middle;
+    background-color: #ec2e2e;
+    height: 100px;
 
-.categoryButtons {
+
+
+
+}
+
+.selectedTags{
+    width: 50px;
+    height: 50px;
+
+}
+.jejuTab {
+    background-color: #ffffff;
     display: grid;
-    grid-template-columns: repeat(2, calc(30% - 10px));
-    gap: 20px;
+    height: 900px;
+    overflow-y: scroll;
+}
+
+.jejuTab::-webkit-scrollbar {
+    width: 10px; /* 수직 스크롤의 너비 */
+}
+
+/* 스크롤바 추적기(스크롤바의 스크롤 위치를 나타내는 부분) */
+.jejuTab::-webkit-scrollbar-thumb {
+    background-color: #888; /* 추적기의 배경색 */
+    border-radius: 5px; /* 추적기의 모서리 둥글기 */
+}
+
+/* 스크롤바 활성화(추적기에 마우스를 가져다 놓았을 때) */
+.jejuTab::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* 활성화된 추적기의 배경색 */
+}
+
+
+
+.tourList {
+    display: inline-block;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    margin-top: 100px;
+}
+
+.tourInfo{
+    position: relative;
+    left: 400px;
+    line-height: 30px;
+    bottom: 310px;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #eee;
+    padding: 5px 10px;
+    margin: 2px;
     border-radius: 10px;
+    font-size: 14px;
 }
 
-.categoryButton {
-    background-color: #4CAF50; /* 기본 색상 */
-    background-size: cover; /* 버튼 전체 영역을 채움 */
-    background-position: center; /* 배경 이미지를 중앙에 위치 */
+
+.selectedTags span {
+    margin-right: 10px;
+    background-color: #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.selectedTags button {
+    margin-left: 5px;
     border: none;
-    color: white;
-    text-align: center;
-    width: 220px;
-    height: 160px;
-    margin: 40px 0px 0px 0px;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: background-color 0.3s;
-    transform: translateX(400px);
-}
-
-
-
-.categoryButton:hover {
-    background-color: #45a049; /* 마우스 오버 시 색 변경 */
+    background-color: transparent;
+    cursor: pointer;
 }
