@@ -31,6 +31,7 @@ function Header(props) {
                             <span>LOGIN</span>
                         </NavLink>
                     }
+
                 </div>
             </nav>
         </div>
