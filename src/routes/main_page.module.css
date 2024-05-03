@@ -37,7 +37,15 @@
 .chat {
     width: 100px;
     height: 100px;
-    background-color: #2d7dec;
+    /*background-color: #2d7dec;*/
+    background-image: url("https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/1f47d.gif");
+    /*귀여운 외계인*/
+    /*background-image: url("https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f937.png ");*/
+    /*모르는 사람 표정 */
+    /*background-image: url("https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/1f916.gif"); */
+    /*움직이는 챗봇*/
+    background-size: cover; /* 이미지 크기 조절 */
+    background-position: center; /* 이미지 위치 조절 */
 }
 
 @media (max-width: 1300px){   /*0 부터 1220까지 (노트북) */

@@ -48,10 +48,18 @@ function RestAreaDetail({ selectedRoute }) {
                     <MapMarker key={index} position={{ lat: area.위도, lng: area.경도 }}
                                onClick={() => handleMarkerClick(area)}
                                image={{
-                                   src: "https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f538.png", // 마커이미지의 주소입니다
+                                   // src: "https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f538.png", // orange diamond
+                                   // src: "https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f53b.png", // red ▼
+                                   // src: "https://images.emojiterra.com/openmoji/v15.0/512px/1f33c.png", // y flower
+                                   // src: "https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/2705.gif", // moving green checkbox
+                                   // src: "https://images.emojiterra.com/openmoji/v15.0/512px/1f698.png", // oil charge
+                                   // src: "https://images.emojiterra.com/openmoji/v15.0/512px/1f697.png ", // r car
+                                   // src:"https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/26fd.png", // r 주유소
+                                   src:"https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/2728.gif", // shining star
+
                                    size: {
-                                       width: 64,
-                                       height: 69,
+                                       width: 25,
+                                       height: 25,
                                    }, // 마커이미지의 크기입니다
                                    options: {
                                        offset: {
