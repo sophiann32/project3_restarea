@@ -4,44 +4,17 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import Modal from '../Modal/Modal';
 import styles from './restAreaDetail.module.css'
 
-// function Modal({ isOpen, onClose, children }) {
-//     if (!isOpen) return null;
-//
-//     return (
-//         <div style={{
-//             position: 'fixed',
-//             top: '50%',
-//             left: '50%',
-//             transform: 'translate(-50%, -50%)',
-//             backgroundColor: 'white',
-//             padding: '20px',
-//             zIndex: 1000,
-//             borderRadius: '8px',
-//             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-//             width: '300px'
-//         }}>
-//             <button onClick={onClose} style={{
-//                 position: 'absolute',
-//                 right: '130px',
-//                 top: '180px',
-//                 width: '80px',
-//                 borderRadius: '5px',
-//                 fontSize: '24px',
-//                 cursor: 'pointer',
-//             }}>
-//
-//             </button>
-//             {children}
-//         </div>
-//     );
-// }
-//
+
 function RestAreaDetail({ selectedRoute }) {
     const [position, setPosition] = useState({ lat: 36.5, lng: 127.5 });
     const [zoomLevel, setZoomLevel] = useState(12);
     const [restAreas, setRestAreas] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedRestArea, setSelectedRestArea] = useState(null);
+
+///////// hover 용 ////////
+    const [isOpen, setIsOpen] = useState(false)
+///////// hover 용 ////////
 
     useEffect(() => {
         if (selectedRoute) {
@@ -67,10 +40,18 @@ function RestAreaDetail({ selectedRoute }) {
         <div>
             <Map center={position} level={zoomLevel} style={{ width: "100%", height: "900px" }}>
                 {restAreas.map((area, index) => (
+
+
                     <MapMarker key={index} position={{ lat: area.위도, lng: area.경도 }}
                                onClick={() => handleMarkerClick(area)}>
                         <div className={styles.marker}>{area.휴게소명}</div>
                     </MapMarker>
+
+
+
+
+
+
                 ))}
             </Map>
             {selectedRestArea && (

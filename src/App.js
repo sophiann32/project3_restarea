@@ -17,6 +17,10 @@ import DetailPost from "./board/DetailPost"
 import CreatePost from "./board/Create";
 import RestArea from "./routes/restArea";
 
+import Jeju from "./routes/jeju";
+import Chatbot from "./chatbot/chat";
+
+
 
 // Axios 글로벌 설정
 axios.defaults.baseURL = 'http://localhost:3001';
@@ -47,11 +51,11 @@ function App() {
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
 
-                      <Route path="/board" element={<Board/>}/>
-                      <Route path="/login" element={<Login/>}/>
+
 
 
                       <Route path="/restArea" element={<RestArea/>}/>
+                      <Route path="/jeju" element={<Jeju/>}/>
                       <Route path="/board" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} loginId={loginId} setLoginId={setLoginId}
@@ -59,7 +63,7 @@ function App() {
 
                       <Route  path="/detailPost/:id" element={<DetailPost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route  path="/create" element={<CreatePost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
-
+                      <Route  path="/chatbot" element={<Chatbot isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                   </Routes>
                   <link to="/chatbot"></link>
 

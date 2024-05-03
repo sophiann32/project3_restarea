@@ -1,0 +1,16 @@
+#mainJ2 {
+    background-color: #FEF7F0;
+    display: grid;
+    height: 100%;
+    grid-template-rows: 45% 55%; /* Two rows of equal height */
+    margin-left: 140px; /* Adds left margin to the grid container */
+    border: 1px solid black;
+}
+.mapSpace {
+    background-color: blue;
+}
+
+.tourList {
+    background-color: #21391B;
+    overflow-y: auto;
+}

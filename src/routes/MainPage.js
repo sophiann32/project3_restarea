@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './main_page.module.css'
-
+import Modal from './Modal';
+import {useParams, Link, useNavigate} from 'react-router-dom';
 
 function MainPage(){
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [messages, setMessages] = useState([]); // 챗봇 메시지를 저장하는 배열
 
-
-
-
-
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
 
     return(
         <>
@@ -73,15 +74,17 @@ function MainPage(){
             </li>
             </ul>
             </form>
+            {/*<button onClick={openModal}>챗봇 모달</button>*/}
+            {/*<Modal isOpen={isModalOpen} onClose={closeModal}>*/}
+            {/*    /!* 모달 내부에 챗봇 UI를 포함시키는 예시입니다. *!/*/}
+            {/*    <div>여기에 챗봇 UI를 표시합니다.</div>*/}
+            {/*</Modal>*/}
+            <div className={styles.chat}>
+                <Link to="/chatbot">챗버튼</Link>
 
-
-
+            </div>
         </div>
-
-
         </>
-
-
     )
 }
 
