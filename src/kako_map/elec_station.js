@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker, CustomOverlayMap, Circle } from "react-kakao-maps-sdk";
 
+import './elec_station.css'
+
 // 날짜 및 시간을 보기 좋게 포맷하는 함수 정의
 function formatDateTime(dateTimeStr) {
     // 날짜와 시간 정보를 부분적으로 추출
@@ -87,7 +89,7 @@ function getZoomLevel(radius) {
 }
 
 // 전기차 충전소 위치를 지도에 표시하는 컴포넌트
-function Elec_station({ locations, radius }) {
+function Elec_station({ locations, radius}) {
     // 내부 상태를 관리하기 위한 useState
     const [state, setState] = useState({
         center: { lat: 37.5665, lng: 126.9780 }, // 지도의 중심 위치 초기값
@@ -98,6 +100,10 @@ function Elec_station({ locations, radius }) {
         radius: radius, // 검색 반경
         isLoading: false // 로딩 상태
     });
+
+
+
+
 
     // 충전소 정보를 기반으로 상태를 업데이트하는 useEffect
     useEffect(() => {
@@ -218,11 +224,13 @@ function Elec_station({ locations, radius }) {
                         <MapMarker
                             position={{ lat: parseFloat(station.lat), lng: parseFloat(station.lng) }}
                             image={{
+                                className: station.stat === "2" ? 'pulsemarker' : '',
                                 src: station.stat === "2" ? '/img/live.png' : '/img/elc.png',
                                 size: { width: 24, height: 35 }
                             }}
                             onClick={() => onMarkerClick(station.statId)}
                         />
+
                     </React.Fragment>
                 ))}
                 {state.selectedStation && (

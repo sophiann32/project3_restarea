@@ -113,78 +113,112 @@ function MapUi() {
         setSelectedSort('distance');
     };
 
+
+    const [isVisible, setIsVisible] = useState(true);
+    const toggleVisibility = () => {
+        setIsVisible(!isVisible);
+    };
+
+
+
     // 컴포넌트가 렌더링할 JSX 구조
     return (
         <>
             <div id={styles.change}>
-                <div className={styles.aside}>
-                    {/* 반경 선택 슬라이더 */}
-                    <div className={styles.markings}>
-                        <span className={styles.mark}>1km</span>
-                        <span className={styles.mark}>3km</span>
-                        <span className={styles.mark}>5km</span>
-                    </div>
-                    <input
-                        type="range"
-                        id="radiusSlider"
-                        name="radius"
-                        min="1"
-                        max="5"
-                        step="2" // 1, 3, 5만 선택 가능
-                        value={radius}
-                        onChange={e => setRadius(e.target.value)}
-                        className={styles.slider}
-                        list="tickmarks"
-                    />
-                    {/* 눈금에 대한 리스트 정의 */}
-                    <datalist id="tickmarks">
-                        <option value="1" label="1km">1km</option>
-                        <option value="3" label="3km">3km</option>
-                        <option value="5" label="5km">5km</option>
-                    </datalist>
-                    {/* 정렬 버튼 */}
-                    <div className={styles.change}>
-                        <div className={styles.sortButtons}>
-                            {list1 === 1 && (
-                                <button onClick={sortByPrice}
-                                        style={selectedSort === 'price' ? {backgroundColor: '#e72f2f'} : null}>
-                                    가격순
-                                </button>
-                            )}
-                            {list1 === 1 && (
-                                <button onClick={sortByDistance}
-                                        style={selectedSort === 'distance' ? {backgroundColor: '#e72f2f'} : null}>
-                                    거리순
-                                </button>
-                            )}
+
+
+                <button className={styles.aside_button} onClick={toggleVisibility}>엄현빈</button>
+                {isVisible &&
+                    <div className={styles.aside}>
+
+
+                        {/* 주유소와 충전소 전환 버튼 */}
+                        <div className={styles.buttonContainer}>
+                            <button
+                                className={`${styles.button} ${list1 === 1 ? styles.buttonActive : ''}`}
+                                onClick={() => setList1(1)}>
+                                주유소
+                            </button>
+                            <button
+                                className={`${styles.button} ${list1 === 2 ? styles.buttonActive : ''}`}
+                                onClick={() => setList1(2)}>
+                                충전소
+                            </button>
                         </div>
+
+
+                        {/* 반경 선택 슬라이더 */}
+                        <div className={styles.markings}>
+                            <span className={styles.mark}>1km</span>
+                            <span className={styles.mark}>3km</span>
+                            <span className={styles.mark}>5km</span>
+                        </div>
+                        <input
+                            type="range"
+                            id="radiusSlider"
+                            name="radius"
+                            min="1"
+                            max="5"
+                            step="2" // 1, 3, 5만 선택 가능
+                            value={radius}
+                            onChange={e => setRadius(e.target.value)}
+                            className={styles.slider}
+                            list="tickmarks"
+                        />
+                        {/* 눈금에 대한 리스트 정의 */}
+                        <datalist id="tickmarks">
+                            <option value="1" label="1km">1km</option>
+                            <option value="3" label="3km">3km</option>
+                            <option value="5" label="5km">5km</option>
+                        </datalist>
+                        {/* 정렬 버튼 */}
+                        <div className={styles.change}>
+                            <div className={styles.sortButtons}>
+                                {list1 === 1 && (
+                                    <button onClick={sortByPrice}
+                                            style={selectedSort === 'price' ? {backgroundColor: '#e72f2f'} : null}>
+                                        가격순
+                                    </button>
+                                )}
+                                {list1 === 1 && (
+                                    <button onClick={sortByDistance}
+                                            style={selectedSort === 'distance' ? {backgroundColor: '#e72f2f'} : null}>
+                                        거리순
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                        {/* 선택된 주유소 또는 충전소의 개수를 표시 */}
+                        <h3 style={{color: 'white', position: 'absolute', left: '400px', top: '108px'}}>
+                            {list1 === 1 ? gasStationCount : chargingStationCount}개
+                        </h3>
+                        {/* 주유소 또는 충전소 리스트 */}
+                        <ul style={{position: 'relative', right: '20px', top: '20px'}}
+                            className={styles.gasStationList}>
+                            {list1 === 1 && gasStations.length > 0 ? (
+                                gasStations.map((station, index) => (
+                                    <li key={index}>
+                                        <span>{station.name}</span> -
+                                        <span>{station.price}원</span> -
+                                        <span>{convertMetersToKilometers(station.distance)}km</span>
+                                    </li>
+                                ))
+                            ) : list1 === 2 && chargingStations.length > 0 ? (
+                                chargingStations.map((station, index) => (
+                                    <li key={index}>
+                                        <span>{station.statNm}</span> -
+                                        <span>{station.addr}</span>
+                                    </li>
+                                ))
+                            ) : (
+                                <li>선택한 범위 내에 정보가 없습니다.</li>
+                            )}
+                        </ul>
                     </div>
-                    {/* 선택된 주유소 또는 충전소의 개수를 표시 */}
-                    <h3 style={{color: 'white', position: 'absolute', left: '290px', top: '55px'}}>
-                        {list1 === 1 ? gasStationCount : chargingStationCount}개
-                    </h3>
-                    {/* 주유소 또는 충전소 리스트 */}
-                    <ul style={{position: 'relative',right:'20px',top:'20px'}} className={styles.gasStationList}>
-                        {list1 === 1 && gasStations.length > 0 ? (
-                            gasStations.map((station, index) => (
-                                <li key={index}>
-                                    <span>{station.name}</span> -
-                                    <span>{station.price}원</span> -
-                                    <span>{convertMetersToKilometers(station.distance)}km</span>
-                                </li>
-                            ))
-                        ) : list1 === 2 && chargingStations.length > 0 ? (
-                            chargingStations.map((station, index) => (
-                                <li key={index}>
-                                    <span>{station.statNm}</span> -
-                                    <span>{station.addr}</span>
-                                </li>
-                            ))
-                        ) : (
-                            <li>선택한 범위 내에 정보가 없습니다.</li>
-                        )}
-                    </ul>
-                </div>
+
+                } {/*버튼으로 사이트 바 열고 닫는 자바스크랩트 닫는 괄호임*/}
+
+
                 {/* 주유소 또는 충전소를 지도에 표시하는 섹션 */}
                 {
                     list1 === 1 ? (
@@ -193,7 +227,7 @@ function MapUi() {
                         </section>
                     ) : list1 === 2 ? (
                         <section className={styles.section}>
-                            <Elec_station locations={chargingStations} radius={radius} />
+                            <Elec_station locations={chargingStations} radius={radius}/>
 
                         </section>
                     ) : (
@@ -234,36 +268,25 @@ function MapUi() {
                         </label>
                     </div>
                 )}
-                {/* 주유소와 충전소 전환 버튼 */}
-                <div className={styles.buttonContainer}>
-                    <button
-                        className={`${styles.button} ${list1 === 1 ? styles.buttonActive : ''}`}
-                        onClick={() => setList1(1)}>
-                        주유소
-                    </button>
-                    <button
-                        className={`${styles.button} ${list1 === 2 ? styles.buttonActive : ''}`}
-                        onClick={() => setList1(2)}>
-                        충전소
-                    </button>
-                </div>
+
+
             </div>
-            {/* 아이콘과 버튼을 포함한 선택 바 */}
+            {/*아이콘과 버튼을 포함한 선택 바*/}
             <div className={styles.select_bar}>
                 <div className={styles.select_item}>
                     <img src="/img/fuel.png" alt="Icon 1" className={styles.icon}/>
                     <p className={styles.text}>내 주변 주유소</p>
-                    <button className={styles.button1}>주유소</button>
+                    <div className={styles.button1}>주유소</div>
                 </div>
                 <div className={styles.select_item}>
                     <img src="/img/elc.png" alt="Icon 2" className={styles.icon}/>
                     <p className={styles.text}>내 주변 충전소</p>
-                    <button className={styles.button2}>충전소</button>
+                    <div className={styles.button2}>충전소</div>
                 </div>
                 <div className={styles.select_item}>
                     <img src="/img/live.png" className={styles.icon2}/>
                     <p className={styles.text2}>충전가능한 충전소보기</p>
-                    <button className={styles.button3}>충전가능한 충전소</button>
+                    <div className={styles.button3}>충전가능한 충전소</div>
                 </div>
             </div>
         </>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import Modal from '../Modal/Modal';
+import styles from './restAreaDetail.module.css'
 
 // function Modal({ isOpen, onClose, children }) {
 //     if (!isOpen) return null;
@@ -68,7 +69,7 @@ function RestAreaDetail({ selectedRoute }) {
                 {restAreas.map((area, index) => (
                     <MapMarker key={index} position={{ lat: area.위도, lng: area.경도 }}
                                onClick={() => handleMarkerClick(area)}>
-                        <div>{area.휴게소명}</div>
+                        <div className={styles.marker}>{area.휴게소명}</div>
                     </MapMarker>
                 ))}
             </Map>
