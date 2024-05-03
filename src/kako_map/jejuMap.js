@@ -48,6 +48,7 @@ function JejuMap({ spots, filteredSpots, selectedSpot, onSelectSpot, categories,
                 {Object.keys(categories).map(category => (
                     <button
                         key={category}
+                        className={styles.categoryButton}
                         onClick={() => onCategoryChange(categories[category].tags)}
                         style={{backgroundImage: `url(${categories[category].imageUrl})`}}
                     >
