@@ -1,7 +1,15 @@
 /*}*/
 #change{
     background-color: #041621;
+
 }
+.aside_button{
+    background-color: #5b5b5b;
+    float: left;
+    width: 120px;
+}
+
+
 
 .aside {
     position: absolute; /* 또는 fixed, 만약 스크롤 시에도 고정되길 원한다면 */
@@ -12,7 +20,7 @@
     top: 30%; /* 뷰포트 상단으로부터의 거리 */
     left: 0; /* 뷰포트 왼쪽으로부터의 거리 */
     width: 470px; /* 사이드바 너비 */
-    height: 350px;
+    height: 450px;
 
 
 
@@ -37,7 +45,7 @@
     height: 30%; /* 스크롤바의 길이 */
     background: #FFAFAF; /* 스크롤바의 색상 */
 
-    border-radius: 10px;
+    /*border-radius: 10px;*/
 }
 
 .aside::-webkit-scrollbar-thumb:hover {
@@ -156,9 +164,9 @@
     display: flex; /* 버튼을 가로로 배치 */
     justify-content: space-around; /* 버튼 사이의 간격을 균등하게 조정 */
     padding: 10px 20px; /* 상하 패딩만 조정하여 버튼과 사이드바 사이의 공간 제거 */
-    position: absolute;
-    bottom: 0px;
-    left: 195px;
+    /*position: absolute;*/
+    /*bottom: 0px;*/
+    /*left: 195px;*/
     z-index: 3;
 
 }
@@ -180,7 +188,7 @@
     color: white; /* 활성 상태일 때 글자색 설정 */
 }
 
-/* 마우스 호버 시 버튼 스타일 */
+ 마우스 호버 시 버튼 스타일
 .button:hover {
     background-color: #007BFF; /* 호버 색상 */
     color: white; /* 호버 시 글자 색상 */
@@ -194,11 +202,14 @@
 
 /*==================================연료버튼===============================================*/
 .radioContainer {
+    box-sizing: border-box;
     display: flex;
+    width: 100%;
     flex-direction: row;
     gap: 15px; /* 각 라디오 버튼 사이의 간격 */
     padding: 20px;
-    margin-left: 100px;
+    /*margin-left: 100px;*/
+    padding-left: 130px;
     border-radius: 8px;
     background-color:#041621;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -267,9 +278,16 @@
     align-items: center; /* 세로 중앙 정렬 */
     justify-items: center; /* 가로 중앙 정렬 */
     gap: 20px; /* 그리드 아이템 간격 */
-    height: 400px;
+    height: 230px;
     background-color: #041621;
     padding: 20px; /* 패딩 */
+
+
+    /*float: right;*/
+    /*width: 120px;*/
+    /*height: 680px;*/
+    /*background-color: #525252;*/
+
 }
 
 .icon_container {
@@ -277,10 +295,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+
 }
 
 .icon {
-    /* 아이콘 스타일 */
+     /*아이콘 스타일 */
     width: 70px; /* 혹은 실제 아이콘 크기에 맞게 조절 */
     height: 100px;
     display: flex;
@@ -288,6 +308,11 @@
     margin-left: 65px;
     justify-content: center;
     margin-bottom: 10px; /* 아이콘과 텍스트 간격 */
+    /*width: 50px;*/
+
+    /*padding-left: 30px;*/
+    /*padding-top: 50px;*/
+
 }
 .icon2 {
     /* 아이콘 스타일 */
@@ -299,6 +324,12 @@
     margin-left: 115px;
     justify-content: center;
     margin-bottom: 10px; /* 아이콘과 텍스트 간격 */
+
+
+    /*width: 50px;*/
+    /*padding-left: 30px;*/
+    /*padding-top: 50px;*/
+
 }
 
 .text {
@@ -306,12 +337,19 @@
      color: white;
      margin-bottom: 15px;
      margin-left: 50px/* 텍스트와 버튼 간격 */
+
+    /*color: white;*/
+    /*padding-left: 7px;*/
+
  }
 .text2 {
     /* 아이콘 설명 텍스트 스타일 */
     color: white;
     margin-bottom: 15px;
     margin-left: 76px/* 텍스트와 버튼 간격 */
+
+    /*color: white;*/
+    /*padding-left: 7px;*/
 }
 
 .button1 {
@@ -322,7 +360,7 @@
     font-size: 20px;
     border-radius: 25px;
     padding: 30px 70px; /* 패딩 */
-    cursor: pointer; /* 마우스 오버 시 손가락 커서 표시 */
+    /*cursor: pointer; !* 마우스 오버 시 손가락 커서 표시 *!*/
 }
 .button2 {
     /* 버튼 스타일 */
@@ -332,7 +370,7 @@
     color: white;
     border-radius: 25px;
     padding: 30px 70px; /* 패딩 */
-    cursor: pointer; /* 마우스 오버 시 손가락 커서 표시 */
+    /*cursor: pointer; !* 마우스 오버 시 손가락 커서 표시 *!*/
 }
 .button3 {
     /* 버튼 스타일 */
@@ -343,7 +381,7 @@
     border-radius: 25px;
     padding: 30px 70px; /* 패딩 */
     margin-right: 20px;
-    cursor: pointer; /* 마우스 오버 시 손가락 커서 표시 */
+    /*cursor: pointer; !* 마우스 오버 시 손가락 커서 표시 *!*/
 }
 
 /* 반응형 디자인을 위한 미디어 쿼리 */
