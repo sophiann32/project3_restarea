@@ -20,21 +20,23 @@
 }
 
 .categoryButton {
-    background-color: #4CAF50; /* 초록색 배경 */
+    background-color: #4CAF50; /* 기본 색상 */
+    background-size: cover; /* 버튼 전체 영역을 채움 */
+    background-position: center; /* 배경 이미지를 중앙에 위치 */
     border: none;
     color: white;
-    /*padding: 60px;*/
     text-align: center;
-    width: 250px;
-    height: 150px;
-    margin: 50px 0px 0px 0px ;
+    width: 220px;
+    height: 160px;
+    margin: 40px 0px 0px 0px;
     text-decoration: none;
     font-size: 16px;
-    border-radius: 20px; /* 버튼 모서리 둥글게 */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* 그림자 효과 */
-    transition: background-color 0.3s; /* 마우스 오버 효과 */
-    transform: translateX(400px)
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background-color 0.3s;
+    transform: translateX(400px);
 }
+
 
 
 .categoryButton:hover {
