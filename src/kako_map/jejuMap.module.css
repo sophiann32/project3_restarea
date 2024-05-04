@@ -30,18 +30,19 @@
 .categoryButtons {
     display: grid;
     justify-content: center;
-    vertical-align: middle;
-    grid-template-columns: repeat(8, calc(10% - 10px));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 5px;
     border-radius: 10px;
+
+
 }
 
 .categoryButton {
-    background-color: #4CAF50; /* 기본 색상 */
+    background-color: rgba(76, 175, 80, 0.7); /* 투명도를 추가한 색상 */
     background-size: cover; /* 버튼 전체 영역을 채움 */
     background-position: center; /* 배경 이미지를 중앙에 위치 */
     border: none;
-    color: white;
+    color: #ffffff;
     text-align: center;
     width: 100px;
     height: 80px;
@@ -53,8 +54,67 @@
     transition: background-color 0.3s;
 }
 
-
-
 .categoryButton:hover {
     background-color: #45a049; /* 마우스 오버 시 색 변경 */
+}
+
+
+.overlayWrapSmall {
+    display: block;
+    width: 230px;
+    /* height: 200px; */  /* 고정된 높이 제거 */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    line-height: 16px;
+}
+
+.overlayImageSmall {
+    width: 230px;
+    height: 130px;
+}
+
+.overlayTitleSmall {
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+.overlayAddressSmall,
+.overlayPhoneSmall,
+.overlayIntroductionSmall {
+    font-size: 10px;
+    margin: 2px 0;
+}
+
+
+.overlayIntroductionSmall {
+    font-size: 12px;
+    margin: 2px 0;
+    word-break: break-word;  /* 긴 단어들을 다음 줄로 넘깁니다 */
+    overflow-wrap: break-word;
+    white-space: normal;  /* 자동 줄바꿈을 허용합니다 */
+    hyphens: auto;  /* 적절한 곳에 하이픈을 추가합니다 */
+}
+
+
+/* 1024px 이상의 화면에서는 맵을 크게 유지 */
+@media (min-width: 1024px) {
+    .mapSpace {
+        height: 85%;
+    }
+}
+
+/* 768px에서 1023px 사이의 화면에서는 맵의 높이를 줄임 */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .mapSpace {
+        height: 50%;
+    }
+}
+
+/* 767px 이하의 화면에서는 맵의 높이를 더욱 줄임 */
+@media (max-width: 767px) {
+    .mapSpace {
+        height: 300px;
+    }
 }

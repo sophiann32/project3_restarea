@@ -2,6 +2,7 @@ import React, { useState, useEffect,useCallback } from 'react';
 import axios from 'axios';
 import styles from './jeju.module.css';
 import JejuMap from '../kako_map/jejuMap';
+import EVChargingModal from '../Modal/EVChargingModal';
 
 function Jeju() {
 
@@ -89,7 +90,7 @@ function Jeju() {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTags, setSelectedTags] = useState([]);
     const allTags = [...new Set(Object.values(categories).flatMap(cat => cat.tags))].sort();
-
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
 
 
@@ -157,30 +158,38 @@ function Jeju() {
     return (
         <>
             <div id={styles.mainJ}>
-                <div className={styles.jejuTab}>
-                    <div className={styles.topNav}>
-                        <select onChange={handleTagChange} value="">
-                            <option value="">태그 선택...</option>
-                            {allTags.map(tag => (
-                                <option key={tag} value={tag}>{tag}</option>
-                            ))}
-                        </select>
-                        <div className={styles.selectedTags}>
-                            {selectedTags.map(tag => (
-                                <span key={tag} className={styles.tag}>
-                                    {tag}
-                                    <button onClick={() => removeTag(tag)}>X</button>
-                                </span>
-                            ))}
+                <div className={styles.jejuTab}>    {/*사이트 왼쪽 리스트 */}
+                    <div className={styles.topNav}> {/*셀렉트박스 넣을 칸*/}
+                        <div className={styles.tagBox}> {/**/}
+                            <select onChange={handleTagChange} value="">
+                                <option value="">태그 선택...</option>
+                                {allTags.map(tag => (
+                                    <option key={tag} value={tag}>{tag}</option>
+                                ))}
+                            </select>
+                            <div className={styles.selectedTags}>
+                                {selectedTags.map(tag => (
+                                    <span key={tag} className={styles.tag}>
+                #{tag}
+                                        <button onClick={() => removeTag(tag)}>X</button>
+            </span>
+                                ))}
+                            </div>
                         </div>
+                        {/* 전기차 충전소 정보 버튼 */}
+                        <button className={styles.evButton} onClick={() => setIsModalOpen(true)}>
+                            전기차 충전소 보기
+                        </button>
                     </div>
                     {filteredSpots.map(spot => (
                         <div key={spot.CONTENTS_ID} className={styles.tourList} onClick={() => setSelectedSpot(spot)}>
-                            <img src={spot.THUMBNAIL_PATH} alt={spot.TITLE} style={{width: "350px", height: "300px", borderRadius: "15px"}}/>
+                            <img src={spot.THUMBNAIL_PATH} alt={spot.TITLE}
+                                 style={{width: "350px", height: "300px", borderRadius: "15px"}}/>
                             <div className={styles.tourInfo}>
                                 <h3>{spot.TITLE}</h3>
                                 <p>{spot.ROAD_ADDRESS}</p>
                                 <p>{spot.PHONE_NO}</p>
+                                <p>{spot.INTRODUCTION}</p>
                                 <div className={styles.tags}>
                                     {spot.TAG ? spot.TAG.split(/[,/]+/).slice(0, 5).map((tag, index) => (
                                         <span key={index} className={styles.tag}>{tag.trim()}</span>
@@ -189,7 +198,6 @@ function Jeju() {
                             </div>
                         </div>
                     ))}
-
                 </div>
                 <section className={styles.jejuMap}>
                     <JejuMap
@@ -198,10 +206,11 @@ function Jeju() {
                         selectedSpot={selectedSpot}
                         onSelectSpot={setSelectedSpot}
                         categories={categories}
-                        onCategoryChange={handleCategoryChange} // 여기서 정의한 함수를 전달
+                        onCategoryChange={handleCategoryChange}
                     />
                 </section>
             </div>
+            {isModalOpen && <EVChargingModal onClose={() => setIsModalOpen(false)} />}
         </>
     );
 }
