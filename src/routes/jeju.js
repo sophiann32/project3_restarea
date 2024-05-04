@@ -2,6 +2,7 @@ import React, { useState, useEffect,useCallback } from 'react';
 import axios from 'axios';
 import styles from './jeju.module.css';
 import JejuMap from '../kako_map/jejuMap';
+import EVChargingModal from '../Modal/EVChargingModal';
 
 function Jeju() {
 
@@ -89,7 +90,7 @@ function Jeju() {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTags, setSelectedTags] = useState([]);
     const allTags = [...new Set(Object.values(categories).flatMap(cat => cat.tags))].sort();
-
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
 
 
@@ -175,6 +176,10 @@ function Jeju() {
                                 ))}
                             </div>
                         </div>
+                        {/* 전기차 충전소 정보 버튼 */}
+                        <button className={styles.evButton} onClick={() => setIsModalOpen(true)}>
+                            전기차 충전소 보기
+                        </button>
                     </div>
                     {filteredSpots.map(spot => (
                         <div key={spot.CONTENTS_ID} className={styles.tourList} onClick={() => setSelectedSpot(spot)}>
@@ -193,7 +198,6 @@ function Jeju() {
                             </div>
                         </div>
                     ))}
-
                 </div>
                 <section className={styles.jejuMap}>
                     <JejuMap
@@ -202,10 +206,11 @@ function Jeju() {
                         selectedSpot={selectedSpot}
                         onSelectSpot={setSelectedSpot}
                         categories={categories}
-                        onCategoryChange={handleCategoryChange} // 여기서 정의한 함수를 전달
+                        onCategoryChange={handleCategoryChange}
                     />
                 </section>
             </div>
+            {isModalOpen && <EVChargingModal onClose={() => setIsModalOpen(false)} />}
         </>
     );
 }

@@ -6,13 +6,15 @@ function JejuMap({ spots, filteredSpots, selectedSpot, onSelectSpot, categories,
     const [mapCenter, setMapCenter] = useState({ lat: 33.36, lng: 126.55 });
     const [hoveredSpot, setHoveredSpot] = useState(null);
     const hoverTimeoutRef = useRef(null);
+    const [isBouncing, setIsBouncing] = useState(null); // 새로운 상태
 
     const selectSpot = (spot) => {
         onSelectSpot(spot);
         setMapCenter({ lat: spot.LATITUDE, lng: spot.LONGITUDE });
         setHoveredSpot(null);  // Reset overlay visibility when a new spot is selected
+        setIsBouncing(spot.CONTENTS_ID); // 선택한 스팟에 대해 바운스 효과 적용
+        setTimeout(() => setIsBouncing(null), 500); // 0.5초 후에 바운스 효과 제거
     };
-
     const handleMouseOver = (spot) => {
         clearTimeout(hoverTimeoutRef.current);
         setHoveredSpot(spot);
@@ -21,7 +23,7 @@ function JejuMap({ spots, filteredSpots, selectedSpot, onSelectSpot, categories,
     const handleMouseOut = () => {
         hoverTimeoutRef.current = setTimeout(() => {
             setHoveredSpot(null);
-        }, 300);  // Adjust delay as needed
+        }, 100);
     };
 
     return (
@@ -44,10 +46,11 @@ function JejuMap({ spots, filteredSpots, selectedSpot, onSelectSpot, categories,
                                     size: { width: 50, height: 50 }
                                 }}
                             />
-                            {hoveredSpot === spot && (
-                                <CustomOverlayMap
+                            {hoveredSpot === spot && (  <CustomOverlayMap
                                     position={{ lat: spot.LATITUDE, lng: spot.LONGITUDE }}
-                                    yAnchor={1}
+                                    yAnchor={1.2}
+                                    // 오버레이 내부의 마우스 이벤트를 무시합니다.
+                                    // style={{ pointerEvents: "none" }}
                                 >
                                     <div className={styles.overlayWrapSmall}>
                                         <img src={spot.THUMBNAIL_PATH} alt="thumbnail" className={styles.overlayImageSmall} />
