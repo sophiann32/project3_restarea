@@ -157,30 +157,34 @@ function Jeju() {
     return (
         <>
             <div id={styles.mainJ}>
-                <div className={styles.jejuTab}>
-                    <div className={styles.topNav}>
-                        <select onChange={handleTagChange} value="">
-                            <option value="">태그 선택...</option>
-                            {allTags.map(tag => (
-                                <option key={tag} value={tag}>{tag}</option>
-                            ))}
-                        </select>
-                        <div className={styles.selectedTags}>
-                            {selectedTags.map(tag => (
-                                <span key={tag} className={styles.tag}>
-                                    {tag}
-                                    <button onClick={() => removeTag(tag)}>X</button>
-                                </span>
-                            ))}
+                <div className={styles.jejuTab}>    {/*사이트 왼쪽 리스트 */}
+                    <div className={styles.topNav}> {/*셀렉트박스 넣을 칸*/}
+                        <div className={styles.tagBox}> {/**/}
+                            <select onChange={handleTagChange} value="">
+                                <option value="">태그 선택...</option>
+                                {allTags.map(tag => (
+                                    <option key={tag} value={tag}>{tag}</option>
+                                ))}
+                            </select>
+                            <div className={styles.selectedTags}>
+                                {selectedTags.map(tag => (
+                                    <span key={tag} className={styles.tag}>
+                #{tag}
+                                        <button onClick={() => removeTag(tag)}>X</button>
+            </span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     {filteredSpots.map(spot => (
                         <div key={spot.CONTENTS_ID} className={styles.tourList} onClick={() => setSelectedSpot(spot)}>
-                            <img src={spot.THUMBNAIL_PATH} alt={spot.TITLE} style={{width: "350px", height: "300px", borderRadius: "15px"}}/>
+                            <img src={spot.THUMBNAIL_PATH} alt={spot.TITLE}
+                                 style={{width: "350px", height: "300px", borderRadius: "15px"}}/>
                             <div className={styles.tourInfo}>
                                 <h3>{spot.TITLE}</h3>
                                 <p>{spot.ROAD_ADDRESS}</p>
                                 <p>{spot.PHONE_NO}</p>
+                                <p>{spot.INTRODUCTION}</p>
                                 <div className={styles.tags}>
                                     {spot.TAG ? spot.TAG.split(/[,/]+/).slice(0, 5).map((tag, index) => (
                                         <span key={index} className={styles.tag}>{tag.trim()}</span>
