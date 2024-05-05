@@ -8,16 +8,6 @@ import styles from './map_ui.module.css'
 import MapInfo from "../kako_map/map_info";
 import GasStation from "../kako_map/gas_station";
 
-
-
-
-
-
-
-
-
-
-
 // 미터 단위를 킬로미터로 변환하는 함수
 function convertMetersToKilometers(meters) {
     return (meters / 1000).toFixed(2); // 미터를 킬로미터로 변환 후, 소수점 둘째 자리까지 표현

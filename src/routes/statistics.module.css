@@ -24,15 +24,49 @@
 }
 .smallbox1 {
     width: 1200px;
-    height: 100px;
+    height: 250px;
     background-color: #d59c9c;
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 50%;
-    margin-left:-600px ;
-
+    margin-left: -600px;
+    padding: 10px;
 }
-.box2 {
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 50%;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ff001e;
+}
+
+.searchInput {
+    width: 200px;
+    height: 30px;
+    font-size: 16px;
+    padding-left: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.searchButton {
+    background-color: #8acac4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.searchButton:hover {
+    background-color: #506dad;
+}
+
+ .box2 {
     display: flex;
     justify-content: center;
     align-items: center;
