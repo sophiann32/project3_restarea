@@ -51,7 +51,7 @@ function RestAreaDetail({ selectedRoute }) {
                                        height: 35,
                                    }
                                }}>
-                        {isOpen === area && <div style={{fontSize: 17, color: '#858585', backgroundColor: '#fffefe', padding: '5px', borderRadius: '5px', textAlign: 'center' }}>{area.휴게소명}</div>}
+                        {isOpen === area && <div style={{fontSize: 17, color: '#000000', backgroundColor: '#fffefe', padding: '5px', borderRadius: '5px', textAlign: 'center' }}>{area.휴게소명}</div>}
                     </MapMarker>
                 ))}
             </Map>
