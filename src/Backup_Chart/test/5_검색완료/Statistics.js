@@ -119,72 +119,66 @@ function Statistics() {
             <div className={styles.statistics}>
                 <div className={styles.box1}>
                     <div className={styles.smallbox1}>
-                        <div className={styles.searchInputContainer}>
-                            <div className={styles.searchInputWrapper}>
-                                <h2> ⛽ 상호명 검색 </h2>
-                                <input
-                                    className={styles.searchInput}
-                                    type="text"
-                                    value={searchValue}
-                                    onChange={(e) => setSearchValue(e.target.value)}
-                                    placeholder=" 주유소,가스 충전소명 (2글자 이상)"
-                                />
-                                <select className={styles.searchArea}>
-                                    value={selectedArea}
-                                    onChange={handleAreaChange}
-                                    >
-                                    <option value="">지역</option>
-                                    <option value="01">서울</option>
-                                    <option value="02">경기</option>
-                                    <option value="03">강원</option>
-                                    <option value="04">충북</option>
-                                    <option value="05">충남</option>
-                                    <option value="06">전북</option>
-                                    <option value="07">전남</option>
-                                    <option value="08">경북</option>
-                                    <option value="09">경남</option>
-                                    <option value="10">부산</option>
-                                    <option value="11">제주</option>
-                                    <option value="14">대구</option>
-                                    <option value="15">인천</option>
-                                    <option value="16">광주</option>
-                                    <option value="17">대전</option>
-                                    <option value="18">울산</option>
-                                    <option value="19">세종</option>
-                                </select>
-                                <button
-                                    className={styles.searchButton}
-                                    onClick={handleSearch}
-                                > 주소,LPG 여부,브랜드명 확인 가능
-                                </button>
-                            </div>
+                        {/* 추가 */}
+                        <input
+                            className={styles.smallbox1.searchInput}
+                            type="text"
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            placeholder="주유소명 (2글자 이상)"
+                        />
+                        <button
+                            className={styles.searchButton}
+                            onClick={handleSearch}
+                        >상세정보 검색
+                        </button>
+                        <select
+                            value={selectedArea}
+                            onChange={handleAreaChange}
+                        >
+                            <option value="">지역</option>
+                            <option value="01">서울</option>
+                            <option value="02">경기</option>
+                            <option value="03">강원</option>
+                            <option value="04">충북</option>
+                            <option value="05">충남</option>
+                            <option value="06">전북</option>
+                            <option value="07">전남</option>
+                            <option value="08">경북</option>
+                            <option value="09">경남</option>
+                            <option value="10">부산</option>
+                            <option value="11">제주</option>
+                            <option value="14">대구</option>
+                            <option value="15">인천</option>
+                            <option value="16">광주</option>
+                            <option value="17">대전</option>
+                            <option value="18">울산</option>
+                            <option value="19">세종</option>
+                        </select>
+                        <div className={styles.results}>
+
+                            {Forwardings && Forwardings.map((Forwarding, index) => (
+                                <div key={index}>
+                                    <p>주소: {Forwarding.address}</p>
+                                    <p>이름: {Forwarding.name}</p>
+                                    {(getLPGYN(Forwarding['LPG_YN']) !== '-') && <p>업종 구분: {getLPGYN(Forwarding['LPG_YN'])}</p>}
+                                    {(getGasTradeName(Forwarding['POLL_DIV_CD']) !== '-') && <p>주유소 상호: {getGasTradeName(Forwarding['POLL_DIV_CD'])}</p>}
+                                    {(getChargeTradeName(Forwarding['GPOLL_DIV_CD']) !== '-') && <p>가스 충전소 상호: {getChargeTradeName(Forwarding['GPOLL_DIV_CD'])}</p>}
+                                </div>
+                            ))}
                         </div>
-                        <div className={styles.chartContainer}>
-                                {Forwardings && Forwardings.map((Forwarding, index) => (
-                                    <div className={styles.results} key={index}>
-                                        <p>상호명: {Forwarding.name}</p>
-                                        <p>주소: {Forwarding.address}</p>
-                                        {(getLPGYN(Forwarding['LPG_YN']) !== '-') &&
-                                            <p>업종 구분: {getLPGYN(Forwarding['LPG_YN'])}</p>}
-                                        {(getGasTradeName(Forwarding['POLL_DIV_CD']) !== '-') &&
-                                            <p>주유소 상호: {getGasTradeName(Forwarding['POLL_DIV_CD'])}</p>}
-                                        {(getChargeTradeName(Forwarding['GPOLL_DIV_CD']) !== '-') &&
-                                            <p>가스 충전소 상호: {getChargeTradeName(Forwarding['GPOLL_DIV_CD'])}</p>}
-                                    </div>
-                                ))}
-                            </div>
 
 
-                        </div>
                     </div>
-                    <div className={styles.box2}>
-                        <div className={styles.chartContainer2}>
-                            <div className={styles.smallbox2}>
-                                <NationalGasPricesChart/>
-                            </div>
-                            <div className={styles.smallbox3}>
-                                <NearbyGasChart data={locationData}/>
-                            </div>
+                </div>
+                <div className={styles.box2}>
+                    <div className={styles.chartContainer}>
+                        <div className={styles.smallbox2}>
+                            <NationalGasPricesChart/>
+                        </div>
+                        <div className={styles.smallbox3}>
+                            <NearbyGasChart data={locationData}/>
+                        </div>
                         <div className={styles.smallbox2}>
                             <Chart7/>
                         </div>

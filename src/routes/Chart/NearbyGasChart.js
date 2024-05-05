@@ -45,7 +45,7 @@ function NearbyGasChart({ data }) {
     };
     const legendTitle = {
         display: true,
-        text: '내 주변 주유소 가격비교',
+        text: '내 주변 주유소 휘발유 가격비교',
         padding: 20, // 제목과 범례 사이의 간격 조절
         font: {
             size: 16, // 폰트 크기 설정

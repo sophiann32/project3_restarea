@@ -24,36 +24,68 @@
 }
 .smallbox1 {
     width: 1200px;
-    height: 250px;
-    background-color: #d59c9c;
+    height: 400px;
+    background-color: rgba(221, 140, 140, 0.21);
     position: relative;
     bottom: 0;
     left: 50%;
     margin-left: -600px;
     padding: 10px;
+    display: grid;
+    grid-template-areas:
+    'a b '
+    'c b ';
+    grid-template-columns: 60% 40%;
+    border-radius: 10px ;
+}
+.searchInputWrapper{
+
+}
+.searchInputContainer {
+    padding: 10px;
+    width: 500px;
+    display: grid;
+    background: rgba(153, 241, 234, 0.9);
+    /*grid-template-columns: repeat(2, 1fr);*/
+    grid-template-rows: auto auto;
+    gap: 10px;
+    margin: 0 auto;
+    grid-template-areas:
+    'a a '
+    'b c '
+    'd d';
+    justify-items: center;
+    grid-template-columns: 70% 30%;
+    border-radius: 10px 20px 0px 40px;
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 50%;
-    max-width: 400px;
-    padding: 20px;
-    border: 1px solid #ff001e;
-}
 
+
+
+.h2{
+    grid-area: a;
+}
 .searchInput {
-    width: 200px;
-    height: 30px;
-    font-size: 16px;
-    padding-left: 20px;
+    grid-area: b;
+    width: 70px;
+    height: 50px;
+    font-size: 18px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 5px;
+    position: relative;
+    display: block;
 }
-
+.searchArea {
+    grid-area: c;
+    width: 60px;
+    height: 50px;
+    font-size: 18px;
+    position: relative;
+    display: block;
+}
 .searchButton {
+    grid-area: d;
     background-color: #8acac4;
     color: #fff;
     padding: 10px 20px;
@@ -65,7 +97,22 @@
 .searchButton:hover {
     background-color: #506dad;
 }
+.chartContainer {
+    overflow-y: auto;
+    max-width: 300px; /* 최대 너비 설정, 'px'와 숫자 사이의 공백 제거 필요 */
+    width: 100%; /* 부모 요소에 맞게 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 20px; /* 여기에 패딩 추가 */
+}
 
+.results {
+    grid-area: c;
+    background-color: #f6f2e1;
+    position: relative;
+    margin-bottom: 10px;
+    padding: 10px 17px;
+    width: 100%;
+}
  .box2 {
     display: flex;
     justify-content: center;
@@ -77,7 +124,7 @@
     background-color: #f8efef;
 }
 
-.chartContainer {
+.chartContainer2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto auto;
@@ -97,6 +144,7 @@
     display: block;
     transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
     height: 455px;
+    border-radius: 40px;
 }
 .smallbox2{
     width: 585px; /* 너비 조정 */
@@ -140,7 +188,7 @@
         justify-content: space-between;
         /*position: fixed;*/
        }
-    .chartContainer {
+    .chartContainer2 {
         grid-template-columns: 1fr; /* 그리드 열을 하나로 변경 */
         padding: 10px; /* 좁은 화면에서 패딩 감소 */
         margin: 0; /* 여백 제거 */
