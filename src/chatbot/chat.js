@@ -206,10 +206,7 @@ function Chatbot() {
     };
 
     return (
-        <div className={"APP"}>
-            <header>
-                <h1>채팅로보트 임니다</h1>
-            </header>
+        <div className="chat_app">
             <div className="chat-container">
                 {messages.map(msg => (
                     <div key={msg.id} className={`message ${msg.sender}`}>

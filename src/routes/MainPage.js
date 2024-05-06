@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styles from './main_page.module.css'
 import Modal from './Modal';
 import {useParams, Link, useNavigate} from 'react-router-dom';
+import ChatBot from '../chatbot/chat';
 
 function MainPage(){
     const [isModalOpen, setModalOpen] = useState(false);
@@ -75,13 +76,15 @@ function MainPage(){
                     </ul>
                 </form>
                 <div className={styles.chat} onClick={openModal}>
-                    챗버튼
+                   CHAT BOT
                 </div>
 
                 {/* 모달 컴포넌트를 조건부 렌더링으로 추가 */}
                 {isModalOpen && (
                     <Modal isOpen={isModalOpen} onClose={closeModal}>
-                        <div>여기에 챗봇 UI를 표시합니다.</div>
+                        <div>
+                        <chat/>
+                        </div>
                     </Modal>
                 )}
             </div>
