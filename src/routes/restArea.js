@@ -3,6 +3,7 @@ import styles from './restArea.module.css';
 import axios from 'axios';
 import RestAreaDetail from "../kako_map/restAreaDetail";
 import Modal from '../Modal/Modal';
+import RestAreaModalContent from '../kako_map/RestAreaModalContent';
 
 function RestArea( ) {
     const [selectedRoute, setSelectedRoute] = useState('');
@@ -152,34 +153,7 @@ function RestArea( ) {
                     </ul>
                 </div>
                 <Modal isOpen={modalOpen} onClose={handleCloseModal}>
-                    <div>
-                        <h2>{selectedRestArea ? selectedRestArea.휴게소명 : '휴게소 이름'}</h2>
-                        {selectedRestArea && selectedRestArea.brandInfo && (
-                            <>
-                                <h3>브랜드 정보: {selectedRestArea.brandInfo.brdName}</h3>
-                                <p>영업시간: {`${selectedRestArea.brandInfo.stime} ~ ${selectedRestArea.brandInfo.etime}`}</p>
-                                <p>브랜드 소개: {selectedRestArea.brandInfo.brdDesc}</p>
-                                <p>최종 수정 일시: {selectedRestArea.brandInfo.lsttmAltrDttm}</p>
-                            </>
-                        )}
-                        {selectedRestArea && selectedRestArea.fuelPrices && (
-                            <>
-                                <h3>연료 가격 정보</h3>
-                                <p>휘발유 가격: {selectedRestArea.fuelPrices.gasolinePrice}원</p>
-                                <p>경유 가격: {selectedRestArea.fuelPrices.diselPrice}원</p>
-                                <p>LPG 가격: {selectedRestArea.fuelPrices.lpgPrice !== 'X' ? `${selectedRestArea.fuelPrices.lpgPrice}원` : 'LPG 미판매'}</p>
-                                <p>전화번호: {selectedRestArea.fuelPrices.telNo}</p>
-                            </>
-                        )}
-                        {selectedRestArea && selectedRestArea.bestFoods && selectedRestArea.bestFoods.length > 0 && (
-                            <>
-                                <h3>인기 음식</h3>
-                                {selectedRestArea.bestFoods.map((food, index) => (
-                                    <p key={index}>{food.foodNm} - {food.foodCost}원 (업데이트: {food.lsttmAltrDttm})</p>
-                                ))}
-                            </>
-                        )}
-                    </div>
+                    {selectedRestArea && <RestAreaModalContent area={selectedRestArea} />}
                 </Modal>
 
                 <section className={styles.restAreaMap}>
