@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Map, MapMarker, } from "react-kakao-maps-sdk";
 import Modal from '../Modal/Modal';
 import styles from './restAreaDetail.module.css'
+import RestAreaModalContent from '../kako_map/RestAreaModalContent';
 
 
 function RestAreaDetail({ selectedRoute }) {
@@ -57,9 +58,7 @@ function RestAreaDetail({ selectedRoute }) {
             </Map>
             {selectedRestArea && (
                 <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-                    <h2>{selectedRestArea.휴게소명}</h2>
-                    <p>전화번호: {selectedRestArea.휴게소전화번호}</p>
-                    {/* Additional info */}
+                    <RestAreaModalContent area={selectedRestArea} />
                 </Modal>
             )}
         </div>
