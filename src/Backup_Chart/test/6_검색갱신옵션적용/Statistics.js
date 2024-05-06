@@ -80,7 +80,7 @@ function Statistics() {
             case 'N':
                 return '주유소';
             case 'Y':
-                return 'LPG 충전소';
+                return '자동차충전소';
             case 'C':
                 return '주유소/충전소 겸업';
             default:
@@ -113,17 +113,16 @@ function Statistics() {
                 <div className={styles.box1}>
                     <div className={styles.smallbox1}>
                         <div className={styles.searchInputContainer}>
-                            {/*<div className={styles.searchInputWrapper}>*/}
-                                <h2 className={styles.h2}> ⛽ 상호명으로 상세 검색 </h2>
+                            <div className={styles.searchInputWrapper}>
+                                <h2> ⛽ 주유소,가스충전소 이름검색 </h2>
                                 <input
                                     className={styles.searchInput}
                                     type="text"
                                     value={searchValue}
                                     onChange={(e) => setSearchValue(e.target.value)}
-                                    placeholder="(주유소,가스충전소 2글자 이상)"
+                                    placeholder="(2글자 이상)"
                                 />
                                 <select
-                                    className={styles.searchArea}
                                     value={selectedArea}
                                     onChange={(e) => setSelectedArea(e.target.value)}
                                 >
@@ -150,10 +149,10 @@ function Statistics() {
                                 <button
                                     className={styles.searchButton}
                                     onClick={handleSearch}
-                                > 주소,공급업체 확인
+                                > 주소,LPG 여부,브랜드명 확인 가능
                                 </button>
                             </div>
-                        {/*</div>*/}
+                        </div>
                         <div className={styles.chartContainer}>
                             {Forwardings && Forwardings.map((Forwarding, index) => {
                                 console.log('Forwarding:', Forwarding); // log the Forwarding object
@@ -164,9 +163,9 @@ function Statistics() {
                                         {(getLPGYN(Forwarding['LPG_YN']) !== '-') &&
                                             <p>업종 구분: {getLPGYN(Forwarding['LPG_YN'])}</p>}
                                         {(getGasTradeName(Forwarding['Gas_Trade_name']) !== '-') &&
-                                            <p>주유소 공급업체명: {getGasTradeName(Forwarding['Gas_Trade_name'])}</p>}
+                                            <p>주유소 상호: {getGasTradeName(Forwarding['Gas_Trade_name'])}</p>}
                                         {(getChargeTradeName(Forwarding['Charge_Trade_name']) !== '-') &&
-                                            <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['Charge_Trade_name'])}</p>}
+                                            <p>가스 충전소 상호: {getChargeTradeName(Forwarding['Charge_Trade_name'])}</p>}
                                     </div>
                                 );
                             })}
