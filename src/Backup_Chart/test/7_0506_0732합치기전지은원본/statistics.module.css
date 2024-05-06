@@ -1,0 +1,233 @@
+.statistics{
+    width: 100%;
+    /*height: 780px;*/
+    background-color: #ffeb9f;
+    /*box-sizing: border-box;*/
+/*    display: grid;*/
+/*    grid-template-areas:      !* !!핵심!!*!*/
+/*            "aside section"*/
+/*;*/
+/*    grid-template-columns: 30% 70% ;*/
+/*    !*자식width*!*/
+/*    grid-template-rows: 780px;*/
+/*    !*자식height*!*/
+}
+
+.box1{
+    width: 100%;
+    height: 500px;
+    /*background-color: #dcdcdc;*/
+    background: linear-gradient(rgba(252, 252, 252, 0.05), rgba(124, 124, 124, 0.93)),url("../../public/img/bg1.jpg");
+    background-size: cover;
+    /*background-position: center;*/
+    /*position: relative;*/
+}
+.smallbox1 {
+    display: grid;
+    width: 1200px;
+    height: 300px;
+    background-color: rgba(255, 254, 254, 0.71);
+    position: relative;
+    bottom: 0;
+    left: 50%;
+    margin-left: -600px;
+    padding: 10px;
+    grid-template-areas:
+    'a b ';
+    grid-template-columns: 50% 50%;
+    border-radius: 10px ;
+    align-items: center;
+    grid-gap: 0;
+}
+/*.searchInputWrapper{*/
+.chartContainer {
+    grid-area: b;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-width: 400px;
+    margin: 0 auto;
+    /*padding: 20px;*/
+    height: 300px;
+    box-sizing: border-box;
+}
+
+/* 스크롤 바 컨테이너 */
+.chartContainer::-webkit-scrollbar {
+    width: 16px;
+}
+
+.chartContainer::-webkit-scrollbar-track {
+    background: #f4fbff;
+    border-radius: 10px;
+}
+
+.chartContainer::-webkit-scrollbar-thumb {
+    background-color: #bad5d1;
+    border-radius: 10px;
+    border: 3px solid #eef6fb;
+}
+.results {
+
+    display: block;
+    background-color: #faf8ed;
+    /*position: relative;*/
+    margin-bottom: 10px;
+    padding: 10px 17px;
+    width: 100%;
+    border-radius: 10px;
+}
+/*}*/
+.searchInputContainer {
+    grid-area: a;
+    display: grid;
+    padding: 10px;
+    width: 400px;
+    height: 250px;
+    background: rgb(231, 231, 231);
+    grid-template-rows: auto auto;
+    gap: 6px;
+    margin: 0 auto;
+    grid-template-areas:
+    'a a '
+    'b c '
+    'd d';
+    justify-items: start;
+    grid-template-columns: 80% 20%;
+    border-radius: 10px ;
+
+}
+
+.h2{
+    grid-area: a;
+}
+.searchInput {
+    grid-area: b;
+    /*width: 50px;*/
+    height: 50px;
+    font-size: 18px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+    display: block;
+}
+.searchArea {
+    grid-area: c;
+    /*width: 70px;*/
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    height: 50px;
+    font-size: 18px;
+    /*position: relative;*/
+
+}
+.searchButton {
+    grid-area: d;
+    background-color: #8acac4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 95%;
+    height: 50px;
+    transition: transform 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+.searchButton:hover {
+    background-color: #7eb8b3;
+    transform: scale(1.01);
+
+}
+
+
+ .box2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto; /* 변경: 컨텐츠에 맞춰 높이 조정 */
+    margin: 0 auto;
+    background-color: #f8efef;
+}
+
+.chartContainer2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    gap: 10px; /* 그리드 사이의 간격 */
+    max-width: 1160px; /* 최대 너비 설정 */
+    width: 100%; /* 부모 요소에 맞게 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 20px; /* 여기에 패딩 추가 */
+
+}
+
+.smallbox2,.smallbox3{
+    background-color: #fffefe;
+    position: relative;
+    margin-bottom: 10px;
+    padding: 10px 17px;
+    display: block;
+    transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
+    height: 455px;
+    border-radius: 40px;
+}
+.smallbox2{
+    width: 585px; /* 너비 조정 */
+}
+
+.smallbox2:hover {
+    transform: translateY(-5px); /* Y축으로 5px 이동 */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; /* 그림자 변화 */
+}
+
+.smallbox3{
+    width: 500px;
+}
+
+.smallbox3:hover {
+    transform: translateY(-5px); /* Y축으로 5px 이동 */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;/* 그림자 변화 */
+}
+
+
+/* 모바일 화면에서 적용되는 스타일 */
+@media screen and (max-width: 768px) {
+    /*.Header_menu_box__+qm-e{*/
+    /*    display: flex;*/
+    /*    flex-direction: column;*/
+
+    /*    align-items: center;*/
+    /*}*/
+    .box1 .box2{
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 48px;
+        padding-left: 20px;
+        padding-right: 20px;
+        z-index: 8;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        /*position: fixed;*/
+       }
+    .chartContainer2 {
+        grid-template-columns: 1fr; /* 그리드 열을 하나로 변경 */
+        padding: 10px; /* 좁은 화면에서 패딩 감소 */
+        margin: 0; /* 여백 제거 */
+    }
+
+
+    .smallbox2, .smallbox3 {
+        width: 100%;
+
+    }
+}
+
