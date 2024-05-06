@@ -31,25 +31,38 @@ function Statistics() {
 
     //추가
     const [searchValue, setSearchValue] = useState('');
+<<<<<<< HEAD
     const [Forwardings, setForwarding] = useState('');
     const [selectedArea, setSelectedArea] = useState('');
+=======
+    const [OilAddress, setOilAddress] = useState('');
+>>>>>>> master
     const handleSearch = () => {
         axios.get('http://localhost:5000/api/search', {
             params: {
                 code: 'F240409104',
                 out: 'json',
                 osnm: searchValue,
+<<<<<<< HEAD
                 area: selectedArea,
             },
         })
             .then((finding) => {
                 const FindingStations = finding.data;
                 setForwarding(FindingStations.map((FindingStation) => ({ ...FindingStation}))); // Update the Forwardings state to an array of objects
+=======
+            },
+        })
+            .then((finding) => {
+                const data = finding.data;
+                setOilAddress(data[0].address);
+>>>>>>> master
             })
             .catch(() => {
                 console.log('Failed to fetch data');
             });
     };
+<<<<<<< HEAD
     useEffect(() => {
         fetchLocationAndData();
     }, []);
@@ -107,11 +120,20 @@ function Statistics() {
                 return '-';
         }
     };
+=======
+
+    // 컴포넌트 마운트 시 자동으로 위치 정보를 불러오고 데이터를 요청
+    useEffect(() => {
+        fetchLocationAndData();
+    }, []);
+    // let[oilPrice,setOilPrice] = useState()
+>>>>>>> master
     return (
         <>
             <div className={styles.statistics}>
                 <div className={styles.box1}>
                     <div className={styles.smallbox1}>
+<<<<<<< HEAD
                         <div className={styles.searchInputContainer}>
                             {/*<div className={styles.searchInputWrapper}>*/}
                                 <h2 className={styles.h2}> ⛽ 상호명으로 상세 검색 </h2>
@@ -170,13 +192,36 @@ function Statistics() {
                                     </div>
                                 );
                             })}
+=======
+
+                        {/* 추가 */}
+                        <input
+                            className={styles.smallbox1.searchInput}
+                            type="text"
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            placeholder="주유소명 (2글자 이상)"
+                        />
+                        <button
+                            className={styles.searchButton}
+                            onClick={handleSearch}
+                        >상세정보 검색
+                        </button>
+                        <p> 주소: {OilAddress}</p>
+                        <div className={styles.results}>
+                            {/* 검색 결과를 여기에 표시 */}
+>>>>>>> master
                         </div>
 
 
                     </div>
                 </div>
                 <div className={styles.box2}>
+<<<<<<< HEAD
                     <div className={styles.chartContainer2}>
+=======
+                <div className={styles.chartContainer}>
+>>>>>>> master
                         <div className={styles.smallbox2}>
                             <NationalGasPricesChart/>
                         </div>

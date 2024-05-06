@@ -25,13 +25,19 @@
 .smallbox1 {
     display: grid;
     width: 1200px;
+<<<<<<< HEAD
     height: 300px;
     background-color: rgba(255, 254, 254, 0.71);
+=======
+    height: 250px;
+    background-color: #d59c9c;
+>>>>>>> master
     position: relative;
     bottom: 0;
     left: 50%;
     margin-left: -600px;
     padding: 10px;
+<<<<<<< HEAD
     grid-template-areas:
     'a b ';
     grid-template-columns: 50% 50%;
@@ -123,12 +129,38 @@
 }
 .searchButton {
     grid-area: d;
+=======
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 50%;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ff001e;
+}
+
+.searchInput {
+    width: 200px;
+    height: 30px;
+    font-size: 16px;
+    padding-left: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.searchButton {
+>>>>>>> master
     background-color: #8acac4;
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+<<<<<<< HEAD
     width: 95%;
     height: 50px;
     transition: transform 0.3s ease-in-out;
@@ -143,6 +175,14 @@
 }
 
 
+=======
+}
+
+.searchButton:hover {
+    background-color: #506dad;
+}
+
+>>>>>>> master
  .box2 {
     display: flex;
     justify-content: center;
