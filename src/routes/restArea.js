@@ -8,9 +8,10 @@ import RestAreaModalContent from '../kako_map/RestAreaModalContent';
 function RestArea( ) {
     const [selectedRoute, setSelectedRoute] = useState('');
     const [restAreas, setRestAreas] = useState([]);
+    const [filteredRestAreas, setFilteredRestAreas] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [selectedRestArea, setSelectedRestArea] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
-
     const normalizeName = (name) => {
         return name.replace(/휴게소|주유소|정류장|터미널/g, '') // 여러 가능한 접미사 제거
             // .replace(/[^\w\s]|_/g, '') // 특수문자 제거
@@ -23,7 +24,6 @@ function RestArea( ) {
             axios.get(`http://localhost:5000/restareas?route=${selectedRoute}`)
                 .then(response => {
                     const areas = response.data;
-                    // 연료, 브랜드, 음식 정보 동시에 가져오기
                     Promise.all([
                         axios.get(`http://localhost:5000/restbrands?routeNm=${selectedRoute}`),
                         axios.get(`http://localhost:5000/fuelprices?routeNm=${selectedRoute}`),
@@ -70,13 +70,16 @@ function RestArea( ) {
                                 }))
                             };
                         });
+
                         setRestAreas(updatedAreas);
+                        setFilteredRestAreas(updatedAreas); // 초기 필터된 리스트는 전체 리스트
                     }).catch(error => {
                         console.error('Error fetching data: ', error);
                     });
                 });
         } else {
             setRestAreas([]);
+            setFilteredRestAreas([]);
         }
     }, [selectedRoute]);
 
@@ -95,7 +98,6 @@ function RestArea( ) {
             <div id={styles.main}>
                 <div className={styles.restAreaTab}>
                     <select value={selectedRoute} onChange={e => setSelectedRoute(e.target.value)}>
-                        <option value="">노선을 선택하세요</option>
                         <option value="">노선을 선택하세요</option>
                         <option value="동해선">동해선</option>
                         <option value="중부내륙선">중부내륙선</option>

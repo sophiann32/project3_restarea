@@ -4,11 +4,11 @@ import styles from './evChargingModal.module.css';
 import axios from 'axios';
 
 function EVChargingModal({ onClose }) {
-    const [radius, setRadius] = useState(5); // 기본 반경 설정
+    const [radius, setRadius] = useState(1); // 기본 반경 설정
     const [chargingStations, setChargingStations] = useState([]);
     const [center, setCenter] = useState({ lat: 33.499621, lng: 126.531188 }); // 디폴트 중심 설정
     const [selectedStation, setSelectedStation] = useState(null);
-    const [zoomLevel, setZoomLevel] = useState(3); // 지도의 줌 레벨 설정
+    const [zoomLevel, setZoomLevel] = useState(5); // 지도의 줌 레벨 설정
     const [userLocation, setUserLocation] = useState(null); // 사용자의 현재 위치 설정
 
     useEffect(() => {
