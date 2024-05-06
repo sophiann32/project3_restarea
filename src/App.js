@@ -50,11 +50,8 @@ function App() {
                       <Route path="/" element={<MainPage/>}/>
                       <Route path="/map" element={<MapUi/> }/>
                       <Route path="/sub" element={<Statistics/>}/>
-
-
-
-
                       <Route path="/restArea" element={<RestArea/>}/>
+                      <Route path="/restarea/:route" element={<RestArea />} />
                       <Route path="/jeju" element={<Jeju/>}/>
                       <Route path="/board" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>

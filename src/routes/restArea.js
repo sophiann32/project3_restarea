@@ -4,32 +4,47 @@ import axios from 'axios';
 import RestAreaDetail from "../kako_map/restAreaDetail";
 import Modal from '../Modal/Modal';
 import RestAreaModalContent from '../kako_map/RestAreaModalContent';
+import { useParams } from 'react-router-dom';
 
-function RestArea( ) {
-    const [selectedRoute, setSelectedRoute] = useState('');
+function RestArea() {
+    const { route } = useParams();
+    const decodedRoute = decodeURIComponent(route || '');
+    console.log("Decoded Route:", decodedRoute);
+    const [selectedRoute, setSelectedRoute] = useState(decodeURIComponent(route || ''));
     const [restAreas, setRestAreas] = useState([]);
     const [filteredRestAreas, setFilteredRestAreas] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedRestArea, setSelectedRestArea] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+
     const normalizeName = (name) => {
-        return name.replace(/휴게소|주유소|정류장|터미널/g, '') // 여러 가능한 접미사 제거
-            // .replace(/[^\w\s]|_/g, '') // 특수문자 제거
-            // .replace(/\s+/g, ' ') // 중복 공백 제거
-            .trim() // 앞뒤 공백 제거
+        return name.replace(/휴게소|주유소|정류장|터미널/g, '')
+            .trim();
     };
+    useEffect(() => {
+        setSelectedRoute(route || '');
+    }, [route]);
+
 
     useEffect(() => {
+        console.log("Fetching rest areas for route:", selectedRoute);
         if (selectedRoute) {
             axios.get(`http://localhost:5000/restareas?route=${selectedRoute}`)
                 .then(response => {
                     const areas = response.data;
+                    console.log("Fetched rest areas:", areas);
                     Promise.all([
                         axios.get(`http://localhost:5000/restbrands?routeNm=${selectedRoute}`),
                         axios.get(`http://localhost:5000/fuelprices?routeNm=${selectedRoute}`),
                         axios.get(`http://localhost:5000/facilities?routeNm=${selectedRoute}`),
                         axios.get(`http://localhost:5000/bestfoods?routeNm=${selectedRoute}`)
                     ]).then(([brandResponse, fuelResponse, facilityResponse, bestFoodResponse]) => {
+                        console.log("Fetched brand data:", brandResponse.data);
+                        console.log("Fetched fuel data:", fuelResponse.data);
+                        console.log("Fetched facility data:", facilityResponse.data);
+                        console.log("Fetched best food data:", bestFoodResponse.data);
+
+                        // 데이터 처리
                         const brandData = brandResponse.data.list;
                         const fuelData = fuelResponse.data.list;
                         const facilityData = facilityResponse.data;
@@ -71,6 +86,7 @@ function RestArea( ) {
                             };
                         });
 
+                        console.log("Updated rest areas:", updatedAreas);
                         setRestAreas(updatedAreas);
                         setFilteredRestAreas(updatedAreas); // 초기 필터된 리스트는 전체 리스트
                     }).catch(error => {
@@ -78,17 +94,21 @@ function RestArea( ) {
                     });
                 });
         } else {
+            console.log("No route selected, clearing rest areas.");
             setRestAreas([]);
             setFilteredRestAreas([]);
         }
     }, [selectedRoute]);
 
+
     const handleAreaClick = (area) => {
+        console.log("Area clicked:", area);
         setSelectedRestArea(area);
         setModalOpen(true);
     };
 
     const handleCloseModal = () => {
+        console.log("Closing modal.");
         setModalOpen(false);
     };
 
@@ -97,7 +117,7 @@ function RestArea( ) {
         <>
             <div id={styles.main}>
                 <div className={styles.restAreaTab}>
-                    <select value={selectedRoute} onChange={e => setSelectedRoute(e.target.value)}>
+                    <select value={selectedRoute} onChange={e => setSelectedRoute(e.target.value || '')}>
                         <option value="">노선을 선택하세요</option>
                         <option value="동해선">동해선</option>
                         <option value="중부내륙선">중부내륙선</option>
