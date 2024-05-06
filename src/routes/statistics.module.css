@@ -3,11 +3,11 @@
     /*height: 780px;*/
     background-color: #ffeb9f;
     /*box-sizing: border-box;*/
-/*    display: grid;*/
+    display: grid;
 /*    grid-template-areas:      !* !!핵심!!*!*/
 /*            "aside section"*/
 /*;*/
-/*    grid-template-columns: 30% 70% ;*/
+    grid-template-columns: 1fr ;
 /*    !*자식width*!*/
 /*    grid-template-rows: 780px;*/
 /*    !*자식height*!*/
@@ -15,7 +15,7 @@
 
 .box1{
     width: 100%;
-    height: 500px;
+    height: 320px;
     /*background-color: #dcdcdc;*/
     background: linear-gradient(rgba(252, 252, 252, 0.05), rgba(124, 124, 124, 0.93)),url("../../public/img/bg1.jpg");
     background-size: cover;
@@ -74,41 +74,37 @@
     transform: translateY(-5px); /* Y축으로 5px 이동 */
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;/* 그림자 변화 */
 }
-
-
-/* 모바일 화면에서 적용되는 스타일 */
+/* iPad screen size (max-width: 768px) */
 @media screen and (max-width: 768px) {
-    /*.Header_menu_box__+qm-e{*/
-    /*    display: flex;*/
-    /*    flex-direction: column;*/
-
-    /*    align-items: center;*/
-    /*}*/
-    .box1 .box2{
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 48px;
-        padding-left: 20px;
-        padding-right: 20px;
-        z-index: 8;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: justify;
-        justify-content: space-between;
-        /*position: fixed;*/
-       }
+    .box1.box2 {
+        width: fit-content; /* subtract 40px for padding */
+    }
+    .smallbox2, .smallbox3 {
+        width: inherit; /* subtract 20px for padding */
+    }
     .chartContainer2 {
-        grid-template-columns: 1fr; /* 그리드 열을 하나로 변경 */
+
         padding: 10px; /* 좁은 화면에서 패딩 감소 */
         margin: 0; /* 여백 제거 */
+        grid-template-columns: repeat(1, 1fr); /* adjust grid columns to 1 column */
+        max-width: 768px; /* set max-width to 430px */
+        grid-auto-flow: column; /* add this line */
     }
+}
 
-
+@media screen and (max-width: 430px) {
+    .box1.box2 {
+        width:  100%;; /* subtract 40px for padding */
+    }
     .smallbox2, .smallbox3 {
-        width: 100%;
-
+        width: 100%; /* subtract 20px for padding */
+        grid-column: 1 / -1;
     }
+    .chartContainer2 {
+        grid-template-columns: repeat(1, 1fr); /* adjust grid columns to 1 column */
+        max-width: 430px; /* set max-width to 430px */
+        grid-auto-flow: column; /* add this line */
+    }
+
 }
 

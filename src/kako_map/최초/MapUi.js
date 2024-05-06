@@ -137,20 +137,19 @@ function MapUi() {
             <div id={styles.change}>
 
 
-                <label className={styles.aside_button} onClick={toggleVisibility}>
+
+                <button className={styles.aside_button} onClick={toggleVisibility}>
                     {isVisible ? (
-                        <img src="https://images.emojiterra.com/twitter/v14.0/512px/274e.png" alt="button image"
-                             style={{width: 50, height: 50}}/>
+                        <img src="https://images.emojiterra.com/twitter/v14.0/512px/274e.png" alt="button image" style={{ width: 50, height: 50 }} />
                     ) : (
-                        <img src="https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/2705.gif"
-                             alt="clicked image" style={{width: 50, height: 50}}/>
+                        <img src="https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/2705.gif" alt="clicked image" style={{ width: 50, height: 50 }} />
                     )}
-                </label>
+                </button>
                 {isVisible &&
                     <div className={styles.aside}>
 
 
-                        {/* 주유소와 충전소 전환 버튼 */}
+                    {/* 주유소와 충전소 전환 버튼 */}
                         <div className={styles.buttonContainer}>
                             <button
                                 className={`${styles.button} ${list1 === 1 ? styles.buttonActive : ''}`}
