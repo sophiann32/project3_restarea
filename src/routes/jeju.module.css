@@ -44,7 +44,7 @@
 }
 
 .selectedTags span {
-    background-color: #ff69b4;
+    background-color: #d58282;
     color: white;
     padding: 5px 10px;
     border-radius: 15px;
@@ -58,15 +58,15 @@
 .selectedTags button {
     position: absolute;
     top: 1px;
-    right: 1px;
+    right: -5px;
     border: none;
     background-color: transparent;
     color: white;
     cursor: pointer;
     font-size: 12px;
-    width: 6px;
-    height: 6px;
-    background: #ff69b4;
+    width: 4px;
+    height: 4px;
+    background: #d58282;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -121,6 +121,7 @@
     border-radius: 10px;
     font-size: 14px;
 }
+
 
 .evButton {
     background-color: #4CAF50;
