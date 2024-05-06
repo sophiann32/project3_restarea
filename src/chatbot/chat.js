@@ -63,15 +63,10 @@ function Chatbot() {
                 latitude: latitude,
                 longitude: longitude
             });
-            console.log('Charging stations data:', response.data.stations);
-            setChargingStations(response.data.stations);
-            const resultsMessage = response.data.stations.length > 0 ? {
+            const formattedStations = response.data.stations.map(station => `${station['Station Name']} - 현 위치로부터 ${formatChargingStationDistance(station.Distance)} 떨어짐`).join('\n');
+            const resultsMessage = {
                 id: Date.now(),
-                text: `아래 전기차 충전소 정보는 반경 5KM 이내에 있는 전기차 충전소입니다.`,
-                sender: 'bot'
-            } : {
-                id: Date.now(),
-                text: `반경 5KM 이내에 전기차 충전소가 없습니다.`,
+                text: `전기차 충전소 정보:\n${formattedStations}`,
                 sender: 'bot'
             };
             setMessages(messages => [...messages, resultsMessage]);
@@ -100,15 +95,10 @@ function Chatbot() {
                 distance: node.getElementsByTagName("DISTANCE")[0].textContent
             })).sort((a, b) => parseFloat(a.price) - parseFloat(b.price)).slice(0, 10);
 
-            setFuelStations(stations);
-
-            const resultsMessage = stations.length > 0 ? {
+            const formattedStations = stations.map(station => `${station.name} - ${station.price}원 - 현 위치로부터 ${formatFuelStationDistance(station.distance)} 떨어짐`).join('\n');
+            const resultsMessage = {
                 id: Date.now(),
-                text: `아래 주유소 정보는 반경 5KM 이내에 있는 주유소입니다.`,
-                sender: 'bot'
-            } : {
-                id: Date.now(),
-                text: `반경 5KM 이내에 주유소가 없습니다.`,
+                text: `주유소 정보:\n${formattedStations}`,
                 sender: 'bot'
             };
             setMessages(messages => [...messages, resultsMessage]);
@@ -219,7 +209,6 @@ function Chatbot() {
                 ))}
             </div>
             <div className="stations-list">
-                <h2>주유소 정보:</h2>
                 <ul>
                     {fuelStations.map(station => (
                         <li key={station.id}>
@@ -229,7 +218,6 @@ function Chatbot() {
                 </ul>
             </div>
             <div className="stations-list">
-                <h2>전기차 충전소 정보:</h2>
                 <ul>
                     {chargingStations.map((station, index) => (
                         <li key={index}>
