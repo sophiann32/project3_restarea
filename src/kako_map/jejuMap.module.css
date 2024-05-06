@@ -1,68 +1,62 @@
+/* CSS for JejuMap Component */
+
+/* mainJ2 Styling */
 #mainJ2 {
     background-color: white;
-    /*display: grid;*/
     height: 100%;
-    /*grid-template-rows: 45% 55%; !* Two rows of equal height *!*/
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
+
+/* mapSpace Styling */
 .mapSpace {
     height: 85%;
-    background-color: blue;
+    flex: 1;
 }
 
-
-
-.tourList::-webkit-scrollbar {
-    width: 10px; /* 수직 스크롤의 너비 */
+/* map Styling */
+.map {
+    width: 100%;
+    height: 100%;
 }
 
-/* 스크롤바 추적기(스크롤바의 스크롤 위치를 나타내는 부분) */
-.tourList::-webkit-scrollbar-thumb {
-    background-color: #888; /* 추적기의 배경색 */
-    border-radius: 5px; /* 추적기의 모서리 둥글기 */
-}
-
-/* 스크롤바 활성화(추적기에 마우스를 가져다 놓았을 때) */
-.tourList::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* 활성화된 추적기의 배경색 */
-}
-
-
+/* categoryButtons Styling */
 .categoryButtons {
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 5px;
     border-radius: 10px;
-
-
+    padding: 10px;
 }
 
+/* categoryButton Styling */
 .categoryButton {
-    background-color: rgba(76, 175, 80, 0.7); /* 투명도를 추가한 색상 */
-    background-size: cover; /* 버튼 전체 영역을 채움 */
-    background-position: center; /* 배경 이미지를 중앙에 위치 */
+    background-color: rgba(76, 175, 80, 0.7);
+    background-size: cover;
+    background-position: center;
     border: none;
     color: #ffffff;
     text-align: center;
     width: 100px;
     height: 80px;
-    margin: 25px 0px 0px 0px;
+    margin-top: 5px;
     text-decoration: none;
     font-size: 16px;
     border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s;
 }
 
 .categoryButton:hover {
-    background-color: #45a049; /* 마우스 오버 시 색 변경 */
+    background-color: #45a049;
 }
 
-
+/* overlayWrapSmall Styling */
 .overlayWrapSmall {
     display: block;
     width: 230px;
-    /* height: 200px; */  /* 고정된 높이 제거 */
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -70,16 +64,19 @@
     line-height: 16px;
 }
 
+/* overlayImageSmall Styling */
 .overlayImageSmall {
     width: 230px;
     height: 130px;
 }
 
+/* overlayTitleSmall Styling */
 .overlayTitleSmall {
     font-size: 12px;
     margin: 5px 0;
 }
 
+/* overlayAddressSmall, overlayPhoneSmall, overlayIntroductionSmall Styling */
 .overlayAddressSmall,
 .overlayPhoneSmall,
 .overlayIntroductionSmall {
@@ -87,34 +84,11 @@
     margin: 2px 0;
 }
 
-
 .overlayIntroductionSmall {
     font-size: 12px;
     margin: 2px 0;
-    word-break: break-word;  /* 긴 단어들을 다음 줄로 넘깁니다 */
+    word-break: break-word;
     overflow-wrap: break-word;
-    white-space: normal;  /* 자동 줄바꿈을 허용합니다 */
-    hyphens: auto;  /* 적절한 곳에 하이픈을 추가합니다 */
-}
-
-
-/* 1024px 이상의 화면에서는 맵을 크게 유지 */
-@media (min-width: 1024px) {
-    .mapSpace {
-        height: 85%;
-    }
-}
-
-/* 768px에서 1023px 사이의 화면에서는 맵의 높이를 줄임 */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .mapSpace {
-        height: 50%;
-    }
-}
-
-/* 767px 이하의 화면에서는 맵의 높이를 더욱 줄임 */
-@media (max-width: 767px) {
-    .mapSpace {
-        height: 300px;
-    }
+    white-space: normal;
+    hyphens: auto;
 }
