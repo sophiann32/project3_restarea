@@ -5,7 +5,7 @@
     grid-template-areas:
         "restAreaTab restAreaMap";
     grid-template-columns: 27% 73%;
-    grid-template-rows: auto;
+    grid-template-rows: 900px;
     gap: 10px;
     padding: 10px;
     background-color: #ffffff;
@@ -25,6 +25,7 @@
     grid-area: restAreaTab;
     padding: 20px;
     margin-bottom: 10px; /* 모바일에서 여백 추가 */
+    overflow-y: auto;
 }
 
 .restAreaMap {
