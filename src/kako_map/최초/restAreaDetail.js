@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Map, MapMarker, } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import Modal from '../Modal/Modal';
 import styles from './restAreaDetail.module.css'
 
@@ -40,19 +40,18 @@ function RestAreaDetail({ selectedRoute }) {
         <div>
             <Map center={position} level={zoomLevel} style={{ width: "100%", height: "900px" }}>
                 {restAreas.map((area, index) => (
-                    <MapMarker  key={index} position={{ lat: area.위도, lng: area.경도 }}
-                               onClick={() => handleMarkerClick(area)}
-                               onMouseOver={() => setIsOpen(area)}
-                               onMouseOut={() => setIsOpen(null)}
-                               image={{
-                                   src: "https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f53b.png", // red ▼
-                                   size: {
-                                       width: 30,
-                                       height: 35,
-                                   }
-                               }}>
-                        {isOpen === area && <div style={{fontSize: 17, color: '#000000', backgroundColor: '#fffefe', padding: '5px', borderRadius: '5px', textAlign: 'center' }}>{area.휴게소명}</div>}
+
+
+                    <MapMarker key={index} position={{ lat: area.위도, lng: area.경도 }}
+                               onClick={() => handleMarkerClick(area)}>
+                        <div className={styles.marker}>{area.휴게소명}</div>
                     </MapMarker>
+
+
+
+
+
+
                 ))}
             </Map>
             {selectedRestArea && (

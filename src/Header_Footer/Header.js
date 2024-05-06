@@ -6,9 +6,9 @@ function Header(props) {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const location = useLocation(); // 현재 위치 정보를 가져옵니다.
     const isRestArea = location.pathname === '/restArea'; // /restArea 경로인지 확인합니다.
-
+    const isJeju = location.pathname === '/jeju'; // /jeju 경로인지 확인합니다.
     // /restArea일 때 사용할 스타일
-    const headerClass = isRestArea ? `${styles.nav_wrap} ${styles.restAreaActive}` : styles.nav_wrap;
+    const headerClass = isRestArea || isJeju ? `${styles.nav_wrap} ${styles.specialAreaActive}` : styles.nav_wrap;
 
     return (
         <div className={headerClass}>
@@ -23,6 +23,7 @@ function Header(props) {
                         <li><NavLink to="/sub">통계</NavLink></li>
                         <li><NavLink to="/restArea">휴게소</NavLink></li>
                         <li><NavLink to="/board">리뷰 게시판</NavLink></li>
+                        <li><NavLink to="/jeju">제주</NavLink></li>
                     </ul>
                 </div>
                 <div className={styles.login_box}>
@@ -31,6 +32,7 @@ function Header(props) {
                             <span>LOGIN</span>
                         </NavLink>
                     }
+
                 </div>
             </nav>
         </div>

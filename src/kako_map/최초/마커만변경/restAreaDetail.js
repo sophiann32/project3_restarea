@@ -36,23 +36,49 @@ function RestAreaDetail({ selectedRoute }) {
         setModalOpen(true);
     };
 
+
+
+
     return (
         <div>
             <Map center={position} level={zoomLevel} style={{ width: "100%", height: "900px" }}>
                 {restAreas.map((area, index) => (
-                    <MapMarker  key={index} position={{ lat: area.위도, lng: area.경도 }}
+
+
+                    <MapMarker key={index} position={{ lat: area.위도, lng: area.경도 }}
                                onClick={() => handleMarkerClick(area)}
-                               onMouseOver={() => setIsOpen(area)}
-                               onMouseOut={() => setIsOpen(null)}
                                image={{
-                                   src: "https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f53b.png", // red ▼
+                                   // src: "https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f538.png", // orange diamond
+                                   // src: "https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f53b.png", // red ▼
+                                   // src: "https://images.emojiterra.com/openmoji/v15.0/512px/1f33c.png", // y flower
+                                   // src: "https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/2705.gif", // moving green checkbox
+                                   // src: "https://images.emojiterra.com/openmoji/v15.0/512px/1f698.png", // oil charge
+                                   // src: "https://images.emojiterra.com/openmoji/v15.0/512px/1f697.png ", // r car
+                                   // src:"https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/26fd.png", // r 주유소
+                                   src:"https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/2728.gif", // shining star
+
                                    size: {
-                                       width: 30,
-                                       height: 35,
-                                   }
+                                       width: 25,
+                                       height: 25,
+                                   }, // 마커이미지의 크기입니다
+                                   options: {
+                                       offset: {
+                                           x: 27,
+                                           y: 69,
+                                       }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                                   },
                                }}>
-                        {isOpen === area && <div style={{fontSize: 17, color: '#000000', backgroundColor: '#fffefe', padding: '5px', borderRadius: '5px', textAlign: 'center' }}>{area.휴게소명}</div>}
+                        <div className={styles.marker}>{area.휴게소명}</div>
+
+
                     </MapMarker>
+
+
+
+
+
+
+
                 ))}
             </Map>
             {selectedRestArea && (
