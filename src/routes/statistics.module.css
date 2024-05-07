@@ -4,7 +4,7 @@
     padding: 20px;
     max-width: 1200px; /* 전체 가로 크기 설정 */
     margin: 0 auto; /* 가운데 정렬을 위해 */
-    background-color: #fff7d2;
+    background-color: #ede3e3;
     display: grid;
     grid-template-areas:
     'a'
@@ -14,12 +14,10 @@
 .box1 {
     grid-area: a;
     width: 100%;
-    height: 320px;
-    /*background-color: #dcdcdc;*/
+    height: fit-content;
     background: linear-gradient(rgba(252, 252, 252, 0.05), rgba(124, 124, 124, 0.93)), url("../../public/img/bg1.jpg");
     background-size: cover;
-    /*background-position: center;*/
-    /*position: relative;*/
+    border-radius: 10px ;
 }
 
 .box2 {
@@ -31,7 +29,7 @@
     width: 100%;
     height: auto; /* 변경: 컨텐츠에 맞춰 높이 조정 */
     margin: 0 auto;
-    background-color: #f6ceff;
+    background-color: #ebe2e2;
 }
 
 .chartContainer2 {
@@ -86,7 +84,6 @@
     }
 
     .chartContainer2 {
-
         padding: 10px; /* 좁은 화면에서 패딩 감소 */
         margin: 0; /* 여백 제거 */
         grid-template-columns: repeat(1, 1fr); /* adjust grid columns to 1 column */
@@ -97,19 +94,21 @@
 
 @media screen and (max-width: 430px) {
     .box1.box2 {
-        width: 100%;; /* subtract 40px for padding */
+        width: 70%; /* subtract 40px for padding */
     }
-
     .smallbox2, .smallbox3 {
         width: 100%; /* subtract 20px for padding */
         grid-column: 1 / -1;
     }
-
     .chartContainer2 {
         grid-template-columns: repeat(1, 1fr); /* adjust grid columns to 1 column */
         max-width: 430px; /* set max-width to 430px */
         grid-auto-flow: column; /* add this line */
+        width: 400px;
+        }
+    .statistics {
+        gap: 0px;
+        padding: 0px;
     }
-
 }
 
