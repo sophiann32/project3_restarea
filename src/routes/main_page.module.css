@@ -10,21 +10,26 @@
 
 }
 
+
 .form{
     /*max-width: 1000px;*/
     border: none;
     margin: 0 auto;
+    padding-top: 200px;
 
 }
 
 .main_page ul{
     list-style-type: none;
+    text-align: center;
 }
 
 .label{
+    /*padding-top: 500px;*/
     font-size: 30px;
     font-weight: bold;
-
+    text-align: center;
+    /*background-color: #fff;*/
 
 
 }
@@ -32,6 +37,14 @@
     width: 500px;
     height: 50px;
     font-size: 20px;
+    border-radius: 20px;
+
+}
+.mainButton{
+    margin: 0 auto;
+    width: 500px;
+    border-radius: 20px;
+    margin-left: 70px;
 }
 
 .chat {
@@ -80,9 +93,28 @@
     #select{
         width: 250px;
         height: 40px;
-        font-size: 12px;
+        font-size: 11px;
+        margin-right: 50px;
+    }
+
+    .mainButton{
+        margin: 0 auto;
+        width: 80%;
+        border-radius: 20px;
+        /*margin-left: 50px;*/
+    }
+    .form li label{
+        padding-right: 50px;
     }
 
 
+
+
     }
 
+
+
+/*@media (max-width: 480px) {*/
+/*    !*0 부터 480까지  (모바일) *!*/
+/*    height: "100px"*/
+/*}*/

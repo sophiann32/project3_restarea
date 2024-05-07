@@ -1,6 +1,6 @@
 .nav_wrap {
-    border-bottom: 3px solid black;
-    background-color: #03111A;
+    border-bottom: 3px solid #18185e;
+    background-color: #dbe9f5;
 }
 
 .nav {
@@ -50,7 +50,7 @@
 }
 
 li a {
-    color: #f3f3f3;
+    color: #2f3a6c;
 }
 .login_box {
     margin-left: 20px;
