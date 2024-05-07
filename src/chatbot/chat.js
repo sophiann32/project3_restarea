@@ -245,7 +245,7 @@ function Chatbot() {
             <div className="user-input">
                 <button onClick={() => handleMessage('내 주변 최저가 주유소 찾기')}>내 주변 최저가 주유소 찾기</button>
                 <button onClick={() => handleMessage('내 주변 전기차 충전소 찾기')}>내 주변 전기차 충전소 찾기</button>
-                <button onClick={() => handleMessage('고속도로 휴게소 정보 확인하러 가기')}>고속도로 휴게소 정보 확인하러 가기</button>
+                <button onClick={() => handleMessage('고속도로 휴게소 정보 보러가기')}>고속도로 휴게소 정보 보러가기</button>
                 <button onClick={() => handleMessage('로그인 페이지로 이동하기')}>로그인 페이지로 이동하기</button>
                 <button onClick={() => handleMessage('통계 차트 보러가기')}>통계 차트 보러가기</button>
                 <div className="tooltip">
