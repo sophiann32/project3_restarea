@@ -1,72 +1,35 @@
-.statistics{
-    width: 100%;
-    /*height: 780px;*/
+.statistics {
+    /*grid-template-rows: repeat(3, auto); !* 3행으로 배치 *!*/
+    /*gap: 20px;*/
+    /*padding: 20px;*/
+    /*max-width: 1200px; !* 전체 가로 크기 설정 *!*/
+    /*margin: 0 auto; !* 가운데 정렬을 위해 *!*/
     background-color: #ffeb9f;
-    /*box-sizing: border-box;*/
-/*    display: grid;*/
-/*    grid-template-areas:      !* !!핵심!!*!*/
-/*            "aside section"*/
-/*;*/
-/*    grid-template-columns: 30% 70% ;*/
-/*    !*자식width*!*/
-/*    grid-template-rows: 780px;*/
-/*    !*자식height*!*/
+    width: 100%;
+    display: grid;
+
+    /*grid-template-areas:*/
+    /*'box1'*/
+    /*'box2'*/
+    /*'box3';*/
+    /*grid-template-columns: 1fr;*/
+
 }
 
-.box1{
+.box1 {
+    /*grid-area: box1;*/
     width: 100%;
-    height: 500px;
+    height: 320px;
     /*background-color: #dcdcdc;*/
     background: linear-gradient(rgba(252, 252, 252, 0.05), rgba(124, 124, 124, 0.93)),url("../../public/img/bg1.jpg");
     background-size: cover;
-    background-position: center;
-    position: relative;
-}
-.smallbox1 {
-    width: 1200px;
-    height: 250px;
-    background-color: #d59c9c;
-    position: relative;
-    bottom: 0;
-    left: 50%;
-    margin-left: -600px;
-    padding: 10px;
+    /*background-position: center;*/
+    /*position: relative;*/
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 50%;
-    max-width: 400px;
-    padding: 20px;
-    border: 1px solid #ff001e;
-}
-
-.searchInput {
-    width: 200px;
-    height: 30px;
-    font-size: 16px;
-    padding-left: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.searchButton {
-    background-color: #8acac4;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.searchButton:hover {
-    background-color: #506dad;
-}
 
  .box2 {
+     /*grid-area: box2; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,7 +40,7 @@
     background-color: #f8efef;
 }
 
-.chartContainer {
+.chartContainer2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto auto;
@@ -97,6 +60,7 @@
     display: block;
     transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
     height: 455px;
+    border-radius: 40px;
 }
 .smallbox2{
     width: 585px; /* 너비 조정 */
@@ -115,41 +79,37 @@
     transform: translateY(-5px); /* Y축으로 5px 이동 */
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;/* 그림자 변화 */
 }
-
-
-/* 모바일 화면에서 적용되는 스타일 */
+/* iPad screen size (max-width: 768px) */
 @media screen and (max-width: 768px) {
-    /*.Header_menu_box__+qm-e{*/
-    /*    display: flex;*/
-    /*    flex-direction: column;*/
+    .box1.box2 {
+        width: fit-content; /* subtract 40px for padding */
+    }
+    .smallbox2, .smallbox3 {
+        width: inherit; /* subtract 20px for padding */
+    }
+    .chartContainer2 {
 
-    /*    align-items: center;*/
-    /*}*/
-    .box1 .box2{
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 48px;
-        padding-left: 20px;
-        padding-right: 20px;
-        z-index: 8;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: justify;
-        justify-content: space-between;
-        /*position: fixed;*/
-       }
-    .chartContainer {
-        grid-template-columns: 1fr; /* 그리드 열을 하나로 변경 */
         padding: 10px; /* 좁은 화면에서 패딩 감소 */
         margin: 0; /* 여백 제거 */
+        grid-template-columns: repeat(1, 1fr); /* adjust grid columns to 1 column */
+        max-width: 768px; /* set max-width to 430px */
+        grid-auto-flow: column; /* add this line */
     }
+}
 
-
+@media screen and (max-width: 430px) {
+    .box1.box2 {
+        width:  100%;; /* subtract 40px for padding */
+    }
     .smallbox2, .smallbox3 {
-        width: 100%;
-
+        width: 100%; /* subtract 20px for padding */
+        grid-column: 1 / -1;
     }
+    .chartContainer2 {
+        grid-template-columns: repeat(1, 1fr); /* adjust grid columns to 1 column */
+        max-width: 430px; /* set max-width to 430px */
+        grid-auto-flow: column; /* add this line */
+    }
+
 }
 

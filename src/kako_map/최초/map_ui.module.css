@@ -3,26 +3,27 @@
     background-color: #fff6f6;
 
 }
-.aside_button {
+.aside_button{
+    float: left;
+    width: 50px;
+    top: 15%;
+    left: 15px;
     position: absolute;
-    display: inline-block;
-    cursor: pointer;
-    padding: 10px;
-    transition: transform 0.2s ease-in-out;
-    top: 15vh; /* 15% from the top of the viewport */
-    left: 15px; /* 15% from the left of the viewport */
-    z-index: 3;
 }
-.aside_button:hover {
-    transform: scale(1.05);
-}
+
+
 
 .aside {
     position: absolute; /* 또는 fixed, 만약 스크롤 시에도 고정되길 원한다면 */
+    /*top: 330px; !* 뷰포트 상단으로부터의 거리 *!*/
+    /*left: 130px; !* 뷰포트 왼쪽으로부터의 거리 *!*/
+    /*width: 350px; !* 사이드바 너비 *!*/
+    /*height: 350px;*/
     top: 20%; /* 뷰포트 상단으로부터의 거리 */
     left: 0; /* 뷰포트 왼쪽으로부터의 거리 */
     width: 470px; /* 사이드바 너비 */
-    height: 60%;
+    height: 600px;
+
     padding: 5px; /* 사이드바 내부 패딩 */
     background-color: #f4f4f4;
     border-radius: 20px;
@@ -212,7 +213,7 @@
     /*margin-left: 100px;*/
     padding-left: 130px;
     border-radius: 8px;
-    background-color: #e7e7e7;
+    background-color:#041621;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
@@ -221,9 +222,9 @@
     position: relative;
     padding-left: 35px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 12px;
     user-select: none; /* 텍스트 선택 방지 */
-    color: #474545;
+    color: white;
 }
 
 .radioContainer input[type="radio"] {
@@ -244,7 +245,7 @@
 }
 
 .radioContainer input:checked ~ .checkmark {
-    background-color: #c187df;
+    background-color: #007bff;
 }
 
 .radioContainer .checkmark:after {
@@ -268,8 +269,8 @@
 .section {
     width: calc(100% - 40px - 200px); /* 총 너비에서 aside 너비와 여백을 제외 */
     margin-left: 120px; /* aside 너비와 여백을 고려한 왼쪽 마진 */
-    height: 80vh; /* 뷰포트 높이를 전체 채움 */
-    background-color: #fffefe;
+    height: 100vh; /* 뷰포트 높이를 전체 채움 */
+    background-color: #090909;
     position: relative; /* z-index를 위해 position 설정 필요 */
     z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
 }
