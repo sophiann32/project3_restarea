@@ -7,14 +7,18 @@ h1{
 }
 
 th, td {
-    border: 1px solid #ddd;
+    /*border: 1px solid #000000;*/
     padding: 8px;
     text-align: center;
+    background-color: #e0eaff;
 }
 
 th {
     background-color: #f2f2f2;
     cursor: pointer; /* 정렬을 위해 커서 타입 변경 */
+}
+th:first-child{
+    width: 50%;
 }
 
 /*.post-link {*/
@@ -35,7 +39,7 @@ th {
 .pagingContainer {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin: 30px;
 }
 
 .paging-container a {
@@ -45,12 +49,29 @@ th {
 /* 검색 조건을 가운데 정렬 */
 #searchContainer {
     text-align: center;
-    margin-top: 20px;
+    margin:0 auto;
+    width: 900px;
+    border: 1px solid black;
+    display: flex;
+}
+#searchContainer form{
+    border: none;
+
 }
 
 #searchContainer label,
 #searchContainer select,
 #searchContainer input[type="text"],
 #searchContainer button {
-    margin-right: 10px;
+    /*display: flex;*/
+    /*margin-right: 10px;*/
+}
+
+.buttonContainer{
+    width: 100px;
+    margin:20px auto ;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #97fdab;
+    text-align: center;
 }

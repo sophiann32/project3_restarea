@@ -10,7 +10,7 @@ th, td {
 }
 
 th {
-    background-color: #fdbfbf;
+    background-color: #859fff;
     width: 200px;
     text-align: center;
 }
@@ -149,4 +149,11 @@ th {
 /* 답글 폼 스타일 */
 .reply-form {
     margin-left: 50px;
+}
+
+.prev{
+    text-align: center;
+    border:2px solid black;
+    width: 500px;
+    margin: 0 auto;
 }

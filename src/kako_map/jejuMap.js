@@ -15,6 +15,7 @@ function JejuMap({ spots, filteredSpots, selectedSpot, onSelectSpot, categories,
         setIsBouncing(spot.CONTENTS_ID); // 선택한 스팟에 대해 바운스 효과 적용
         setTimeout(() => setIsBouncing(null), 500); // 0.5초 후에 바운스 효과 제거
     };
+
     const handleMouseOver = (spot) => {
         clearTimeout(hoverTimeoutRef.current);
         setHoveredSpot(spot);
@@ -30,7 +31,7 @@ function JejuMap({ spots, filteredSpots, selectedSpot, onSelectSpot, categories,
         <div id={styles.mainJ2}>
             <div className={styles.mapSpace}>
                 <Map
-                    center={{ lat: selectedSpot?.LATITUDE || 33.32, lng: selectedSpot?.LONGITUDE || 126.55 }}
+                    center={{ lat: selectedSpot?.LATITUDE || mapCenter.lat, lng: selectedSpot?.LONGITUDE || mapCenter.lng }}
                     level={9}
                     style={{ width: "100%", height: "100%" }}
                 >

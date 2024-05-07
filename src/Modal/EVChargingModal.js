@@ -4,19 +4,17 @@ import styles from './evChargingModal.module.css';
 import axios from 'axios';
 
 function EVChargingModal({ onClose }) {
-    const [radius, setRadius] = useState(5); // 기본 반경 설정
+    const [radius, setRadius] = useState(1);
     const [chargingStations, setChargingStations] = useState([]);
-    const [center, setCenter] = useState({ lat: 33.499621, lng: 126.531188 }); // 디폴트 중심 설정
+    const [center, setCenter] = useState({ lat: 33.499621, lng: 126.531188 });
     const [selectedStation, setSelectedStation] = useState(null);
-    const [zoomLevel, setZoomLevel] = useState(3); // 지도의 줌 레벨 설정
-    const [userLocation, setUserLocation] = useState(null); // 사용자의 현재 위치 설정
+    const [zoomLevel, setZoomLevel] = useState(5);
+    const [userLocation, setUserLocation] = useState(null);
 
     useEffect(() => {
-        // 사용자의 현재 위치 가져오기
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
-                // 제주도 범위 확인
                 if (latitude >= 33.0 && latitude <= 34.0 && longitude >= 126.0 && longitude <= 127.0) {
                     setUserLocation({ lat: latitude, lng: longitude });
                     setCenter({ lat: latitude, lng: longitude });
@@ -37,7 +35,6 @@ function EVChargingModal({ onClose }) {
     }, [radius]);
 
     useEffect(() => {
-        // 반경에 따라 줌 레벨 설정
         switch (radius) {
             case 1:
                 setZoomLevel(5);
@@ -101,7 +98,7 @@ function EVChargingModal({ onClose }) {
                                     <MapMarker
                                         position={userLocation}
                                         image={{
-                                            src: "/img/car.png", // 사용자 위치 이미지
+                                            src: "/img/car.png",
                                             size: {
                                                 width: 50,
                                                 height: 50,
@@ -121,7 +118,7 @@ function EVChargingModal({ onClose }) {
                             )}
                             <Circle
                                 center={center}
-                                radius={radius * 1000} // 반경 km를 미터로 변환
+                                radius={radius * 1000}
                                 strokeWeight={2}
                                 strokeColor={"#004c80"}
                                 strokeOpacity={0.8}
@@ -135,7 +132,7 @@ function EVChargingModal({ onClose }) {
                                     position={{ lat: station.lat, lng: station.lng }}
                                     title={station.Name}
                                     image={{
-                                        src: "/img/jeju_elc.png", // 충전소 이미지
+                                        src: "/img/jeju_elc.png",
                                         size: {
                                             width: 36,
                                             height: 36,

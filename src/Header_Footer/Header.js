@@ -16,8 +16,9 @@ function Header(props) {
                 <div className={styles.logo}><NavLink to='/'><span>STOP</span>SCAN</NavLink></div>
                 <button className={styles.menu_button} onClick={() => setMenuOpen(!isMenuOpen)}>
                     &#9776;
+                    {/*이게 햄버거 모양 유니코드문자*/}
                 </button>
-                <div className={`${styles.menu_box} ${isMenuOpen ? styles.menu_open : ''}`}>
+                <div className={`${styles.menu_box} ${isMenuOpen ? styles.menu_open :styles.menu_closed}`}>
                     <ul>
                         <li><NavLink to="/map">내 위치</NavLink></li>
                         <li><NavLink to="/sub">통계</NavLink></li>

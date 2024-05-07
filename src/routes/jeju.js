@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import styles from './jeju.module.css';
 import JejuMap from '../kako_map/jejuMap';
@@ -89,78 +89,67 @@ function Jeju() {
     const [selectedSpot, setSelectedSpot] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTags, setSelectedTags] = useState([]);
-    const allTags = [...new Set(Object.values(categories).flatMap(cat => cat.tags))].sort();
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+    const tourInfoRef = useRef(null);
 
+    // 모든 태그 목록 추출
+    const allTags = [...new Set(Object.values(categories).flatMap(cat => cat.tags))].sort();
 
-
-
-    function handleTagChange(event) {
-        const value = event.target.value;
-        setSelectedTags(prev => [...new Set([...prev, value])].slice(0, 3));
-    }
-
-    function removeTag(tagToRemove) {
-        setSelectedTags(prev => prev.filter(tag => tag !== tagToRemove));
-    }
-
-    // 카테고리에 따른 필터링 로직
-    const handleCategoryChange = (tags) => {
-        const newFilteredSpots = tourismSpots.filter(spot =>
-            spot.TAG && tags.some(tag => spot.TAG.split(/[,/]+/).includes(tag.trim()))
-        );
-        setFilteredSpots(newFilteredSpots);
-        setSelectedSpot(newFilteredSpots[0] || null);
-    };
-
-
-
-// 태그 선택에 따른 필터링 로직
-    useEffect(() => {
-        if (selectedTags.length > 0) {
-            const newFilteredSpots = tourismSpots.filter(spot =>
-                    spot.TAG && selectedTags.every(tag =>
-                        spot.TAG.split(/[,/]+/).some(spotTag => spotTag.trim() === tag)
-                    )
-            );
-            setFilteredSpots(newFilteredSpots);
-            setSelectedSpot(newFilteredSpots[0] || null);
-        } else {
-            setFilteredSpots(tourismSpots);
-        }
-    }, [selectedTags, tourismSpots]);
-
-
-
-
-    useEffect(() => {
-        loadTourismSpots();
-        return () => {};
-    }, []);
-
-    const loadTourismSpots = async () => {
+    // 관광 명소 로드 함수
+    const loadTourismSpots = async (tags = selectedCategory || selectedTags) => {
         setIsLoading(true);
         try {
             const response = await axios.get('http://localhost:5000/api/tourism-spots');
-            setTourismSpots(response.data);
-            setFilteredSpots(response.data);
-            setSelectedSpot(response.data[0]);
-            setIsLoading(false);
+            const spots = response.data.filter(spot =>
+                spot.TAG && tags.some(tag => spot.TAG.split(/[,/]+/).includes(tag.trim()))
+            );
+            setTourismSpots(spots);
+            setFilteredSpots(spots);
+            setSelectedSpot(spots[0] || null);
         } catch (error) {
             console.error('Error fetching tourism spots data:', error);
+        } finally {
             setIsLoading(false);
         }
     };
 
+    // 태그 선택 핸들러
+    function handleTagChange(event) {
+        const value = event.target.value;
+        const newTags = [...new Set([...selectedTags, value])].slice(0, 3);
+        setSelectedTags(newTags);
+        loadTourismSpots(newTags);
+        scrollToTop(); // 스크롤을 최상단으로 이동
+    }
 
+    function removeTag(tagToRemove) {
+        const newTags = selectedTags.filter(tag => tag !== tagToRemove);
+        setSelectedTags(newTags);
+        loadTourismSpots(newTags);
+        scrollToTop(); // 스크롤을 최상단으로 이동
+    }
 
+    // 카테고리 선택 핸들러
+    const handleCategoryChange = (tags) => {
+        setSelectedCategory(tags);
+        loadTourismSpots(tags);
+        scrollToTop(); // 스크롤을 최상단으로 이동
+    };
+
+    // 스크롤을 최상단으로 이동하는 함수
+    const scrollToTop = () => {
+        if (tourInfoRef.current) {
+            tourInfoRef.current.scrollTop = 0;
+        }
+    };
 
     return (
         <>
             <div id={styles.mainJ}>
-                <div className={styles.jejuTab}>    {/*사이트 왼쪽 리스트 */}
-                    <div className={styles.topNav}> {/*셀렉트박스 넣을 칸*/}
-                        <div className={styles.tagBox}> {/**/}
+                <div className={styles.jejuTab} ref={tourInfoRef}>
+                    <div className={styles.topNav}>
+                        <div className={styles.tagBox}>
                             <select onChange={handleTagChange} value="">
                                 <option value="">태그 선택...</option>
                                 {allTags.map(tag => (
@@ -170,9 +159,9 @@ function Jeju() {
                             <div className={styles.selectedTags}>
                                 {selectedTags.map(tag => (
                                     <span key={tag} className={styles.tag}>
-                #{tag}
+                                        #{tag}
                                         <button onClick={() => removeTag(tag)}>X</button>
-            </span>
+                                    </span>
                                 ))}
                             </div>
                         </div>
@@ -181,23 +170,27 @@ function Jeju() {
                             전기차 충전소 보기
                         </button>
                     </div>
-                    {filteredSpots.map(spot => (
-                        <div key={spot.CONTENTS_ID} className={styles.tourList} onClick={() => setSelectedSpot(spot)}>
-                            <img src={spot.THUMBNAIL_PATH} alt={spot.TITLE}
-                                 style={{width: "350px", height: "300px", borderRadius: "15px"}}/>
-                            <div className={styles.tourInfo}>
-                                <h3>{spot.TITLE}</h3>
-                                <p>{spot.ROAD_ADDRESS}</p>
-                                <p>{spot.PHONE_NO}</p>
-                                <p>{spot.INTRODUCTION}</p>
-                                <div className={styles.tags}>
-                                    {spot.TAG ? spot.TAG.split(/[,/]+/).slice(0, 5).map((tag, index) => (
-                                        <span key={index} className={styles.tag}>{tag.trim()}</span>
-                                    )) : null}
+                    {isLoading ? (
+                        <div>Loading...</div>
+                    ) : (
+                        filteredSpots.map(spot => (
+                            <div key={spot.CONTENTS_ID} className={styles.tourList} onClick={() => setSelectedSpot(spot)}>
+                                <img src={spot.THUMBNAIL_PATH} alt={spot.TITLE}
+                                     style={{width: "350px", height: "300px", borderRadius: "15px"}}/>
+                                <div className={styles.tourInfo}>
+                                    <h3>{spot.TITLE}</h3>
+                                    <p>{spot.ROAD_ADDRESS}</p>
+                                    <p>{spot.PHONE_NO}</p>
+                                    <p>{spot.INTRODUCTION}</p>
+                                    <div className={styles.tags}>
+                                        {spot.TAG ? spot.TAG.split(/[,/]+/).slice(0, 5).map((tag, index) => (
+                                            <span key={index} className={styles.tag}>{tag.trim()}</span>
+                                        )) : null}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </div>
                 <section className={styles.jejuMap}>
                     <JejuMap

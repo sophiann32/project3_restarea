@@ -1,110 +1,97 @@
-
 #mainJ {
-    /*width: 100%;*/
-    /*height: 100%;*/
     background-color: white;
     display: grid;
-    grid-template-areas:
-        "jejuTab jejuMap";
+    grid-template-areas: "jejuTab jejuMap";
     grid-template-columns: 45% 55%;
-    /*자식width*/
     grid-template-rows: 900px;
-    /*자식height*/
-
-
+    gap: 10px;
+    padding: 10px;
 }
+
 .topNav {
     display: flex;
+    flex-direction: row;
     background-color: white;
     height: 100px;
 }
+
 .tagBox {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: white; /* 밝은 회색조 배경 */
-    border-radius: 12px; /* 모서리 둥글게 */
-    width: 90%; /* 전체 너비 대비 90% 사용 */
-    max-width: 600px; /* 최대 너비 설정 */
+    background-color: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
 }
 
 .tagBox select {
     margin-top: 5px;
-    /*width: 100%;*/
     padding: 10px 15px;
     border-radius: 8px;
-    /*border: 1px solid #ccc; !* 테두리 색상 *!*/
     background-color: white;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 내부 그림자 효과 */
-    /*margin-bottom: 10px; !* 아래쪽 여백 *!*/
-    font-size: 18px; /* 글씨 크기 */
-    line-height: 2; /* 텍스트 간격 넓히기 */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    line-height: 2;
 }
 
 .selectedTags {
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    /*gap: 5px; !* 태그들 사이의 간격 *!*/
     padding: 5px;
-    width: 100%; /* 부모 요소 너비와 일치 */
-    /*justify-content: center; !* 가운데 정렬 *!*/
+    width: 100%;
 }
 
-
 .selectedTags span {
-    background-color: #ff69b4; /* 분홍색 배경 */
-    color: white; /* 글자 색상 흰색 */
+    background-color: #d58282;
+    color: white;
     padding: 5px 10px;
-    border-radius: 15px; /* 모서리 둥글게 */
+    border-radius: 15px;
     font-size: 14px;
-    /*display: inline-flex; !* 가로로 배열 *!*/
     align-items: center;
-    position: relative; /* 위치 설정을 위해 상대적 배치 */
+    position: relative;
     width: 90px;
     top: 9px;
 }
 
 .selectedTags button {
-    position: absolute; /* 우측 상단으로 이동 */
+    position: absolute;
     top: 1px;
-    right: 1px;
+    right: -5px;
     border: none;
     background-color: transparent;
-    color: white; /* X 버튼 색상 */
+    color: white;
     cursor: pointer;
-    font-size: 12px; /* X 글씨 크기 */
-    width: 6px;
-    height: 6px;
-    background: #ff69b4;
-    /*border-radius: 50%;*/
+    font-size: 12px;
+    width: 4px;
+    height: 4px;
+    background: #d58282;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .jejuTab {
     background-color: #ffffff;
     display: grid;
-    /*height: 900px;*/
     overflow-y: scroll;
     overflow-x: hidden;
     white-space: normal;
 }
 
 .jejuTab::-webkit-scrollbar {
-    width: 10px; /* 수직 스크롤의 너비 */
+    width: 10px;
 }
 
-/* 스크롤바 추적기(스크롤바의 스크롤 위치를 나타내는 부분) */
 .jejuTab::-webkit-scrollbar-thumb {
-    background-color: #888; /* 추적기의 배경색 */
-    border-radius: 5px; /* 추적기의 모서리 둥글기 */
+    background-color: #888;
+    border-radius: 5px;
 }
 
-/* 스크롤바 활성화(추적기에 마우스를 가져다 놓았을 때) */
 .jejuTab::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* 활성화된 추적기의 배경색 */
+    background-color: #555;
 }
 
 .tourList {
@@ -116,15 +103,16 @@
 
 .tourInfo {
     position: relative;
-    left: 400px;  /* 예시로 left 값을 0으로 설정해보았습니다 */
+    left: 400px;
     bottom: 310px;
     line-height: 30px;
     word-wrap: break-word;
     white-space: normal;
     overflow-wrap: break-word;
     hyphens: auto;
-    max-width: 100%;  /* 요소의 너비가 부모 요소를 벗어나지 않도록 제한합니다 */
+    max-width: 100%;
 }
+
 .tag {
     display: inline-block;
     background-color: #eee;
@@ -132,22 +120,6 @@
     margin: 2px;
     border-radius: 10px;
     font-size: 14px;
-}
-
-.selectedTags span {
-    margin-right: 10px;
-    background-color: #ccc;
-    padding: 5px;
-    border-radius: 5px;
-    display: inline-flex;
-    align-items: center;
-}
-
-.selectedTags button {
-    margin-left: 5px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
 }
 
 
@@ -170,16 +142,6 @@
     background-color: #45a049;
 }
 
-
-
-
-
-
-
-/*===============================================================================*/
-
-
-/* 1024px 이상의 화면에서는 그리드 레이아웃을 유지 */
 @media (min-width: 1024px) {
     #mainJ {
         grid-template-columns: 45% 55%;
@@ -187,36 +149,60 @@
     }
 }
 
-/* 768px에서 1023px 사이의 화면에서는 두 줄로 나눔 */
 @media (min-width: 768px) and (max-width: 1023px) {
     #mainJ {
-        grid-template-areas:
+        grid-template-areas: 
             "jejuTab"
             "jejuMap";
         grid-template-columns: 100%;
         grid-template-rows: auto auto;
+        padding: 20px;
+    }
+
+    .topNav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tagBox {
+        max-width: 90%;
+    }
+
+    .evButton {
+        margin-left: 0;
     }
 }
 
-/* 767px 이하의 화면에서는 모든 요소를 한 줄로 표시 */
 @media (max-width: 767px) {
     #mainJ {
-        grid-template-areas:
+        grid-template-areas: 
             "jejuTab"
             "jejuMap";
         grid-template-columns: 100%;
         grid-template-rows: auto auto;
+        padding: 10px;
+    }
+
+    .topNav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tagBox {
+        max-width: 90%;
+    }
+
+    .evButton {
+        margin-left: 0;
     }
 }
 
-/* 1024px 이상의 화면에서는 높이를 유지 */
 @media (min-width: 1024px) {
     .jejuTab {
         height: 900px;
     }
 }
 
-/* 768px에서 1023px 사이의 화면에서는 높이를 자동 조절 */
 @media (min-width: 768px) and (max-width: 1023px) {
     .jejuTab {
         height: auto;
@@ -224,15 +210,12 @@
     }
 }
 
-/* 767px 이하의 화면에서는 높이를 더욱 줄임 */
 @media (max-width: 767px) {
     .jejuTab {
         height: auto;
         max-height: 400px;
     }
-}
 
-@media (max-width: 767px) {
     .tourInfo {
         font-size: 14px;
     }
@@ -249,6 +232,6 @@
 @media (max-width: 1023px) {
     .tourInfo {
         top: 0;
-        left: 0; /* left 속성을 0으로 설정 */
+        left: 0;
     }
 }

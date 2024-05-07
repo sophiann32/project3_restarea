@@ -67,6 +67,7 @@
     right: 10px; /* 오른쪽 여백 */
     cursor: pointer;
     z-index: 1100;
+    color: black;
 }
 
 
@@ -194,4 +195,44 @@
 
 .stationInfo{
     border: 1px solid black;
+}
+
+
+
+/* 모바일 스타일 */
+@media (max-width: 768px) {
+    .modalContent {
+        flex-direction: column;
+        width: 90%;
+        height: 90%;
+        max-width: 500px;
+        max-height: 600px;
+    }
+
+    .header {
+        justify-content: flex-start;
+        padding-left: 20px;
+        padding-right: 10px;
+        color: black;
+    }
+
+    .closeButton {
+        font-size: 24px;
+        right: 0;
+    }
+
+    .body {
+        flex-direction: column;
+    }
+
+    .mapSection {
+        flex: 1;
+        min-width: 0;
+        height: 300px;
+    }
+
+    .infoSection {
+        flex: 1;
+        padding: 10px;
+    }
 }

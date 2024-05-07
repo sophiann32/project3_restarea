@@ -1,48 +1,60 @@
-#main{
+#main {
     width: 100%;
     height: 100%;
-    background-color: #b377d7;
     display: grid;
-    grid-template-areas:      /* !!핵심!!*/
-            "restAreaTab restAreaMap"
-;
-    grid-template-columns: 27% 73% ;
-    /*자식width*/
+    grid-template-areas:
+        "restAreaTab restAreaMap";
+    grid-template-columns: 27% 73%;
     grid-template-rows: 900px;
-    /*자식height*/
+    gap: 10px;
+    padding: 10px;
+    background-color: #ffffff;
 }
 
+@media (max-width: 800px) {
+    #main {
+        grid-template-areas:
+            "restAreaTab";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+}
 
-.restAreaTab{
+.restAreaTab {
     background: white;
     grid-area: restAreaTab;
-    overflow-y: auto; /* 내용이 많을 경우 스크롤바 표시 */
+    padding: 20px;
+    margin-bottom: 10px; /* 모바일에서 여백 추가 */
+    overflow-y: auto;
 }
 
-.restAreaTab::-webkit-scrollbar {
-    width: 20px; /* 스크롤바 너비 */
+.restAreaMap {
+    display: block; /* 기본값은 보이도록 설정 */
 }
 
-
-
-
-.restAreaMap{
-    grid-area: restAreaMap;
+@media (max-width: 800px) {
+    .restAreaMap {
+        display: none; /* 모바일에서 맵 숨김 */
+    }
+    .restAreaTab{
+        background: white;
+        grid-area: restAreaTab;
+        overflow-y: auto;
+        padding: 10px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+    }
+    .restAreaTab select{
+        margin-left: 50px;
+    }
 }
 
-
-/*.restAreaList {*/
-/*    list-style: none;*/
-/*    padding: 0;*/
-/*    margin: 20px 0;*/
-/*    background-color: #f0f0f0;*/
-/*    border: 1px solid #ddd;*/
-/*    border-radius: 8px;*/
-/*}*/
 
 .restAreaItem {
     list-style-type: none;
-    padding:  20px;
+    padding: 20px;
     margin-right: 45px;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
@@ -55,6 +67,36 @@
 
 .restAreaItem:hover {
     background-color: #e9e9e9;
+}
+
+.restAreaTab select {
+    display: block;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.restAreaTab select:hover,
+.restAreaTab select:focus {
+    border-color: #b377d7;
+    box-shadow: 0 0 8px rgba(179, 119, 215, 0.6);
+}
+
+.restAreaTab select option {
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+.restAreaTab::-webkit-scrollbar {
+    width: 20px;
 }
 
 h2, h3 {
