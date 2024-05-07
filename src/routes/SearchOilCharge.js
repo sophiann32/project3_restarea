@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import styles from './Search_Oil_Charge.module.css';
+import styles from './SearchOilCharge.module.css';
 import axios from "axios";
 
-function Search_Oil_Charge() {
+function SearchOilCharge() {
     const [searchValue, setSearchValue] = useState('');
     const [Forwardings, setForwarding] = useState('');
     const [selectedArea, setSelectedArea] = useState('');
@@ -144,4 +144,4 @@ function Search_Oil_Charge() {
     );
 }
 
-export default Search_Oil_Charge;
+export default SearchOilCharge;

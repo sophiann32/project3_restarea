@@ -3,9 +3,9 @@ import styles from './statistics.module.css';
 import axios from "axios";
 import NationalGasPricesChart from './Chart/NationalGasPricesChart.js';
 import NearbyGasChart from './Chart/NearbyGasChart.js';
-import EV_ChargingSlots from './Chart/EV_ChargingSlots.js';
+import EVChargingSlots from './Chart/EVChargingSlots.js';
 import Chart7 from "./Chart/Chart7";
-import Search_Oil_Charge from './Search_Oil_Charge';
+import SearchOilCharge from './SearchOilCharge';
 
 function Statistics() {
     const [locationData, setLocationData] = useState(null);
@@ -37,7 +37,7 @@ function Statistics() {
         <>
         <div className={styles.statistics}>
             <div className={styles.box1}>
-                    <Search_Oil_Charge/>
+                    <SearchOilCharge/>
             </div>
             <div className={styles.box2}>
                     <div className={styles.chartContainer2}>
@@ -51,7 +51,7 @@ function Statistics() {
                             <Chart7/>
                         </div>
                         <div className={styles.smallbox3}>
-                            <EV_ChargingSlots/>
+                            <EVChargingSlots/>
                         </div>
                     </div>
 
