@@ -1,13 +1,15 @@
 .footer{
     /* % 부모가 자식 width 설정가능  */
     /* % 부모가 자식 height 설정가능  */
-    background-color: #7c7c7c;
+    /*background-color: #7c7c7c;*/
+    background-color: white;
     width: 100%;
     height: 200px;
     text-align: center;
     padding-top: 80px;
     margin: 0 auto;
 }
+
 .footer_div1{
     font-weight: bold;
 
