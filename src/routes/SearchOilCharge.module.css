@@ -134,7 +134,7 @@
     .smallbox1 {
         margin: 0; /* 여백 제거 */
         grid-template-columns: repeat(1, 1fr);
-        max-width: 400px; /* set max-width to 430px */
+        max-width: fit-content;
         grid-auto-flow: column; /* add this line */
         grid-template-areas:
         'a '
@@ -149,7 +149,10 @@
         grid-area: a;
         display: grid;
         padding: 10px;
-        width: 400px;
+        max-width: fit-content;
         height: 50%;
+    }
+    .results {
+    width: fit-content;
     }
 }
