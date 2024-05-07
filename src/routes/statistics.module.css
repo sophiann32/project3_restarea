@@ -1,5 +1,9 @@
 .statistics{
-    width: 100%;
+  grid-template-rows: repeat(3, auto); /* 3행으로 배치 */
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px; /* 전체 가로 크기 설정 */
+  margin: 0 auto; /* 가운데 정렬을 위해 */
     /*height: 780px;*/
     background-color: #ffeb9f;
     /*box-sizing: border-box;*/
