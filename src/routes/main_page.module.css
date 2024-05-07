@@ -103,7 +103,8 @@
         margin: 0 auto;
         width: 80%;
         border-radius: 20px;
-        /*margin-left: 50px;*/
+
+        margin-left: 80px;
     }
     .form li label{
         padding-right: 50px;
