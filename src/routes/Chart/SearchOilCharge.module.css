@@ -1,12 +1,12 @@
 .smallbox1 {
     display: grid;
-    max-width: 1200px; /* 전체 가로 크기 설정 */
     height: 300px;
     background-color: rgba(255, 254, 254, 0.71);
     position: relative;
     bottom: 0;
     left: 50%;
     margin-left: -600px;
+    padding: 10px;
     grid-template-areas:
     'a b ';
     grid-template-columns: 50% 50%;
@@ -14,14 +14,12 @@
     align-items: center;
     grid-gap: 0;
 }
-/*.searchInputWrapper{*/
 .chartContainer {
     grid-area: b;
     overflow-y: auto;
     overflow-x: hidden;
     max-width: 400px;
     margin: 0 auto;
-    /*padding: 20px;*/
     height: 90%;
     box-sizing: border-box;
 }
@@ -50,7 +48,6 @@
     width: 100%;
     border-radius: 10px;
 }
-
 .searchInputContainer {
     grid-area: a;
     display: grid;
@@ -68,9 +65,7 @@
     justify-items: start;
     grid-template-columns: 80% 20%;
     border-radius: 10px ;
-
 }
-
 .h2{
     font-weight: normal;
     grid-area: a;
@@ -107,49 +102,9 @@
     width: 95%;
     height: 50px;
     transition: transform 0.3s ease-in-out;
-    transition: background-color 0.3s ease-in-out;
 }
-
-
 .searchButton:hover {
     background-color: #7eb8b3;
     transform: scale(1.01);
 }
-@media screen and (max-width: 768px) {
 
-    .searchInputContainer, .chartContainer {
-        width: inherit; /* subtract 20px for padding */
-    }
-    .smallbox1 {
-        margin: 0; /* 여백 제거 */
-        max-width: 640px;
-        grid-auto-flow: column; /* add this line */
-        left: 0%;
-    }
-}
-@media screen and (max-width: 430px) {
-    .searchInputContainer, .chartContainer {
-        width: inherit; /* subtract 20px for padding */
-    }
-    .smallbox1 {
-        margin: 0; /* 여백 제거 */
-        grid-template-columns: repeat(1, 1fr);
-        max-width: 400px; /* set max-width to 430px */
-        grid-auto-flow: column; /* add this line */
-        grid-template-areas:
-        'a '
-        'b';
-        left: 0%;
-        gap: 10px;
-        align-content: space-between;
-        align-items: start;
-    }
-
-    .searchInputContainer {
-        grid-area: a;
-        display: grid;
-        padding: 10px;
-        width: 400px;
-        height: 50%;
-    }
-}
