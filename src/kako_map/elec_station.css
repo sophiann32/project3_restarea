@@ -16,3 +16,17 @@
 .pulsemarker {
     animation: pulse 2s infinite;
 }
+
+.mapContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* 모바일 크기 조정 */
+@media (max-width: 480px) {
+    .mapContainer {
+        width: 100%;
+        height: 400px; /* 높이를 300px로 설정 */
+    }
+}

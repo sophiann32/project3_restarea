@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Map, MapMarker, CustomOverlayMap,Circle  } from "react-kakao-maps-sdk";
 import {isVisible} from "@testing-library/user-event/dist/utils";
+import styles from '../kako_map/gas_staion.module.css'
 
 
 function Popup({ station, onClose }) {
@@ -41,6 +42,7 @@ function Popup({ station, onClose }) {
                 <p><strong>거리:</strong> {station.distance}m</p>
             </div>
             <button onClick={onClose} style={{
+                width: '100px',
                 cursor: 'pointer',
                 backgroundColor: '#f00',
                 color: '#fff',
@@ -78,10 +80,21 @@ function UserLocationPopup({ center }) {
 // 줌 레벨 설정 함수
 function getZoomLevel(radius) {
     switch (parseInt(radius, 10)) {
+        case 1: return 6;
+        case 3: return 8;
+        case 5: return 8;
+        default: return 6;
+    }
+}
+
+
+// 모바일 줌 레벨 설정 함수
+function getZoomLevelForMobile(radius) {
+    switch (parseInt(radius, 10)) {
         case 1: return 4;
-        case 3: return 6;
-        case 5: return 7;
-        default: return 3;
+        case 3: return 7;
+        case 5: return 8;
+        default: return 5;
     }
 }
 
@@ -112,6 +125,20 @@ function GasStation({ radius, stations }) {
             enableHighAccuracy: true
         });
     };
+
+    // 뷰포트 크기 변경에 따라 줌 레벨 조정
+    useEffect(() => {
+        const handleResize = () => {
+            const isMobile = window.matchMedia("(max-width: 480px)").matches;
+            const zoomLevel = isMobile ? getZoomLevelForMobile(radius) : getZoomLevel(radius);
+            setState(prev => ({ ...prev, zoomLevel }));
+        };
+
+        window.addEventListener("resize", handleResize);
+        handleResize(); // 초기 실행
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, [radius]);
 
 
     useEffect(() => {
@@ -146,7 +173,7 @@ function GasStation({ radius, stations }) {
 
 
     return (
-        <div style={{ width: "100%", height: "100%", position: 'relative' }}>
+        <div className={styles.mapContainer}>
             <Map center={state.center} style={{ width: "100%", height: "100%" }}
                  level={state.zoomLevel}
                  key={state.zoomLevel}>

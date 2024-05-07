@@ -1,6 +1,6 @@
 /*}*/
 #change{
-    background-color: #fff6f6;
+    background-color: white;
 
 }
 .aside_button {
@@ -9,8 +9,8 @@
     cursor: pointer;
     padding: 10px;
     transition: transform 0.2s ease-in-out;
-    top: 15vh; /* 15% from the top of the viewport */
-    left: 15px; /* 15% from the left of the viewport */
+    top: 15%; /* 15% from the top of the viewport */
+    left: 0; /* 15% from the left of the viewport */
     z-index: 3;
 }
 .aside_button:hover {
@@ -32,6 +32,14 @@
             inset 0 -3em 3em rgba(0, 200, 0, 0.09),
             0 0 0 2px white,
             0.3em 0.3em 1em rgba(163, 0, 200, 0.27);
+}
+
+@media (max-width: 480px) {
+    .aside{
+        width: 400px;
+    }
+
+
 }
 .aside::-webkit-scrollbar {
     width: 15px; /* 스크롤바 너비 */
@@ -212,7 +220,7 @@
     /*margin-left: 100px;*/
     padding-left: 130px;
     border-radius: 8px;
-    background-color: #e7e7e7;
+    background-color: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
@@ -253,6 +261,13 @@
     display: none;
 }
 
+@media (max-width: 480px){
+    .radioContainer{
+        position: absolute;
+        padding: 0;
+        /*bottom: 100px;*/
+    }
+}
 /*.radioContainer input:checked ~ .checkmark:after {*/
 /*    display: block;*/
 /*    top: 8px;*/
@@ -280,16 +295,12 @@
     justify-items: center; /* 가로 중앙 정렬 */
     gap: 20px; /* 그리드 아이템 간격 */
     height: 230px;
-    background-color: #041621;
+    /*background-color: #041621;*/
+    background-color: white;
     padding: 20px; /* 패딩 */
 
-
-    /*float: right;*/
-    /*width: 120px;*/
-    /*height: 680px;*/
-    /*background-color: #525252;*/
-
 }
+
 
 .icon_container {
     display: flex;
@@ -335,7 +346,7 @@
 
 .text {
      /* 아이콘 설명 텍스트 스타일 */
-     color: white;
+     color: black;
      margin-bottom: 15px;
      margin-left: 50px/* 텍스트와 버튼 간격 */
 
@@ -345,7 +356,7 @@
  }
 .text2 {
     /* 아이콘 설명 텍스트 스타일 */
-    color: white;
+    color: black;
     margin-bottom: 15px;
     margin-left: 76px/* 텍스트와 버튼 간격 */
 
@@ -416,10 +427,15 @@
 }
 
 @media (max-width: 480px) {
+    .aside_button{
+        z-index: 1000;
+
+    }
+
     .aside {
         /* 가장 작은 뷰포트에 맞춤 */
-        width: 100%; /* 화면 전체 너비를 차지하도록 함 */
-        height: auto; /* 내용에 맞게 높이를 조정 */
+        width: 400px; /* 화면 전체 너비를 차지하도록 함 */
+        height: 400px; /* 내용에 맞게 높이를 조정 */
         position: fixed; /* 화면 하단에 고정 */
         bottom: 0;
         left: 0;
@@ -430,5 +446,15 @@
     .section {
         margin-left: 0; /* aside가 전체 너비를 차지하므로 마진을 제거 */
         width: 100%; /* 화면 전체 너비를 사용 */
+        height: 400px;
+    }
+    .select_bar{
+        margin-top: 13%;
+
+
+    }
+    .icon2{
+        position: relative;
+        left: 10px;
     }
 }

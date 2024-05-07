@@ -64,6 +64,7 @@ function ElecStationPopup({ station, onClose }) {
                 <p><strong>거리:</strong> {distanceKm}km</p>
             </div>
             <button onClick={onClose} style={{
+                width:'100px',
                 cursor: 'pointer',
                 backgroundColor: '#f00',
                 color: '#fff',
@@ -88,26 +89,29 @@ function getZoomLevel(radius) {
     }
 }
 
+function getZoomLevelForMobile(radius) {
+    switch (parseInt(radius, 10)) {
+        case 1: return 5;
+        case 3: return 7;
+        case 5: return 8;
+        default: return 5;
+    }
+}
+
 // 전기차 충전소 위치를 지도에 표시하는 컴포넌트
-function Elec_station({ locations, radius}) {
-    // 내부 상태를 관리하기 위한 useState
+function Elec_station({ locations, radius }) {
     const [state, setState] = useState({
-        center: { lat: 37.5665, lng: 126.9780 }, // 지도의 중심 위치 초기값
-        zoomLevel: getZoomLevel(radius), // 지도의 초기 줌 레벨
-        selectedStation: null, // 선택된 충전소 정보
-        chargersInfo: {}, // 충전소 정보를 저장하는 객체
-        userLocation: null, // 사용자의 위치 정보
-        radius: radius, // 검색 반경
-        isLoading: false // 로딩 상태
+        center: { lat: 37.5665, lng: 126.9780 },
+        zoomLevel: getZoomLevel(radius),
+        selectedStation: null,
+        chargersInfo: {},
+        userLocation: null,
+        radius: radius,
+        isLoading: false,
     });
 
-
-
-
-
-    // 충전소 정보를 기반으로 상태를 업데이트하는 useEffect
     useEffect(() => {
-        setState(prev => ({ ...prev, isLoading: true}));
+        setState(prev => ({ ...prev, isLoading: true }));
         const chargersInfo = locations.reduce((acc, station) => {
             if (!acc[station.statId]) {
                 acc[station.statId] = {
@@ -126,25 +130,8 @@ function Elec_station({ locations, radius}) {
             return acc;
         }, {});
 
-        setState(prev => ({ ...prev, chargersInfo, isLoading: false })); // 로딩 종료
+        setState(prev => ({ ...prev, chargersInfo, isLoading: false }));
     }, [locations]);
-
-
-    // 로딩 인디케이터 스타일
-    const loadingOverlayStyle = {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        color: 'white',
-        fontSize: '24px',
-        zIndex: 1000
-    };
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -163,16 +150,23 @@ function Elec_station({ locations, radius}) {
         );
     }, []);
 
-    // 반경 정보가 변경될 때마다 줌 레벨을 업데이트하는 useEffect
     useEffect(() => {
-        setState(prev => ({
-            ...prev,
-            zoomLevel: getZoomLevel(radius),
-            radius: radius * 1000 // 반경을 미터로 변환하여 저장
-        }));
+        const handleResize = () => {
+            const isMobile = window.matchMedia("(max-width: 480px)").matches;
+            const zoomLevel = isMobile ? getZoomLevelForMobile(radius) : getZoomLevel(radius);
+            setState(prev => ({
+                ...prev,
+                zoomLevel,
+                radius: radius * 1000
+            }));
+        };
+
+        window.addEventListener("resize", handleResize);
+        handleResize();
+
+        return () => window.removeEventListener("resize", handleResize);
     }, [radius]);
 
-    // 마커 클릭 이벤트를 처리하는 함수
     const onMarkerClick = (statId) => {
         setState(prev => ({
             ...prev,
@@ -180,7 +174,6 @@ function Elec_station({ locations, radius}) {
         }));
     };
 
-    // 정보창을 닫는 함수
     const closeInfoWindow = () => {
         setState(prev => ({
             ...prev,
@@ -188,7 +181,21 @@ function Elec_station({ locations, radius}) {
         }));
     };
 
-    // 컴포넌트의 렌더링 결과를 반환
+    const loadingOverlayStyle = {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        fontSize: '24px',
+        zIndex: 1000
+    };
+
     return (
         <>
             {state.isLoading && (
@@ -196,50 +203,50 @@ function Elec_station({ locations, radius}) {
                     불러오는 중...
                 </div>
             )}
-            <Map center={state.center} style={{ width: "100%", height: "100%" }} level={state.zoomLevel}>
-                {state.userLocation && (
-                    <>
-                        <MapMarker
-                            position={state.userLocation}
-                            image={{ src: '/img/my_location.png', size: { width: 24, height: 35 } }}
-                        />
-                        <CustomOverlayMap position={state.userLocation} yAnchor={2.0}>
-                            <div style={{ padding: '5px', borderRadius: '1px', height: '20px', fontWeight: 'bold' }}>
-                                내 위치
-                            </div>
-                        </CustomOverlayMap>
-                        <Circle
-                            center={state.userLocation}
-                            radius={state.radius}
-                            strokeWeight={2}
-                            strokeColor={'#75B8FA'}
-                            strokeOpacity={0.7}
-                            fillColor={'#e5effc'}
-                            fillOpacity={0.5}
-                        />
-                    </>
-                )}
-                {locations.map((station) => (
-                    <React.Fragment key={`${station.statId}-${station.chgerId}`}>
-                        <MapMarker
-                            position={{ lat: parseFloat(station.lat), lng: parseFloat(station.lng) }}
-                            image={{
-                                className: station.stat === "2" ? 'pulsemarker' : '',
-                                src: station.stat === "2" ? '/img/live.png' : '/img/elc.png',
-                                size: { width: 24, height: 35 }
-                            }}
-                            onClick={() => onMarkerClick(station.statId)}
-                        />
-
-                    </React.Fragment>
-                ))}
-                {state.selectedStation && (
-                    <ElecStationPopup station={state.selectedStation} onClose={closeInfoWindow} />
-                )}
-            </Map>
+            <div className="mapContainer">
+                <Map center={state.center} style={{ width: "100%", height: "100%" }} level={state.zoomLevel}>
+                    {state.userLocation && (
+                        <>
+                            <MapMarker
+                                position={state.userLocation}
+                                image={{ src: '/img/my_location.png', size: { width: 24, height: 35 } }}
+                            />
+                            <CustomOverlayMap position={state.userLocation} yAnchor={2.0}>
+                                <div style={{ padding: '5px', borderRadius: '1px', height: '20px', fontWeight: 'bold' }}>
+                                    내 위치
+                                </div>
+                            </CustomOverlayMap>
+                            <Circle
+                                center={state.userLocation}
+                                radius={state.radius}
+                                strokeWeight={2}
+                                strokeColor={'#75B8FA'}
+                                strokeOpacity={0.7}
+                                fillColor={'#e5effc'}
+                                fillOpacity={0.5}
+                            />
+                        </>
+                    )}
+                    {locations.map((station) => (
+                        <React.Fragment key={`${station.statId}-${station.chgerId}`}>
+                            <MapMarker
+                                position={{ lat: parseFloat(station.lat), lng: parseFloat(station.lng) }}
+                                image={{
+                                    className: station.stat === "2" ? 'pulsemarker' : '',
+                                    src: station.stat === "2" ? '/img/live.png' : '/img/elc.png',
+                                    size: { width: 24, height: 35 }
+                                }}
+                                onClick={() => onMarkerClick(station.statId)}
+                            />
+                        </React.Fragment>
+                    ))}
+                    {state.selectedStation && (
+                        <ElecStationPopup station={state.selectedStation} onClose={closeInfoWindow} />
+                    )}
+                </Map>
+            </div>
         </>
     );
 }
 
-// 컴포넌트를 내보내어 다른 곳에서도 사용할 수 있게 함
 export default Elec_station;
