@@ -63,7 +63,7 @@ function Login(props) {
             });
 
             // 서버로부터의 응답 처리
-            navigate('/');
+            navigate('/board');
             console.log('console위치 catch 전 : '+ username)
 
         } catch (error) {
