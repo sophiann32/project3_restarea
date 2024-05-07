@@ -1,12 +1,13 @@
 .main_page{
     /*width: 1200px;*/
     width: 100%;
-    height: 780px;
+    height: 680px;
     background-color: #e8fffc;
     margin: 0 auto;
     background: linear-gradient(rgba(147, 197, 255, 0.1), rgba(124, 124, 124, 1)),url("../../public/img/road.jpg");
     background-size: cover;
     background-position: center;
+    position: relative;
 
 }
 
@@ -96,6 +97,7 @@
         font-size: 11px;
         margin-right: 50px;
     }
+}
 
     .mainButton{
         margin: 0 auto;
@@ -110,7 +112,7 @@
 
 
 
-    }
+
 
 
 
@@ -118,3 +120,8 @@
 /*    !*0 부터 480까지  (모바일) *!*/
 /*    height: "100px"*/
 /*}*/
+
+.modal {
+    position: relative;
+}
+

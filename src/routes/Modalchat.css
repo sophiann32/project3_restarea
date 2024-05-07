@@ -1,5 +1,5 @@
 .modalBackground {
-    position: fixed;
+    position: absolute; /* 기존에 fixed였던 것을 absolute로 변경 */
     top: 0;
     left: 0;
     right: 0;
@@ -10,8 +10,10 @@
     align-items: center;
 }
 
+
 .modalContent {
     background: white;
     padding: 20px;
     border-radius: 10px;
 }
+

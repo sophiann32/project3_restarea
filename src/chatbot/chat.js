@@ -3,17 +3,33 @@ import axios from 'axios';
 import './chat.css';
 import { FaMicrophone } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Stationinfo from './Stationinfo';
+
 
 function Chatbot() {
     const [messages, setMessages] = useState([]);
-    const [fuelStations, setFuelStations] = useState([]);
-    const [chargingStations, setChargingStations] = useState([]);
+    const [fuelStations] = useState([]);
+    const [chargingStations] = useState([]);
     const [isListening, setIsListening] = useState(false);
 
+    const Chat = ({ stations }) => {
+        return (
+            <div>
+                {stations.map(station => (
+                    <Stationinfo
+                        key={station.id}
+                        name={station.name}
+                        address={station.address}
+                        distance={station.distance}
+                    />
+                ))}
+            </div>
+        );
+    };
     useEffect(() => {
         const initialMessage = {
             id: Date.now(),
-            text: '안녕하세요! 어떻게 도와드릴까요?',
+            text: '안녕하세요! 여러분 주변에 최저가 주유소, 전기차 충전소 위치 등을 알려주고, 고속도로의 휴게소 정보를 알려드립니다:)',
             sender: 'bot'
         };
         setMessages([initialMessage]);
@@ -145,13 +161,24 @@ function Chatbot() {
                 speak(botResponse.text);
             }
         }
+        if (message.includes('고속도로 휴게소 정보 보러가기')) {
+            const RestareaUrl = "http://localhost:3000/restArea";
+            const botResponse = {
+                id: Date.now(),
+                text: `고속도로 휴게소 정보를 확인하러 가려면 여기를 클릭하세요.`,
+                sender: 'bot',
+                url: RestareaUrl // URL을 메시지 객체에 추가
+            };
+            setMessages(messages => [...messages, botResponse]);
+            speak("고속도로 휴게소 정보 페이지 링크를 보냈습니다.");
+        }
         if (message.includes('로그인 페이지로 이동하기')) {
             const loginUrl = "http://localhost:3000/login";
             const botResponse = {
                 id: Date.now(),
                 text: `로그인 페이지로 이동하려면 여기를 클릭하세요.`,
                 sender: 'bot',
-                url: loginUrl // URL을 메시지 객체에 추가
+                url: loginUrl
             };
             setMessages(messages => [...messages, botResponse]);
             speak("로그인 페이지 링크를 보냈습니다.");
@@ -209,26 +236,16 @@ function Chatbot() {
                 ))}
             </div>
             <div className="stations-list">
-                <ul>
-                    {fuelStations.map(station => (
-                        <li key={station.id}>
-                            {station.name} - {station.price}원 - 현 위치로부터 {formatFuelStationDistance(station.distance)} 떨어짐
-                        </li>
-                    ))}
-                </ul>
+                <Chat stations={fuelStations} type="fuel"/>
             </div>
             <div className="stations-list">
-                <ul>
-                    {chargingStations.map((station, index) => (
-                        <li key={index}>
-                            {station['Station Name']} - 현 위치로부터 {formatChargingStationDistance(station.Distance)} 떨어짐
-                        </li>
-                    ))}
-                </ul>
+                <Chat stations={chargingStations} type="charge"/>
             </div>
+
             <div className="user-input">
                 <button onClick={() => handleMessage('내 주변 최저가 주유소 찾기')}>내 주변 최저가 주유소 찾기</button>
                 <button onClick={() => handleMessage('내 주변 전기차 충전소 찾기')}>내 주변 전기차 충전소 찾기</button>
+                <button onClick={() => handleMessage('고속도로 휴게소 정보 확인하러 가기')}>고속도로 휴게소 정보 확인하러 가기</button>
                 <button onClick={() => handleMessage('로그인 페이지로 이동하기')}>로그인 페이지로 이동하기</button>
                 <button onClick={() => handleMessage('통계 차트 보러가기')}>통계 차트 보러가기</button>
                 <div className="tooltip">
@@ -237,8 +254,8 @@ function Chatbot() {
                         {isListening ? "듣는 중..." : "음성인식"}
                     </button>
                     <span className="tooltiptext">
-                        음성인식 버튼을 누르고 주유소 or 전기차 라고 마이크에 말하시면<br/> 그에 맞는 정보가 표시됩니다.<br/>
-                        (주유소는 반경 5KM 내에 있는<br/> 최저가 주유소가,<br/> 전기차는 반경 5KM 내에 있는<br/> 충전소가 표시됩니다.)
+                        음성인식 버튼을 누르고<br/> 주유소! or 전기차! 라고<br/> 음성으로 말씀하시면 <br/>그에 맞는 정보가 표시됩니다.<br/>
+                        (주유소는 반경 5KM 내에 있는 최저가 주유소가,<br/> 전기차는 반경 5KM 내에 있는 전기차 충전소가 표시됩니다.)
                     </span>
                 </div>
             </div>

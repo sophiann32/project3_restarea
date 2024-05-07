@@ -5,7 +5,7 @@ function ChatModal({ isOpen, onClose }) {
     if (!isOpen) return null;
 
     return (
-        <div className="modal show">
+        <div className="modal_show">
             <div className="modal-content">
                 <span className="close-button" onClick={onClose}>&times;</span>
                 <h2><Chatbot/></h2>

@@ -26,10 +26,12 @@ body {
 
 .chat-container {
     background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
-    margin: 20px;
-    height: 50vh;
+    margin: 18px;
+    height: 47vh;
+    width: 330px;
     overflow-y: auto;
-    border: 1px solid #ccc;
+    border: 10px solid #30313b;
+    border-radius: 25px  ;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     color: var(--text-color);
@@ -45,6 +47,7 @@ body {
     max-width: 100%;
     word-wrap: break-word; /* 긴 텍스트가 박스를 벗어나는 것을 방지 */
     animation: fadeIn 0.3s;
+    font-size: 23px;
 }
 
 @keyframes fadeIn {
@@ -117,14 +120,6 @@ body {
     font-size: 16px;
     margin-top: 10px;
 }
-:root {
-    --primary-color-dark: #282c34; /* 다크 모드의 주요 색상 */
-    --primary-color-light: #4A90E2; /* 라이트 모드의 주요 색상 */
-    --text-color-dark: #FFFFFF; /* 다크 모드의 텍스트 색상 */
-    --text-color-light: #333; /* 라이트 모드의 텍스트 색상 */
-    --bg-color-dark: #333; /* 다크 모드의 배경 색상 */
-    --bg-color-light: #F0F2F5; /* 라이트 모드의 배경 색상 */
-}
 
 button {
     background-color: var(--accent-color);
@@ -188,6 +183,7 @@ button:hover {
     margin-left: -140px;
     opacity: 0;
     transition: opacity 0.3s;
+    font-size: 20px;
 }
 
 .tooltip:hover .tooltiptext {
@@ -196,11 +192,26 @@ button:hover {
 }
 
 .chat_app {
-    width: 500px;
-    position: relative;
-    bottom: 100px;
-    left: 1200px;
+    width: 400px;
+    position: fixed;
+    /*bottom: 100px;*/
+    /*left: 1200px;*/
+    right: 1%;
+    bottom: 33%;
+    height: 520px;
+
 }
+@media (max-width: 480px) {
+    .chat_app{
+        width: 400px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+    }
+
+}
+
 
 .chat_app button {
    background-color: #de8989;

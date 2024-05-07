@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import styles from './main_page.module.css'
 import Modal from './Modal';
-import {useParams, Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import ChatBot from '../chatbot/chat';
 
 function MainPage(){
     const [selectedRoute, setSelectedRoute] = useState('');
     const navigate = useNavigate();
     const [isModalOpen,setModalOpen] = useState(false);
-    const [messages, setMessages ] = useState([]);
 
-    const openModal = () => setModalOpen(true);
-    const closeModal = () => setModalOpen(false)
+
+    const toggleModal = () => setModalOpen(!isModalOpen);
     const handleRouteChange = (event) => {
         setSelectedRoute(event.target.value);
         console.log("Route changed:", event.target.value);
     };
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -93,18 +91,12 @@ function MainPage(){
 
                     <button className={styles.mainButton} type="submit">검색</button>
                 </form>
-
-
-                <div className={styles.chat} onClick={openModal}>
-                   CHAT BOT
+                <div className={styles.chat} onClick={toggleModal}>
+                    CHAT BOT
                 </div>
-
-                {/* 모달 컴포넌트를 조건부 렌더링으로 추가 */}
                 {isModalOpen && (
-                    <Modal isOpen={isModalOpen} onClose={closeModal}>
-                        <div>
-                        <chat/>
-                        </div>
+                    <Modal isOpen={isModalOpen} onClose={toggleModal}>
+                        <ChatBot />
                     </Modal>
                 )}
             </div>
