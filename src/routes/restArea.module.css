@@ -11,13 +11,21 @@
     background-color: #ffffff;
 }
 
+
+
 @media (max-width: 800px) {
     #main {
         grid-template-areas:
-            "restAreaTab";
-        grid-template-columns: 1fr;
+            "restAreaTab"
+            "restAreaMap";
+        /*grid-template-columns: 1fr;*/
+        grid-template-columns: 100%;
         grid-template-rows: auto;
+        /*grid-template-rows: 100px 500px;*/
+        gap: 0;
+        padding: 0;
     }
+
 }
 
 .restAreaTab {
@@ -26,15 +34,19 @@
     padding: 20px;
     margin-bottom: 10px; /* 모바일에서 여백 추가 */
     overflow-y: auto;
+    /*width: 100px;*/
 }
 
 .restAreaMap {
     display: block; /* 기본값은 보이도록 설정 */
 }
 
-@media (max-width: 800px) {
+
+@media (max-width: 480px) {
     .restAreaMap {
-        display: none; /* 모바일에서 맵 숨김 */
+        /*display: none; !* 모바일에서 맵 숨김 *!*/
+        /*width: 100%;*/
+        /*height: 100px;*/
     }
     .restAreaTab{
         background: white;
@@ -45,10 +57,15 @@
         display: flex;
         flex-direction: column;
         align-items: center; /* 수직 가운데 정렬을 위해 추가 */
+        width: 80%;
+        height: 200px;
     }
-    .restAreaTab select{
-        margin-left: 50px;
+    .restAreaItems{
+        height: 100px;
+        overflow: hidden;
+        overflow-y: scroll;
     }
+
 }
 
 
@@ -59,6 +76,7 @@
     border-bottom: 1px solid #ccc;
     cursor: pointer;
     transition: background-color 0.2s;
+
 }
 
 .restAreaItem:last-child {

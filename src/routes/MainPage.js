@@ -31,9 +31,9 @@ function MainPage(){
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <ul>
                         <li>
-                            <label className={styles.label} htmlFor="class">고속도로</label>
+                            <label className={styles.label} htmlFor="class">휴게소</label>
                             <select id={styles.select} value={selectedRoute} onChange={handleRouteChange}>
-                                <option value="" disabled selected hidden>원하는 도로의 휴게소 정보를 확인하세요</option>
+                                <option value="" disabled selected hidden>🔍 원하는 도로의 휴게소 정보를 확인하세요</option>
                                 {/* 고속도로 옵션들 */}
                                 <optgroup style={{color:'darkblue'}} label="북쪽">
 
@@ -91,7 +91,7 @@ function MainPage(){
                         </li>
                     </ul>
 
-                    <button type="submit">검색</button>
+                    <button className={styles.mainButton} type="submit">검색</button>
                 </form>
 
 

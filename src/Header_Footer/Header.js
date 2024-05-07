@@ -13,18 +13,21 @@ function Header(props) {
     return (
         <div className={headerClass}>
             <nav className={styles.nav}>
-                <div className={styles.logo}><NavLink to='/'><span>STOP</span>SCAN</NavLink></div>
+                <div className={styles.logo}><NavLink to='/'>
+                    {/*<span>STOP</span>SCAN*/}
+                    <img src={"../img/logo1.png"} style={{width : '250px'}}/>
+                </NavLink></div>
                 <button className={styles.menu_button} onClick={() => setMenuOpen(!isMenuOpen)}>
                     &#9776;
                     {/*이게 햄버거 모양 유니코드문자*/}
                 </button>
                 <div className={`${styles.menu_box} ${isMenuOpen ? styles.menu_open :styles.menu_closed}`}>
                     <ul>
-                        <li><NavLink to="/map">내 위치</NavLink></li>
-                        <li><NavLink to="/sub">통계</NavLink></li>
-                        <li><NavLink to="/restArea">휴게소</NavLink></li>
-                        <li><NavLink to="/board">리뷰 게시판</NavLink></li>
-                        <li><NavLink to="/jeju">제주</NavLink></li>
+                        <li><NavLink to="/map">주유소찾기</NavLink></li>
+                        <li><NavLink to="/restArea">휴게소 찾기</NavLink></li>
+                        <li><NavLink to="/board">게시판</NavLink></li>
+                        <li><NavLink to="/jeju">제주 어때🏝️</NavLink></li>
+                        <li><NavLink to="/sub">유가통계</NavLink></li>
                     </ul>
                 </div>
                 <div className={styles.login_box}>

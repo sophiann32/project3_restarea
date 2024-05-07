@@ -117,7 +117,7 @@ function RestArea() {
         <>
             <div id={styles.main}>
                 <div className={styles.restAreaTab}>
-                    <select value={selectedRoute} onChange={e => setSelectedRoute(e.target.value || '')}>
+                    <select className={styles.restSelecter} value={selectedRoute} onChange={e => setSelectedRoute(e.target.value || '')}>
                         <option value="">노선을 선택하세요</option>
                         <option value="동해선">동해선</option>
                         <option value="중부내륙선">중부내륙선</option>
@@ -166,7 +166,7 @@ function RestArea() {
                         <option value="서울양양선(서울-춘천)">서울양양선(서울-춘천)</option>
                         <option value="서울외곽순환선">서울외곽순환선</option>
                     </select>
-                    <ul>
+                    <ul className={styles.restAreaItems}>
                         {restAreas.map((area, index) => (
                             <li key={index} className={styles.restAreaItem} onClick={() => handleAreaClick(area)}>
                                 {`${area.휴게소명} - ${area.convenience}`}

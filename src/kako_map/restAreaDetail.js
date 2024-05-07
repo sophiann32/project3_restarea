@@ -6,7 +6,7 @@ import styles from './restAreaDetail.module.css';
 import RestAreaModalContent from '../kako_map/RestAreaModalContent';
 
 function RestAreaDetail({ selectedRoute }) {
-    const [position, setPosition] = useState({ lat: 36.5, lng: 127.5 });
+    const [position, setPosition] = useState({lat: 36.5, lng: 127.5});
     const [zoomLevel, setZoomLevel] = useState(12);
     const [restAreas, setRestAreas] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
@@ -20,7 +20,7 @@ function RestAreaDetail({ selectedRoute }) {
                     setRestAreas(response.data);
                     if (response.data.length > 0) {
                         const firstArea = response.data[0];
-                        setPosition({ lat: firstArea.위도, lng: firstArea.경도 });
+                        setPosition({lat: firstArea.위도, lng: firstArea.경도});
                     }
                 })
                 .catch(error => console.error('Error fetching data: ', error));
@@ -81,13 +81,19 @@ function RestAreaDetail({ selectedRoute }) {
         });
     };
 
+
+
+
     return (
-        <div>
-            <Map center={position} level={zoomLevel} style={{ width: "100%", height: "900px" }}>
+        <div className={styles.mapWrapper}>
+            <Map center={position} level={zoomLevel} style={{width: "100%", height: "700px"}}>
+
+
+
                 {restAreas.map((area, index) => (
                     <MapMarker
                         key={index}
-                        position={{ lat: area.위도, lng: area.경도 }}
+                        position={{lat: area.위도, lng: area.경도}}
                         onClick={() => handleMarkerClick(area)}
                         onMouseOver={() => setIsOpen(area)}
                         onMouseOut={() => setIsOpen(null)}
@@ -100,18 +106,26 @@ function RestAreaDetail({ selectedRoute }) {
                         }}
                     >
                         {isOpen === area && (
-                            <div style={{ fontSize: 17, color: '#000000', backgroundColor: '#fffefe', padding: '5px', borderRadius: '5px', textAlign: 'center' }}>
+                            <div style={{
+                                fontSize: 17,
+                                color: '#000000',
+                                backgroundColor: '#fffefe',
+                                padding: '5px',
+                                borderRadius: '5px',
+                                textAlign: 'center'
+                            }}>
                                 {area.휴게소명}
                             </div>
                         )}
                     </MapMarker>
                 ))}
             </Map>
-            {selectedRestArea && (
-                <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-                    <RestAreaModalContent area={selectedRestArea} />
-                </Modal>
-            )}
+            {
+                selectedRestArea && (
+                    <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+                        <RestAreaModalContent area={selectedRestArea}/>
+                    </Modal>
+                )}
         </div>
     );
 }
