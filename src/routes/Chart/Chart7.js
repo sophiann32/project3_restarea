@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import {Bar} from 'react-chartjs-2';
 import axios from "axios";
+import styles from './Chart.css'
 
 function ChartLine() {
     ChartJS.register(
@@ -124,10 +125,10 @@ function ChartLine() {
     };
 
     return (
-
-        <div style={{width: '100%', maxWidth: '400px', margin: 'auto'}}>
-
-            <Bar data={chartData} id="myChart" options={options} width={400} height={460}/>
+        <div className={styles.Chart}>
+            <div style={{width: '100%', maxWidth: '400px', margin: 'auto'}}>
+                <Bar data={chartData} id="myChart" options={options} width={400} height={460}/>
+            </div>
         </div>
     );
 }

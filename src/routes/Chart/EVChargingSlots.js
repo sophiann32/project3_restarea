@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { useNavigate } from 'react-router-dom';
-
+import styles from './Chart.css'
 const LocationTracker = () => {
     const [stations, setStations] = useState([]);
 
@@ -133,11 +133,12 @@ function ChartDonut(props) {
         return () => clearInterval(interval); // 컴포넌트가 소멸될 때 해당 인터벌을 정리
     }, []);
     return (
-        <div className="App">
+        <div className={styles.Chart}>
             <div style={{width: '100%', maxWidth: '400px', margin: 'auto'}}>
-                <Doughnut data={chartData} options={options} width={400} height={460} />
+                <Doughnut data={chartData} options={options} width={400} height={460}/>
             </div>
         </div>
     );
 }
+
 export default LocationTracker;

@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import axios from 'axios';
-
+import styles from './Chart.css'
 // 전역 폰트 설정
 ChartJS.defaults.font.family = 'GmarketSans';
 ChartJS.defaults.font.size = 14;
@@ -113,7 +113,11 @@ function App() {
         }
     };
 
-    return <Bar data={chartdata} options={options} width={600} height={460}/>;
+    return(
+    <div className={styles.Chart}>
+        <Bar data={chartdata} options={options} width={600} height={460}/>
+    </div>);
+
 }
 
 export default App;

@@ -132,6 +132,7 @@
         width: inherit; /* subtract 20px for padding */
     }
     .smallbox1 {
+        display: grid;
         margin: 0; /* 여백 제거 */
         grid-template-columns: repeat(1, 1fr);
         grid-auto-flow: column; /* add this line */
@@ -142,14 +143,14 @@
         gap: 10px;
         align-content: space-between;
         align-items: start;
-        max-width: 63%;
+        /*max-width: fit-content;*/
 
     }
     .searchInputContainer {
         grid-area: a;
         display: grid;
         padding: 10px;
-        max-width: fit-content;
+        width:310px;
         height: 50%;
     }
     .results {

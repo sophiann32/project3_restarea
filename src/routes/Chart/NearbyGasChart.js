@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import {useNavigate} from "react-router-dom";
+import styles from './Chart.css'
 function NearbyGasChart({ data }) {
     const [stations, setStations] = useState([]);
 
@@ -100,13 +101,11 @@ function NearbyGasChart({ data }) {
     };
 
     return (
-        <div className="App">
-            <div className="App">
+            <div className={styles.Chart}>
                 <div style={{width: '100%', maxWidth: '400px', margin: 'auto'}}>
                     <Doughnut data={chartData} options={options} width={400} height={460} />
                 </div>
             </div>
-        </div>
     );
 }
 
