@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import styles from './Modal.module.css'; // 모달에 대한 CSS 스타일
+import React from 'react';
+import styles from './modal.module.css';
 
-function Modal({ isOpen, onClose }) {
-    if (!isOpen) return null;
-
+// 모달의 오버레이나 백그라운드 클릭시 모달 닫기
+function Modal({ isOpen, children }) {
     return (
-        <div className={styles.modalOverlay}>
-            <div className={styles.modal}>
-                <h2>챗봇</h2>
-                <p>여기에 챗봇 내용을 넣으세요.</p>
-                <button onClick={onClose}>닫기</button>
+        <div className={isOpen ? "modal-overlay visible" : "modal-overlay"}>
+            <div className="modal-content">
+                {children}
             </div>
         </div>
     );
 }
+
 
 export default Modal;

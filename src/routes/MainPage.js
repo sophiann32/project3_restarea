@@ -4,13 +4,13 @@ import Modal from './Modal';
 import {useNavigate} from 'react-router-dom';
 import ChatBot from '../chatbot/chat';
 
-function MainPage(){
+function MainPage() {
     const [selectedRoute, setSelectedRoute] = useState('');
     const navigate = useNavigate();
-    const [isModalOpen,setModalOpen] = useState(false);
-
+    const [isModalOpen, setModalOpen] = useState(false);
 
     const toggleModal = () => setModalOpen(!isModalOpen);
+
     const handleRouteChange = (event) => {
         setSelectedRoute(event.target.value);
         console.log("Route changed:", event.target.value);
