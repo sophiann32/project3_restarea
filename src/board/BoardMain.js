@@ -78,13 +78,31 @@ function Board({ userRealName, posts, startPage, currentPage, endPage, totalPage
     }, [page]);
 
 
+/////////////////////////////////////////////
+//////////////  검색내용 보내는코드 gpt한테 받은거///////////////////////////////
+    useEffect(() => {
+        axios.get('http://localhost:3001/boardMain', {
+            params: {
+                param1: 'searchType',
+                param2: 'searchInput',
+                // 필요한 만큼 쿼리 파라미터를 추가할 수 있습니다.
+            }
+        })
+            .then(res => {
+                console.log('데이터확인 : ' + res.data.currentPage);
+                console.log(res);
+                console.log(res.data);
+                setResponseData(res.data);
+            })
+            .catch(error => {
+                console.error('에러 발생: ', error);
+            });
+    },[])
 
 
 
-
-
-    ////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
 
 
     // useEffect(() => {
@@ -104,16 +122,16 @@ function Board({ userRealName, posts, startPage, currentPage, endPage, totalPage
 
     return (
         <div>
-            <h1>게시판</h1>
-            <div style={{position: 'absolute', top: '10px', right: '10px'}}>
+            <h1>리뷰 게시판</h1>
+            <div style={{position: 'absolute', top: '10px', right: '10px',color:"white"}}>
                 {userRealName ? (
                     <p>
-                        {userRealName}님 환영합니다. &nbsp;&nbsp;
-                        <a href="/" className="button">로그아웃</a>
+                        {/*{userRealName}님 환영합니다. &nbsp;&nbsp;*/}
+                        <a href="/" className="button"  style={{color:"white"}}>로그아웃</a>
                         {/*a 태그로 이동하면 seasion끊기는거 이용*/}
                     </p>
-                ) : (
-                    <a href="/" className="button">로그인</a>
+                ) : (''
+                    // <a href="/" className="button">로그인</a>
                 )}
             </div>
 
@@ -154,7 +172,7 @@ function Board({ userRealName, posts, startPage, currentPage, endPage, totalPage
             {/*////////////////////////////////*/}
 
 
-            <div className="button-container">
+            <div className={styles.buttonContainer}>
                 {userRealName && <Link to="/create" className="button">글쓰기</Link>}
             </div>
 
@@ -217,18 +235,19 @@ function Board({ userRealName, posts, startPage, currentPage, endPage, totalPage
             {/*///////////////////////////////////////////////////////*/}
 
 
-            <div id="searchContainer">
-                <form action="/boardMain" method="GET">
-                    <label htmlFor="searchType">검색 조건:</label>
-                    <select id="searchType" name="searchType">
-                        <option value="title" selected>제목</option>
-                        <option value="content">게시글 내용</option>
-                        <option value="author">글 작성자</option>
-                    </select>
-                    <input type="text" id="searchInput" name="searchInput"/>
-                    <button type="submit">검색</button>
-                </form>
-            </div>
+            {/*<div id={styles.searchContainer}>*/}
+            {/*    <form action="/boardMain" method="GET">*/}
+            {/*    /!*    <form action="http://localhost:3001/boardMain" method="post">*!/*/}
+            {/*            <label htmlFor="searchType">검색 조건:</label>*/}
+            {/*            <select id="searchType" name="searchType">*/}
+            {/*                <option value="title" selected>제목</option>*/}
+            {/*                <option value="content">게시글 내용</option>*/}
+            {/*                <option value="author">글 작성자</option>*/}
+            {/*            </select>*/}
+            {/*            <input type="text" id="searchInput" name="searchInput"/>*/}
+            {/*            <button type="submit">검색</button>*/}
+            {/*        </form>*/}
+            {/*</div>*/}
             {/*/////////////////////////////////////*/}
         </div>
     );
