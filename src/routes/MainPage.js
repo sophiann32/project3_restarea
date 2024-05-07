@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import styles from './main_page.module.css'
-import { useNavigate } from 'react-router-dom';
+import Modal from './Modal';
+import {useParams, Link, useNavigate} from 'react-router-dom';
+import ChatBot from '../chatbot/chat';
 
 function MainPage(){
     const [selectedRoute, setSelectedRoute] = useState('');
     const navigate = useNavigate();
+    const [isModalOpen,setModalOpen] = useState(false);
+    const [messages, setMessages ] = useState([]);
 
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false)
     const handleRouteChange = (event) => {
         setSelectedRoute(event.target.value);
         console.log("Route changed:", event.target.value);
@@ -30,6 +36,7 @@ function MainPage(){
                                 <option value="" disabled selected hidden>원하는 도로의 휴게소 정보를 확인하세요</option>
                                 {/* 고속도로 옵션들 */}
                                 <optgroup style={{color:'darkblue'}} label="북쪽">
+
                                     <option value="동해선">동해선</option>
                                     <option value="중부내륙선">중부내륙선</option>
                                     <option value="호남선">호남선</option>
@@ -59,6 +66,7 @@ function MainPage(){
                                     <option value="국도3호선">국도3호선</option>
                                     <option value="호남고속도로">호남고속도로</option>
                                     <option value="대전통영선">대전통영선</option>
+
                                 </optgroup>
                                 <optgroup label="짧은거">
                                     <option value="중부선">중부선</option>
@@ -82,8 +90,23 @@ function MainPage(){
                             </select>
                         </li>
                     </ul>
+
                     <button type="submit">검색</button>
                 </form>
+
+
+                <div className={styles.chat} onClick={openModal}>
+                   CHAT BOT
+                </div>
+
+                {/* 모달 컴포넌트를 조건부 렌더링으로 추가 */}
+                {isModalOpen && (
+                    <Modal isOpen={isModalOpen} onClose={closeModal}>
+                        <div>
+                        <chat/>
+                        </div>
+                    </Modal>
+                )}
             </div>
         </>
     );
