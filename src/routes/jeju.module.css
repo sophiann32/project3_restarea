@@ -98,7 +98,7 @@
     display: block;
     background-color: white;
     border-bottom: 1px solid #eee;
-    margin-top: 200px;
+    margin-top: 50px;
 }
 
 .tourInfo {
@@ -111,6 +111,7 @@
     overflow-wrap: break-word;
     hyphens: auto;
     max-width: 100%;
+
 }
 
 .tag {

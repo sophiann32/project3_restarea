@@ -80,9 +80,9 @@ function UserLocationPopup({ center }) {
 // 줌 레벨 설정 함수
 function getZoomLevel(radius) {
     switch (parseInt(radius, 10)) {
-        case 1: return 6;
-        case 3: return 8;
-        case 5: return 8;
+        case 1: return 5;
+        case 3: return 6;
+        case 5: return 7;
         default: return 6;
     }
 }
