@@ -58,9 +58,15 @@ li a {
     background-color: #d58282;
     border-radius: 20px;
 }
+.login_box span{
+    color: white;
+}
 
+.login_box span:hover{
+    color: black;
+}
 .login_box{
-    /*color: #f8eaea;*/
+    color: #f8eaea;
     /*background-color: #fff;*/
 }
 

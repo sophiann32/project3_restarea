@@ -33,8 +33,7 @@ function MainPage(){
                             <select id={styles.select} value={selectedRoute} onChange={handleRouteChange}>
                                 <option value="" disabled selected hidden>🔍 원하는 도로의 휴게소 정보를 확인하세요</option>
                                 {/* 고속도로 옵션들 */}
-                                <optgroup style={{color:'darkblue'}} label="북쪽">
-
+                                <optgroup style={{color:'darkblue'}} >
                                     <option value="동해선">동해선</option>
                                     <option value="중부내륙선">중부내륙선</option>
                                     <option value="호남선">호남선</option>
@@ -64,9 +63,6 @@ function MainPage(){
                                     <option value="국도3호선">국도3호선</option>
                                     <option value="호남고속도로">호남고속도로</option>
                                     <option value="대전통영선">대전통영선</option>
-
-                                </optgroup>
-                                <optgroup label="짧은거">
                                     <option value="중부선">중부선</option>
                                     <option value="남해선">남해선</option>
                                     <option value="중부내륙">중부내륙</option>
