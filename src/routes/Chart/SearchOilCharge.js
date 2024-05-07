@@ -121,6 +121,7 @@ function SearchOilCharge() {
                     > 주소,공급업체 확인
                     </button>
                 </div>
+                {/*</div>*/}
                 <div className={styles.chartContainer}>
                     {Forwardings && Forwardings.map((Forwarding, index) => {
                         console.log('Forwarding:', Forwarding); // log the Forwarding object

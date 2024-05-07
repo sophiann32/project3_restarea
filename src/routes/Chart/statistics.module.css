@@ -4,7 +4,7 @@
     padding: 20px;
     max-width: 1200px; /* 전체 가로 크기 설정 */
     margin: 0 auto; /* 가운데 정렬을 위해 */
-    background-color: #fff7d2;
+    background-color: #ffeb9f;
     display: grid;
     grid-template-areas:
     'a'
@@ -22,6 +22,7 @@
     /*position: relative;*/
 }
 
+
 .box2 {
     grid-area: b;
     display: flex;
@@ -31,7 +32,7 @@
     width: 100%;
     height: auto; /* 변경: 컨텐츠에 맞춰 높이 조정 */
     margin: 0 auto;
-    background-color: #f6ceff;
+    background-color: #b73131;
 }
 
 .chartContainer2 {
