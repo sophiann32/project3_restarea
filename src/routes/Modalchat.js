@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from './modal.module.css';
-function Modal({ isOpen, onClose, children }) {
-    if (!isOpen) return null;
 
+function Modal({ children, onClose }) {
     return (
-        <div className={styles.modalBackground}>
-            <div className={styles.modalContent}>
-                <button onClick={onClose}>닫기</button>
+        <div className="modal">
+            <div className="modal-content">
+                <span className="close" onClick={onClose}>&times;</span>
                 {children}
             </div>
         </div>

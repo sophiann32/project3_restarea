@@ -1,0 +1,19 @@
+.station-info {
+    border: 1px solid #0cd30d;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.station-info h4 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2em;
+}
+
+.station-info p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    color: #666;
+}
