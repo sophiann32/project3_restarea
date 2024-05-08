@@ -31,7 +31,7 @@
 - **배포**: AWS EC2
   
 ## 구조
-![image](./readmeImg/구조.png)   
+![image](./readmeImg/구조.PNG)   
 
 
 ## 프로젝트 관리 
