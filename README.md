@@ -32,17 +32,17 @@
   
 ## 배포구조
 ![image](./readmeImg/구조.PNG)   
-* aws에 배포시 구조입니다
+* #### `aws`에 배포시 구조입니다
 ## 리엑트구조
 ![image](./readmeImg/구조1.PNG)   
-* 리엑트 APP.JS 의 라우터 형태입니다.
+* #### `react` APP.JS 의 라우터 형태입니다.
 ![image](./readmeImg/구조2.PNG)
 * AXIOS 글로벌 설정과 이용한 모듈입니다.
 ## EXPRESS구조
 ![image](./readmeImg/구구조.PNG)
-* express 에서는 대부분 오라클DB에서 데이터를 불러오는 서버입니다.
+* #### `express` 에서는 대부분 오라클DB에서 데이터를 불러오는 서버입니다.
 ![image](./readmeImg/구구조1.PNG)
-* session 설정한 부분입니다. 로그인이후 세션이 유지 가능하게 해줍니다.
+* #### `session` 설정한 부분입니다. 로그인이후 세션이 유지 가능하게 해줍니다.
 
 
 
