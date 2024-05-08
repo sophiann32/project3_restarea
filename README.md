@@ -37,7 +37,7 @@
 ![image](./readmeImg/구조1.PNG)   
 * #### `react` APP.JS 의 라우터 형태입니다.
 ![image](./readmeImg/구조2.PNG)
-* AXIOS 글로벌 설정과 이용한 모듈입니다.
+*  #### `AXIOS` 글로벌 설정과 이용한 모듈입니다.
 ## EXPRESS구조
 ![image](./readmeImg/구구조.PNG)
 * #### `express` 에서는 대부분 오라클DB에서 데이터를 불러오는 서버입니다.
