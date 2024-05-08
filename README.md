@@ -29,6 +29,10 @@
 - **데이터수집**: Flask
 - **데이터베이스**: oracleDB
 - **배포**: AWS EC2
+  
+## 구조
+![image](./readmeImg/구조.png)   
+
 
 ## 프로젝트 관리 
 
