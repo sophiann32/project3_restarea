@@ -25,7 +25,7 @@
 
 - **프론트엔드**: React, CSS Modules, Kakao Maps SDK
 - **백엔드**: Node.js, Express
-- **데이터분석**: 
+- **데이터분석**: python
 - **데이터수집**: Flask
 - **데이터베이스**: oracleDB
 - **배포**: AWS EC2
