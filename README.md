@@ -32,6 +32,11 @@
   
 ## 구조
 ![image](./readmeImg/구조.PNG)   
+* aws에 배포시 구조입니다
+![image](./readmeImg/구조1.PNG)   
+* 리엑트 APP.JS 의 라우터 형태입니다.
+
+
 
 
 ## 프로젝트 관리 
