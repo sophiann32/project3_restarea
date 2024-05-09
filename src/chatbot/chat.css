@@ -1,0 +1,218 @@
+:root {
+    --primary-color: #4A90E2; /* 주요 색상 */
+    --secondary-color: #FAFAFA; /* 보조 색상 */
+    --accent-color: #FFAFAF; /* 악센트 색상 */
+    --accent-color-dark: #e17b7b; /* 어두운 악센트 색상 */
+    --text-color: #333; /* 기본 텍스트 색상 */
+    --bg-color: #efe4e4; /* 배경 색상 */
+    --font-family: 'Arial', sans-serif; /* 글꼴 */
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: var(--font-family);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+
+.App-header {
+    background-color: var(--primary-color);
+    padding: 10px 0;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.chat-container {
+    background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
+    margin: 18px;
+    height: 47vh;
+    width: 330px;
+    overflow-y: auto;
+    border: 10px solid #30313b;
+    border-radius: 25px  ;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    color: var(--text-color);
+    font-family: var(--font-family);
+
+}
+
+.message {
+    margin: 5px 10px;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    max-width: 100%;
+    word-wrap: break-word; /* 긴 텍스트가 박스를 벗어나는 것을 방지 */
+    animation: fadeIn 0.3s;
+    font-size: 23px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.user {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+    border-top-right-radius: 2px; /* 대화 풍선 모양 조절 */
+}
+
+.bot {
+    background-color: #f8f8f8;
+    color: black;
+    align-self: flex-start;
+    border-top-left-radius: 2px; /* 대화 풍선 모양 조절 */
+}
+
+.input-area {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* 버튼 사이의 간격을 20px로 설정 */
+    margin-top: 20px; /* 채팅 박스와의 간격 */
+}
+.App-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 0;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between; /* 항목들을 양 끝으로 정렬 */
+    align-items: center; /* 중앙 정렬 */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: white; }
+}
+
+.typing-effect {
+    font-size: calc(10px + 2vmin);
+    color: white;
+    border-right: 2px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+.theme-toggle-button {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #282c34;
+    border: none;
+    color: white;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    margin: 2px;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--accent-color-dark);
+    transform: scale(1.1); /* 호버 시 버튼 확대 */
+}
+
+.voice-button {
+    background-color: #4A90E2; /* 녹색 배경 */
+    color: white; /* 흰색 텍스트 */
+    border: none; /* 테두리 없애기 */
+    padding: 10px 20px; /* 패딩 조정 */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 10px;
+    transition-duration: 0.4s; /* 부드러운 효과를 위한 전환 기간 */
+    cursor: pointer;
+}
+
+.voice-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.speech-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 280px;
+    background-color: #4A90E2;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -140px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 20px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.chat_app {
+    width: 400px;
+    position: fixed;
+    /*bottom: 100px;*/
+    /*left: 1200px;*/
+    right: 1%;
+    bottom: 33%;
+    height: 520px;
+
+}
+@media (max-width: 480px) {
+    .chat_app{
+        width: 400px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+    }
+
+}
+
+
+.chat_app button {
+   background-color: #de8989;
+}
