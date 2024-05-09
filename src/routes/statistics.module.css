@@ -1,98 +1,143 @@
-.statistics{
-    width: 100%;
-    /*height: 780px;*/
-    background-color: #ffeb9f;
-    /*box-sizing: border-box;*/
-/*    display: grid;*/
-/*    grid-template-areas:      !* !!핵심!!*!*/
-/*            "aside section"*/
-/*;*/
-/*    grid-template-columns: 30% 70% ;*/
-/*    !*자식width*!*/
-/*    grid-template-rows: 780px;*/
-/*    !*자식height*!*/
+.statistics {
+    grid-template-rows: repeat(2, auto); /* 3행으로 배치 */
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px; /* 전체 가로 크기 설정 */
+    margin: 0 auto; /* 가운데 정렬을 위해 */
+    background-color: #ede3e3;
+    display: grid;
+    grid-template-areas:
+    'a'
+    'b';
+    grid-template-columns: 1fr;
 }
-
-.box1{
+.box1 {
+    grid-area: a;
     width: 100%;
-    height: 500px;
-    /*background-color: #dcdcdc;*/
-    background: linear-gradient(rgba(252, 252, 252, 0.05), rgba(124, 124, 124, 0.93)),url("../../public/img/bg1.jpg");
+    height: fit-content;
+    background: linear-gradient(rgba(252, 252, 252, 0.05), rgba(124, 124, 124, 0.93)), url("../../public/img/bg1.jpg");
     background-size: cover;
-    background-position: center;
-    position: relative;
-    z-index: 3;
+    border-radius: 10px ;
 }
-.bento{
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*align-items: flex-start;*/
-    /*padding: 0px;*/
-    /*gap: 24px;*/
 
-    /*position: absolute;*/
-    /*width: 346px;*/
-    /*height: 416px;*/
-    /*left: 16px;*/
-    /*top: 259px;*/
-
+.box2 {
+    grid-area: b;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 32px;
-    gap: 32px;
-
-    position: absolute;
-    width: 466px;
-    left: calc(50% - 466px/2 + 1282.5px);
-    top: -18.43%;
-    bottom: 42.43%;
-
-    background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-
-z-index: 2;
-}
-
-.Frame {
-    z-index: 1;
-    width: 466px;
-    height: 2235px;
-    padding: 32px;
-    background: #8acac4;
-    flexDirection: 'column';
-    justifyContent: 'flex-start';
-    alignItems: 'flex-start';
-    gap: 32px;
-    display: inline-flex;
-}
-.box2{
     width: 100%;
-    height: 500px;
+    height: auto; /* 변경: 컨텐츠에 맞춰 높이 조정 */
     margin: 0 auto;
-    background-color: #bebebe;
+    background-color: #ebe2e2;
 }
-.smallbox2{
-    width: 1200px;
-    height: 455px;
-    background-color: #f6f6f6;
-    margin: 0 auto;
+
+.chartContainer2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    gap: 10px; /* 그리드 사이의 간격 */
+    max-width: 1160px; /* 최대 너비 설정 */
+    width: 100%; /* 부모 요소에 맞게 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 20px; /* 여기에 패딩 추가 */
+
 }
-.box3{
-    width: 100%;
-    height: 550px;
-    background-color: #99e1ff;
+
+.smallbox2, .smallbox3 {
+    background-color: #fffefe;
     position: relative;
+    margin-bottom: 10px;
+    padding: 10px 17px;
+    display: block;
+    transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
+    height: 455px;
+    border-radius: 40px;
 }
-.smallbox3{
-    width: 1200px;
-    height: 460px;
-    background-color: #f3eeff;
-    border-radius: 30px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left:-600px ;
-    margin-top: -230px;
+
+.smallbox2 {
+    width: 585px; /* 너비 조정 */
 }
+
+.smallbox2:hover {
+    transform: translateY(-5px); /* Y축으로 5px 이동 */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; /* 그림자 변화 */
+}
+
+.smallbox3 {
+    width: 500px;
+}
+
+.smallbox3:hover {
+    transform: translateY(-5px); /* Y축으로 5px 이동 */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; /* 그림자 변화 */
+}
+
+/* iPad screen size (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    .box1.box2 {
+        width: 70%; /* subtract 40px for padding */
+    }
+
+    .smallbox2, .smallbox3 {
+        width: 95%; /* subtract 20px for padding */
+        grid-column: 1 / -1;
+        height: inherit;
+        padding: 0;
+    }
+
+    .chartContainer2 {
+        grid-template-columns: repeat(1, 1fr); /* adjust grid columns to 1 column */
+        max-width: inherit; /* set max-width to 430px */
+        grid-auto-flow: column; /* add this line */
+        padding: 0;
+
+        /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+
+        position: relative;
+        background: #FFFFFF;
+
+
+    }
+}
+.statistics {
+    gap: 0px;
+    padding: 0px;
+}
+@media screen and (max-width: 431px) {
+    .box1.box2 {
+        width: 70%; /* subtract 40px for padding */
+    }
+    .smallbox2, .smallbox3 {
+        width: 95%; /* subtract 20px for padding */
+        grid-column: 1 / -1;
+        height: inherit;
+        padding: 0;
+    }
+    .chartContainer2 {
+        grid-template-columns: repeat(1, 1fr); /* adjust grid columns to 1 column */
+        max-width: inherit; /* set max-width to 430px */
+        grid-auto-flow: column; /* add this line */
+        padding: 0;
+
+        /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+
+        position: relative;
+        background: #FFFFFF;
+
+
+    }
+    .statistics {
+        gap: 0px;
+        padding: 0px;
+    }
+}
+

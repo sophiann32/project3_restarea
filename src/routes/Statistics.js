@@ -1,77 +1,65 @@
-import {React,useState} from 'react';
-import styles from './statistics.module.css'
+import React, { useState, useEffect } from 'react';
+import styles from './statistics.module.css';
 import axios from "axios";
+import NationalGasPricesChart from './Chart/NationalGasPricesChart.js';
+import NearbyGasChart from './Chart/NearbyGasChart.js';
+import EVChargingSlots from './Chart/EVChargingSlots.js';
+import Chart7 from "./Chart/Chart7";
+import SearchOilCharge from './SearchOilCharge';
+
+function Statistics() {
+    const [locationData, setLocationData] = useState(null);
+    // 위치 정보를 가져오고 데이터를 로드하는 함수
+    const fetchLocationAndData = () => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+            axios.post('http://localhost:5000/api/gas-stations', {
+                latitude,
+                longitude
+            })
+                .then(response => {
+                    setLocationData(response.data);
+                    console.log('넘어온 데이터:', response.data);
+                })
+                .catch(error => {
+                    console.error('데이터 에러:', error);
+                });
+        }, error => {
+            console.error('Error getting location:', error);
+        });
+    };
+    useEffect(() => {
+        fetchLocationAndData();
+    }, []);
 
 
-
-
-function Statistics(){
-
-    let[oilPrice,setOilPrice] = useState('이름')
-    let[oilPrice1,setOilPrice1] = useState('주유가격')
-
-    return(
+    return (
         <>
-            <div className={styles.statistics}>
-                <div className={styles.box1}>
-                    {/*<div className={styles.smallbox1}>*/}
-                    <div className="Bento" style={{}}>
-                    <div className="Frame" style={{}}/>
-                    <div className="Frame" style={{}}/>
-                    <div className="Frame" style={{}}/>
-                    <div className="Frame" style={{}}/>
-                    </div>
-                </div>
-                <div className={styles.box2}>
-                <div className={styles.smallbox2}>
-
-                        <button onClick={
-                            () => {
-                                axios.get('http://localhost:5000/api/Search')
-                                    .then((response) => {
-                                        let shoesCopy = response.data
-                                        return setOilPrice(shoesCopy[0].GIS_X_COOR)
-
-
-                                    })
-                                    .catch(() => {
-                                        console.log('실패함');
-                                    })
-                            }
-                        }>위치
-                        </button>
-                        고급 휘발유 가격: {oilPrice}
-                        <br/>
-
-                        <button onClick={
-                            () => {
-                                axios.get('http://localhost:5000/oill')
-                                    .then((response) => {
-                                        let shoesCopy = response.data
-                                        return setOilPrice1(shoesCopy[1].PRICE)
-                                    })
-                                    .catch(() => {
-                                        console.log('실패함');
-                                    })
-                            }
-                        }>휘발유
-                        </button>
-                        휘발유 가격: {oilPrice1}
-
-
+        <div className={styles.statistics}>
+            <div className={styles.box1}>
+                    <SearchOilCharge/>
+            </div>
+            <div className={styles.box2}>
+                    <div className={styles.chartContainer2}>
+                        <div className={styles.smallbox2}>
+                            <NationalGasPricesChart/>
+                        </div>
+                        <div className={styles.smallbox3}>
+                            <NearbyGasChart data={locationData}/>
+                        </div>
+                        <div className={styles.smallbox2}>
+                            <Chart7/>
+                        </div>
+                        <div className={styles.smallbox3}>
+                            <EVChargingSlots/>
+                        </div>
                     </div>
 
                 </div>
-                <div className={styles.box3}>
-                    <div className={styles.smallbox3}></div>
-
-                </div>
-
             </div>
 
         </>
-    )
+    );
 }
 
-export default Statistics
-
+export default Statistics;
