@@ -4,11 +4,11 @@
 
 }
 
+
 @media screen and (max-width: 430px) {
     .Chart {
         max-width: 300px;
         height: inherit;
-
         margin: auto;
 
         /* Frame */

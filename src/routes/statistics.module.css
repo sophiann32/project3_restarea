@@ -76,22 +76,38 @@
 /* iPad screen size (max-width: 768px) */
 @media screen and (max-width: 768px) {
     .box1.box2 {
-        width: fit-content; /* subtract 40px for padding */
+        width: 70%; /* subtract 40px for padding */
     }
 
     .smallbox2, .smallbox3 {
-        width: inherit; /* subtract 20px for padding */
+        width: 95%; /* subtract 20px for padding */
+        grid-column: 1 / -1;
+        height: inherit;
+        padding: 0;
     }
 
     .chartContainer2 {
-        padding: 10px; /* 좁은 화면에서 패딩 감소 */
-        margin: 0; /* 여백 제거 */
         grid-template-columns: repeat(1, 1fr); /* adjust grid columns to 1 column */
-        max-width: 768px; /* set max-width to 430px */
+        max-width: inherit; /* set max-width to 430px */
         grid-auto-flow: column; /* add this line */
+        padding: 0;
+
+        /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+
+        position: relative;
+        background: #FFFFFF;
+
+
     }
 }
-
+.statistics {
+    gap: 0px;
+    padding: 0px;
+}
 @media screen and (max-width: 431px) {
     .box1.box2 {
         width: 70%; /* subtract 40px for padding */
