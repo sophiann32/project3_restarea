@@ -115,19 +115,26 @@
     background-color: #7eb8b3;
     transform: scale(1.01);
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 769px) {
 
     .searchInputContainer, .chartContainer {
         width: inherit; /* subtract 20px for padding */
     }
+    .results{
+        margin-right: 20px;
+    }
+    .chartContainer {
+        width: inherit;
+        margin-right: 15px;
+    }
     .smallbox1 {
         margin: 0; /* 여백 제거 */
-        max-width: 640px;
+        max-width: inherit;
         grid-auto-flow: column; /* add this line */
         left: 0%;
     }
 }
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 431px) {
     .searchInputContainer, .chartContainer {
         width: inherit; /* subtract 20px for padding */
     }
