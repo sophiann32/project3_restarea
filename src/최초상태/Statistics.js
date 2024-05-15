@@ -14,41 +14,16 @@ function Statistics(){
         <>
             <div className={styles.statistics}>
                 <div className={styles.box1}>
-                    <div className={styles.smallbox1}>
-
-
-
-                        <button onClick={
-                            () => {
-                                axios.get('http://localhost:5000/api/Search')
-                                    // 응답을 then의 콜백함수로 받을수 있다.
-                                    // 받은 데이터는 인자를 임의로 작명하여 확인 가능
-                                    .then((response) => {
-                                        // console.log(response)  // 전체 데이터
-                                        // console.log(response.data) // 실 데이터
-                                        // [[배열 요소1], [배열요소2]] ==> 하나의 배열로 병합
-                                        // concat등의 메소드 활용가능
-                                        let shoesCopy = response.data
-                                        // 추가 작업
-                                        console.log(shoesCopy)
-                                        // return setOilPrice(shoesCopy[0].PRICE)
-                                        // 리턴값을 set변수  를 바꿔서  useState를 이용할수있께 해야함
-
-                                    })
-                                    // 응답에 실패한 경우, 예외처리 코드 정의
-                                    .catch(() => {
-                                        console.log('실패함');
-                                    })
-                            }
-                        }> (OpenApi자료) 파이참 oill 데이터 키면 콘솔에 데이터가 한글로 찍힘
-                        </button>
-
-
-
+                    {/*<div className={styles.smallbox1}>*/}
+                    <div className="Bento" style={{}}>
+                    <div className="Frame" style={{}}/>
+                    <div className="Frame" style={{}}/>
+                    <div className="Frame" style={{}}/>
+                    <div className="Frame" style={{}}/>
                     </div>
                 </div>
                 <div className={styles.box2}>
-                    <div className={styles.smallbox2}>
+                <div className={styles.smallbox2}>
 
                         <button onClick={
                             () => {
