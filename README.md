@@ -96,6 +96,9 @@ axios를 사용하여 휴게소정보외에도 브랜드,연료가격,시설,인
 
 ![image](./readmeImg/제주전기차충전소.png)
 
+
+![image](./readmeImg/제주전기차충전소.png)
+
 제주도 전기차 충전소 상태 제공
 
 ![image](./readmeImg/통계.png)   
