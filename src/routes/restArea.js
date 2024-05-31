@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 
 function RestArea() {
     const { route } = useParams();
-    const decodedRoute = decodeURIComponent(route || '');
+    const decodedRoute = decodeURIComponent(route || ''); //url에서 'route' 파라미터를 가져옴.
     console.log("Decoded Route:", decodedRoute);
     const [selectedRoute, setSelectedRoute] = useState(decodeURIComponent(route || ''));
     const [restAreas, setRestAreas] = useState([]);
@@ -22,7 +22,7 @@ function RestArea() {
             .trim();
     };
     useEffect(() => {
-        setSelectedRoute(route || '');
+        setSelectedRoute(route || ''); // route가 빈값이면 빈 문자열을 반환해서 route값이 없을경우에도 오류없이처리
     }, [route]);
 
 

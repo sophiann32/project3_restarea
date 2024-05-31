@@ -19,7 +19,7 @@ function MainPage() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Form submitted. Selected Route:", selectedRoute);
-        if (selectedRoute) {
+        if (selectedRoute) { // 사용자가 드롭다운에서 경로를 선택했는지 확인
             navigate(`/restarea/${selectedRoute}`);
         }
     };

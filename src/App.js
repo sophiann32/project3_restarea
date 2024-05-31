@@ -4,7 +4,6 @@ import elec_info from "./kako_map/elec_station";
 import {useEffect, useState} from "react";
 import {Routes, Route} from 'react-router-dom'
 import axios from "axios";
-
 import Header from "./Header_Footer/Header";
 import Footer from "./Header_Footer/Footer";
 import MainPage from "./routes/MainPage.js";
@@ -16,7 +15,6 @@ import Login from "./board/Login"
 import DetailPost from "./board/DetailPost"
 import CreatePost from "./board/Create";
 import RestArea from "./routes/restArea";
-
 import Jeju from "./routes/jeju";
 import Chatbot from "./chatbot/chat";
 
@@ -57,7 +55,6 @@ function App() {
                       <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} loginId={loginId} setLoginId={setLoginId}
                                                            setUserName={setUserName} userName={userName} userRealName={userRealName} setUserRealName={setUserRealName}/>}/>
-
                       <Route  path="/detailPost/:id" element={<DetailPost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route  path="/create" element={<CreatePost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route  path="/chatbot" element={<Chatbot isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
