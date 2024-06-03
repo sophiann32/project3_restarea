@@ -4,15 +4,15 @@ import axios from "axios";
 
 function SearchOilCharge() {
     const [searchValue, setSearchValue] = useState('');
-    const [Forwardings, setForwarding] = useState('');
+    const [Forwardings, setForwarding] = useState([]);
     const [selectedArea, setSelectedArea] = useState('');
-    const [IsCarWash, setChargeCarWash] = useState(null);
+    const [IsCarWash, setIsCarWash] = useState('Y');
     const [selectedStation, setSelectedStation] = useState(null);
     const [carWashInfo, setCarWashInfo] = useState(null);
     const handleSearch = () => {
-        axios.get('http://localhost:5000/api/search', {
+        axios.get('http://localhost:5000/api/gas-stations', {
             params: {
-                code: 'F240409104',
+                code: 'F240411107',
                 out: 'json',
                 osnm: searchValue,
                 area: selectedArea,
@@ -21,7 +21,7 @@ function SearchOilCharge() {
         })
             .then((finding) => {
                 const FindingStations = finding.data;
-                setForwarding(FindingStations.map((FindingStation) => ({...FindingStation}))); // Update the Forwardings state to an array of objects
+                setForwarding(FindingStations);
             })
             .catch(() => {
                 console.log('Failed to fetch data');
@@ -36,8 +36,12 @@ function SearchOilCharge() {
         })
             .then((response) => {
                 const detail = response.data;
-                setChargeCarWash(detail.CarWash);
-                setCarWashInfo(detail);
+                const carWashStatus = detail.RESULT.OIL[0].CAR_WASH_YN;
+                setIsCarWash(carWashStatus);
+                setCarWashInfo({
+                    oilPrice: detail.RESULT.OIL_PRICE[0].PRICE,
+                    tel: detail.RESULT.OIL[0].TEL
+                })
 
             })
             .catch((error) => {
@@ -162,14 +166,14 @@ function SearchOilCharge() {
                                         <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['Charge_Trade_name'])}</p>}
                                     {selectedStation && selectedStation.uni_id === Forwarding.uni_id && (
                                         <div>
-                                            <p>세차장: {IsCarWash ? 'yes' : 'no'}</p>
+                                            <p>세차장: {IsCarWash === "Y" ? '있음🫧' : '없음❌'}</p>
                                             {carWashInfo && (
                                                 <div>
                                                     <p>세차장 정보:</p>
                                                     <ul>
-                                                        <li>주소: {carWashInfo.address}</li>
+                                                        <li>오일 가격: {carWashInfo.oilPrice}</li>
                                                         <li>전화번호: {carWashInfo.tel}</li>
-                                                        {/* Add more car wash info fields here */}
+
                                                     </ul>
                                                 </div>
                                             )}
