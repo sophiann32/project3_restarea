@@ -6,8 +6,11 @@ function SearchOilCharge() {
     const [searchValue, setSearchValue] = useState('');
     const [Forwardings, setForwarding] = useState('');
     const [selectedArea, setSelectedArea] = useState('');
+    const [IsCarWash, setChargeCarWash] = useState(null);
+    const [selectedStation, setSelectedStation] = useState(null);
+    const [carWashInfo, setCarWashInfo] = useState(null);
     const handleSearch = () => {
-        axios.get('http://localhost:5000/api/search_and_detail', {
+        axios.get('http://localhost:5000/api/search', {
             params: {
                 code: 'F240409104',
                 out: 'json',
@@ -22,6 +25,23 @@ function SearchOilCharge() {
             })
             .catch(() => {
                 console.log('Failed to fetch data');
+            });
+    };
+    const handleStationClick = (station) => {
+        setSelectedStation(station);
+        axios.get('http://localhost:5000/api/gas-station-detail', {
+            params: {
+                uni_id: station.uni_id,
+            },
+        })
+            .then((response) => {
+                const detail = response.data;
+                setChargeCarWash(detail.CarWash);
+                setCarWashInfo(detail);
+
+            })
+            .catch((error) => {
+                console.error(error);
             });
     };
 
@@ -80,7 +100,6 @@ function SearchOilCharge() {
         }
     };
     return (
-        <>
             <div className={styles.smallbox1}>
                 <div className={styles.searchInputContainer}>
                     <h2 className={styles.h2}> ⛽ 상호명으로 상세 검색 </h2>
@@ -122,25 +141,46 @@ function SearchOilCharge() {
                     > 주소,공급업체 확인
                     </button>
                 </div>
+
                 <div className={styles.chartContainer}>
                     {Forwardings && Forwardings.map((Forwarding, index) => {
                         console.log('Forwarding:', Forwarding); // log the Forwarding object
                         return (
-                            <div className={styles.results} key={index}>
-                                <p>상호명: {Forwarding.name}</p>
-                                <p>주소: {Forwarding.address}</p>
-                                {(getLPGYN(Forwarding['LPG_YN']) !== '-') &&
-                                    <p>업종 구분: {getLPGYN(Forwarding['LPG_YN'])}</p>}
-                                {(getGasTradeName(Forwarding['Gas_Trade_name']) !== '-') &&
-                                    <p>주유소 공급업체명: {getGasTradeName(Forwarding['Gas_Trade_name'])}</p>}
-                                {(getChargeTradeName(Forwarding['Charge_Trade_name']) !== '-') &&
-                                    <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['Charge_Trade_name'])}</p>}
+                            <div
+                                className={styles.results}
+                                key={index}
+                                onClick={() => handleStationClick(Forwarding)}
+                            >
+                                <div className={styles.results} key={index}>
+                                    <p>상호명: {Forwarding.name}</p>
+                                    <p>주소: {Forwarding.address}</p>
+                                    {(getLPGYN(Forwarding['LPG_YN']) !== '-') &&
+                                        <p>업종 구분: {getLPGYN(Forwarding['LPG_YN'])}</p>}
+                                    {(getGasTradeName(Forwarding['Gas_Trade_name']) !== '-') &&
+                                        <p>주유소 공급업체명: {getGasTradeName(Forwarding['Gas_Trade_name'])}</p>}
+                                    {(getChargeTradeName(Forwarding['Charge_Trade_name']) !== '-') &&
+                                        <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['Charge_Trade_name'])}</p>}
+                                    {selectedStation && selectedStation.uni_id === Forwarding.uni_id && (
+                                        <div>
+                                            <p>세차장: {IsCarWash ? 'yes' : 'no'}</p>
+                                            {carWashInfo && (
+                                                <div>
+                                                    <p>세차장 정보:</p>
+                                                    <ul>
+                                                        <li>주소: {carWashInfo.address}</li>
+                                                        <li>전화번호: {carWashInfo.tel}</li>
+                                                        {/* Add more car wash info fields here */}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         );
                     })}
                 </div>
             </div>
-        </>
     );
 }
 
