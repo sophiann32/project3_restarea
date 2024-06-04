@@ -38,10 +38,22 @@ function SearchOilCharge() {
                 const detail = response.data;
                 const carWashStatus = detail.RESULT.OIL[0].CAR_WASH_YN;
                 setIsCarWash(carWashStatus);
+                const oilPriceArray =detail.RESULT.OIL[0].OIL_PRICE;
+                console.log(oilPriceArray);
+                const oilPrices =oilPriceArray.map((price)=>{
+                    return{
+                        productCode: price.PRODCD,
+                        price:price.PRICE,
+                        tradeDate:price.TRADE_DT
+                    };
+                });
+                console.log(oilPrices);
                 setCarWashInfo({
-                    oilPrice: detail.RESULT.OIL_PRICE[0].PRICE,
+                    oilPrice: oilPrices.productCode,
                     tel: detail.RESULT.OIL[0].TEL
                 })
+                console.log(oilPrices.oilPrice);
+
 
             })
             .catch((error) => {
@@ -103,6 +115,20 @@ function SearchOilCharge() {
                 return '-';
         }
     };
+    const getProductName = (productCode) => {
+        switch (productCode) {
+            case "B027":
+                return "휘발유";
+            case "C004":
+                return "실내등유";
+            case "D047":
+                return "고급휘발유";
+            case "K015":
+                return "자동차부탄";
+            default:
+                return "Unknown";
+        }
+    };
     return (
             <div className={styles.smallbox1}>
                 <div className={styles.searchInputContainer}>
@@ -148,7 +174,6 @@ function SearchOilCharge() {
 
                 <div className={styles.chartContainer}>
                     {Forwardings && Forwardings.map((Forwarding, index) => {
-                        console.log('Forwarding:', Forwarding); // log the Forwarding object
                         return (
                             <div
                                 className={styles.results}
@@ -166,12 +191,16 @@ function SearchOilCharge() {
                                         <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['Charge_Trade_name'])}</p>}
                                     {selectedStation && selectedStation.uni_id === Forwarding.uni_id && (
                                         <div>
-                                            <p>세차장: {IsCarWash === "Y" ? '있음🫧' : '없음❌'}</p>
+                                            <p>세차장: {IsCarWash === "Y" ? '있음🚿' : '없음❌'}</p>
                                             {carWashInfo && (
                                                 <div>
                                                     <p>세차장 정보:</p>
                                                     <ul>
-                                                        <li>오일 가격: {carWashInfo.oilPrice}</li>
+                                                        {carWashInfo.oilPrices.map((price, index) => (
+                                                            <li key={index}>
+                                                                {getProductName(price.productCode)}: {price.price} ({price.tradeDate})
+                                                            </li>
+                                                        ))}
                                                         <li>전화번호: {carWashInfo.tel}</li>
 
                                                     </ul>
