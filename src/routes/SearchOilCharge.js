@@ -111,6 +111,8 @@ function SearchOilCharge() {
                 return "자동차부탄";
             case "D047":
                 return "경유";
+            default:
+                return '-';
         }
     };
     return (
