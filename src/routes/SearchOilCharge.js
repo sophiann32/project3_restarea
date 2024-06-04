@@ -39,7 +39,6 @@ function SearchOilCharge() {
                 const carWashStatus = detail.RESULT.OIL[0].CAR_WASH_YN;
                 setIsCarWash(carWashStatus);
                 const oilPriceArray =detail.RESULT.OIL[0].OIL_PRICE;
-                console.log(oilPriceArray);
                 const oilPrices =oilPriceArray.map((price)=>{
                     return{
                         productCode: price.PRODCD,
@@ -47,14 +46,10 @@ function SearchOilCharge() {
                         tradeDate:price.TRADE_DT
                     };
                 });
-                console.log(oilPrices);
                 setCarWashInfo({
-                    oilPrice: oilPrices.productCode,
+                    oilPrice :oilPrices,
                     tel: detail.RESULT.OIL[0].TEL
                 })
-                console.log(oilPrices.oilPrice);
-
-
             })
             .catch((error) => {
                 console.error(error);
@@ -83,18 +78,7 @@ function SearchOilCharge() {
                 return '-';
         }
     };
-    const getLPGYN = (yn) => {
-        switch (yn) {
-            case 'N':
-                return '주유소';
-            case 'Y':
-                return 'LPG 충전소';
-            case 'C':
-                return '주유소/충전소 겸업';
-            default:
-                return '-';
-        }
-    };
+
     const getChargeTradeName = (code) => {
         switch (code) {
             case 'SKE':
@@ -121,12 +105,12 @@ function SearchOilCharge() {
                 return "휘발유";
             case "C004":
                 return "실내등유";
-            case "D047":
+            case "B034":
                 return "고급휘발유";
             case "K015":
                 return "자동차부탄";
-            default:
-                return "Unknown";
+            case "D047":
+                return "경유";
         }
     };
     return (
@@ -145,7 +129,6 @@ function SearchOilCharge() {
                         value={selectedArea}
                         onChange={(e) => setSelectedArea(e.target.value)}
                     >
-
                         <option value="">지역</option>
                         <option value="01">서울</option>
                         <option value="02">경기</option>
@@ -183,22 +166,21 @@ function SearchOilCharge() {
                                 <div className={styles.results} key={index}>
                                     <p>상호명: {Forwarding.name}</p>
                                     <p>주소: {Forwarding.address}</p>
-                                    {(getLPGYN(Forwarding['LPG_YN']) !== '-') &&
-                                        <p>업종 구분: {getLPGYN(Forwarding['LPG_YN'])}</p>}
-                                    {(getGasTradeName(Forwarding['Gas_Trade_name']) !== '-') &&
-                                        <p>주유소 공급업체명: {getGasTradeName(Forwarding['Gas_Trade_name'])}</p>}
-                                    {(getChargeTradeName(Forwarding['Charge_Trade_name']) !== '-') &&
-                                        <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['Charge_Trade_name'])}</p>}
+                                    {(getGasTradeName(Forwarding['gas_trade_name']) !== '-') &&
+                                        <p>주유소 공급업체명: {getGasTradeName(Forwarding['gas_trade_name'])}</p>}
+                                    {(getChargeTradeName(Forwarding['charge_trade_name']) !== '-') &&
+                                        <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['charge_trade_name'])}</p>}
                                     {selectedStation && selectedStation.uni_id === Forwarding.uni_id && (
                                         <div>
                                             <p>세차장: {IsCarWash === "Y" ? '있음🚿' : '없음❌'}</p>
                                             {carWashInfo && (
                                                 <div>
-                                                    <p>세차장 정보:</p>
+                                                    <p>주유소 상세 정보:</p>
                                                     <ul>
-                                                        {carWashInfo.oilPrices.map((price, index) => (
+                                                        {carWashInfo.oilPrice.map((price, index) => (
                                                             <li key={index}>
-                                                                {getProductName(price.productCode)}: {price.price} ({price.tradeDate})
+                                                                {/*{getProductName(price.productCode)}: {price.price} ({price.tradeDate})*/}
+                                                                {getProductName(price.productCode)}: {price.price.toLocaleString('ko-KR')}원
                                                             </li>
                                                         ))}
                                                         <li>전화번호: {carWashInfo.tel}</li>
