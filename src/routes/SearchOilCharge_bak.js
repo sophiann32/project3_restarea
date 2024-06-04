@@ -96,7 +96,6 @@ function SearchOilCharge() {
                         value={selectedArea}
                         onChange={(e) => setSelectedArea(e.target.value)}
                     >
-
                         <option value="">지역</option>
                         <option value="01">서울</option>
                         <option value="02">경기</option>
