@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Chart.css'
 const LocationTracker = () => {
     const [stations, setStations] = useState([]);
-
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords;
@@ -74,7 +73,6 @@ function ChartDonut(props) {
             size: 16, // 폰트 크기 설정
             weight: 'bold', // 폰트 굵기 설정
         }
-
     };
     const navigate = useNavigate();
     const handleChartClick = (event, elements) => {
@@ -82,11 +80,40 @@ function ChartDonut(props) {
             return;
         }
         if (elements.length > 0) {
+            console.log(elements);
             // const clickedElementIndex = elements[0]._index;
             // const clickedData = chartData.labels[clickedElementIndex];
             navigate(`/map`);
         }
     };
+
+    // const handleChartClick = () => {
+    //     const elements= `${stations}`;
+    //     const getSearchQueryFromChartElement = (clickedElement) => {
+    //         const address = clickedElement.address;
+    //         return `충전소 ${address}`;
+    //     };
+    //     const clickedElement = elements; // 클릭된 차트 요소
+    //
+    //     console.log(clickedElement);
+    //     const query = getSearchQueryFromChartElement(clickedElement); // 클릭된 요소에서_SEARCH 쿼리 생성
+    //
+    //     // https://map.naver.com/p/search/
+    //     // 네이버 지도 API를 사용하여 충전소 검색
+    //     const searchUrl = `https://map.naver.com/v5/api/search/all?query=${query}&Categories=charging_station`;
+    //     fetch(searchUrl)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             const firstResult = data.items[0];
+    //             if (firstResult) {
+    //                 // 첫 번째 검색 결과의 정보 표시
+    //                 const { title, address, lat, lng } = firstResult;
+    //                 console.log(`첫 번째 결과: ${title} at ${address} (${lat}, ${lng})`);
+    //                 // 이 정보를 사용하여 충전소의 세부 정보를 표시할 수 있습니다.
+    //             }
+    //         });
+    // };
+
     const options = {
         plugins: {
             tooltip: {

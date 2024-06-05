@@ -11,10 +11,10 @@ function Chatbot() {
     const [fuelStations] = useState([]);
     const [chargingStations] = useState([]);
     const [isListening, setIsListening] = useState(false);
-    const [question, setQuestion] = useState('');
-    const [chatHistory, setChatHistory] = useState('');
-    const [isFetching, setIsFetching] = useState(false);
-    const [dots, setDots] = useState('');
+
+
+
+
     const Chat = ({ stations }) => {
         return (
             <div>
@@ -127,8 +127,6 @@ function Chatbot() {
         }
     };
 
-
-
     const formatFuelStationDistance = (distance) => {
         const distanceInMeters = parseFloat(distance);
         return `${(distanceInMeters / 1000).toFixed(2)}km`;
@@ -226,45 +224,6 @@ function Chatbot() {
         setMessages(messages => [...messages, botResponse]);
         speak(botResponse.text);
     };
-
-
-
-    useEffect(() => {
-        if (isFetching) {
-            const interval = setInterval(() => {
-                setDots(dots => dots.length < 10 ? dots + '.' : '');
-            }, 500);
-            return () => clearInterval(interval);
-        }
-    }, [isFetching]); // isFetching 상태값 변경되면 수행이 된다.
-
-    const handleInputChange = (event) => {
-        setQuestion(event.target.value);
-    };
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (question.trim()) {
-            setIsFetching(true);
-            setChatHistory(prev => `${prev}\n상담자: ${question}`); //상태 변경 콜백함수 수행시 인자는 현재 상태의 값이 인자로 세팅이 된다.
-            try {
-                const response = await axios.post('http://localhost:5000/ere', { content: question });
-                if (response.data.status === 'success') {
-                    setChatHistory(prev => `${prev}\n쳇봇: ${response.data.answer}`);
-                } else {
-                    alert('Error: ' + response.data.message);
-                }
-            } catch (error) {
-                alert('Error: ' + error.message);
-            } finally {
-                setIsFetching(false);
-            }
-            setQuestion('');
-        }
-    };
-
-
-
-
 
     return (
         <div className="chat_app">
