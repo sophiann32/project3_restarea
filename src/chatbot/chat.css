@@ -14,6 +14,7 @@ body {
     color: var(--text-color);
     margin: 0;
     padding: 0;
+    position: relative;
 }
 
 
@@ -211,8 +212,21 @@ button:hover {
     }
 
 }
-
+.test {
+    /*unicode-bidi: normal !important;*/
+}
 
 .chat_app button {
    background-color: #de8989;
+}
+textarea {
+    z-index: 99;
+}
+#bot-input-area {
+    display: block;
+    z-index: 99;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #fff;
 }

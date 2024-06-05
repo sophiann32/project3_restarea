@@ -11,10 +11,12 @@ function Chatbot() {
     const [fuelStations] = useState([]);
     const [chargingStations] = useState([]);
     const [isListening, setIsListening] = useState(false);
+    //---------------------------------------------------------------------
     const [question, setQuestion] = useState('');
     const [chatHistory, setChatHistory] = useState('');
     const [isFetching, setIsFetching] = useState(false);
     const [dots, setDots] = useState('');
+    //---------------------------------------------------------------------
     const Chat = ({ stations }) => {
         return (
             <div>
@@ -227,7 +229,7 @@ function Chatbot() {
         speak(botResponse.text);
     };
 
-
+//---------------------------------------------------------------------
 
     useEffect(() => {
         if (isFetching) {
@@ -261,7 +263,7 @@ function Chatbot() {
             setQuestion('');
         }
     };
-
+//---------------------------------------------------------------------
 
 
 
@@ -276,7 +278,17 @@ function Chatbot() {
                         ) : (
                             msg.text
                         )}
+                        {/*----------------------------*/}
+                        <textarea
+                            value={isFetching ? `응답중${dots}` : chatHistory}
+                            rows="10"
+                            cols="50"
+                            readOnly
+                        />
+                    {/*    -----------------------------*/}
                     </div>
+
+
                 ))}
             </div>
             <div className="stations-list">
@@ -292,6 +304,22 @@ function Chatbot() {
                 <button onClick={() => handleMessage('고속도로 휴게소 정보 확인하러 가기')}>고속도로 휴게소 정보 확인하러 가기</button>
                 <button onClick={() => handleMessage('로그인 페이지로 이동하기')}>로그인 페이지로 이동하기</button>
                 <button onClick={() => handleMessage('통계 차트 보러가기')}>통계 차트 보러가기</button>
+                {/*------------------------------------------------*/}
+                <div id="bot-input-area">
+                    <form className="test" onSubmit={handleSubmit}>
+                        <textarea
+                            value={question}
+                            onChange={handleInputChange}
+                            placeholder="상담 내용을 여기에 입력하세요."
+                            rows="4"
+                            cols="50"
+                        />
+                        <br/>
+                        <button type="submit">보내기</button>
+                    </form>
+                </div>
+
+                {/*-----------------------------------------------------*/}
                 <div className="tooltip">
                     <button className="voice-button" onClick={handleSpeech} disabled={isListening}>
                         <FaMicrophone/>
