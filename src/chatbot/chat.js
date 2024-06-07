@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Stationinfo from './Stationinfo';
 
 
+
 function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [fuelStations] = useState([]);
@@ -278,18 +279,16 @@ function Chatbot() {
                         ) : (
                             msg.text
                         )}
-                        {/*----------------------------*/}
-                        <textarea
-                            value={isFetching ? `응답중${dots}` : chatHistory}
-                            rows="10"
-                            cols="50"
-                            readOnly
-                        />
-                    {/*    -----------------------------*/}
                     </div>
-
-
                 ))}
+                <textarea className={"message Answer"}
+                          value={isFetching ? `응답중${dots}` : chatHistory}
+                          rows="10"
+                          cols="50"
+                          placeholder="추가로 알고싶은 내용 문의하세요."
+                          readOnly
+                />
+
             </div>
             <div className="stations-list">
                 <Chat stations={fuelStations} type="fuel"/>
@@ -301,13 +300,15 @@ function Chatbot() {
             <div className="user-input">
                 <button onClick={() => handleMessage('내 주변 최저가 주유소 찾기')}>내 주변 최저가 주유소 찾기</button>
                 <button onClick={() => handleMessage('내 주변 전기차 충전소 찾기')}>내 주변 전기차 충전소 찾기</button>
-                <button onClick={() => handleMessage('고속도로 휴게소 정보 확인하러 가기')}>고속도로 휴게소 정보 확인하러 가기</button>
-                <button onClick={() => handleMessage('로그인 페이지로 이동하기')}>로그인 페이지로 이동하기</button>
-                <button onClick={() => handleMessage('통계 차트 보러가기')}>통계 차트 보러가기</button>
-                {/*------------------------------------------------*/}
+                <container id={"con1"}>
+                <button id={"item1"} onClick={() => handleMessage('휴게소 정보 확인하러 가기')}>휴게소로 이동</button>
+                <button id={"item2"} onClick={() => handleMessage('로그인 페이지로 이동하기')}>로그인으로 이동</button>
+                <button id={"item3"} onClick={() => handleMessage('통계 차트 보러가기')}>통계로 이동</button>
+                </container>
+                    {/*------------------------------------------------*/}
                 <div id="bot-input-area">
                     <form className="test" onSubmit={handleSubmit}>
-                        <textarea
+                        <textarea className={"content"}
                             value={question}
                             onChange={handleInputChange}
                             placeholder="상담 내용을 여기에 입력하세요."
