@@ -31,6 +31,7 @@ function Chatbot() {
                     />
                 ))}
             </div>
+
         );
     };
     const hasRun = useRef(false);
@@ -123,15 +124,20 @@ function Chatbot() {
                 price: node.getElementsByTagName("PRICE")[0].textContent,
                 distance: node.getElementsByTagName("DISTANCE")[0].textContent
             })).sort((a, b) => parseFloat(a.price) - parseFloat(b.price)).slice(0, 10);
-
-            const formattedStations = stations.map(station => `${station.name} - ${station.price}원 현 위치로부터 ${formatFuelStationDistance(station.distance)} 떨어짐`).join('\n');
+            //
+            const formattedStations = stations.map((station, index) => `${index + 1}. ${station.name} ${station.price}원 현 위치로부터 ${formatFuelStationDistance(station.distance)} 떨어짐`).join('\n');
             const resultsMessage = {
                 id: Date.now(),
                 text: `주유소 정보:\n${formattedStations}`,
                 sender: 'bot'
             };
+
+            const firstStation = stations[0];
+            const speechText = `주유소 정보: ${firstStation.name} ${firstStation.price}원 현 위치로부터 ${formatFuelStationDistance(firstStation.distance)} 떨어짐`;
+
             setMessages(messages => [...messages, resultsMessage]);
-            speak(resultsMessage.text);
+            speak(speechText);
+
         } catch (error) {
             console.error("Error fetching stations:", error);
         }
@@ -271,6 +277,7 @@ function Chatbot() {
             setQuestion('');
         }
     };
+
 //---------------------------------------------------------------------
 
 
