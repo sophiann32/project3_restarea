@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import './chat.css';
 import { FaMicrophone } from 'react-icons/fa';
@@ -17,6 +17,7 @@ function Chatbot() {
     const [chatHistory, setChatHistory] = useState('');
     const [isFetching, setIsFetching] = useState(false);
     const [dots, setDots] = useState('');
+
     //---------------------------------------------------------------------
     const Chat = ({ stations }) => {
         return (
@@ -32,10 +33,15 @@ function Chatbot() {
             </div>
         );
     };
+    const hasRun = useRef(false);
+
     useEffect(() => {
+        if (hasRun.current) return;
+        hasRun.current = true;
+
         const initialMessage = {
             id: Date.now(),
-            text: '안녕하세요! 여러분 주변에 최저가 주유소, 전기차 충전소 위치 등을 알려주고, 고속도로의 휴게소 정보를 알려드립니다:)',
+            text: '안녕하세요!',
             sender: 'bot'
         };
         setMessages([initialMessage]);
@@ -44,6 +50,7 @@ function Chatbot() {
         const chatContainer = document.querySelector('.chat-container');
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }, []);
+
 
     useEffect(() => {
         const chatContainer = document.querySelector('.chat-container');
@@ -85,7 +92,7 @@ function Chatbot() {
                 latitude: latitude,
                 longitude: longitude
             });
-            const formattedStations = response.data.stations.map(station => `${station['Station Name']} - 현 위치로부터 ${formatChargingStationDistance(station.Distance)} 떨어짐`).join('\n');
+            const formattedStations = response.data.stations.map(station => `${station['Station Name']}  현 위치로부터 ${formatChargingStationDistance(station.Distance)} 떨어짐`).join('\n');
             const resultsMessage = {
                 id: Date.now(),
                 text: `전기차 충전소 정보:\n${formattedStations}`,
@@ -117,7 +124,7 @@ function Chatbot() {
                 distance: node.getElementsByTagName("DISTANCE")[0].textContent
             })).sort((a, b) => parseFloat(a.price) - parseFloat(b.price)).slice(0, 10);
 
-            const formattedStations = stations.map(station => `${station.name} - ${station.price}원 - 현 위치로부터 ${formatFuelStationDistance(station.distance)} 떨어짐`).join('\n');
+            const formattedStations = stations.map(station => `${station.name} - ${station.price}원 현 위치로부터 ${formatFuelStationDistance(station.distance)} 떨어짐`).join('\n');
             const resultsMessage = {
                 id: Date.now(),
                 text: `주유소 정보:\n${formattedStations}`,
