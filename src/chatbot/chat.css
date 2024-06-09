@@ -27,6 +27,8 @@ body {
 
 .chat-container {
     background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
+    /*background-image: url("https://cdn.builder.io/api/v1/image/assets/TEMP/0b95d0a932e9465f2287ef7167b12906ee35ec2eeb6bb640180c0b8caff5383f?");*/
+    /*background-size: cover;*/
     margin: 10px;
     height: 47vh;
     width: 330px;
