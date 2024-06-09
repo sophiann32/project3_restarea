@@ -18,7 +18,6 @@ function Chatbot() {
     const [isFetching, setIsFetching] = useState(false);
     const [dots, setDots] = useState('');
 
-
     //---------------------------------------------------------------------
     const Chat = ({ stations }) => {
         return (
@@ -159,9 +158,7 @@ function Chatbot() {
     const handleMessage = (message) => {
         setMessages(messages => [...messages, {id: Date.now(), text: message, sender: 'user'}]);
         speak(message);
-        if (message.includes('')) {
-            handleSubmit({ preventDefault: () => {} });
-        }
+
         if (message.includes('주유소')) {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(position => {
@@ -184,6 +181,39 @@ function Chatbot() {
                 setMessages(messages => [...messages, botResponse]);
                 speak(botResponse.text);
             }
+        }
+        if (message.includes('고속도로 휴게소 정보 보러가기')) {
+            const RestareaUrl = "http://localhost:3000/restArea";
+            const botResponse = {
+                id: Date.now(),
+                text: `고속도로 휴게소 정보를 확인하러 가려면 여기를 클릭하세요.`,
+                sender: 'bot',
+                url: RestareaUrl // URL을 메시지 객체에 추가
+            };
+            setMessages(messages => [...messages, botResponse]);
+            speak("고속도로 휴게소 정보 페이지 링크를 보냈습니다.");
+        }
+        if (message.includes('로그인 페이지로 이동하기')) {
+            const loginUrl = "http://localhost:3000/login";
+            const botResponse = {
+                id: Date.now(),
+                text: `로그인 페이지로 이동하려면 여기를 클릭하세요.`,
+                sender: 'bot',
+                url: loginUrl
+            };
+            setMessages(messages => [...messages, botResponse]);
+            speak("로그인 페이지 링크를 보냈습니다.");
+        }
+        if (message.includes('통계 차트 보러가기')) {
+            const statsUrl = "http://localhost:3000/sub";
+            const botResponse = {
+                id: Date.now(),
+                text: `통계 차트 페이지로 이동하려면 여기를 클릭하세요.`,
+                sender: 'bot',
+                url: statsUrl
+            };
+            setMessages(messages => [...messages, botResponse]);
+            speak("통계 차트 페이지 링크를 보냈습니다.");
         }
     };
 
@@ -231,7 +261,7 @@ function Chatbot() {
         event.preventDefault();
         if (question.trim()) {
             setIsFetching(true);
-            setChatHistory(prev => `${prev}\n상담자: ${question}`);
+            setChatHistory(prev => `${prev}\n상담자: ${question}`); //상태 변경 콜백함수 수행시 인자는 현재 상태의 값이 인자로 세팅이 된다.
             try {
                 const response = await axios.post('http://localhost:5000/ere', { content: question });
                 if (response.data.status === 'success') {
@@ -250,6 +280,9 @@ function Chatbot() {
 
 //---------------------------------------------------------------------
 
+
+
+
     return (
         <div className="chat_app">
             <div className="chat-container">
@@ -262,16 +295,13 @@ function Chatbot() {
                         )}
                     </div>
                 ))}
-                <div>
-                    {chatHistory && (
-                        <div
-                            className="message Answer"
-                            dangerouslySetInnerHTML={{
-                                __html: chatHistory
-                            }}
-                        />
-                    )}
-                </div>
+                <textarea className={"message Answer"}
+                          value={isFetching ? `응답중${dots}` : chatHistory}
+                          rows="10"
+                          cols="50"
+                          placeholder="추가로 알고싶은 내용 문의하세요."
+                          readOnly
+                />
 
             </div>
             <div className="stations-list">
@@ -295,7 +325,7 @@ function Chatbot() {
                         <textarea className={"content"}
                             value={question}
                             onChange={handleInputChange}
-                            placeholder="알고 싶은 내용을 입력하세요."
+                            placeholder="상담 내용을 여기에 입력하세요."
                             rows="4"
                             cols="50"
                         />
@@ -311,7 +341,7 @@ function Chatbot() {
                         {isListening ? "듣는 중..." : "음성인식"}
                     </button>
                     <span className="tooltiptext">
-                        주유소! or 전기차! 라고<br/> 음성으로 말씀하시면 <br/>그에 맞는 정보가 표시됩니다.<br/>
+                        음성인식 버튼을 누르고<br/> 주유소! or 전기차! 라고<br/> 음성으로 말씀하시면 <br/>그에 맞는 정보가 표시됩니다.<br/>
                         (주유소는 반경 5KM 내에 있는 최저가 주유소가,<br/> 전기차는 반경 5KM 내에 있는 전기차 충전소가 표시됩니다.)
                     </span>
                 </div>

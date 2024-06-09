@@ -27,7 +27,7 @@ body {
 
 .chat-container {
     background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
-    margin: 18px;
+    margin: 10px;
     height: 47vh;
     width: 330px;
     overflow-y: auto;
@@ -45,10 +45,9 @@ body {
     padding: 10px;
     border-radius: 15px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    /*max-width: 100%;*/
     word-wrap: break-word; /* 긴 텍스트가 박스를 벗어나는 것을 방지 */
     animation: fadeIn 0.3s;
-    font-size: 23px;
+    font-size: 19px;
 }
 
 @keyframes fadeIn {
@@ -72,9 +71,8 @@ body {
 .Answer{
     border-top-left-radius: 2px;
     background-color: #f8f8f8;
-    height: 50px;
     width: 290px;
-    font-size: 18px;
+    font-size: 19px;
 }
 .content {
     margin-bottom: 1px;
@@ -147,7 +145,7 @@ button {
 
 button:hover {
     background-color: var(--accent-color-dark);
-    transform: scale(1.1); /* 호버 시 버튼 확대 */
+    transform: scale(1.05); /* 호버 시 버튼 확대 */
 }
 
 .voice-button {
@@ -194,7 +192,7 @@ button:hover {
     margin-left: -140px;
     opacity: 0;
     transition: opacity 0.3s;
-    font-size: 20px;
+    font-size: 19px;
 }
 
 .tooltip:hover .tooltiptext {
@@ -236,7 +234,7 @@ button:hover {
 .user-input{
     display: flex;
     flex-wrap: wrap;
-    margin : 18px;
+    margin : 10px;
     padding: 10px;
 }
 
@@ -251,13 +249,13 @@ button:hover {
 }
 
 textarea {
-    /*z-index: 99;*/
+    border-radius: 6px;
     height: 31px;
 }
 
 .chat-container {
     background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
-    margin: 18px;
+    margin: 10px;
     height: 47vh;
     width: 330px;
     overflow-y: auto;

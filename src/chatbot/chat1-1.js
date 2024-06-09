@@ -159,9 +159,7 @@ function Chatbot() {
     const handleMessage = (message) => {
         setMessages(messages => [...messages, {id: Date.now(), text: message, sender: 'user'}]);
         speak(message);
-        if (message.includes('')) {
-            handleSubmit({ preventDefault: () => {} });
-        }
+
         if (message.includes('주유소')) {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(position => {
@@ -185,6 +183,18 @@ function Chatbot() {
                 speak(botResponse.text);
             }
         }
+        // if (message.includes('휴게소')) {
+        //     const RestareaUrl = "http://localhost:3000/restArea";
+        //     const botResponse = {
+        //         id: Date.now(),
+        //         text: `고속도로 휴게소 정보를 확인하러 가려면 여기를 클릭하세요.`,
+        //         sender: 'bot',
+        //         url: RestareaUrl // URL을 메시지 객체에 추가
+        //     };
+        //     setMessages(messages => [...messages, botResponse]);
+        //     speak("");
+        // }
+
     };
 
 
@@ -262,12 +272,12 @@ function Chatbot() {
                         )}
                     </div>
                 ))}
-                <div>
+                <div className="message Answer">
                     {chatHistory && (
                         <div
                             className="message Answer"
                             dangerouslySetInnerHTML={{
-                                __html: chatHistory
+                                __html: chatHistory,
                             }}
                         />
                     )}
@@ -295,7 +305,7 @@ function Chatbot() {
                         <textarea className={"content"}
                             value={question}
                             onChange={handleInputChange}
-                            placeholder="알고 싶은 내용을 입력하세요."
+                            placeholder="상담 내용을 여기에 입력하세요."
                             rows="4"
                             cols="50"
                         />
@@ -311,7 +321,7 @@ function Chatbot() {
                         {isListening ? "듣는 중..." : "음성인식"}
                     </button>
                     <span className="tooltiptext">
-                        주유소! or 전기차! 라고<br/> 음성으로 말씀하시면 <br/>그에 맞는 정보가 표시됩니다.<br/>
+                        음성인식 버튼을 누르고<br/> 주유소! or 전기차! 라고<br/> 음성으로 말씀하시면 <br/>그에 맞는 정보가 표시됩니다.<br/>
                         (주유소는 반경 5KM 내에 있는 최저가 주유소가,<br/> 전기차는 반경 5KM 내에 있는 전기차 충전소가 표시됩니다.)
                     </span>
                 </div>
