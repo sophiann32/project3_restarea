@@ -1,11 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './chat.css';
 import { FaMicrophone } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Stationinfo from './Stationinfo';
-
-
 
 function Chatbot() {
     const [messages, setMessages] = useState([]);
@@ -14,10 +12,8 @@ function Chatbot() {
     const [isListening, setIsListening] = useState(false);
     //---------------------------------------------------------------------
     const [question, setQuestion] = useState('');
-    const [chatHistory, setChatHistory] = useState('');
     const [isFetching, setIsFetching] = useState(false);
     const [dots, setDots] = useState('');
-
 
     //---------------------------------------------------------------------
     const Chat = ({ stations }) => {
@@ -67,6 +63,8 @@ function Chatbot() {
     };
 
     const handleSpeech = () => {
+        if (isListening) return;
+        setIsListening(true);
         const recognition = new window.webkitSpeechRecognition();
         recognition.lang = 'ko-KR';
         recognition.start();
@@ -74,7 +72,9 @@ function Chatbot() {
         recognition.onresult = (event) => {
             const speechResult = event.results[0][0].transcript;
             console.log(`Recognized: ${speechResult}`);
-            handleMessage(speechResult);
+            // handleMessage(speechResult);
+            // handleSubmit(speechResult);
+            handleCommand(speechResult);
             setIsListening(false);
         };
 
@@ -134,7 +134,7 @@ function Chatbot() {
             };
 
             const firstStation = stations[0];
-            const speechText = `주유소 정보: ${firstStation.name} ${firstStation.price}원 현 위치로부터 ${formatFuelStationDistance(firstStation.distance)} 떨어짐`;
+            const speechText = `5킬로미터 내에 있는 최저가 주유소: ${firstStation.name} ${firstStation.price}원 현 위치로부터 ${formatFuelStationDistance(firstStation.distance)} 떨어짐`;
 
             setMessages(messages => [...messages, resultsMessage]);
             speak(speechText);
@@ -143,8 +143,6 @@ function Chatbot() {
             console.error("Error fetching stations:", error);
         }
     };
-
-
 
     const formatFuelStationDistance = (distance) => {
         const distanceInMeters = parseFloat(distance);
@@ -156,41 +154,71 @@ function Chatbot() {
         return `${distanceInMeters.toFixed(2)}km`;
     };
 
-    const handleMessage = (message) => {
-        setMessages(messages => [...messages, {id: Date.now(), text: message, sender: 'user'}]);
+    const handleMessage = (message, sender = 'user') => {
+        const newMessage = { id: Date.now(), text: message, sender: sender };
+        setMessages(messages => [...messages, newMessage]);
         speak(message);
-        if (message.includes('')) {
-            handleSubmit({ preventDefault: () => {} });
-        }
         if (message.includes('주유소')) {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(position => {
-                    const {latitude, longitude} = position.coords;
+                    const { latitude, longitude } = position.coords;
                     fetchFuelPrices(latitude, longitude, 'fuel');
                 }, handleGeolocationError);
             } else {
-                const botResponse = {id: Date.now(), text: "Geolocation이 지원되지 않는 브라우저입니다.", sender: 'bot'};
+                const botResponse = { id: Date.now(), text: "Geolocation이 지원되지 않는 브라우저입니다.", sender: 'bot' };
                 setMessages(messages => [...messages, botResponse]);
                 speak(botResponse.text);
             }
         } else if (message.includes('전기차')) {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(position => {
-                    const {latitude, longitude} = position.coords;
+                    const { latitude, longitude } = position.coords;
                     fetchChargingStations(latitude, longitude);
                 }, handleGeolocationError);
             } else {
-                const botResponse = {id: Date.now(), text: "Geolocation이 지원되지 않는 브라우저입니다.", sender: 'bot'};
+                const botResponse = { id: Date.now(), text: "Geolocation이 지원되지 않는 브라우저입니다.", sender: 'bot' };
                 setMessages(messages => [...messages, botResponse]);
                 speak(botResponse.text);
             }
         }
+        if (message.includes('휴게소')) {
+            const RestareaUrl = "http://localhost:3000/restArea";
+            const botResponse = {
+                id: Date.now(),
+                text: `고속도로 휴게소 정보를 확인하러 가려면 여기를 클릭하세요.`,
+                sender: 'bot',
+                url: RestareaUrl // URL을 메시지 객체에 추가
+            };
+            setMessages(messages => [...messages, botResponse]);
+            speak("");
+        }
+        if (message.includes('로그인')) {
+            const loginUrl = "http://localhost:3000/login";
+            const botResponse = {
+                id: Date.now(),
+                text: `로그인 페이지로 이동하려면 여기를 클릭하세요.`,
+                sender: 'bot',
+                url: loginUrl
+            };
+            setMessages(messages => [...messages, botResponse]);
+            speak("");
+        }
+        if (message.includes('유가')) {
+            const statsUrl = "http://localhost:3000/sub";
+            const botResponse = {
+                id: Date.now(),
+                text: `통계 차트 페이지로 이동하려면 여기를 클릭하세요.`,
+                sender: 'bot',
+                url: statsUrl
+            };
+            setMessages(messages => [...messages, botResponse]);
+            speak("");
+        }
     };
-
 
     const handleGeolocationError = (error) => {
         let errorMessage = '';
-        switch(error.code) {
+        switch (error.code) {
             case error.PERMISSION_DENIED:
                 errorMessage = "위치 정보 접근이 거부되었습니다.";
                 break;
@@ -213,7 +241,7 @@ function Chatbot() {
         speak(botResponse.text);
     };
 
-//---------------------------------------------------------------------
+    //---------------------------------------------------------------------
 
     useEffect(() => {
         if (isFetching) {
@@ -227,15 +255,18 @@ function Chatbot() {
     const handleInputChange = (event) => {
         setQuestion(event.target.value);
     };
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (question.trim()) {
+    const handleSubmit = async (message) => {
+        if (message.trim()) {
+            // setIsFetching(true);
+            // setChatHistory(prev => `${prev}\n상담자: ${message}`);
             setIsFetching(true);
-            setChatHistory(prev => `${prev}\n상담자: ${question}`);
+            const newMessage = { id: Date.now(), text: message, sender: 'user' };
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+
             try {
-                const response = await axios.post('http://localhost:5000/ere', { content: question });
+                const response = await axios.post('http://localhost:5000/ere', { content: message });
                 if (response.data.status === 'success') {
-                    setChatHistory(prev => `${prev}\n쳇봇: ${response.data.answer}`);
+                    handleMessage(response.data.message, 'bot');
                 } else {
                     alert('Error: ' + response.data.message);
                 }
@@ -247,8 +278,23 @@ function Chatbot() {
             setQuestion('');
         }
     };
+    const handleCommand = (message) => {
+        if (message.includes('주유소')) {
+            handleMessage('주유소', 'user');
+        } else if (message.includes('전기차')) {
+            handleMessage('전기차', 'user');
+        } else if (message.includes('휴게소')) {
+            handleMessage('휴게소', 'user');
+        } else if (message.includes('유가')) {
+            handleMessage('유가', 'user');
+        } else if (message.includes('로그인')) {
+            handleMessage('로그인', 'user');
+        } else {
+            handleSubmit(message);
+        }
+    };
 
-//---------------------------------------------------------------------
+    //---------------------------------------------------------------------
 
     return (
         <div className="chat_app">
@@ -262,44 +308,47 @@ function Chatbot() {
                         )}
                     </div>
                 ))}
-                <div>
-                    {chatHistory && (
-                        <div
-                            className="message Answer"
-                            dangerouslySetInnerHTML={{
-                                __html: chatHistory
-                            }}
-                        />
-                    )}
-                </div>
+                {isFetching && messages.length > 0 ? (
+                    <div className="message user">
+                        응답중{[...Array(dots)].map((_, i) => (
+                        <span key={i}>.</span>
+                    ))}
+                    </div>
+                ) : (
+                    <div className="message user" />
+                )}
+
 
             </div>
             <div className="stations-list">
-                <Chat stations={fuelStations} type="fuel"/>
+                <Chat stations={fuelStations} type="fuel" />
             </div>
             <div className="stations-list">
-                <Chat stations={chargingStations} type="charge"/>
+                <Chat stations={chargingStations} type="charge" />
             </div>
 
             <div className="user-input">
                 <button onClick={() => handleMessage('내 주변 최저가 주유소 찾기')}>내 주변 최저가 주유소 찾기</button>
                 <button onClick={() => handleMessage('내 주변 전기차 충전소 찾기')}>내 주변 전기차 충전소 찾기</button>
                 <container id={"con1"}>
-                <button id={"item1"} onClick={() => handleMessage('휴게소 정보 확인하러 가기')}>휴게소로 이동</button>
-                <button id={"item2"} onClick={() => handleMessage('로그인 페이지로 이동하기')}>로그인으로 이동</button>
-                <button id={"item3"} onClick={() => handleMessage('통계 차트 보러가기')}>통계로 이동</button>
+                    <button id={"item1"} onClick={() => handleMessage('휴게소')}>휴게소로 이동</button>
+                    <button id={"item2"} onClick={() => handleMessage('로그인')}>로그인으로 이동</button>
+                    <button id={"item3"} onClick={() => handleMessage('유가')}>유가로 이동</button>
                 </container>
-                    {/*------------------------------------------------*/}
+                {/*------------------------------------------------*/}
                 <div id="bot-input-area">
-                    <form className="test" onSubmit={handleSubmit}>
+                    <form className="test" onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit(question);
+                    }}>
                         <textarea className={"content"}
-                            value={question}
-                            onChange={handleInputChange}
-                            placeholder="알고 싶은 내용을 입력하세요."
-                            rows="4"
-                            cols="50"
+                                  value={question}
+                                  onChange={handleInputChange}
+                                  placeholder="알고 싶은 내용을 입력하세요."
+                                  rows="4"
+                                  cols="50"
                         />
-                        <br/>
+                        <br />
                         <button type="submit">보내기</button>
                     </form>
                 </div>
@@ -307,12 +356,11 @@ function Chatbot() {
                 {/*-----------------------------------------------------*/}
                 <div className="tooltip">
                     <button className="voice-button" onClick={handleSpeech} disabled={isListening}>
-                        <FaMicrophone/>
+                        <FaMicrophone />
                         {isListening ? "듣는 중..." : "음성인식"}
                     </button>
                     <span className="tooltiptext">
-                        주유소! or 전기차! 라고<br/> 음성으로 말씀하시면 <br/>그에 맞는 정보가 표시됩니다.<br/>
-                        (주유소는 반경 5KM 내에 있는 최저가 주유소가,<br/> 전기차는 반경 5KM 내에 있는 전기차 충전소가 표시됩니다.)
+                        주유소 or 전기차 or 휴게소 or 유가 or 로그인 <br /> 근처 저렴한 주유소,전기차 바로 안내, 이동 <br /> 자세한 정보 물어보기.<br />
                     </span>
                 </div>
             </div>

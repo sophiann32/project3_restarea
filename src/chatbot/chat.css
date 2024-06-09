@@ -27,6 +27,8 @@ body {
 
 .chat-container {
     background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
+    /*background-image: url("https://cdn.builder.io/api/v1/image/assets/TEMP/0b95d0a932e9465f2287ef7167b12906ee35ec2eeb6bb640180c0b8caff5383f?");*/
+    /*background-size: cover;*/
     margin: 10px;
     height: 47vh;
     width: 330px;
@@ -49,6 +51,10 @@ body {
     animation: fadeIn 0.3s;
     font-size: 19px;
 }
+/*.message.user {*/
+/*    !* Add this CSS to hide the message bubble by default *!*/
+/*    display: none;*/
+/*}*/
 
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -67,12 +73,6 @@ body {
     color: black;
     align-self: flex-start;
     border-top-left-radius: 2px; /* 대화 풍선 모양 조절 */
-}
-.Answer{
-    border-top-left-radius: 2px;
-    background-color: #f8f8f8;
-    width: 290px;
-    font-size: 19px;
 }
 .content {
     margin-bottom: 1px;
