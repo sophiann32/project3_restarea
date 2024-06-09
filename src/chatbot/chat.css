@@ -49,6 +49,10 @@ body {
     animation: fadeIn 0.3s;
     font-size: 19px;
 }
+/*.message.user {*/
+/*    !* Add this CSS to hide the message bubble by default *!*/
+/*    display: none;*/
+/*}*/
 
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -67,12 +71,6 @@ body {
     color: black;
     align-self: flex-start;
     border-top-left-radius: 2px; /* 대화 풍선 모양 조절 */
-}
-.Answer{
-    border-top-left-radius: 2px;
-    background-color: #f8f8f8;
-    width: 290px;
-    font-size: 19px;
 }
 .content {
     margin-bottom: 1px;
