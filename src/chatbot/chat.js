@@ -14,7 +14,7 @@ function Chatbot() {
     const [question, setQuestion] = useState('');
     const [isFetching, setIsFetching] = useState(false);
     const [dots, setDots] = useState('');
-
+    // const [chatHistory, setChatHistory] = useState('');
     //---------------------------------------------------------------------
     const Chat = ({ stations }) => {
         return (
@@ -39,11 +39,12 @@ function Chatbot() {
 
         const initialMessage = {
             id: Date.now(),
-            text: '안녕하세요!',
+            text: '안녕하세요! Stop Scan입니다. 주유소,휴게소,제주여행,유가 관련 정보를 제공합니다.',
+            spokenText: '안녕하세요.',
             sender: 'bot'
         };
         setMessages([initialMessage]);
-        speak(initialMessage.text);
+        speak(initialMessage.spokenText);
 
         const chatContainer = document.querySelector('.chat-container');
         chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -207,7 +208,7 @@ function Chatbot() {
             const statsUrl = "http://localhost:3000/sub";
             const botResponse = {
                 id: Date.now(),
-                text: `통계 차트 페이지로 이동하려면 여기를 클릭하세요.`,
+                text: `유가 통계 페이지로 이동하려면 여기를 클릭하세요.`,
                 sender: 'bot',
                 url: statsUrl
             };
@@ -245,10 +246,14 @@ function Chatbot() {
 
     useEffect(() => {
         if (isFetching) {
+            console.log('isFetching is true, starting interval');
             const interval = setInterval(() => {
                 setDots(dots => dots.length < 10 ? dots + '.' : '');
             }, 500);
-            return () => clearInterval(interval);
+            return () =>{
+                console.log('Clearing interval');
+                clearInterval(interval);
+            }
         }
     }, [isFetching]); // isFetching 상태값 변경되면 수행이 된다.
 
@@ -256,17 +261,16 @@ function Chatbot() {
         setQuestion(event.target.value);
     };
     const handleSubmit = async (message) => {
-        if (message.trim()) {
-            // setIsFetching(true);
+        if (typeof message !== 'undefined' && message.trim()) {
             // setChatHistory(prev => `${prev}\n상담자: ${message}`);
             setIsFetching(true);
             const newMessage = { id: Date.now(), text: message, sender: 'user' };
             setMessages((prevMessages) => [...prevMessages, newMessage]);
-
             try {
                 const response = await axios.post('http://localhost:5000/ere', { content: message });
+
                 if (response.data.status === 'success') {
-                    handleMessage(response.data.message, 'bot');
+                    handleMessage(response.data.answer, 'bot');
                 } else {
                     alert('Error: ' + response.data.message);
                 }
@@ -331,9 +335,9 @@ function Chatbot() {
                 <button onClick={() => handleMessage('내 주변 최저가 주유소 찾기')}>내 주변 최저가 주유소 찾기</button>
                 <button onClick={() => handleMessage('내 주변 전기차 충전소 찾기')}>내 주변 전기차 충전소 찾기</button>
                 <container id={"con1"}>
-                    <button id={"item1"} onClick={() => handleMessage('휴게소')}>휴게소로 이동</button>
-                    <button id={"item2"} onClick={() => handleMessage('로그인')}>로그인으로 이동</button>
-                    <button id={"item3"} onClick={() => handleMessage('유가')}>유가로 이동</button>
+                    {/*<button id={"item1"} onClick={() => handleMessage('휴게소')}>휴게소로 이동</button>*/}
+                    {/*<button id={"item2"} onClick={() => handleMessage('로그인')}>로그인으로 이동</button>*/}
+                    {/*<button id={"item3"} onClick={() => handleMessage('유가')}>유가로 이동</button>*/}
                 </container>
                 {/*------------------------------------------------*/}
                 <div id="bot-input-area">
@@ -360,7 +364,7 @@ function Chatbot() {
                         {isListening ? "듣는 중..." : "음성인식"}
                     </button>
                     <span className="tooltiptext">
-                        주유소 or 전기차 or 휴게소 or 유가 or 로그인 <br /> 근처 저렴한 주유소,전기차 바로 안내, 이동 <br /> 자세한 정보 물어보기.<br />
+                        주유소! 전기차! 휴게소! 유가! 로그인!<br /> 정보 제공 및 홈페이지 이동 <br /> 그외 자세한 정보도 알려드립니다.<br />
                     </span>
                 </div>
             </div>
