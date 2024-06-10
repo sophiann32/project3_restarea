@@ -246,12 +246,10 @@ function Chatbot() {
 
     useEffect(() => {
         if (isFetching) {
-            console.log('isFetching is true, starting interval');
             const interval = setInterval(() => {
                 setDots(dots => dots.length < 10 ? dots + '.' : '');
             }, 500);
             return () =>{
-                console.log('Clearing interval');
                 clearInterval(interval);
             }
         }
