@@ -7,6 +7,8 @@ function SearchOilCharge() {
     const [Forwardings, setForwarding] = useState([]);
     const [selectedArea, setSelectedArea] = useState('');
     const [IsCarWash, setIsCarWash] = useState('Y');
+    const [IsMaint,setIsMaint] = useState('Y');
+    const [IsCvs, setIsCvs] = useState('Y');
     const [selectedStation, setSelectedStation] = useState(null);
     const [carWashInfo, setCarWashInfo] = useState(null);
     const handleSearch = () => {
@@ -38,6 +40,11 @@ function SearchOilCharge() {
                 const detail = response.data;
                 const carWashStatus = detail.RESULT.OIL[0].CAR_WASH_YN;
                 setIsCarWash(carWashStatus);
+                const maintStatus = detail.RESULT.OIL[0].MAINT_YN;
+                setIsMaint(maintStatus);
+                const cvsStatus = detail.RESULT.OIL[0].CVS_YN;
+                setIsCvs(cvsStatus);
+
                 const oilPriceArray =detail.RESULT.OIL[0].OIL_PRICE;
                 const oilPrices =oilPriceArray.map((price)=>{
                     return{
@@ -48,7 +55,7 @@ function SearchOilCharge() {
                 });
                 setCarWashInfo({
                     oilPrice :oilPrices,
-                    tel: detail.RESULT.OIL[0].TEL
+                    tel: detail.RESULT.OIL[0].TEL,
                 })
             })
             .catch((error) => {
@@ -151,7 +158,7 @@ function SearchOilCharge() {
                     <button
                         className={styles.searchButton}
                         onClick={handleSearch}
-                    > 주소,공급업체 확인
+                    > 전국 주유소 상세정보(세차장,주소,가격..)
                     </button>
                 </div>
 
@@ -164,6 +171,7 @@ function SearchOilCharge() {
                                 onClick={() => handleStationClick(Forwarding)}
                             >
                                 <div className={styles.results} key={index}>
+                                    <span style={{color:"blueviolet",fontSize:"smaller"}}> 클릭 👀 자세한 내용을 확인하세요</span>
                                     <p>상호명: {Forwarding.name}</p>
                                     <p>주소: {Forwarding.address}</p>
                                     {(getGasTradeName(Forwarding['gas_trade_name']) !== '-') &&
@@ -172,20 +180,18 @@ function SearchOilCharge() {
                                         <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['charge_trade_name'])}</p>}
                                     {selectedStation && selectedStation.uni_id === Forwarding.uni_id && (
                                         <div>
-                                            <p>세차장: {IsCarWash === "Y" ? '있음🚿' : '없음❌'}</p>
+                                            <p>세차장: {IsCarWash === "Y" ? '있음🚿' : '없음'}</p>
+                                            <p>정비시설: {IsMaint.MAINT_YN === "Y" ? '있음🪧' : '없음'} </p>
+                                            <p>편의점: {IsCvs.CVS_YN === "Y" ? '있음🆗' : '없음'}</p>
                                             {carWashInfo && (
                                                 <div>
-                                                    <p>주유소 상세 정보:</p>
-                                                    <ul>
-                                                        {carWashInfo.oilPrice.map((price, index) => (
-                                                            <li key={index}>
-                                                                {/*{getProductName(price.productCode)}: {price.price} ({price.tradeDate})*/}
-                                                                {getProductName(price.productCode)}: {price.price.toLocaleString('ko-KR')}원
-                                                            </li>
-                                                        ))}
-                                                        <li>전화번호: {carWashInfo.tel}</li>
-
-                                                    </ul>
+                                                    <p>전화번호: {carWashInfo.tel}</p>
+                                                    {carWashInfo.oilPrice.map((price, index) => (
+                                                        <p key={index}>
+                                                            {getProductName(price.productCode)}: {price.price.toLocaleString('ko-KR')}원
+                                                            <span style={{ fontSize: "small" }}> ({price.tradeDate})</span>
+                                                        </p>
+                                                    ))}
                                                 </div>
                                             )}
                                         </div>

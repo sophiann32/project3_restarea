@@ -9,8 +9,12 @@ function MainPage() {
     const navigate = useNavigate();
     const [isModalOpen, setModalOpen] = useState(false);
 
-    const toggleModal = () => setModalOpen(!isModalOpen);
-
+    // const toggleModal = () => setModalOpen(!isModalOpen);
+    const toggleModal = () => {
+        const synth = window.speechSynthesis;
+        synth.cancel();
+        setModalOpen(!isModalOpen);
+    };
     const handleRouteChange = (event) => {
         setSelectedRoute(event.target.value);
         console.log("Route changed:", event.target.value);
