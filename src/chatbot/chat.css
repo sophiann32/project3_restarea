@@ -192,7 +192,7 @@ button:hover {
     margin-left: -140px;
     opacity: 0;
     transition: opacity 0.3s;
-    font-size: 19px;
+    font-size: 17px;
 }
 
 .tooltip:hover .tooltiptext {

@@ -14,7 +14,7 @@ function Chatbot() {
     const [question, setQuestion] = useState('');
     const [isFetching, setIsFetching] = useState(false);
     const [dots, setDots] = useState('');
-    // const [chatHistory, setChatHistory] = useState('');
+
     //---------------------------------------------------------------------
     const Chat = ({ stations }) => {
         return (
@@ -39,7 +39,11 @@ function Chatbot() {
 
         const initialMessage = {
             id: Date.now(),
-            text: '안녕하세요! Stop Scan입니다. 주유소,휴게소,제주여행,유가 관련 정보를 제공합니다.',
+            text: '안녕하세요! Stop Scan입니다.\n' +
+                '주유소와 충전소의 실시간 정보를 확인해 보세요.\n' +
+                '휴게소 정보를 한눈에!\n' +
+                '제주도의 관광명소와 전기충전소 상태를 실시간으로 확인하세요.\n' +
+                '회원제 주유소 게시판도 이용해 보세요.',
             spokenText: '안녕하세요.',
             sender: 'bot'
         };
@@ -58,7 +62,9 @@ function Chatbot() {
 
     const speak = (text) => {
         const synth = window.speechSynthesis;
-        const utterance = new SpeechSynthesisUtterance(text);
+        const truncatedText = text.length > 120 ? text.substring(0, 120) + '  다음 내용은 기재되어있는 내용 참고하세요.' : text;
+        const sanitizedText = truncatedText.replace(/[#/*///-]/g, '');
+        const utterance = new SpeechSynthesisUtterance(sanitizedText);
         utterance.lang = 'ko-KR';
         synth.speak(utterance);
     };
@@ -262,7 +268,6 @@ function Chatbot() {
     };
     const handleSubmit = async (message) => {
         if (typeof message !== 'undefined' && message.trim()) {
-            // setChatHistory(prev => `${prev}\n상담자: ${message}`);
             setIsFetching(true);
             const newMessage = { id: Date.now(), text: message, sender: 'user' };
             setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -297,6 +302,14 @@ function Chatbot() {
             handleSubmit(message);
         }
     };
+    const stopSpeechSynthesis = () => {
+        const synth = window.speechSynthesis;
+        synth.cancel();
+    };
+
+    const handleLinkClick = () => {
+        stopSpeechSynthesis();
+    };
 
     //---------------------------------------------------------------------
 
@@ -304,9 +317,9 @@ function Chatbot() {
         <div className="chat_app">
             <div className="chat-container">
                 {messages.map(msg => (
-                    <div key={msg.id} className={`message ${msg.sender}`}>
+                    <div key={msg.id} className={`message ${msg.sender}`} style={{whiteSpace: 'pre-line'}}>
                         {msg.url ? (
-                            <Link to={msg.url}>{msg.text}</Link>
+                            <Link to={msg.url} onClick={handleLinkClick}>{msg.text}</Link>
                         ) : (
                             msg.text
                         )}
@@ -319,7 +332,7 @@ function Chatbot() {
                     ))}
                     </div>
                 ) : (
-                    <div className="message user" />
+                    !isFetching && messages.length === 0 && <div className="message user" />
                 )}
 
 
@@ -364,7 +377,7 @@ function Chatbot() {
                         {isListening ? "듣는 중..." : "음성인식"}
                     </button>
                     <span className="tooltiptext">
-                        주유소! 전기차! 휴게소! 유가! 로그인!<br /> 정보 제공 및 홈페이지 이동 <br /> 그외 자세한 정보도 알려드립니다.<br />
+                        외치세요!<br /><span style={{fontSize:"18px",color:"greenyellow"}}>주유소 or 전기차</span> (가까운 곳 안내)<br /><span style={{fontSize:"18px",color:"greenyellow"}}>휴게소 or 유가</span> (해당 페이지로 이동)<br/>자세한 내용도 물어보세요.<br/>
                     </span>
                 </div>
             </div>
