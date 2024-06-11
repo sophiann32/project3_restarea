@@ -15,7 +15,7 @@ export default function Register() {
             data: { email, username, password }
         }).then((result) => {
             if (result.status === 201) {
-                alert("Registration successful!");
+                alert("회원가입을 성공하셨습니다!");
                 window.open('/login', '_self');
             }
         }).catch((error) => {
@@ -27,36 +27,36 @@ export default function Register() {
         <div>
             <div className="registerContainer">
                 <div className="inputGroup">
-                    <label className="inputLabel">Email</label>
+                    <label className="inputLabel">이메일</label>
                     <input
                         type="email"
-                        placeholder="Email"
+                        placeholder="이메일을 입력해주세요"
                         className="inputValue"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
                     />
                 </div>
                 <div className="inputGroup">
-                    <label className="inputLabel">Username</label>
+                    <label className="inputLabel">닉네임</label>
                     <input
                         type="text"
-                        placeholder="Username"
+                        placeholder="닉네임을 입력해주세요"
                         className="inputValue"
                         onChange={(e) => setUsername(e.target.value)}
                         value={username}
                     />
                 </div>
                 <div className="inputGroup">
-                    <label className="inputLabel">Password</label>
+                    <label className="inputLabel">비밀번호</label>
                     <input
                         type="password"
-                        placeholder="Password"
+                        placeholder="비밀번호를 입력해주세요"
                         className="inputValue"
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                     />
                 </div>
-                <button onClick={registerUser} className="registerButton">Register</button>
+                <button onClick={registerUser} className="registerButton">가입하기</button>
             </div>
         </div>
     );
