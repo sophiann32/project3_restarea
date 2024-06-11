@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom'
 import "./login.module.css";
 
 export default function Login({ setIsLogin, setUser }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const login = () => {
         axios({
@@ -21,6 +23,10 @@ export default function Login({ setIsLogin, setUser }) {
             console.error("Login error: ", error.response ? error.response.data : error.message);
         });
     };
+
+    const goToRegister = () =>{
+        navigate('/register') //Register 페이지로 이동
+    }
 
     return (
         <div>
@@ -46,6 +52,7 @@ export default function Login({ setIsLogin, setUser }) {
                     />
                 </div>
                 <button onClick={login} className="loginButton">Login</button>
+                <button onClick={goToRegister} className="registerButton">회원가입</button>
             </div>
         </div>
     );

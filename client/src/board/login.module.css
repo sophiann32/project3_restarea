@@ -28,3 +28,17 @@
     background-color: #61dafb;
     font-weight: bold;
 }
+
+.registerButton {
+    background-color: #4CAF50; /* 예: 초록색 */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.registerButton:hover {
+    background-color: #45a049;
+}

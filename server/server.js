@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const { login, refreshToken, logout } = require('./controller/authController');
+const { login, refreshToken, logout,registerUser } = require('./controller/authController');
 const { authenticateToken } = require('./middleware/authMiddleware');
 const app = express();
 
@@ -16,6 +16,7 @@ app.use(cors({
     credentials: true // 쿠키를 사용하도록 설정
 }));
 
+app.post('/register', registerUser);
 app.post('/login', login);
 app.post('/refreshToken', refreshToken);
 app.post('/logout', logout);

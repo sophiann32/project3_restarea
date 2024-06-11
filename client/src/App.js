@@ -9,7 +9,8 @@ import MapUi from "./routes/MapUi.js";
 import Statistics from "./routes/Statistics";
 
 import Board from "./board/BoardMain"
-import Login from "./board/Login"
+import Login from "./board/Login";
+import Register from "./board/Register";
 import DetailPost from "./board/DetailPost"
 import CreatePost from "./board/Create";
 import RestArea from "./routes/restArea";
@@ -65,6 +66,7 @@ function App() {
                       <Route path="/jeju" element={<Jeju/>}/>
                       <Route path="/board" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
+                      <Route path="/register" element={<Register />} />
                       <Route path="/login" element={<Login setIsLogin={setIsLogin} setUser={setUser} />} />
                       <Route  path="/detailPost/:id" element={<DetailPost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
                       <Route  path="/create" element={<CreatePost isLoggedIn={isLoggedIn} loginId={loginId} userName={userName} userRealName={userRealName}/>}/>
