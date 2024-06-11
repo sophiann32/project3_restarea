@@ -90,7 +90,11 @@ const login = async (req, res) => {
                 console.log("Set-Cookie Header Sent for Access Token:", accessToken);
                 console.log("Set-Cookie Header Sent for Refresh Token:", refreshToken);
 
-                res.status(200).json({ message: 'Login successful' });
+                res.status(200).json({
+                    message: 'Login successful',
+                    username: userInfo[1] // username 반환
+                });
+
             } else {
                 res.status(401).json({ message: 'Invalid email or password' });
             }
