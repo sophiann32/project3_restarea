@@ -18,12 +18,12 @@ function SearchOilCharge() {
                 out: 'json',
                 osnm: searchValue,
                 area: selectedArea,
-
             },
         })
             .then((finding) => {
                 const FindingStations = finding.data;
                 setForwarding(FindingStations);
+                console.log('1.서버에 처음 보내고 받은값 :' , FindingStations);
             })
             .catch(() => {
                 console.log('Failed to fetch data');
