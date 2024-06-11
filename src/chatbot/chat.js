@@ -141,7 +141,7 @@ function Chatbot() {
             };
 
             const firstStation = stations[0];
-            const speechText = `5킬로미터 내에 있는 최저가 주유소: ${firstStation.name} ${firstStation.price}원 현 위치로부터 ${formatFuelStationDistance(firstStation.distance)} 떨어짐`;
+            const speechText = `${firstStation.name} ${firstStation.price}원 현 위치로부터 ${formatFuelStationDistance(firstStation.distance)} 떨어짐`;
 
             setMessages(messages => [...messages, resultsMessage]);
             speak(speechText);
@@ -199,13 +199,13 @@ function Chatbot() {
             setMessages(messages => [...messages, botResponse]);
             speak("");
         }
-        if (message.includes('로그인')) {
-            const loginUrl = "http://localhost:3000/login";
+        if (message.includes('제주도')) {
+            const jejuUrl = "http://localhost:3000/jeju";
             const botResponse = {
                 id: Date.now(),
-                text: `로그인 페이지로 이동하려면 여기를 클릭하세요.`,
+                text: `제주도 페이지로 이동하려면 여기를 클릭하세요.`,
                 sender: 'bot',
-                url: loginUrl
+                url: jejuUrl
             };
             setMessages(messages => [...messages, botResponse]);
             speak("");
@@ -296,8 +296,8 @@ function Chatbot() {
             handleMessage('휴게소', 'user');
         } else if (message.includes('유가')) {
             handleMessage('유가', 'user');
-        } else if (message.includes('로그인')) {
-            handleMessage('로그인', 'user');
+        } else if (message.includes('제주도')) {
+            handleMessage('제주도', 'user');
         } else {
             handleSubmit(message);
         }
@@ -345,11 +345,11 @@ function Chatbot() {
             </div>
 
             <div className="user-input">
-                <button onClick={() => handleMessage('내 주변 주유소 가격 안내')}> 내 주변 주유소의 최신 가격</button>
+                <button onClick={() => handleMessage('5킬로미터 내에 있는 최근방 주유소')}> 내 주변 주유소의 최신 가격</button>
                 <button onClick={() => handleMessage('내 주변 전기차 충전소 안내')}> 내 주변 전기차 충전소</button>
                 <container id={"con1"}>
                     {/*<button id={"item1"} onClick={() => handleMessage('휴게소')}>휴게소로 이동</button>*/}
-                    {/*<button id={"item2"} onClick={() => handleMessage('로그인')}>로그인으로 이동</button>*/}
+                    {/*<button id={"item2"} onClick={() => handleMessage('제주도')}>제주도으로 이동</button>*/}
                     {/*<button id={"item3"} onClick={() => handleMessage('유가')}>유가로 이동</button>*/}
                 </container>
                 {/*------------------------------------------------*/}
@@ -377,7 +377,7 @@ function Chatbot() {
                         {isListening ? "듣는 중..." : "음성인식"}
                     </button>
                     <span className="tooltiptext">
-                        외치세요!<br /><span style={{fontSize:"18px",color:"greenyellow"}}>주유소 or 전기차</span> (가까운 곳 안내)<br /><span style={{fontSize:"18px",color:"greenyellow"}}>휴게소 or 유가</span> (해당 페이지로 이동)<br/>자세한 내용도 물어보세요.<br/>
+                        <span style={{fontSize:"18px",color:"greenyellow"}}>주유소 or 전기차</span> (가까운 곳 안내)<br /><span style={{fontSize:"18px",color:"greenyellow"}}>휴게소 or 유가 or 제주</span> (해당 페이지로 이동)<br/>자세한 내용도 물어보세요.<br/>
                     </span>
                 </div>
             </div>
