@@ -131,7 +131,7 @@ function Chatbot() {
                 name: node.getElementsByTagName("OS_NM")[0].textContent,
                 price: node.getElementsByTagName("PRICE")[0].textContent,
                 distance: node.getElementsByTagName("DISTANCE")[0].textContent
-            })).sort((a, b) => parseFloat(a.price) - parseFloat(b.price)).slice(0, 10);
+            })).slice(0, 10);
             //
             const formattedStations = stations.map((station, index) => `${index + 1}. ${station.name} ${station.price}원 현 위치로부터 ${formatFuelStationDistance(station.distance)} 떨어짐`).join('\n');
             const resultsMessage = {
@@ -345,8 +345,8 @@ function Chatbot() {
             </div>
 
             <div className="user-input">
-                <button onClick={() => handleMessage('내 주변 최저가 주유소 찾기')}>내 주변 최저가 주유소 찾기</button>
-                <button onClick={() => handleMessage('내 주변 전기차 충전소 찾기')}>내 주변 전기차 충전소 찾기</button>
+                <button onClick={() => handleMessage('내 주변 주유소 가격 안내')}> 내 주변 주유소의 최신 가격</button>
+                <button onClick={() => handleMessage('내 주변 전기차 충전소 안내')}> 내 주변 전기차 충전소</button>
                 <container id={"con1"}>
                     {/*<button id={"item1"} onClick={() => handleMessage('휴게소')}>휴게소로 이동</button>*/}
                     {/*<button id={"item2"} onClick={() => handleMessage('로그인')}>로그인으로 이동</button>*/}
