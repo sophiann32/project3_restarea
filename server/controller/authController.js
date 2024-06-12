@@ -139,9 +139,9 @@ const refreshToken = async (req, res) => {
             httpOnly: true
         });
 
-        res.status(200).json({ message: 'Access Token Recreated' });
+        res.status(200).json({ message: 'Access Token 재생성',accessToken });
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: '서버 에러' });
     }
 };
 

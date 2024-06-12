@@ -5,10 +5,10 @@ const useTokenRefresh = () => {
     useEffect(() => {
         const interval = setInterval(async () => {
             try {
-                const response = await api.post('/refresh-token');
-                api.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
+                const result = await api.post('/refreshtoken');
+                api.defaults.headers.common['Authorization'] = `Bearer ${result.data.accessToken}`;
             } catch (error) {
-                console.error('Failed to refresh access token', error);
+                console.error('Access Token 갱신 실패', error);
             }
         }, 55 * 1000); // 55초마다 토큰 갱신 시도
 

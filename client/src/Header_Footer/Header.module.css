@@ -73,6 +73,16 @@ li a {
 .login_box a:hover {
     color: #555;
 }
+.loggedInBox {
+    display: flex;
+    align-items: center;
+}
+
+.logout_button {
+    width: 20px;
+    margin-left: 30px;
+}
+
 /* 헤더 전체 스타일에 영향을 미치는 클래스 변경 */
 .nav_wrap.specialAreaActive {
     background-color: white;

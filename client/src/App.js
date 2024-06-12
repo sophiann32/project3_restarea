@@ -1,6 +1,9 @@
 import './App.css';
 import { useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './redux/store';
 import api from "./board/axiosInstance";
 import Header from "./Header_Footer/Header";
 import Footer from "./Header_Footer/Footer";
@@ -8,8 +11,7 @@ import MainPage from "./routes/MainPage.js";
 import MapUi from "./routes/MapUi.js";
 import Statistics from "./routes/Statistics";
 import Board from "./board/BoardMain";
-import Login from "./board/Login";
-import Register from "./board/Register";
+import SignUp from "./board/SignUp";
 import DetailPost from "./board/DetailPost";
 import CreatePost from "./board/Create";
 import RestArea from "./routes/restArea";
@@ -29,6 +31,14 @@ function App() {
     const [user, setUser] = useState({});
     const [loginId, setLoginId] = useState('');
     const [username, setUsername] = useState('');
+    const [drawerOpen, setDrawerOpen] = useState(false); // Drawer 상태 추가
+
+    const toggleDrawer = (open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setDrawerOpen(open);
+    };
 
     const checkLoginStatus = async () => {
         try {
@@ -42,18 +52,13 @@ function App() {
                 setUsername(userData.username);
             }
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                try {
-                    await refreshAccessToken();
-                    await checkLoginStatus(); // 다시 로그인 상태를 확인합니다.
-                } catch (e) {
-                    console.log('Failed to refresh access token', e);
-                }
-            } else {
-                console.log(error);
-            }
+            console.log(error);
         }
     };
+
+    useEffect(() => {
+        checkLoginStatus();
+    }, []);
 
     const refreshAccessToken = async () => {
         try {
@@ -69,36 +74,34 @@ function App() {
         }
     };
 
-    useEffect(() => {
-        checkLoginStatus();
-    }, []);
-
     return (
-        <div className="App">
-            <div id="wrap">
-                <Header isLoggedIn={isLoggedIn} loginId={loginId} username={username} />
-                <div id="change">
-                    <Routes>
-                        <Route path="/" element={<MainPage />} />
-                        <Route path="/map" element={<MapUi />} />
-                        <Route path="/sub" element={<Statistics />} />
-                        <Route path="/restArea" element={<RestArea />} />
-                        <Route path="/restarea/:route" element={<RestArea />} />
-                        <Route path="/jeju" element={<Jeju />} />
-                        <Route path="/board" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
-                        <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/login" element={<Login setIsLogin={setIsLogin} setUser={setUser} />} />
-                        <Route path="/detailPost/:id" element={<DetailPost isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
-                        <Route path="/create" element={<CreatePost isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
-                        <Route path="/chatbot" element={<Chatbot isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
-                    </Routes>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <div className="App">
+                    <div id="wrap">
+                        <Header isLoggedIn={isLoggedIn} loginId={loginId} username={username} />
+                        <div id="change">
+                            <Routes>
+                                <Route path="/" element={<MainPage />} />
+                                <Route path="/map" element={<MapUi />} />
+                                <Route path="/sub" element={<Statistics />} />
+                                <Route path="/restArea" element={<RestArea />} />
+                                <Route path="/restarea/:route" element={<RestArea />} />
+                                <Route path="/jeju" element={<Jeju />} />
+                                <Route path="/board" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
+                                <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
+                                <Route path="/SignUp" element={<SignUp />} />
+                                <Route path="/detailPost/:id" element={<DetailPost isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
+                                <Route path="/create" element={<CreatePost isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
+                                <Route path="/chatbot" element={<Chatbot isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
+                            </Routes>
+                        </div>
+                        <Footer />
+                    </div>
+
                 </div>
-                <Footer />
-            </div>
-            {/*wrap 끝*/}
-        </div>
-        // App 끝
+            </PersistGate>
+        </Provider>
     );
 }
 

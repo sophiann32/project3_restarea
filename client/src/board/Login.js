@@ -1,19 +1,23 @@
 import React, { useState } from "react";
-import axios from "./axiosInstance"; 
+import { useDispatch } from 'react-redux';
+import axios from "./axiosInstance";
 import { useNavigate } from 'react-router-dom';
+import { loginSuccess } from '../redux/authSlice';
 import "./login.module.css";
 
-export default function Login({ setIsLogin, setUser }) {
+export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const login = () => {
         axios.post('/login', { email, password })
             .then((result) => {
                 if (result.status === 200) {
-                    setIsLogin(true);
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${result.data.accessToken}`;
+                    const { accessToken, refreshToken, user } = result.data;
+                    dispatch(loginSuccess({ accessToken, refreshToken, user }));
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
                     navigate('/');
                 }
             }).catch((error) => {
@@ -22,7 +26,7 @@ export default function Login({ setIsLogin, setUser }) {
     };
 
     const goToRegister = () => {
-        navigate('/register'); // Register 페이지로 이동
+        navigate('/register');
     };
 
     return (
