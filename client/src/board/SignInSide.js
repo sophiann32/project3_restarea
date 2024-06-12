@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
-export default function SignInSide({ setIsLogin, setUser }) {
+export default function SignInSide({ setIsLogin, setUser, closeDrawer }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -33,11 +33,10 @@ export default function SignInSide({ setIsLogin, setUser }) {
             const response = await api.post('/login', { email, password });
             if (response.status === 200) {
                 const { accessToken, refreshToken, user } = response.data;
-                // setIsLogin(true);
-                // setUser(user);
                 dispatch(loginSuccess({ accessToken, refreshToken, user }));
                 api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
                 navigate('/');
+                closeDrawer(); // 로그인 성공 시 Drawer를 닫음
             } else {
                 console.error('Login failed with status:', response.status);
             }
@@ -45,9 +44,12 @@ export default function SignInSide({ setIsLogin, setUser }) {
             console.error('Failed to login', error);
         }
     };
+
     const goToSignUp = () => {
         navigate('/SignUp');
+        closeDrawer(); // 회원가입 페이지로 이동 시 Drawer를 닫음
     };
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <Grid container component="main" sx={{ height: '100vh' }}>
@@ -121,18 +123,6 @@ export default function SignInSide({ setIsLogin, setUser }) {
                             >
                                 회원가입
                             </Button>
-                            {/*<Grid container>*/}
-                            {/*    /!*<Grid item xs>*!/*/}
-                            {/*    /!*    <Link href="#" variant="body2">*!/*/}
-                            {/*    /!*        Forgot password?*!/*/}
-                            {/*    /!*    </Link>*!/*/}
-                            {/*    /!*</Grid>*!/*/}
-                            {/*    <Grid item>*/}
-                            {/*        <Link href="#" variant="body2">*/}
-                            {/*            {"회원가입을 아직하지않으셨나요? 회원가입"}*/}
-                            {/*        </Link>*/}
-                            {/*    </Grid>*/}
-                            {/*</Grid>*/}
                         </Box>
                     </Box>
                 </Grid>

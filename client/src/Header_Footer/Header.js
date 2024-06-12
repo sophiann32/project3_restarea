@@ -6,7 +6,8 @@ import { logout } from '../redux/authSlice';
 import api from '../board/axiosInstance';
 import Drawer from '@mui/material/Drawer'; // Drawer 컴포넌트 추가
 import Button from '@mui/material/Button'; // Button 컴포넌트 추가
-import SignInSide from '../board/SignInSide'; // Login 컴포넌트 import
+import Stack from '@mui/material/Stack';
+import SignInSide from '../board/SignInSide'; // SignInside 컴포넌트 import
 
 function Header({ setIsLogin, setUser }) {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -67,9 +68,10 @@ function Header({ setIsLogin, setUser }) {
                         </div>
                     ) : (
                         <>
-                            <Button onClick={toggleDrawer(true)}>Login</Button>
+                            <Button onClick={toggleDrawer(true)} variant ="contained">Login</Button>
                             <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
-                                <SignInSide setIsLogin={setIsLogin} setUser={setUser} />
+                                <SignInSide setIsLogin={setIsLogin} setUser={setUser} closeDrawer={()=> setDrawerOpen()}
+                                />
                             </Drawer>
                         </>
                     )}
