@@ -16,25 +16,27 @@ import api from '../board/axiosInstance';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../redux/authSlice'; // loginSuccess 액션 import
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const defaultTheme = createTheme();
 
 export default function SignInSide({ setIsLogin, setUser, closeDrawer }) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const email = data.get('email');
-        const password = data.get('password');
-
         try {
             const response = await api.post('/login', { email, password });
             if (response.status === 200) {
                 const { accessToken, refreshToken, user } = response.data;
                 dispatch(loginSuccess({ accessToken, refreshToken, user }));
                 api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+                console.log("로그인 성공 , user:" ,user) // 디버깅용 콘솔
                 navigate('/');
                 closeDrawer(); // 로그인 성공 시 Drawer를 닫음
             } else {
@@ -44,6 +46,27 @@ export default function SignInSide({ setIsLogin, setUser, closeDrawer }) {
             console.error('Failed to login', error);
         }
     };
+
+    useEffect(() => {
+        const savedEmail = localStorage.getItem('rememberedEmail');
+        if (savedEmail) {
+            setEmail(savedEmail);
+            setRememberMe(true);
+        }
+    }, []);
+
+    const handleRememberMe = (event) => {
+        const checked = event.target.checked;
+        setRememberMe(checked);
+    };
+
+    useEffect(() => {
+        if (rememberMe) {
+            localStorage.setItem('rememberedEmail', email);
+        } else {
+            localStorage.removeItem('rememberedEmail');
+        }
+    }, [rememberMe, email]);
 
     const goToSignUp = () => {
         navigate('/SignUp');
@@ -93,6 +116,8 @@ export default function SignInSide({ setIsLogin, setUser, closeDrawer }) {
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
+                                value={email}
+                                onChange={(e)=> setEmail(e.target.value)}
                             />
                             <TextField
                                 margin="normal"
@@ -103,9 +128,11 @@ export default function SignInSide({ setIsLogin, setUser, closeDrawer }) {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
+                                control={<Checkbox checked={rememberMe} onChange={handleRememberMe} color="primary" />}
                                 label="아이디 저장"
                             />
                             <Button

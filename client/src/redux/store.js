@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './authSlice';
 import logger from 'redux-logger';
 
+
 const persistConfig = {
     key: 'root',
     storage,
