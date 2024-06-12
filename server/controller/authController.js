@@ -20,16 +20,16 @@ const registerUser = async (req, res) => {
             { autoCommit: true }
         );
 
-        res.status(201).json({ message: 'User registered successfully' });
+        res.status(201).json({ message: '회원가입 성공' });
     } catch (err) {
         console.error("Error during registration:", err);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: '서버에러' });
     } finally {
         if (connection) {
             try {
                 await connection.close();
             } catch (err) {
-                console.error("Error closing connection:", err);
+                console.error("에러로 연결종료:", err);
             }
         }
     }
@@ -91,7 +91,7 @@ const login = async (req, res) => {
                 console.log("Set-Cookie Header Sent for Refresh Token:", refreshToken);
 
                 res.status(200).json({
-                    message: 'Login successful',
+                    message: '로그인 성공',
                     username: userInfo[1] // username 반환
                 });
 
@@ -103,7 +103,7 @@ const login = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: '서버 에러' });
     } finally {
         if (connection) {
             try {

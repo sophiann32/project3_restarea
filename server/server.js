@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const axios = require('axios'); // axios 모듈 추가
+const dbConfig = require('./db/dbConfig'); // 데이터베이스 설정 파일 import
 const { login, refreshToken, logout,registerUser } = require('./controller/authController');
 const { authenticateToken } = require('./middleware/authMiddleware');
 const app = express();
@@ -77,7 +79,7 @@ app.post('/find-stations', async (req, res) => {
 
     try {
         console.log('데이터베이스 연결 중...');
-        const connection = await oracledb.getConnection(dbConfig); // 데이터베이스 연결 수립
+        const connection = await dbConfig.getConnection(dbConfig); // 데이터베이스 연결 수립
         const sqlQuery = `
             SELECT *
             FROM (SELECT statNm, statId, addr, lat, lng, zcode, distance
