@@ -7,6 +7,7 @@ import api from '../board/axiosInstance';
 import Drawer from '@mui/material/Drawer'; // Drawer 컴포넌트 추가
 import Button from '@mui/material/Button'; // Button 컴포넌트 추가
 import SignInSide from '../board/SignInSide'; // SignInside 컴포넌트 import
+import Avatar from '@mui/material/Avatar';  // Avatar 컴포넌트 추가
 
 function Header({ setIsLogin, setUser }) {
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -15,12 +16,16 @@ function Header({ setIsLogin, setUser }) {
     const navigate = useNavigate();
 
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-    const username = useSelector(state => state.auth.user?.username);
+    const user = useSelector(state => state.auth.user);
+    const username = user?.username || 'Guest';
+    const profilePicture = user?.profilePicture || '/img/default-profile.png'; // 없으면 기본 프로필 이미지
 
     const isRestArea = location.pathname === '/restArea';
     const isJeju = location.pathname === '/jeju';
     const headerClass = isRestArea || isJeju ? `${styles.nav_wrap} ${styles.specialAreaActive}` : styles.nav_wrap;
     const [drawerOpen, setDrawerOpen] = useState(false); // Drawer 상태 추가
+
+    const [profileOpen, setProfileOpen] = useState(false); // 프로필 모달
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -37,6 +42,14 @@ function Header({ setIsLogin, setUser }) {
         } catch (error) {
             console.error('Failed to logout', error);
         }
+    };
+
+    const handleProfileClick = () => {
+        setProfileOpen(true);
+    };
+
+    const handleClose = () => {
+        setProfileOpen(false);
     };
 
     return (
@@ -62,7 +75,13 @@ function Header({ setIsLogin, setUser }) {
                 <div className={styles.login_box}>
                     {isLoggedIn ? (
                         <div className={styles.loggedInBox}>
-                            {username} 님
+                            <Avatar
+                                alt={username}
+                                src={profilePicture}
+                                onClick={handleProfileClick}
+                                style={{ cursor: 'pointer'}}
+                            />
+                            <span className={styles.username}>{username} 님 </span>
                             <button onClick={handleLogout} className={styles.logout_button}>LOGOUT</button>
                         </div>
                     ) : (
@@ -74,6 +93,7 @@ function Header({ setIsLogin, setUser }) {
                         </>
                     )}
                 </div>
+                {/*<ProfileModal open={profileOpen} onClose={handleClose} /> /!* 프로필 모달 *!/*/}
             </nav>
         </div>
     );

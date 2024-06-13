@@ -6,6 +6,7 @@ const axios = require('axios'); // axios 모듈 추가
 const dbConfig = require('./db/dbConfig'); // 데이터베이스 설정 파일 import
 const { login, refreshToken, logout,registerUser } = require('./controller/authController');
 const { authenticateToken } = require('./middleware/authMiddleware');
+const userProfileController = require('./controller/userProfileController')
 const app = express();
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.post('/register', registerUser);
 app.post('/login', login);
 app.post('/refreshToken', refreshToken);
 app.post('/logout', logout);
+app.use('/profile', userProfileController);
 
 app.get('/protected', authenticateToken, (req, res) => {
     res.status(200).json({ message: 'Protected content', user: req.user });

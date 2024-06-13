@@ -77,10 +77,20 @@ li a {
     display: flex;
     align-items: center;
 }
+.username {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+
 
 .logout_button {
-    width: 20px;
-    margin-left: 30px;
+    margin-left: 20px;
+    background-color: #f44336; /* 로그아웃 버튼 색상 */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
 /* 헤더 전체 스타일에 영향을 미치는 클래스 변경 */

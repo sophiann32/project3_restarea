@@ -37,6 +37,8 @@ export default function SignInSide({ setIsLogin, setUser, closeDrawer }) {
                 dispatch(loginSuccess({ accessToken, refreshToken, user }));
                 api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
                 console.log("로그인 성공 , user:" ,user) // 디버깅용 콘솔
+                setUser(user)
+                setIsLogin(true)
                 navigate('/');
                 closeDrawer(); // 로그인 성공 시 Drawer를 닫음
             } else {

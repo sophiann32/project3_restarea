@@ -79,7 +79,7 @@ function App() {
             <PersistGate loading={null} persistor={persistor}>
                 <div className="App">
                     <div id="wrap">
-                        <Header isLoggedIn={isLoggedIn} loginId={loginId} username={username} />
+                        <Header setIsLogin={setIsLogin} loginId={loginId} setUser={setUser} />
                         <div id="change">
                             <Routes>
                                 <Route path="/" element={<MainPage />} />

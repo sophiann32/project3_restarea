@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const dbConfig = require('../db/dbConfig');
 require('dotenv').config();
 
-
 const registerUser = async (req, res) => {
     const { email, username, password } = req.body;
     let connection;
@@ -51,28 +50,24 @@ const login = async (req, res) => {
             const userInfo = result.rows[0];
             const dbPassword = userInfo[3]; // 데이터베이스에서 가져온 해시된 비밀번호
 
-            //해시된 비밀번호와 평문 비밀번호 비교
+            // 해시된 비밀번호와 평문 비밀번호 비교
             const passwordMatch = await bcrypt.compare(password, dbPassword);
             if (passwordMatch) { // 평문 비밀번호 비교
-                const accessToken = jwt.sign({
-                    id: userInfo[0], // USER_ID
-                    username: userInfo[1], // USERNAME
-                    email: userInfo[2] // EMAIL
-                }, process.env.ACCESS_SECRET, {
+                const user = {
+                    id: userInfo[0],
+                    username: userInfo[1],
+                    email: userInfo[2]
+                };
+
+                const accessToken = jwt.sign(user, process.env.ACCESS_SECRET, {
                     expiresIn: '1m',
                     issuer: 'UHB'
                 });
 
-                const refreshToken = jwt.sign({
-                    id: userInfo[0], // USER_ID
-                    username: userInfo[1], // USERNAME
-                    email: userInfo[2] // EMAIL
-                }, process.env.REFRESH_SECRET, {
+                const refreshToken = jwt.sign(user, process.env.REFRESH_SECRET, {
                     expiresIn: '7d',
                     issuer: 'UHB'
                 });
-                console.log("access token", accessToken);
-                console.log("refresh token", refreshToken);
 
                 res.cookie('accessToken', accessToken, {
                     secure: false, // production 환경에서는 true로 설정
@@ -80,19 +75,17 @@ const login = async (req, res) => {
                     // sameSite: 'Lax' // 필요에 따라 'Strict', 'None'으로 변경
                 });
 
-
                 res.cookie('refreshToken', refreshToken, {
                     secure: false, // production 환경에서는 true로 설정
                     httpOnly: true,
                     // sameSite: 'Lax' // 필요에 따라 'Strict', 'None'으로 변경
                 });
 
-                console.log("Set-Cookie Header Sent for Access Token:", accessToken);
-                console.log("Set-Cookie Header Sent for Refresh Token:", refreshToken);
-
                 res.status(200).json({
                     message: '로그인 성공',
-                    username: userInfo[1] // username 반환
+                    user, // 유저 정보 포함
+                    accessToken,
+                    refreshToken
                 });
 
             } else {
@@ -139,7 +132,7 @@ const refreshToken = async (req, res) => {
             httpOnly: true
         });
 
-        res.status(200).json({ message: 'Access Token 재생성',accessToken });
+        res.status(200).json({ message: 'Access Token 재생성', accessToken });
     } catch (error) {
         res.status(500).json({ message: '서버 에러' });
     }
