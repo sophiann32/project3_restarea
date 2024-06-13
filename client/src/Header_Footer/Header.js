@@ -8,7 +8,7 @@ import Drawer from '@mui/material/Drawer'; // Drawer 컴포넌트 추가
 import Button from '@mui/material/Button'; // Button 컴포넌트 추가
 import SignInSide from '../board/SignInSide'; // SignInside 컴포넌트 import
 import Avatar from '@mui/material/Avatar';  // Avatar 컴포넌트 추가
-
+import ProfileModal from '../board/profileModal';
 function Header({ setIsLogin, setUser }) {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
@@ -93,7 +93,7 @@ function Header({ setIsLogin, setUser }) {
                         </>
                     )}
                 </div>
-                {/*<ProfileModal open={profileOpen} onClose={handleClose} /> /!* 프로필 모달 *!/*/}
+                <ProfileModal open={profileOpen} onClose={handleClose} /> {/* 프로필 모달 */}
             </nav>
         </div>
     );
