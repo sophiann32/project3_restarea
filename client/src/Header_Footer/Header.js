@@ -4,11 +4,12 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/authSlice';
 import api from '../board/axiosInstance';
-import Drawer from '@mui/material/Drawer'; // Drawer 컴포넌트 추가
-import Button from '@mui/material/Button'; // Button 컴포넌트 추가
-import SignInSide from '../board/SignInSide'; // SignInside 컴포넌트 import
-import Avatar from '@mui/material/Avatar';  // Avatar 컴포넌트 추가
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import SignInSide from '../board/SignInSide';
+import Avatar from '@mui/material/Avatar';
 import ProfileModal from '../board/profileModal';
+
 function Header({ setIsLogin, setUser }) {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
@@ -23,9 +24,8 @@ function Header({ setIsLogin, setUser }) {
     const isRestArea = location.pathname === '/restArea';
     const isJeju = location.pathname === '/jeju';
     const headerClass = isRestArea || isJeju ? `${styles.nav_wrap} ${styles.specialAreaActive}` : styles.nav_wrap;
-    const [drawerOpen, setDrawerOpen] = useState(false); // Drawer 상태 추가
-
-    const [profileOpen, setProfileOpen] = useState(false); // 프로필 모달
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [profileOpen, setProfileOpen] = useState(false);
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -38,6 +38,8 @@ function Header({ setIsLogin, setUser }) {
         try {
             await api.post('/logout');
             dispatch(logout());
+            setIsLogin(false);
+            setUser({});
             navigate('/');
         } catch (error) {
             console.error('Failed to logout', error);

@@ -16,7 +16,7 @@ export default function Register() {
         }).then((result) => {
             if (result.status === 201) {
                 alert("회원가입을 성공하셨습니다!");
-                window.open('/login', '_self');
+                window.open('/', '_self');
             }
         }).catch((error) => {
             console.error("Registration error: ", error.response ? error.response.data : error.message);

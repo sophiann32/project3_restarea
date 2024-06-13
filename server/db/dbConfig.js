@@ -10,7 +10,7 @@ const dbConfig = {
 async function getConnection() {
     return await oracledb.getConnection(dbConfig);
 }
-oracledb.initOracleClient({ libDir: 'C:\\instantclient_21_13' });
+oracledb.initOracleClient({ libDir: 'D:\\instantclient_21_13' });
 
 module.exports = {
     getConnection

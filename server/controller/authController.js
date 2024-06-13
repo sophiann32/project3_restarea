@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
         res.status(201).json({ message: '회원가입 성공' });
     } catch (err) {
         console.error("Error during registration:", err);
-        res.status(500).json({ message: '서버에러' });
+        res.status(500).json({ message: '서버 에러' });
     } finally {
         if (connection) {
             try {
@@ -42,13 +42,24 @@ const login = async (req, res) => {
         connection = await dbConfig.getConnection();
 
         const result = await connection.execute(
-            `SELECT USER_ID, USERNAME, EMAIL, PASSWORD FROM users WHERE email = :email`,
+            `SELECT u.USER_ID, u.USERNAME, u.EMAIL, u.PASSWORD, p.PROFILE_PICTURE
+             FROM users u
+                      LEFT JOIN user_profile p ON u.USER_ID = p.USER_ID
+             WHERE u.email = :email`,
             [email]
         );
 
         if (result.rows.length > 0) {
             const userInfo = result.rows[0];
             const dbPassword = userInfo[3]; // 데이터베이스에서 가져온 해시된 비밀번호
+            let profilePicture = userInfo[4];
+
+            if (profilePicture) {
+                profilePicture = Buffer.from(profilePicture).toString('base64');
+                profilePicture = `data:image/jpeg;base64,${profilePicture}`;
+            } else {
+                profilePicture = '/img/default-profile.png';
+            }
 
             // 해시된 비밀번호와 평문 비밀번호 비교
             const passwordMatch = await bcrypt.compare(password, dbPassword);
@@ -57,10 +68,11 @@ const login = async (req, res) => {
                     id: userInfo[0],
                     username: userInfo[1],
                     email: userInfo[2]
+                    // profilePicture는 토큰에 포함하지 않음
                 };
 
                 const accessToken = jwt.sign(user, process.env.ACCESS_SECRET, {
-                    expiresIn: '1m',
+                    expiresIn: '1h',
                     issuer: 'UHB'
                 });
 
@@ -83,7 +95,12 @@ const login = async (req, res) => {
 
                 res.status(200).json({
                     message: '로그인 성공',
-                    user, // 유저 정보 포함
+                    user: {
+                        id: user.id,
+                        username: user.username,
+                        email: user.email,
+                        profilePicture: profilePicture // 여기서 별도로 프로필 사진을 반환
+                    },
                     accessToken,
                     refreshToken
                 });
@@ -121,9 +138,10 @@ const refreshToken = async (req, res) => {
         const accessToken = jwt.sign({
             id: data.id,
             username: data.username,
-            email: data.email
+            email: data.email,
+            profilePicture: data.profilePicture
         }, process.env.ACCESS_SECRET, {
-            expiresIn: '1m',
+            expiresIn: '1h',
             issuer: 'UHB'
         });
 

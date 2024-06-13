@@ -46,7 +46,12 @@ function App() {
             if (result.status === 200) {
                 setIsLogin(true);
                 const userData = result.data.user;
-                setUser(userData);
+
+                // 프로필 이미지 URL 설정
+                const profileImageResponse = await api.get(`/api/profile-picture/${userData.id}`);
+                const profileImageUrl = profileImageResponse.data.profilePicture;
+
+                setUser({ ...userData, profilePicture: profileImageUrl });
                 setIsLoggedIn(true);
                 setLoginId(userData.loginId);
                 setUsername(userData.username);
@@ -79,7 +84,7 @@ function App() {
             <PersistGate loading={null} persistor={persistor}>
                 <div className="App">
                     <div id="wrap">
-                        <Header setIsLogin={setIsLogin} loginId={loginId} setUser={setUser} />
+                        <Header setIsLogin={setIsLogin} loginId={loginId} setUser={setUser} user={user} />
                         <div id="change">
                             <Routes>
                                 <Route path="/" element={<MainPage />} />
@@ -98,7 +103,6 @@ function App() {
                         </div>
                         <Footer />
                     </div>
-
                 </div>
             </PersistGate>
         </Provider>
