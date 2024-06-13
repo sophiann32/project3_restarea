@@ -4,9 +4,9 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const axios = require('axios'); // axios 모듈 추가
 const dbConfig = require('./db/dbConfig'); // 데이터베이스 설정 파일 import
-const { login, refreshToken, logout,registerUser } = require('./controller/authController');
+const { login, refreshToken, logout, registerUser } = require('./controller/authController');
 const { authenticateToken } = require('./middleware/authMiddleware');
-const userProfileController = require('./controller/userProfileController')
+const userProfileController = require('./controller/userProfileController');
 const app = express();
 
 dotenv.config();
@@ -23,17 +23,11 @@ app.post('/register', registerUser);
 app.post('/login', login);
 app.post('/refreshToken', refreshToken);
 app.post('/logout', logout);
-app.use('/profile', userProfileController);
+app.use('/api', userProfileController);
 
 app.get('/protected', authenticateToken, (req, res) => {
     res.status(200).json({ message: 'Protected content', user: req.user });
 });
-
-
-
-
-
-
 
 async function fetchAllChargerData(zcode, serviceKey) {
     let allItems = [];  // 불러온 데이터를 저장할 배열
@@ -149,7 +143,7 @@ app.post('/find-stations', async (req, res) => {
     }
 });
 
-app.listen(process.env.PORT, ()=>{
-    console.log(`server is on ${process.env.PORT}`);
-})
-
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, ()=>{
+    console.log(`server is on ${PORT}`);
+});
