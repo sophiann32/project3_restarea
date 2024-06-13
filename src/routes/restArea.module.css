@@ -10,7 +10,12 @@
     padding: 10px;
     background-color: #ffffff;
 }
-
+.modal-image {
+    width: 100%;  /* 부모 요소의 너비에 맞게 조정 */
+    max-width: 60px;  /* 최대 너비 설정 */
+    height: auto;  /* 이미지 비율을 유지하면서 높이를 자동으로 조정 */
+    margin-bottom: 10px;  /* 이미지 사이 간격 */
+}
 
 
 @media (max-width: 800px) {
