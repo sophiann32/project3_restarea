@@ -21,7 +21,7 @@ const registerUser = async (req, res) => {
 
         res.status(201).json({ message: '회원가입 성공' });
     } catch (err) {
-        console.error("Error during registration:", err);
+        console.error("회원가입중 에러발생:", err);
         res.status(500).json({ message: '서버 에러' });
     } finally {
         if (connection) {

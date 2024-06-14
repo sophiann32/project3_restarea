@@ -57,7 +57,7 @@ export default function SignUp() {
                 window.open('/login', '_self');
             }
         }).catch((error) => {
-            console.error("Registration error: ", error.response ? error.response.data : error.message);
+            console.error("회원가입 에러: ", error.response ? error.response.data : error.message);
         });
     };
 
