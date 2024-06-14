@@ -187,7 +187,7 @@ axios를 사용하여 휴게소정보외에도 브랜드,연료가격,시설,인
 ## 프로젝트 관리 
 
 ![image](./readmeImg/1.png)   
-각 서버를 효율적으로 관리하기 위해, React, Express, 그리고 Flask를 사용하는 세 개의 서버에 각각 원격 레포지토리를 생성
+각 서버를 효율적으로 관리하기 위해, React, Express, 그리고 Flask를 사용하는 세 개의 서버에 각각 원격 레포지토리를 생성   
 https://github.com/UHB4/rest_area_flask   
 https://github.com/UHB4/rest_area_express
 
