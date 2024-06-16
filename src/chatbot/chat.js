@@ -145,7 +145,7 @@ function Chatbot() {
             const formattedStations = stations.map((station, index) => `${index + 1}. ${station.name} ${station.price}원 현 위치로부터 ${formatFuelStationDistance(station.distance)} 떨어짐`).join('\n');
             const resultsMessage = {
                 id: Date.now(),
-                text: `주유소 정보:\n${formattedStations}`,
+                text: `5km 내 주유소 가격:\n${formattedStations}`,
                 sender: 'bot'
             };
 
@@ -277,7 +277,7 @@ function Chatbot() {
         }
     };
     const handleCommand = (message) => {
-        console.log("어떻게 들어오길래:",message)
+
         if (message.trim() ==='주유소') {
             handleMessage('주유소', 'user');
         } else if (message.trim() ==='전기차') {
@@ -289,7 +289,7 @@ function Chatbot() {
         } else if (message.trim() ==='제주도') {
             handleMessage('제주도', 'user');
         } else {
-            console.log("어떻게 들어오길래2:",message)
+
             handleSubmit(message);
         }
     };
@@ -338,8 +338,8 @@ function Chatbot() {
             </div>
 
             <div className="user-input">
-                <button onClick={() => handleMessage('5킬로미터 내에 있는 최근방 주유소')}> 내 주변 주유소의 최신 가격</button>
-                <button onClick={() => handleMessage('내 주변 전기차 충전소 안내')}> 내 주변 전기차 충전소</button>
+                <button onClick={() => handleMessage('주유소')}>내 주변 주유소의 최신 가격</button>
+                <button onClick={() => handleMessage('전기차')}>내 주변 전기차 충전소</button>
                 <container id={"con1"}>
                     {/*<button id={"item1"} onClick={() => handleMessage('휴게소')}>휴게소로 이동</button>*/}
                     {/*<button id={"item2"} onClick={() => handleMessage('제주도')}>제주도으로 이동</button>*/}
