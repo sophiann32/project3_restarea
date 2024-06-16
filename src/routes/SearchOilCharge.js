@@ -26,16 +26,8 @@ function SearchOilCharge() {
                 const FindingStations = finding.data;
                 setForwarding(FindingStations);
                 console.log('1.서버에 처음 보내고 받은값 :', FindingStations);
-
-                // 오디오 재생/일시정지 기능 호출
                 if (audioRef.current) {
-                    if (audioRef.current.paused) {
-                        audioRef.current.play();
-                    } else {
-                        audioRef.current.pause();
-                    }
-                } else {
-                    console.error("audioRef is not assigned correctly.");
+                    audioRef.current.play();
                 }
             })
             .catch(() => {
@@ -177,8 +169,8 @@ function SearchOilCharge() {
                     >
                         실시간 상세정보 확인
                     </button>
-                    <AudioSwitch ref={audioRef} />
-                    {/*{forwarding && <div>{JSON.stringify(forwarding)}</div>}*/}
+                    <AudioSwitch ref={audioRef} src="/a_car_whizzing_by슝.mp3" />
+
                 </div>
 
                 <div className={styles.chartContainer}>

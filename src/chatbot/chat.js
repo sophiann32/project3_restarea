@@ -2,18 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './chat.css';
 import { FaMicrophone } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Stationinfo from './Stationinfo';
-
+import AudioSwitch from './../routes/Media/AudioSwitch';
 function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [fuelStations] = useState([]);
     const [chargingStations] = useState([]);
     const [isListening, setIsListening] = useState(false);
+    const navigate = useNavigate();
     //---------------------------------------------------------------------
     const [question, setQuestion] = useState('');
     const [isFetching, setIsFetching] = useState(false);
     const [dots, setDots] = useState('');
+    const audioRef = useRef(null);
     useEffect(() => {
         if (isFetching) {
             const interval = setInterval(() => {
@@ -96,20 +98,10 @@ function Chatbot() {
         recognition.onresult = (event) => {
             const speechResult = event.results[0][0].transcript;
             console.log(`Recognized: ${speechResult}`);
-            // handleMessage(speechResult);
-            // handleSubmit(speechResult);
             handleCommand(speechResult);
             setIsListening(false);
         };
 
-        recognition.onend = () => {
-            setIsListening(false);
-        };
-
-        recognition.onerror = (event) => {
-            console.error("Speech recognition error", event.error);
-            setIsListening(false);
-        };
     };
 
     const fetchChargingStations = async (latitude, longitude) => {
@@ -182,7 +174,7 @@ function Chatbot() {
         const newMessage = { id: Date.now(), text: message, sender: sender };
         setMessages(messages => [...messages, newMessage]);
         speak(message);
-        if (message.includes('주유소')) {
+        if (message.trim() === '주유소') {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(position => {
                     const { latitude, longitude } = position.coords;
@@ -193,7 +185,7 @@ function Chatbot() {
                 setMessages(messages => [...messages, botResponse]);
                 speak(botResponse.text);
             }
-        } else if (message.includes('전기차')) {
+        } else if( message.trim() ==='전기차') {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(position => {
                     const { latitude, longitude } = position.coords;
@@ -205,39 +197,16 @@ function Chatbot() {
                 speak(botResponse.text);
             }
         }
-        if (message.includes('휴게소')) {
-            const RestareaUrl = "http://localhost:3000/restArea";
-            const botResponse = {
-                id: Date.now(),
-                text: `고속도로 휴게소 정보를 확인하러 가려면 여기를 클릭하세요.`,
-                sender: 'bot',
-                url: RestareaUrl // URL을 메시지 객체에 추가
-            };
-            setMessages(messages => [...messages, botResponse]);
-            speak("");
+        if (message.trim() ==='휴게소') {
+            navigate('/restArea'); // 지정된 경로로 이동
         }
-        if (message.includes('제주도')) {
-            const jejuUrl = "http://localhost:3000/jeju";
-            const botResponse = {
-                id: Date.now(),
-                text: `제주도 페이지로 이동하려면 여기를 클릭하세요.`,
-                sender: 'bot',
-                url: jejuUrl
-            };
-            setMessages(messages => [...messages, botResponse]);
-            speak("");
+        if( message.trim() ==='제주도') {
+            navigate('/jeju');
         }
-        if (message.includes('유가')) {
-            const statsUrl = "http://localhost:3000/sub";
-            const botResponse = {
-                id: Date.now(),
-                text: `유가 통계 페이지로 이동하려면 여기를 클릭하세요.`,
-                sender: 'bot',
-                url: statsUrl
-            };
-            setMessages(messages => [...messages, botResponse]);
-            speak("");
-        }
+        if (message.trim() ==='유가') {
+            navigate('/sub');
+            }
+
     };
 
     const handleGeolocationError = (error) => {
@@ -273,6 +242,9 @@ function Chatbot() {
             const interval = setInterval(() => {
                 setDots(dots => dots.length < 10 ? dots + '.' : '');
             }, 500);
+            if (audioRef.current) {
+                audioRef.current.play();
+            }
             return () =>{
                 console.log('Clearing interval');
                 clearInterval(interval);
@@ -305,17 +277,19 @@ function Chatbot() {
         }
     };
     const handleCommand = (message) => {
-        if (message.includes('주유소')) {
+        console.log("어떻게 들어오길래:",message)
+        if (message.trim() ==='주유소') {
             handleMessage('주유소', 'user');
-        } else if (message.includes('전기차')) {
+        } else if (message.trim() ==='전기차') {
             handleMessage('전기차', 'user');
-        } else if (message.includes('휴게소')) {
+        } else if (message.trim() ==='휴게소') {
             handleMessage('휴게소', 'user');
-        } else if (message.includes('유가')) {
+        } else if (message.trim() ==='유가') {
             handleMessage('유가', 'user');
-        } else if (message.includes('제주도')) {
+        } else if (message.trim() ==='제주도') {
             handleMessage('제주도', 'user');
         } else {
+            console.log("어떻게 들어오길래2:",message)
             handleSubmit(message);
         }
     };
@@ -347,7 +321,9 @@ function Chatbot() {
                         응답중{dots.split('').map((dot, i) => (
                         <span key={i}>{dot}</span>
                     ))}
+                        <AudioSwitch ref={audioRef} src="/ElevenLabs_Sara_조금만.mp3" />
                     </div>
+
                 ) : (
                     !isFetching && messages.length === 0 && <div className="message user" />
                 )}
@@ -383,15 +359,15 @@ function Chatbot() {
                                   cols="50"
                         />
                         <br />
-                        <button type="submit">보내기</button>
+                        <button type="submit">보내기
+                        </button>
                     </form>
                 </div>
-
-                {/*-----------------------------------------------------*/}
                 <div className="tooltip">
                     <button className="voice-button" onClick={handleSpeech} disabled={isListening}>
                         <FaMicrophone />
                         {isListening ? "듣는 중..." : "음성인식"}
+
                     </button>
                     <span className="tooltiptext">
                         <span style={{fontSize:"18px",color:"greenyellow"}}>주유소 or 전기차</span> (가까운 곳 안내)<br /><span style={{fontSize:"18px",color:"greenyellow"}}>휴게소 or 유가 or 제주도</span> (해당 페이지로 이동)<br/>자세한 내용도 물어보세요.<br/>
