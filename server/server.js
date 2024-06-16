@@ -7,6 +7,7 @@ const dbConfig = require('./db/dbConfig'); // 데이터베이스 설정 파일 i
 const { login, refreshToken, logout, registerUser } = require('./controller/authController');
 const { authenticateToken } = require('./middleware/authMiddleware');
 const userProfileController = require('./controller/userProfileController');
+const postsRouter = require('./routes/posts')
 const app = express();
 
 dotenv.config();
@@ -15,7 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST','PUT','DELETE'],
     credentials: true // 쿠키를 사용하도록 설정
 }));
 
@@ -24,6 +25,7 @@ app.post('/login', login);
 app.post('/refreshToken', refreshToken);
 app.post('/logout', logout);
 app.use('/api', userProfileController);
+app.use('/api', postsRouter)
 
 app.get('/protected', authenticateToken, (req, res) => {
     res.status(200).json({ message: 'Protected content', user: req.user });

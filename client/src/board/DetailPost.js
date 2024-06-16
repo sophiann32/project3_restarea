@@ -1,134 +1,162 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import styles from './detailPost.module.css'
+import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import api from './axiosInstance';
+import styles from './detailPost.module.css';
 
-import {useParams, Link, useNavigate} from 'react-router-dom'; // React Router가 필요합니다.
-
-function DetailPost(props) {
-    const [detailPostData, setDetailPostData] = useState({});
+const DetailPost = () => {
     const { id } = useParams();
-
     const navigate = useNavigate();
-
-    //////delet post요청/////
-    const handleDeletePost = () => {
-        axios.post(`http://localhost:3001/deletePost/${detailPostData.post?.id}`, null, { withCredentials: true })
-            .then(res => {
-                // 성공적으로 삭제된 경우 처리할 내용
-                console.log('게시물이 성공적으로 삭제되었습니다.');
-                navigate('/board');
-                // 삭제 후 어떤 페이지로 리다이렉트할지 결정할 수 있습니다.
-            })
-            .catch(err => {
-                // 삭제 실패 시 처리할 내용
-                console.error('게시물 삭제 중 오류가 발생했습니다:', err);
-                // 실패한 경우 사용자에게 알리거나 다른 처리를 할 수 있습니다.
-            });
-    };
-
-    ////////////////////
-
-
-
-
+    const [post, setPost] = useState({});
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
+    const [isEditing, setIsEditing] = useState(false);
+    const [editTitle, setEditTitle] = useState('');
+    const [editContent, setEditContent] = useState('');
+    const [recommendationCount, setRecommendationCount] = useState(0);
+    const user = useSelector((state) => state.auth.user);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/detailPost/${id}`,{withCredentials: true} )
-            .then(res => {
-                // console.log('데이터 확인: ', res.data.currentPage);
-                // console.log(res);
-                console.log('detail 데이터 : ' + res.data);
-                setDetailPostData(res.data);
-            });
+        const fetchPost = async () => {
+            try {
+                const response = await api.get(`/api/posts/${id}`);
+                setPost(response.data);
+                setEditTitle(response.data.TITLE);
+                setEditContent(response.data.CONTENT);
+                const recResponse = await api.get(`/api/posts/${id}/recommendations`);
+                setRecommendationCount(recResponse.data.recommendationCount);
+            } catch (error) {
+                console.error('게시글 가져오기 실패', error);
+            }
+        };
+
+        const fetchComments = async () => {
+            try {
+                const response = await api.get(`/api/posts/${id}/comments`);
+                setComments(response.data);
+            } catch (error) {
+                console.error('댓글 가져오기 실패', error);
+            }
+        };
+
+        fetchPost();
+        fetchComments();
     }, [id]);
 
+    const handleDelete = async () => {
+        try {
+            await api.delete(`/api/posts/${id}`);
+            alert('글 삭제 완료');
+            navigate('/board');
+        } catch (error) {
+            console.error('글 삭제 실패', error);
+            if (error.response.status === 403) {
+                alert('권한이 없습니다.');
+            }
+        }
+    };
+
+    const handleCommentSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await api.post('/api/comments', { POST_ID: id, USER_ID: user.id, CONTENT: newComment });
+            setNewComment('');
+            const response = await api.get(`/api/posts/${id}/comments`);
+            setComments(response.data);
+        } catch (error) {
+            console.error('댓글 작성 실패', error);
+        }
+    };
+
+    const handleRecommend = async () => {
+        try {
+            const response = await api.post('/api/recommendations', { POST_ID: id, USER_ID: user.id });
+            alert('추천 완료');
+            setRecommendationCount(response.data.recommendationCount);
+        } catch (error) {
+            console.error('추천 실패', error);
+            if (error.response.status === 400) {
+                alert('이미 추천하셨습니다.');
+            }
+        }
+    };
+
+    const handleEdit = async (e) => {
+        e.preventDefault();
+        try {
+            await api.put(`/api/posts/${id}`, { TITLE: editTitle, CONTENT: editContent });
+            setPost({ ...post, TITLE: editTitle, CONTENT: editContent });
+            setIsEditing(false);
+        } catch (error) {
+            console.error('글 수정 실패', error);
+            if (error.response.status === 403) {
+                alert('권한이 없습니다.');
+            }
+        }
+    };
+
     return (
-        <body>
-        <div>
-            <p>{detailPostData.userRealName}님 </p>
-            {/*<p>{props.userRealName}님 </p>*/}
-        </div>
-        <table>
-            <tr>
-                <th>제목</th>
-                <td className="title">{detailPostData.post?.title}</td>
-            </tr>
-            <tr>
-                <th>작성자</th>
-                <td className="author">{detailPostData.post?.author}</td>
-            </tr>
-            <tr>
-                <th>게시글 내용</th>
-                <td className="content" style={{wordWrap: 'break-word'}}>
-                    {detailPostData.post?.content}
-                    {detailPostData.post?.file_original_name && (
-                        <ul style={{listStyleType: 'none', paddingLeft: 0}}>
-                            {detailPostData.post.file_original_name.split(';').map((originalName, index) => {
-                                const extension = originalName.split('.').pop();
-                                if (['jpg', 'jpeg', 'png'].includes(extension)) {
-                                    return (
-                                        <li style={{textAlign: 'center'}}>
-                                            <img
-                                                src={`/uploads/${detailPostData.post.file_stored_name.split(';')[index]}`}
-                                                alt={originalName} style={{maxWidth: '100%', height: 'auto'}}/>
-                                        </li>
-                                    );
-                                }
-                                return null;
-                            })}
-                        </ul>
-                    )}
-                </td>
-            </tr>
-            <tr>
-                <th>생성일</th>
-                <td>{detailPostData.post?.created_at}</td>
-            </tr>
-            <tr>
-                <th>조회수</th>
-                <td>{detailPostData.post?.views}</td>
-            </tr>
-            <tr>
-                <th>좋아요 수</th>
-                <td>{detailPostData.post?.likes}</td>
-            </tr>
-        </table>
-        <div className="attachment-section center">
-            {/*<div className="attachment-header">첨부 파일</div>*/}
-            {detailPostData.post?.file_original_name ? (
-                <ul style={{listStyleType: 'none', paddingLeft: 0}}>
-                    {detailPostData.post.file_original_name.split(';').map((originalName, index) => (
-                        <li style={{textAlign: 'center'}}>
-                            <a href={`/uploads/${detailPostData.post.file_stored_name.split(';')[index]}`}
-                               download={originalName}>
-                                {originalName}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                // <p>첨부된 파일이 없습니다.</p>
-                ''
+        <div className={styles.detailPostContainer}>
+            {user && user.id === post.USER_ID && (
+                <>
+                    <button onClick={handleDelete}>글 삭제</button>
+                    <button onClick={() => setIsEditing(!isEditing)}>
+                        {isEditing ? '취소' : '글 수정'}
+                    </button>
+                </>
             )}
+
+            {isEditing ? (
+                <form onSubmit={handleEdit} className={styles.editForm}>
+                    <input
+                        type="text"
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        placeholder="제목을 입력하세요"
+                        required
+                    />
+                    <textarea
+                        value={editContent}
+                        onChange={(e) => setEditContent(e.target.value)}
+                        placeholder="내용을 입력하세요"
+                        required
+                    />
+                    <button type="submit">수정 완료</button>
+                </form>
+            ) : (
+                <>
+                    <h1>{post.TITLE}</h1>
+                    <p>{post.CONTENT}</p>
+                    <p>작성자: {post.USERNAME}</p>
+                    <p>작성일: {new Date(post.CREATED_AT).toLocaleString()}</p>
+                </>
+            )}
+
+            <button onClick={handleRecommend}>추천</button>
+            <p>추천 수: {recommendationCount}</p>
+
+            <h2>댓글</h2>
+            <ul className={styles.commentList}>
+                {comments.map(comment => (
+                    <li key={comment.COMMENT_ID}>
+                        <p>{comment.CONTENT}</p>
+                        <p>작성자: {comment.USERNAME}</p>
+                        <p>작성일: {new Date(comment.CREATED_AT).toLocaleString()}</p>
+                    </li>
+                ))}
+            </ul>
+
+            <form onSubmit={handleCommentSubmit} className={styles.commentForm}>
+                <textarea
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    placeholder="댓글을 입력하세요"
+                    required
+                />
+                <button type="submit">댓글 작성</button>
+            </form>
         </div>
-
-        {/* 댓글 섹션은 주석 처리 */}
-        {/* <CommentSection comments={detailPostData.comments} postId={detailPostData.post?.id} userId={detailPostData.userId} /> */}
-
-        {/*<div className="center">*/}
-        {/*    <a href="/" className="button">이전 페이지로 돌아가기</a>*/}
-        {/*    <a href={`/editPost/${detailPostData.post?.id}`} className="button">수정</a>*/}
-        {/*    <a href={`/deletePost/${detailPostData.post?.id}`} className="button">삭제</a>*/}
-        {/*</div>*/}
-        <div className={styles.prev}>
-            <Link to="/" className="button">이전 페이지로 돌아가기</Link>
-            <Link to={`/editPost/${detailPostData.post?.id}`} className="button">수정</Link>
-            {/*<Link to={`/deletePost/${detailPostData.post?.id}`} className="button">삭제</Link>*/}
-            <button className="button" onClick={handleDeletePost}>삭제</button>
-
-        </div>
-        </body>
     );
-}
+};
 
 export default DetailPost;

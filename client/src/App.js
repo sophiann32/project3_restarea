@@ -10,14 +10,14 @@ import Footer from "./Header_Footer/Footer";
 import MainPage from "./routes/MainPage.js";
 import MapUi from "./routes/MapUi.js";
 import Statistics from "./routes/Statistics";
-import Board from "./board/BoardMain";
+import Board from "./board/Board";
 import SignUp from "./board/SignUp";
-import DetailPost from "./board/DetailPost";
-import CreatePost from "./board/Create";
+import CreatePost from './board/CreatePost'; // 글 작성 컴포넌트 임포트
 import RestArea from "./routes/restArea";
 import Jeju from "./routes/jeju";
 import Chatbot from "./chatbot/chat";
 import useTokenRefresh from "./board/useTokenRefresh";
+import DetailPost from './board/DetailPost'; // 상세 게시글 컴포넌트 임포트
 
 // Axios 글로벌 설정
 api.defaults.baseURL = 'http://localhost:3001';
@@ -93,11 +93,10 @@ function App() {
                                 <Route path="/restArea" element={<RestArea />} />
                                 <Route path="/restarea/:route" element={<RestArea />} />
                                 <Route path="/jeju" element={<Jeju />} />
-                                <Route path="/board" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
-                                <Route path="/boardMain/:page" element={<Board isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
+                                <Route path="/board" element={<Board />} />
                                 <Route path="/SignUp" element={<SignUp />} />
-                                <Route path="/detailPost/:id" element={<DetailPost isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
-                                <Route path="/create" element={<CreatePost isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
+                                <Route path="/create-post" element={<CreatePost />} />
+                                <Route path="/post/:id" element={<DetailPost />} />
                                 <Route path="/chatbot" element={<Chatbot isLoggedIn={isLoggedIn} loginId={loginId} username={username} />} />
                             </Routes>
                         </div>

@@ -25,9 +25,12 @@ const authSlice = createSlice({
         },
         setUser(state, action) {
             state.user = action.payload;
+        },
+        updateAccessToken(state, action) { // 새로운 액션 추가
+            state.accessToken = action.payload.accessToken;
         }
     },
 });
 
-export const { loginSuccess, logout, setUser } = authSlice.actions;
+export const { loginSuccess, logout, setUser, updateAccessToken } = authSlice.actions; // 새로운 액션을 export
 export default authSlice.reducer;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,7 +16,6 @@ import api from '../board/axiosInstance';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../redux/authSlice'; // loginSuccess 액션 import
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 const defaultTheme = createTheme();
 
