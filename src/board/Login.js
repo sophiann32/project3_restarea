@@ -97,7 +97,7 @@ function Login(props) {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    <button type="button" onClick={handleSubmit}>Login</button>
+                    <button id="button1"  onClick={handleSubmit}>Login</button>
                 </form>
 
             }

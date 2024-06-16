@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styles from './SearchOilCharge.module.css';
 import axios from "axios";
+import AudioSwitch from "./Media/AudioSwitch";
 
 function SearchOilCharge() {
     const [searchValue, setSearchValue] = useState('');
@@ -123,13 +124,16 @@ function SearchOilCharge() {
     return (
             <div className={styles.smallbox1}>
                 <div className={styles.searchInputContainer}>
-                    <h2 className={styles.h2}> ⛽ 상호명으로 상세 검색 </h2>
+                    <h2 className={styles.h2}>
+                        <AudioSwitch />
+                        ⛽ 전국 주유소,가스충전소 검색</h2>
+
                     <input
                         className={styles.searchInput}
                         type="text"
                         value={searchValue}
                         onChange={(e) => setSearchValue(e.target.value)}
-                        placeholder="(주유소,가스충전소 2글자 이상)"
+                        placeholder="(상호명 2글자 이상 필수)"
                     />
                     <select
                         className={styles.searchArea}
@@ -158,46 +162,43 @@ function SearchOilCharge() {
                     <button
                         className={styles.searchButton}
                         onClick={handleSearch}
-                    > 전국 주유소 상세정보(세차장,주소,가격..)
+                    >실시간 상세정보 확인
                     </button>
                 </div>
 
                 <div className={styles.chartContainer}>
                     {Forwardings && Forwardings.map((Forwarding, index) => {
                         return (
-                            <div
-                                className={styles.results}
-                                key={index}
-                                onClick={() => handleStationClick(Forwarding)}
-                            >
-                                <div className={styles.results} key={index}>
-                                    <span style={{color:"blueviolet",fontSize:"smaller"}}> 클릭 👀 자세한 내용을 확인하세요</span>
-                                    <p>상호명: {Forwarding.name}</p>
-                                    <p>주소: {Forwarding.address}</p>
-                                    {(getGasTradeName(Forwarding['gas_trade_name']) !== '-') &&
-                                        <p>주유소 공급업체명: {getGasTradeName(Forwarding['gas_trade_name'])}</p>}
-                                    {(getChargeTradeName(Forwarding['charge_trade_name']) !== '-') &&
-                                        <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['charge_trade_name'])}</p>}
-                                    {selectedStation && selectedStation.uni_id === Forwarding.uni_id && (
-                                        <div>
-                                            <p>세차장: {IsCarWash === "Y" ? '있음🚿' : '없음'}</p>
-                                            <p>정비시설: {IsMaint.MAINT_YN === "Y" ? '있음🪧' : '없음'} </p>
-                                            <p>편의점: {IsCvs.CVS_YN === "Y" ? '있음🆗' : '없음'}</p>
-                                            {carWashInfo && (
-                                                <div>
-                                                    <p>전화번호: {carWashInfo.tel}</p>
-                                                    {carWashInfo.oilPrice.map((price, index) => (
-                                                        <p key={index}>
-                                                            {getProductName(price.productCode)}: {price.price.toLocaleString('ko-KR')}원
-                                                            <span style={{ fontSize: "small" }}> ({price.tradeDate})</span>
-                                                        </p>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-                                </div>
+
+                            <div className={styles.results} key={index} onClick={() => handleStationClick(Forwarding)}>
+                                {/*<span style={{color: "blueviolet", fontSize: "smaller"}}> 클릭 👀 더 자세한 내용을 확인하세요</span>*/}
+                                <span style={{color: "blueviolet", fontSize: "smaller"}}> 클릭 👀 더 자세한 내용을 확인하세요</span>
+                                <p>상호명: {Forwarding.name}</p>
+                                <p>주소: {Forwarding.address}</p>
+                                {(getGasTradeName(Forwarding['gas_trade_name']) !== '-') &&
+                                    <p>주유소 공급업체명: {getGasTradeName(Forwarding['gas_trade_name'])}</p>}
+                                {(getChargeTradeName(Forwarding['charge_trade_name']) !== '-') &&
+                                    <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['charge_trade_name'])}</p>}
+                                {selectedStation && selectedStation.uni_id === Forwarding.uni_id && (
+                                    <div>
+                                        <p>세차장: {IsCarWash === "Y" ? '있음🚿' : '없음'}</p>
+                                        <p>정비시설: {IsMaint.MAINT_YN === "Y" ? '있음🪧' : '없음'} </p>
+                                        <p>편의점: {IsCvs.CVS_YN === "Y" ? '있음🆗' : '없음'}</p>
+                                        {carWashInfo && (
+                                            <div>
+                                                <p>전화번호: {carWashInfo.tel}</p>
+                                                {carWashInfo.oilPrice.map((price, index) => (
+                                                    <p key={index}>
+                                                        {getProductName(price.productCode)}: {price.price.toLocaleString('ko-KR')}원
+                                                        <span style={{fontSize: "small"}}> ({price.tradeDate})</span>
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
+
                         );
                     })}
                 </div>
