@@ -14,6 +14,23 @@ function Chatbot() {
     const [question, setQuestion] = useState('');
     const [isFetching, setIsFetching] = useState(false);
     const [dots, setDots] = useState('');
+    useEffect(() => {
+        if (isFetching) {
+            const interval = setInterval(() => {
+                setDots((prevDots) => {
+                    if (prevDots.length < 3) {
+                        return prevDots + '.';
+                    } else {
+                        return '.';
+                    }
+                });
+            }, 500); // 500ms마다 dots 업데이트
+
+            return () => clearInterval(interval); // 언마운트 시 interval 정리
+        } else {
+            setDots(''); // isFetching이 false일 때 dots 초기화
+        }
+    }, [isFetching]);
 
     //---------------------------------------------------------------------
     const Chat = ({ stations }) => {
@@ -327,8 +344,8 @@ function Chatbot() {
                 ))}
                 {isFetching && messages.length > 0 ? (
                     <div className="message user">
-                        응답중{[...Array(dots)].map((_, i) => (
-                        <span key={i}>.</span>
+                        응답중{dots.split('').map((dot, i) => (
+                        <span key={i}>{dot}</span>
                     ))}
                     </div>
                 ) : (
@@ -377,7 +394,7 @@ function Chatbot() {
                         {isListening ? "듣는 중..." : "음성인식"}
                     </button>
                     <span className="tooltiptext">
-                        <span style={{fontSize:"18px",color:"greenyellow"}}>주유소 or 전기차</span> (가까운 곳 안내)<br /><span style={{fontSize:"18px",color:"greenyellow"}}>휴게소 or 유가 or 제주</span> (해당 페이지로 이동)<br/>자세한 내용도 물어보세요.<br/>
+                        <span style={{fontSize:"18px",color:"greenyellow"}}>주유소 or 전기차</span> (가까운 곳 안내)<br /><span style={{fontSize:"18px",color:"greenyellow"}}>휴게소 or 유가 or 제주도</span> (해당 페이지로 이동)<br/>자세한 내용도 물어보세요.<br/>
                     </span>
                 </div>
             </div>

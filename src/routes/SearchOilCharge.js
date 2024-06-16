@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './SearchOilCharge.module.css';
 import axios from "axios";
 import AudioSwitch from "./Media/AudioSwitch";
@@ -12,6 +12,7 @@ function SearchOilCharge() {
     const [IsCvs, setIsCvs] = useState('Y');
     const [selectedStation, setSelectedStation] = useState(null);
     const [carWashInfo, setCarWashInfo] = useState(null);
+    const audioRef = useRef(null);
     const handleSearch = () => {
         axios.get('http://localhost:5000/api/gas-stations', {
             params: {
@@ -24,7 +25,18 @@ function SearchOilCharge() {
             .then((finding) => {
                 const FindingStations = finding.data;
                 setForwarding(FindingStations);
-                console.log('1.서버에 처음 보내고 받은값 :' , FindingStations);
+                console.log('1.서버에 처음 보내고 받은값 :', FindingStations);
+
+                // 오디오 재생/일시정지 기능 호출
+                if (audioRef.current) {
+                    if (audioRef.current.paused) {
+                        audioRef.current.play();
+                    } else {
+                        audioRef.current.pause();
+                    }
+                } else {
+                    console.error("audioRef is not assigned correctly.");
+                }
             })
             .catch(() => {
                 console.log('Failed to fetch data');
@@ -162,8 +174,11 @@ function SearchOilCharge() {
                     <button
                         className={styles.searchButton}
                         onClick={handleSearch}
-                    >실시간 상세정보 확인
+                    >
+                        실시간 상세정보 확인
                     </button>
+                    <AudioSwitch ref={audioRef} />
+                    {/*{forwarding && <div>{JSON.stringify(forwarding)}</div>}*/}
                 </div>
 
                 <div className={styles.chartContainer}>
