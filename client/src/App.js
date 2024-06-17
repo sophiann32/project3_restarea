@@ -87,7 +87,7 @@ function App() {
                         <Header setIsLogin={setIsLogin} loginId={loginId} setUser={setUser} user={user} />
                         <div id="change">
                             <Routes>
-                                <Route path="/" element={<MainPage />} />
+                                <Route path="/main" element={<MainPage />} />
                                 <Route path="/map" element={<MapUi />} />
                                 <Route path="/sub" element={<Statistics />} />
                                 <Route path="/restArea" element={<RestArea />} />
