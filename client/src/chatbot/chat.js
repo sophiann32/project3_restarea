@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import './chat.css';
+// import './chat.module.css';
+import styles from './chat.module.css';
 import { FaMicrophone } from 'react-icons/fa';
 import { Link,useNavigate } from 'react-router-dom';
 import Stationinfo from './Stationinfo';
 import AudioSwitch from './../routes/Media/AudioSwitch';
-function Chatbot() {
+function Chatbot({onClose}) {
     const [messages, setMessages] = useState([]);
     const [fuelStations] = useState([]);
     const [chargingStations] = useState([]);
@@ -69,13 +70,13 @@ function Chatbot() {
         setMessages([initialMessage]);
         speak(initialMessage.spokenText);
 
-        const chatContainer = document.querySelector('.chat-container');
+        const chatContainer = document.querySelector(`.${styles.chat_container}`);
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }, []);
 
 
     useEffect(() => {
-        const chatContainer = document.querySelector('.chat-container');
+        const chatContainer = document.querySelector(`.${styles.chat_container}`);
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }, [messages]);
 
@@ -305,10 +306,12 @@ function Chatbot() {
     //---------------------------------------------------------------------
 
     return (
-        <div className="chat_app">
-            <div className="chat-container">
+        <div className={styles.chat_app}>
+            <span className={styles.close_button} onClick={onClose}>&times;</span>
+            <div className={styles.chat_container}>
                 {messages.map(msg => (
-                    <div key={msg.id} className={`message ${msg.sender}`} style={{whiteSpace: 'pre-line'}}>
+                    <div key={msg.id} className={`${styles.message} ${styles[msg.sender]}`}
+                         style={{whiteSpace: 'pre-line'}}>
                         {msg.url ? (
                             <Link to={msg.url} onClick={handleLinkClick}>{msg.text}</Link>
                         ) : (
@@ -317,27 +320,27 @@ function Chatbot() {
                     </div>
                 ))}
                 {isFetching && messages.length > 0 ? (
-                    <div className="message user">
+                    <div className={styles.message}>
                         응답중{dots.split('').map((dot, i) => (
                         <span key={i}>{dot}</span>
                     ))}
-                        <AudioSwitch ref={audioRef} src="/ElevenLabs_Sara_조금만.mp3" />
+                        <AudioSwitch ref={audioRef} src="/ElevenLabs_Sara_조금만.mp3"/>
                     </div>
 
                 ) : (
-                    !isFetching && messages.length === 0 && <div className="message user" />
+                    !isFetching && messages.length === 0 && <div className={styles.message}/>
                 )}
 
 
             </div>
-            <div className="stations-list">
-                <Chat stations={fuelStations} type="fuel" />
+            <div className={styles.stations_list}>
+                <Chat stations={fuelStations} type="fuel"/>
             </div>
-            <div className="stations-list">
-                <Chat stations={chargingStations} type="charge" />
+            <div className={styles.stations_list}>
+                <Chat stations={chargingStations} type="charge"/>
             </div>
 
-            <div className="user-input">
+            <div className={styles.user_input}>
 
                 <button onClick={() => handleMessage('주유소')}>내 주변 주유소의 최신 가격</button>
                 <button onClick={() => handleMessage('전기차')}>내 주변 전기차 충전소</button>
@@ -359,20 +362,21 @@ function Chatbot() {
                                   rows="4"
                                   cols="50"
                         />
-                        <br />
+                        <br/>
                         <button type="submit">보내기
                         </button>
                     </form>
                 </div>
 
-                <div className="tooltip">
-                    <button className="voice-button" onClick={handleSpeech} disabled={isListening}>
-                        <FaMicrophone />
+                <div className={styles.tooltip}>
+                    <button className={styles.voice_button} onClick={handleSpeech} disabled={isListening}>
+                        <FaMicrophone/>
                         {isListening ? "듣는 중..." : "음성인식"}
 
                     </button>
-                    <span className="tooltiptext">
-                        <span style={{fontSize:"18px",color:"greenyellow"}}>주유소 or 전기차</span> (가까운 곳 안내)<br /><span style={{fontSize:"18px",color:"greenyellow"}}>휴게소 or 유가 or 제주도</span> (해당 페이지로 이동)<br/>자세한 내용도 물어보세요.<br/>
+                    <span className={styles.tooltiptext}>
+                        <span style={{fontSize: "18px", color: "greenyellow"}}>주유소 or 전기차</span> (가까운 곳 안내)<br/><span
+                        style={{fontSize: "18px", color: "greenyellow"}}>휴게소 or 유가 or 제주도</span> (해당 페이지로 이동)<br/>자세한 내용도 물어보세요.<br/>
                     </span>
                 </div>
             </div>
