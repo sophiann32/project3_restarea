@@ -80,8 +80,6 @@ function ChartDonut(props) {
             return;
         }
         if (elements.length > 0) {
-            // const clickedElementIndex = elements[0]._index;
-            // const clickedData = chartData.labels[clickedElementIndex];
             navigate(`/map`);
         }
     };

@@ -1,0 +1,12 @@
+.switchAudio {
+    position: relative; /* 상대적 위치 설정 */
+    padding: 1rem; /* 내부 여백 설정 */
+
+    transition: transform 0.667s cubic-bezier(0.19, 1, 0.22, 1) 0s, color 0.4s ease 0s, background-color 0.4s ease 0s;
+}
+
+
+
+.switchAudio__btn:hover {
+    transform: scale(1.05); /* 호버 시 크기 확대 */
+}

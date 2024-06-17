@@ -1,4 +1,5 @@
 .statistics {
+    transition: opacity 0.5s ease-in-out;
     grid-template-rows: repeat(2, auto); /* 3행으로 배치 */
     gap: 20px;
     padding: 20px;
@@ -44,6 +45,7 @@
 
 }
 
+
 .smallbox2, .smallbox3 {
     background-color: #fffefe;
     position: relative;
@@ -53,6 +55,8 @@
     transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
     height: 455px;
     border-radius: 40px;
+    overflow: hidden;
+
 }
 
 .smallbox2 {

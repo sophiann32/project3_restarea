@@ -7,9 +7,13 @@ import EVChargingSlots from './Chart/EVChargingSlots.js';
 import Chart7 from "./Chart/Chart7";
 import SearchOilCharge from './SearchOilCharge';
 
+
 function Statistics() {
     const [locationData, setLocationData] = useState(null);
-    // 위치 정보를 가져오고 데이터를 로드하는 함수
+    const [opacity, setOpacity] = useState(1);
+
+
+
     const fetchLocationAndData = () => {
         navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords;
@@ -28,37 +32,44 @@ function Statistics() {
             console.error('Error getting location:', error);
         });
     };
+
     useEffect(() => {
         fetchLocationAndData();
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const newOpacity = 1 - scrollTop / maxScroll;
+            setOpacity(Math.max(newOpacity, 0));
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
-
-
     return (
-        <>
         <div className={styles.statistics}>
-            <div className={styles.box1}>
-                    <SearchOilCharge/>
-            </div>
-            <div className={styles.box2}>
-                    <div className={styles.chartContainer2}>
-                        <div className={styles.smallbox2}>
-                            <NationalGasPricesChart/>
-                        </div>
-                        <div className={styles.smallbox3}>
-                            <NearbyGasChart data={locationData}/>
-                        </div>
-                        <div className={styles.smallbox2}>
-                            <Chart7/>
-                        </div>
-                        <div className={styles.smallbox3}>
-                            <EVChargingSlots/>
-                        </div>
-                    </div>
+            <div className={styles.box1} style={{ opacity }}>
 
+                <SearchOilCharge />
+            </div>
+
+            <div className={styles.box2}>
+                <div className={styles.chartContainer2}>
+                    <div className={styles.smallbox2}>
+                        <NationalGasPricesChart />
+                    </div>
+                    <div className={styles.smallbox3}>
+                        <NearbyGasChart data={locationData} />
+                    </div>
+                    <div className={styles.smallbox2}>
+                        <Chart7 />
+                    </div>
+                    <div className={styles.smallbox3}>
+                        <EVChargingSlots />
+                    </div>
                 </div>
             </div>
-
-        </>
+        </div>
     );
 }
 
