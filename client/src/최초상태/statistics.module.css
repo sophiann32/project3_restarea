@@ -1,0 +1,98 @@
+.statistics{
+    width: 100%;
+    /*height: 780px;*/
+    background-color: #ffeb9f;
+    /*box-sizing: border-box;*/
+/*    display: grid;*/
+/*    grid-template-areas:      !* !!핵심!!*!*/
+/*            "aside section"*/
+/*;*/
+/*    grid-template-columns: 30% 70% ;*/
+/*    !*자식width*!*/
+/*    grid-template-rows: 780px;*/
+/*    !*자식height*!*/
+}
+
+.box1{
+    width: 100%;
+    height: 500px;
+    /*background-color: #dcdcdc;*/
+    background: linear-gradient(rgba(252, 252, 252, 0.05), rgba(124, 124, 124, 0.93)),url("../../public/img/bg1.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 3;
+}
+.bento{
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: flex-start;*/
+    /*padding: 0px;*/
+    /*gap: 24px;*/
+
+    /*position: absolute;*/
+    /*width: 346px;*/
+    /*height: 416px;*/
+    /*left: 16px;*/
+    /*top: 259px;*/
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px;
+    gap: 32px;
+
+    position: absolute;
+    width: 466px;
+    left: calc(50% - 466px/2 + 1282.5px);
+    top: -18.43%;
+    bottom: 42.43%;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+
+z-index: 2;
+}
+
+.Frame {
+    z-index: 1;
+    width: 466px;
+    height: 2235px;
+    padding: 32px;
+    background: #8acac4;
+    flexDirection: 'column';
+    justifyContent: 'flex-start';
+    alignItems: 'flex-start';
+    gap: 32px;
+    display: inline-flex;
+}
+.box2{
+    width: 100%;
+    height: 500px;
+    margin: 0 auto;
+    background-color: #bebebe;
+}
+.smallbox2{
+    width: 1200px;
+    height: 455px;
+    background-color: #f6f6f6;
+    margin: 0 auto;
+}
+.box3{
+    width: 100%;
+    height: 550px;
+    background-color: #99e1ff;
+    position: relative;
+}
+.smallbox3{
+    width: 1200px;
+    height: 460px;
+    background-color: #f3eeff;
+    border-radius: 30px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left:-600px ;
+    margin-top: -230px;
+}

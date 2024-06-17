@@ -1,0 +1,435 @@
+/*}*/
+#change{
+    background-color: #fff6f6;
+
+}
+.aside_button{
+    float: left;
+    width: 50px;
+    top: 15%;
+    left: 15px;
+    position: absolute;
+}
+
+
+
+.aside {
+    position: absolute; /* 또는 fixed, 만약 스크롤 시에도 고정되길 원한다면 */
+    /*top: 330px; !* 뷰포트 상단으로부터의 거리 *!*/
+    /*left: 130px; !* 뷰포트 왼쪽으로부터의 거리 *!*/
+    /*width: 350px; !* 사이드바 너비 *!*/
+    /*height: 350px;*/
+    top: 20%; /* 뷰포트 상단으로부터의 거리 */
+    left: 0; /* 뷰포트 왼쪽으로부터의 거리 */
+    width: 470px; /* 사이드바 너비 */
+    height: 600px;
+
+    padding: 5px; /* 사이드바 내부 패딩 */
+    background-color: #f4f4f4;
+    border-radius: 20px;
+    z-index: 2; /* 다른 내용물 위에 오도록 z-index 설정 */
+    overflow-y: auto; /* 내용이 많을 경우 스크롤바 표시 */
+    box-shadow:
+            inset 0 -3em 3em rgba(0, 200, 0, 0.09),
+            0 0 0 2px white,
+            0.3em 0.3em 1em rgba(163, 0, 200, 0.27);
+}
+.aside::-webkit-scrollbar {
+    width: 15px; /* 스크롤바 너비 */
+}
+
+.aside::-webkit-scrollbar-track {
+    background: #fff7ec; /* 스크롤바 트랙 배경색 */
+}
+
+.aside::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: rgba(0, 0, 255, 0.16); /* 스크롤바의 색상 */
+
+    /*border-radius: 10px;*/
+}
+
+.aside::-webkit-scrollbar-thumb:hover {
+    background: rgb(193, 154, 216); /* 스크롤바 호버 시 색상 */
+}
+
+
+.markings {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px; /* 게이지 바의 양 끝과 맞추기 위해 패딩 설정 */
+}
+
+.mark {
+    color: rgba(93, 89, 89, 0.93); /* 눈금 색상 */
+}
+
+.slider {
+    -webkit-appearance: none; /* 기본 스타일링 제거 */
+    width: 100%; /* 전체 너비 */
+    height: 15px; /* 슬라이더 두께 */
+    border-radius: 5px; /* 슬라이더 둥근 모서리 */
+    background: linear-gradient(to right, #ffc7d3, rgba(0, 0, 255, 0.2)); /* 그라데이션 적용 */
+    outline: none; /* 클릭 시 외곽선 제거 */
+    opacity: 0.7; /* 투명도 설정 */
+    -webkit-transition: .2s; /* 전환 효과 */
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1; /* 마우스 오버 시 투명도 변경 */
+}
+
+/* 슬라이더 썸(핸들)에 대한 스타일 */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* 기본 스타일링 제거 */
+    appearance: none;
+    width: 25px; /* 썸의 너비 */
+    height: 25px; /* 썸의 높이 */
+    border-radius: 50%; /* 원형 모양 */
+    background: #ad8cc1; /* 썸 색상 */
+    cursor: pointer; /* 커서 모양 변경 */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* 썸의 너비 */
+    height: 25px; /* 썸의 높이 */
+    border-radius: 50%; /* 원형 모양 */
+    background: #fff; /* 썸 색상 */
+    cursor: pointer; /* 커서 모양 변경 */
+}
+.sortButtons {
+    display: flex;
+    /*justify-content: space-between;*/
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.sortButtons button {
+    background-color: transparent;
+    color: #000000;
+    border: 2px solid rgba(93, 89, 89, 0.45);
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgb(255, 254, 254);
+}
+
+.sortButtons button:hover {
+    background-color: rgba(0, 0, 255, 0.2);
+}
+
+
+.gasStationList {
+    width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-left: 10px;
+
+}
+
+.gasStationList li {
+    align-items: center;
+    background-color: rgb(255, 254, 254); /* 사이드바와 동일한 배경색 설정 */
+    color: #000000; /* 글자색 설정 */
+    padding: 10px; /* 내부 패딩 */
+    box-shadow: 12px 12px 2px 1px rgba(107, 107, 159, 0.28);
+    font-size: 13px;
+}
+
+/* 스크롤바 스타일 (옵션) */
+/*.gasStationList::-webkit-scrollbar {*/
+/*    height: 8px;*/
+/*}*/
+
+/*.gasStationList::-webkit-scrollbar-thumb {*/
+/*    background: #555;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.gasStationList::-webkit-scrollbar-track {*/
+/*    background: #000;*/
+/*}*/
+
+
+
+
+/*===========================사이드바 밑에 버튼============================================*/
+.buttonContainer {
+    display: flex; /* 버튼을 가로로 배치 */
+    justify-content: space-around; /* 버튼 사이의 간격을 균등하게 조정 */
+    padding: 10px 20px; /* 상하 패딩만 조정하여 버튼과 사이드바 사이의 공간 제거 */
+    /*position: absolute;*/
+    /*bottom: 0px;*/
+    /*left: 195px;*/
+    z-index: 3;
+
+}
+.button {
+    border: none;
+    padding: 10px 20px; /* 버튼 내부 패딩 조절 */
+    margin: 10px; /* 주변 요소와의 간격 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    background-color: white; /* 기본 배경 색상 설정 */
+    color: black; /* 글자 색상 설정 */
+    font-size: 1em; /* 글자 크기 */
+    cursor: pointer; /* 호버 시 커서 변경 */
+    transition: background-color 0.3s; /* 배경 색상 변화 애니메이션 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 상자 그림자 효과 */
+    outline: none; /* 포커스 시 테두리 제거 */
+}
+.buttonActive {
+    background-color: #c19ad8; /* 활성 상태일 때 배경색 설정 */
+    color: white; /* 활성 상태일 때 글자색 설정 */
+}
+
+ 마우스 호버 시 버튼 스타일
+.button:hover {
+    background-color: #007BFF; /* 호버 색상 */
+    color: white; /* 호버 시 글자 색상 */
+}
+
+
+
+
+
+/*========================================================================================*/
+
+/*==================================연료버튼===============================================*/
+.radioContainer {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    gap: 15px; /* 각 라디오 버튼 사이의 간격 */
+    padding: 20px;
+    /*margin-left: 100px;*/
+    padding-left: 130px;
+    border-radius: 8px;
+    background-color:#041621;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.radioContainer label {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 12px;
+    user-select: none; /* 텍스트 선택 방지 */
+    color: white;
+}
+
+.radioContainer input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.radioContainer .checkmark {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+}
+
+.radioContainer input:checked ~ .checkmark {
+    background-color: #007bff;
+}
+
+.radioContainer .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/*.radioContainer input:checked ~ .checkmark:after {*/
+/*    display: block;*/
+/*    top: 8px;*/
+/*    left: 7.7px;*/
+/*    width: 10px;*/
+/*    height: 10px;*/
+/*    border-radius: 50%;*/
+/*    background: yellow;*/
+/*}*/
+/*==========================================================================================*/
+
+
+.section {
+    width: calc(100% - 40px - 200px); /* 총 너비에서 aside 너비와 여백을 제외 */
+    margin-left: 120px; /* aside 너비와 여백을 고려한 왼쪽 마진 */
+    height: 100vh; /* 뷰포트 높이를 전체 채움 */
+    background-color: #090909;
+    position: relative; /* z-index를 위해 position 설정 필요 */
+    z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
+}
+.select_bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3등분으로 나눔 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-items: center; /* 가로 중앙 정렬 */
+    gap: 20px; /* 그리드 아이템 간격 */
+    height: 230px;
+    background-color: #041621;
+    padding: 20px; /* 패딩 */
+
+
+    /*float: right;*/
+    /*width: 120px;*/
+    /*height: 680px;*/
+    /*background-color: #525252;*/
+
+}
+
+.icon_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.icon {
+     /*아이콘 스타일 */
+    width: 70px; /* 혹은 실제 아이콘 크기에 맞게 조절 */
+    height: 100px;
+    display: flex;
+    align-items: center;
+    margin-left: 65px;
+    justify-content: center;
+    margin-bottom: 10px; /* 아이콘과 텍스트 간격 */
+    /*width: 50px;*/
+
+    /*padding-left: 30px;*/
+    /*padding-top: 50px;*/
+
+}
+.icon2 {
+    /* 아이콘 스타일 */
+    width: 70px; /* 혹은 실제 아이콘 크기에 맞게 조절 */
+    height: 100px;
+    border-radius: 40%; /* 원형으로 */
+    display: flex;
+    align-items: center;
+    margin-left: 115px;
+    justify-content: center;
+    margin-bottom: 10px; /* 아이콘과 텍스트 간격 */
+
+
+    /*width: 50px;*/
+    /*padding-left: 30px;*/
+    /*padding-top: 50px;*/
+
+}
+
+.text {
+     /* 아이콘 설명 텍스트 스타일 */
+     color: white;
+     margin-bottom: 15px;
+     margin-left: 50px/* 텍스트와 버튼 간격 */
+
+    /*color: white;*/
+    /*padding-left: 7px;*/
+
+ }
+.text2 {
+    /* 아이콘 설명 텍스트 스타일 */
+    color: white;
+    margin-bottom: 15px;
+    margin-left: 76px/* 텍스트와 버튼 간격 */
+
+    /*color: white;*/
+    /*padding-left: 7px;*/
+}
+
+.button1 {
+    /* 버튼 스타일 */
+    border: none;
+    background-color: #FFAFAF; /* 버튼 배경 색상 */
+    color: white;
+    font-size: 20px;
+    border-radius: 25px;
+    padding: 30px 70px; /* 패딩 */
+    /*cursor: pointer; !* 마우스 오버 시 손가락 커서 표시 *!*/
+}
+.button2 {
+    /* 버튼 스타일 */
+    border: none;
+    font-size: 20px;
+    background-color: #FED700; /* 버튼 배경 색상 */
+    color: white;
+    border-radius: 25px;
+    padding: 30px 70px; /* 패딩 */
+    /*cursor: pointer; !* 마우스 오버 시 손가락 커서 표시 *!*/
+}
+.button3 {
+    /* 버튼 스타일 */
+    border: none;
+    font-size: 20px;
+    background-color: #DBDF23; /* 버튼 배경 색상 */
+    color: white;
+    border-radius: 25px;
+    padding: 30px 70px; /* 패딩 */
+    margin-right: 20px;
+    /*cursor: pointer; !* 마우스 오버 시 손가락 커서 표시 *!*/
+}
+
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media (max-width: 768px) {
+    .select_bar {
+        grid-template-columns: 1fr; /* 모바일에서는 한 열로 표시 */
+        height: auto; /* 높이를 내용에 맞게 자동으로 조정 */
+        gap: 10px; /* 아이템 간격 줄임 */
+    }
+
+    .icon_container {
+        flex-direction: row; /* 모바일에서는 가로로 배치 */
+    }
+
+    .icon_button {
+        padding: 5px 10px; /* 모바일에서 버튼 패딩 줄임 */
+    }
+}
+
+/* 반응형 미디어 쿼리 */
+@media (max-width: 768px) {
+    .aside {
+        /* 중간 크기의 뷰포트에 맞춤 */
+        width: 150px; /* 사이드바 너비를 줄임 */
+        padding: 15px; /* 패딩을 줄임 */
+    }
+    .section {
+        width: calc(100% - 30px - 150px); /* 새로운 aside 너비에 맞춤 */
+        margin-left: 180px; /* 새로운 aside 너비와 패딩에 맞춤 */
+    }
+}
+
+@media (max-width: 480px) {
+    .aside {
+        /* 가장 작은 뷰포트에 맞춤 */
+        width: 100%; /* 화면 전체 너비를 차지하도록 함 */
+        height: auto; /* 내용에 맞게 높이를 조정 */
+        position: fixed; /* 화면 하단에 고정 */
+        bottom: 0;
+        left: 0;
+        border-radius: 0; /* 둥근 모서리 제거 */
+        padding: 10px; /* 패딩 줄임 */
+        z-index: 3; /* 내용 위에 오도록 z-index를 높임 */
+    }
+    .section {
+        margin-left: 0; /* aside가 전체 너비를 차지하므로 마진을 제거 */
+        width: 100%; /* 화면 전체 너비를 사용 */
+    }
+}
