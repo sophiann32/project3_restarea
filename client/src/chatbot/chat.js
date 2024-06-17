@@ -338,7 +338,7 @@ function Chatbot() {
             </div>
 
             <div className="user-input">
-<<<<<<< HEAD:src/chatbot/chat.js
+
                 <button onClick={() => handleMessage('주유소')}>내 주변 주유소의 최신 가격</button>
                 <button onClick={() => handleMessage('전기차')}>내 주변 전기차 충전소</button>
                 <container id={"con1"}>
@@ -364,13 +364,7 @@ function Chatbot() {
                         </button>
                     </form>
                 </div>
-=======
-                <button onClick={() => handleMessage('내 주변 최저가 주유소 찾기')}>내 주변 최저가 주유소 찾기</button>
-                <button onClick={() => handleMessage('내 주변 전기차 충전소 찾기')}>내 주변 전기차 충전소 찾기</button>
-                <button onClick={() => handleMessage('고속도로 휴게소 정보 보러가기')}>고속도로 휴게소 정보 보러가기</button>
-                <button onClick={() => handleMessage('로그인 페이지로 이동하기')}>로그인 페이지로 이동하기</button>
-                <button onClick={() => handleMessage('통계 차트 보러가기')}>통계 차트 보러가기</button>
->>>>>>> master:client/src/chatbot/chat.js
+
                 <div className="tooltip">
                     <button className="voice-button" onClick={handleSpeech} disabled={isListening}>
                         <FaMicrophone />
