@@ -12,9 +12,6 @@ function Chatbot() {
     const [chargingStations] = useState([]);
     const [isListening, setIsListening] = useState(false);
 
-
-
-
     const Chat = ({ stations }) => {
         return (
             <div>
