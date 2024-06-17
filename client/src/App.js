@@ -13,6 +13,7 @@ import Statistics from "./routes/Statistics";
 import Board from "./board/Board";
 import SignUp from "./board/SignUp";
 import CreatePost from './board/CreatePost'; // 글 작성 컴포넌트 임포트
+import Landing from './Landing/Landing';
 import RestArea from "./routes/restArea";
 import Jeju from "./routes/jeju";
 import Chatbot from "./chatbot/chat";
@@ -87,6 +88,7 @@ function App() {
                         <Header setIsLogin={setIsLogin} loginId={loginId} setUser={setUser} user={user} />
                         <div id="change">
                             <Routes>
+                                <Route path="/" element={<Landing/>}/>
                                 <Route path="/main" element={<MainPage />} />
                                 <Route path="/map" element={<MapUi />} />
                                 <Route path="/sub" element={<Statistics />} />

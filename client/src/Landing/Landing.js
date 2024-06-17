@@ -66,7 +66,7 @@ function LandingPage() {
                     {/*<div className="header-content">*/}
                         {/*<h2>정보 제공 및 실시간 업데이트</h2>*/}
                         {/*<p>사용자의 위치 기반으로 주유소 및 전기차 충전소 정보를 실시간으로 업데이트해드립니다.</p>*/}
-                        <Link to="/map" className="cta-button">Get Started</Link>
+                        <Link to="/main" className="cta-button">Get Started</Link>
                     {/*</div>*/}
                 </header>
             </section>
