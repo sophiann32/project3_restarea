@@ -1,0 +1,177 @@
+.nav_wrap {
+    border-bottom: 3px solid #18185e;
+    background-color: #dbe9f5;
+}
+
+.nav {
+    max-width: 1200px;
+    height: 100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #f3f3f3;
+}
+
+.logo span {
+    font-size: 50px;
+    font-weight: 800;
+}
+
+.menu_button {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 30px;
+}
+
+.menu_box {
+    display: flex;
+    align-items: center;
+}
+.menu_box ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    /*margin-right: 45px;*/
+}
+
+.menu_box ul li {
+    font-size: 15px;
+    margin-right: 25px;
+    line-height: 70px;
+}
+
+li a {
+    color: #2f3a6c;
+}
+/*.login_box {*/
+/*    margin-left: 20px;*/
+/*    padding: 10px 30px;*/
+/*    background-color: #d58282;*/
+/*    border-radius: 20px;*/
+/*}*/
+.login_box span{
+    color: white;
+}
+
+.login_box span:hover{
+    color: black;
+}
+.login_box{
+    color: #f8eaea;
+    /*background-color: #fff;*/
+}
+
+.login_box a:hover {
+    color: #555;
+}
+.loggedInBox {
+    display: flex;
+    align-items: center;
+}
+.username {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+
+
+.logout_button {
+    margin-left: 20px;
+    background-color: #f44336; /* 로그아웃 버튼 색상 */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* 헤더 전체 스타일에 영향을 미치는 클래스 변경 */
+.nav_wrap.specialAreaActive {
+    background-color: white;
+}
+
+.nav_wrap.specialAreaActive .logo a,
+.nav_wrap.specialAreaActive li a,
+.nav_wrap.specialAreaActive .login_box a {
+    color: black; /* 검정색으로 변경 */
+}
+
+/* 활성 링크에 대한 스타일 */
+.nav_wrap.specialAreaActive .active {
+    color: black;
+}
+
+
+@media (max-width: 1300px){   /*0 부터 1220까지 (노트북) */
+    /*1200으로 딱맞추면 중간에 살짝 스크롤이 생김*/
+    .nav {
+        /*max-width: 100%;*/
+        /*padding: 0 10px;*/
+    }
+}
+@media (max-width: 768px){   /*0 부터 768까지  (테블릿) */
+
+}
+@media (max-width: 480px) {
+    /*0 부터 480까지  (모바일) */
+    .logo{
+        text-align: center;
+    }
+    .menu_button {
+        display: block;
+        height: 50px;
+        line-height: 40px;
+    }
+
+    .menu_box {
+
+    }
+    .menu_box ul{
+        width: 100%;
+        text-align: center;
+        flex-direction: column;
+        /*background-color: #fff;*/
+    }
+    .menu_box ul li{
+        width: 100%;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        /*background-color: #791c1c;*/
+        flex-direction: column;
+
+    }
+
+    .nav{
+        height: 100%;
+        display: block;
+    }
+
+    .login_box{
+        display: block;
+        width: 150px;
+        /*border-radius: 0;*/
+        margin: 0 auto;
+        text-align: center;
+        /*background-color: #56e158;*/
+    }
+    .menu_open{
+
+    }
+    .menu_closed{
+        display: none;
+    }
+
+
+}
+
+
+
