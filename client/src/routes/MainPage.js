@@ -3,10 +3,13 @@ import styles from './main_page.module.css';
 import Modal from './Modal';
 import { useNavigate } from 'react-router-dom';
 import ChatBot from '../chatbot/chat';
+import NearbyGasChart from '../routes/Chart/NearbyGasChart.js';
+import axios from 'axios';
 
 function MainPage() {
     const [selectedRoute, setSelectedRoute] = useState('');
     const [previousRoute, setPreviousRoute] = useState('');
+    const [gasStations, setGasStations] = useState(null); // 주유소 데이터를 위한 상태
     const navigate = useNavigate();
     const [isModalOpen, setModalOpen] = useState(false);
     const [placeholderText, setPlaceholderText] = useState('');
@@ -62,6 +65,29 @@ function MainPage() {
             navigate(`/restarea/${selectedRoute}`);
         }
     };
+
+    const fetchLocationAndData = () => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+            axios.post('http://localhost:5000/api/gas-stations', {
+                latitude,
+                longitude
+            })
+                .then(response => {
+                    setGasStations(response.data);
+                    console.log('넘어온 데이터:', response.data);
+                })
+                .catch(error => {
+                    console.error('데이터 에러:', error);
+                });
+        }, error => {
+            console.error('Error getting location:', error);
+        });
+    };
+
+    useEffect(() => {
+        fetchLocationAndData();
+    }, []);
 
     return (
         <div className={styles.main_page}>
@@ -140,6 +166,15 @@ function MainPage() {
                     <ChatBot />
                 </Modal>
             )}
+
+            {/* 하얀 배경 부분 추가 */}
+            <div className={styles.white_background}>
+                <div className={styles.chart_container}>
+                    <div className={styles.chart}>
+                        <NearbyGasChart data={gasStations} />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

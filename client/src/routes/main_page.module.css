@@ -1,11 +1,11 @@
 .main_page {
     width: 100%;
-    height: 800px;
+    height: 2000px; /* 전체 높이를 2000px로 설정 */
     background-color: #e8fffc;
     margin: 0 auto;
-    background: linear-gradient(rgba(147, 197, 255, 0.1), rgba(124, 124, 124, 0.5)), url("../../public/img/highway.png");
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(rgba(147, 197, 255, 0.1), rgba(124, 124, 124, 0.5)), url("../../public/img/highway.png") no-repeat;
+    background-size: contain;
+    background-position: center top;
     position: relative;
     overflow: hidden;
     animation: expand 1s ease-out forwards;
@@ -20,15 +20,16 @@
     }
     50% {
         width: 100%;
-        height: 950px;
+        height: 1900px;
         opacity: 1;
     }
     100% {
         width: 100%;
-        height: 1000px;
+        height: 2000px;
         opacity: 1;
     }
 }
+
 
 /* 모던하고 시크한 드롭다운 스타일 */
 .select_container {
@@ -188,6 +189,37 @@
     background-size: cover;
     background-position: center;
 }
+
+.white_background {
+    position: absolute;
+    top: 1000px; /* 하얀 배경 시작 위치를 1000px로 설정 */
+    width: 100%;
+    height: 1000px;
+    background-color: white;
+}
+
+.chart_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* 페이지 하단에서 약간의 여백을 추가 */
+}
+
+.chart {
+    background-color: #fffefe;
+    position: relative;
+    margin-top: 100px;
+    padding: 10px 17px;
+    display: block;
+    transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
+    height: 455px;
+    width: 500px;
+    border-radius: 40px;
+}
+
+
+
+
 
 @media (max-width: 1300px) {
     .nav {}
