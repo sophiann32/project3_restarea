@@ -12,6 +12,9 @@ async function getConnection() {
 }
 oracledb.initOracleClient({ libDir: 'C:\\JEWi\\Util\\instantclient_21_13' });
 
+oracledb.initOracleClient({ libDir: 'C:\\SHJO\\Util\\instantclient_21_13' });
+
+
 module.exports = {
     getConnection
 };
