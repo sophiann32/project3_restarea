@@ -40,6 +40,9 @@ body {
 }
 
 .navLinks {
+
+    transform: translateY(100px);
+
     list-style: none;
     display: flex;
     gap: 20px;
@@ -49,9 +52,13 @@ body {
     color: white;
     text-decoration: none;
     font-weight: bold;
+
 }
 
-.ctaButton {
+.cta-button {
+
+    transform: translateY(100px);
+
     color: white;
     border: 3px solid white;
     border-radius: 5px;

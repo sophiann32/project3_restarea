@@ -85,7 +85,6 @@ function RestArea() {
                                 }))
                             };
                         });
-
                         console.log("Updated rest areas:", updatedAreas);
                         setRestAreas(updatedAreas);
                         setFilteredRestAreas(updatedAreas); // 초기 필터된 리스트는 전체 리스트

@@ -12,7 +12,7 @@ function RestAreaDetail({ selectedRoute }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedRestArea, setSelectedRestArea] = useState(null);
     const [isOpen, setIsOpen] = useState(false); // Hover
-
+    const [selectedMarker, setSelectedMarker] = useState(null);
     useEffect(() => {
         if (selectedRoute) {
             axios.get(`http://localhost:5000/restareas?route=${selectedRoute}`)
@@ -33,6 +33,7 @@ function RestAreaDetail({ selectedRoute }) {
     };
 
     const handleMarkerClick = (area) => {
+        setSelectedMarker(area);
         const normalizedAreaName = normalizeName(area.휴게소명);
 
         Promise.all([
@@ -89,7 +90,6 @@ function RestAreaDetail({ selectedRoute }) {
             <Map center={position} level={zoomLevel} style={{width: "100%", height: "700px"}}>
 
 
-
                 {restAreas.map((area, index) => (
                     <MapMarker
                         key={index}
@@ -98,11 +98,12 @@ function RestAreaDetail({ selectedRoute }) {
                         onMouseOver={() => setIsOpen(area)}
                         onMouseOut={() => setIsOpen(null)}
                         image={{
-                            src: "https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f53b.png",
-                            size: {
-                                width: 30,
-                                height: 35,
-                            },
+                            src: selectedMarker === area
+                                ? "https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/1f3af.gif" // 클릭된 마커의 새 아이콘
+                                : "https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f53b.png", // 기본 아이콘
+                            size: selectedMarker === area
+                                ? { width: 30, height: 35 } // 클릭된 마커의 새 크기
+                                : { width: 30, height: 35 }, // 기본 크기
                         }}
                     >
                         {isOpen === area && (
@@ -120,6 +121,7 @@ function RestAreaDetail({ selectedRoute }) {
                     </MapMarker>
                 ))}
             </Map>
+
             {
                 selectedRestArea && (
                     <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>

@@ -4,7 +4,15 @@ import React from 'react';
 function RestAreaModalContent({ area }) {
     return (
         <div>
-            <h2>{area.휴게소명}</h2>
+                <h2>{area.휴게소명}</h2>
+                {area.휴게소명 === "망향(부산)" && (
+                    <>
+                        <h3>추천 메뉴</h3>
+                        <img src={`${process.env.PUBLIC_URL}/image1.jpg`} alt="망향휴게소식당" className="modal-image" />
+                        <img src={`${process.env.PUBLIC_URL}/image2.jpg`} alt="천안명물호두과자" className="modal-image" />
+                        <img src={`${process.env.PUBLIC_URL}/image3.jpg`} alt="탐앤탐스" className="modal-image" />
+                    </>
+                )}
             {area.fuelPrices && (
                 <>
                     <h3>연료 가격 정보</h3>

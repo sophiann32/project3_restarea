@@ -2,7 +2,7 @@
     --primary-color: #4A90E2; /* 주요 색상 */
     --secondary-color: #FAFAFA; /* 보조 색상 */
     --accent-color: #FFAFAF; /* 악센트 색상 */
-    --accent-color-dark: #e17b7b; /* 어두운 악센트 색상 */
+    --accent-color-dark: #6cd8cc; /* 어두운 악센트 색상 */
     --text-color: #333; /* 기본 텍스트 색상 */
     --bg-color: #efe4e4; /* 배경 색상 */
     --font-family: 'Arial', sans-serif; /* 글꼴 */
@@ -14,6 +14,7 @@ body {
     color: var(--text-color);
     margin: 0;
     padding: 0;
+    position: relative;
 }
 
 
@@ -26,8 +27,10 @@ body {
 
 .chat-container {
     background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
-    margin: 18px;
-    height: 47vh;
+    /*background-image: url("https://cdn.builder.io/api/v1/image/assets/TEMP/0b95d0a932e9465f2287ef7167b12906ee35ec2eeb6bb640180c0b8caff5383f?");*/
+    /*background-size: cover;*/
+    margin: 10px;
+    /*height: 47vh;*/
     width: 330px;
     overflow-y: auto;
     border: 10px solid #30313b;
@@ -36,6 +39,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     color: var(--text-color);
     font-family: var(--font-family);
+    height: calc(100% - 40px);
 
 }
 
@@ -44,11 +48,14 @@ body {
     padding: 10px;
     border-radius: 15px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    max-width: 100%;
     word-wrap: break-word; /* 긴 텍스트가 박스를 벗어나는 것을 방지 */
     animation: fadeIn 0.3s;
-    font-size: 23px;
+    font-size: 19px;
 }
+/*.message.user {*/
+/*    !* Add this CSS to hide the message bubble by default *!*/
+/*    display: none;*/
+/*}*/
 
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -67,6 +74,9 @@ body {
     color: black;
     align-self: flex-start;
     border-top-left-radius: 2px; /* 대화 풍선 모양 조절 */
+}
+.content {
+    margin-bottom: 1px;
 }
 
 .input-area {
@@ -121,7 +131,7 @@ body {
     margin-top: 10px;
 }
 
-button {
+#btn {
     background-color: var(--accent-color);
     color: white;
     border: none;
@@ -136,10 +146,10 @@ button {
 
 button:hover {
     background-color: var(--accent-color-dark);
-    transform: scale(1.1); /* 호버 시 버튼 확대 */
+    transform: scale(1.05); /* 호버 시 버튼 확대 */
 }
 
-.voice-button {
+.voice_button {
     background-color: #4A90E2; /* 녹색 배경 */
     color: white; /* 흰색 텍스트 */
     border: none; /* 테두리 없애기 */
@@ -148,7 +158,7 @@ button:hover {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 5px 10px;
+    /*margin: 5px 10px;*/
     transition-duration: 0.4s; /* 부드러운 효과를 위한 전환 기간 */
     cursor: pointer;
 }
@@ -183,7 +193,7 @@ button:hover {
     margin-left: -140px;
     opacity: 0;
     transition: opacity 0.3s;
-    font-size: 20px;
+    font-size: 17px;
 }
 
 .tooltip:hover .tooltiptext {
@@ -199,7 +209,24 @@ button:hover {
     right: 1%;
     bottom: 33%;
     height: 520px;
+    margin-right: 20px;
+}
+.modal_content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    position: relative;
 
+}
+.close_button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10; /* Ensure the button is above other content */
 }
 @media (max-width: 480px) {
     .chat_app{
@@ -207,12 +234,75 @@ button:hover {
         position: absolute;
         right: 0;
         bottom: 0;
+        margin-right: 10px;
 
     }
 
 }
-
+.close_button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10; /* Ensure the button is above other content */
+}
+.test {
+    /*unicode-bidi: normal !important;*/
+    height: 200px;
+    display: contents;
+}
 
 .chat_app button {
    background-color: #de8989;
+}
+
+
+.user_input{
+    display: flex;
+    flex-wrap: wrap;
+    margin : 10px;
+    padding: 10px;
+}
+
+#con1{
+    display: flex;
+
+    /*grid-template-areas:*/
+    /*grid-template-columns: 1fr;*/
+}
+#item1{
+
+}
+
+textarea {
+    border-radius: 6px;
+    height: 31px;
+}
+
+.chat_container {
+    background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
+    margin: 10px;
+    /*height: 47vh;*/
+    width: 330px;
+    overflow-y: auto;
+    border: 10px solid #30313b;
+    border-radius: 25px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    height: calc(100% - 40px);
+
+}
+
+
+#bot-input-area {
+    display: flex;
+    flex-wrap: wrap;
+    /*z-index: 99;*/
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*right: 0;*/
+    /*background: #fff;*/
 }
