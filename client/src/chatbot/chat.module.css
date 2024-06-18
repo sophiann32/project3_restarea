@@ -131,7 +131,7 @@ body {
     margin-top: 10px;
 }
 
-button {
+#btn {
     background-color: var(--accent-color);
     color: white;
     border: none;
