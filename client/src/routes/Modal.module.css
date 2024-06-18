@@ -13,21 +13,22 @@
     transition: opacity 0.25s ease;
 }
 
-.modal.show {
+.modal_show {
     visibility: visible;
     opacity: 1;
     position: fixed;
 }
 
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    width: 90%;
-    max-width: 500px;
-}
 
-.close-button {
+
+.close_button {
     float: right;
     cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+}
+.chat_app {
+    margin-right: 20px; /* Chatbot과 모달 콘텐츠 사이의 간격을 조정합니다 */
 }

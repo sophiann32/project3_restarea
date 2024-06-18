@@ -30,7 +30,7 @@ body {
     /*background-image: url("https://cdn.builder.io/api/v1/image/assets/TEMP/0b95d0a932e9465f2287ef7167b12906ee35ec2eeb6bb640180c0b8caff5383f?");*/
     /*background-size: cover;*/
     margin: 10px;
-    height: 47vh;
+    /*height: 47vh;*/
     width: 330px;
     overflow-y: auto;
     border: 10px solid #30313b;
@@ -39,6 +39,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     color: var(--text-color);
     font-family: var(--font-family);
+    height: calc(100% - 40px);
 
 }
 
@@ -148,7 +149,7 @@ button:hover {
     transform: scale(1.05); /* 호버 시 버튼 확대 */
 }
 
-.voice-button {
+.voice_button {
     background-color: #4A90E2; /* 녹색 배경 */
     color: white; /* 흰색 텍스트 */
     border: none; /* 테두리 없애기 */
@@ -208,7 +209,24 @@ button:hover {
     right: 1%;
     bottom: 33%;
     height: 520px;
+    margin-right: 20px;
+}
+.modal_content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    position: relative;
 
+}
+.close_button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10; /* Ensure the button is above other content */
 }
 @media (max-width: 480px) {
     .chat_app{
@@ -216,9 +234,18 @@ button:hover {
         position: absolute;
         right: 0;
         bottom: 0;
+        margin-right: 10px;
 
     }
 
+}
+.close_button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10; /* Ensure the button is above other content */
 }
 .test {
     /*unicode-bidi: normal !important;*/
@@ -231,7 +258,7 @@ button:hover {
 }
 
 
-.user-input{
+.user_input{
     display: flex;
     flex-wrap: wrap;
     margin : 10px;
@@ -253,10 +280,10 @@ textarea {
     height: 31px;
 }
 
-.chat-container {
+.chat_container {
     background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
     margin: 10px;
-    height: 47vh;
+    /*height: 47vh;*/
     width: 330px;
     overflow-y: auto;
     border: 10px solid #30313b;
@@ -265,6 +292,8 @@ textarea {
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     color: var(--text-color);
     font-family: var(--font-family);
+    height: calc(100% - 40px);
+
 }
 
 
