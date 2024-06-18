@@ -1,16 +1,39 @@
 /*}*/
 #change{
+    width: 100%;
     background-color: white;
+    display: grid;
+    grid-template-areas:
+        'a b';
+    grid-gap: 0;
+    grid-template-columns: 73% 27%;
+    grid-template-rows: 900px;
 
 }
+#searchOilCharge{
+    z-index: 999;
+    grid-area: b;
+}
+.section {
+    width: calc(100%); /* 총 너비에서 aside 너비와 여백을 제외 */
+    margin-left: 200px; /* aside 너비와 여백을 고려한 왼쪽 마진 */
+    height: 80vh; /* 뷰포트 높이를 전체 채움 */
+    margin-top: 5.5%;
+    background-color: #fffefe;
+    position: relative; /* z-index를 위해 position 설정 필요 */
+    z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
+    grid-area: a;
+}
+
+
 .aside_button {
     position: absolute;
     display: inline-block;
     cursor: pointer;
     padding: 10px;
     transition: transform 0.2s ease-in-out;
-    top: 15%; /* 15% from the top of the viewport */
-    left: 0; /* 15% from the left of the viewport */
+    top: 5%;
+    left: 1%;
     z-index: 3;
 }
 .aside_button:hover {
@@ -19,10 +42,10 @@
 
 .aside {
     position: absolute; /* 또는 fixed, 만약 스크롤 시에도 고정되길 원한다면 */
-    top: 20%; /* 뷰포트 상단으로부터의 거리 */
-    left: 0; /* 뷰포트 왼쪽으로부터의 거리 */
     width: 470px; /* 사이드바 너비 */
-    height: 60%;
+    left: 1%;
+    height: 45%;
+    top: 5%;
     padding: 5px; /* 사이드바 내부 패딩 */
     background-color: #f4f4f4;
     border-radius: 20px;
@@ -151,31 +174,13 @@
     font-size: 13px;
 }
 
-/* 스크롤바 스타일 (옵션) */
-/*.gasStationList::-webkit-scrollbar {*/
-/*    height: 8px;*/
-/*}*/
-
-/*.gasStationList::-webkit-scrollbar-thumb {*/
-/*    background: #555;*/
-/*    border-radius: 4px;*/
-/*}*/
-
-/*.gasStationList::-webkit-scrollbar-track {*/
-/*    background: #000;*/
-/*}*/
 
 
-
-
-/*===========================사이드바 밑에 버튼============================================*/
 .buttonContainer {
     display: flex; /* 버튼을 가로로 배치 */
     justify-content: space-around; /* 버튼 사이의 간격을 균등하게 조정 */
     padding: 10px 20px; /* 상하 패딩만 조정하여 버튼과 사이드바 사이의 공간 제거 */
-    /*position: absolute;*/
-    /*bottom: 0px;*/
-    /*left: 195px;*/
+
     z-index: 3;
 
 }
@@ -208,7 +213,6 @@
 
 
 /*========================================================================================*/
-
 /*==================================연료버튼===============================================*/
 .radioContainer {
     box-sizing: border-box;
@@ -217,8 +221,6 @@
     flex-direction: row;
     gap: 15px; /* 각 라디오 버튼 사이의 간격 */
     padding: 20px;
-    /*margin-left: 100px;*/
-    padding-left: 130px;
     border-radius: 8px;
     background-color: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -268,38 +270,20 @@
         /*bottom: 100px;*/
     }
 }
-/*.radioContainer input:checked ~ .checkmark:after {*/
-/*    display: block;*/
-/*    top: 8px;*/
-/*    left: 7.7px;*/
-/*    width: 10px;*/
-/*    height: 10px;*/
-/*    border-radius: 50%;*/
-/*    background: yellow;*/
-/*}*/
-/*==========================================================================================*/
 
 
-.section {
-    width: calc(100% - 40px - 200px); /* 총 너비에서 aside 너비와 여백을 제외 */
-    margin-left: 120px; /* aside 너비와 여백을 고려한 왼쪽 마진 */
-    height: 80vh; /* 뷰포트 높이를 전체 채움 */
-    background-color: #fffefe;
-    position: relative; /* z-index를 위해 position 설정 필요 */
-    z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
-}
 .select_bar {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3등분으로 나눔 */
+    /*display: grid;*/
+    /*grid-template-columns: repeat(3, 1fr); !* 3등분으로 나눔 *!*/
     align-items: center; /* 세로 중앙 정렬 */
     justify-items: center; /* 가로 중앙 정렬 */
-    gap: 20px; /* 그리드 아이템 간격 */
+    /*gap: 20px; !* 그리드 아이템 간격 *!*/
     height: 230px;
-    /*background-color: #041621;*/
     background-color: white;
     padding: 20px; /* 패딩 */
 
 }
+.mapinfo{}
 
 
 .icon_container {
@@ -336,12 +320,6 @@
     margin-left: 115px;
     justify-content: center;
     margin-bottom: 10px; /* 아이콘과 텍스트 간격 */
-
-
-    /*width: 50px;*/
-    /*padding-left: 30px;*/
-    /*padding-top: 50px;*/
-
 }
 
 .text {

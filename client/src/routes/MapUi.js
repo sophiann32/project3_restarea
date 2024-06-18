@@ -1,21 +1,14 @@
 // React 및 관련 훅과 axios를 임포트함
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import SmoothScroll from './SmoothScroll';
 
 // 컴포넌트 및 스타일시트 파일 임포트
 import Elec_station from "../kako_map/elec_station";
 import styles from './map_ui.module.css'
 import MapInfo from "../kako_map/map_info";
 import GasStation from "../kako_map/gas_station";
-
-
-
-
-
-
-
-
-
+import SearchOilCharge from "./SearchOilCharge";
 
 
 // 미터 단위를 킬로미터로 변환하는 함수
@@ -133,23 +126,24 @@ function MapUi() {
 
     // 컴포넌트가 렌더링할 JSX 구조
     return (
-        <>
+        <><SmoothScroll>
+            <div style={{ height: '200vh', background: 'linear-gradient(180deg, #e66465, #9198e5)' }}>
+                <h1 style={{ margin: '50vh 0', textAlign: 'center', color: 'white' }}>Smooth Scroll Example</h1>
+            </div>
+
             <div id={styles.change}>
-
-
+                <SearchOilCharge id={styles.searchOilCharge}/>
                 <label className={styles.aside_button} onClick={toggleVisibility}>
                     {isVisible ? (
                         <img src="https://images.emojiterra.com/twitter/v14.0/512px/274e.png" alt="button image"
-                             style={{width: 50, height: 50}}/>
+                             style={{width: 40, height: 40}}/>
                     ) : (
                         <img src="https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/2705.gif"
-                             alt="clicked image" style={{width: 50, height: 50}}/>
+                             alt="clicked image" style={{width: 40, height: 40}}/>
                     )}
                 </label>
                 {isVisible &&
                     <div className={styles.aside}>
-
-
                         {/* 주유소와 충전소 전환 버튼 */}
                         <div className={styles.buttonContainer}>
                             <button
@@ -163,7 +157,6 @@ function MapUi() {
                                 충전소
                             </button>
                         </div>
-
 
                         {/* 반경 선택 슬라이더 */}
                         <div className={styles.markings}>
@@ -206,6 +199,41 @@ function MapUi() {
                                 )}
                             </div>
                         </div>
+                        {/* 연료 유형 선택 라디오 버튼 */}
+                        {list1 === 1 && (
+                            <div className={styles.radioContainer}>
+                                <label>
+                                    <input type="radio" name="fuelType" value="B027"
+                                           checked={fuelType === 'B027'} onChange={() => setFuelType('B027')}/>
+                                    <span className={styles.checkmark}></span>
+                                    휘발유
+                                </label>
+                                <label>
+                                    <input type="radio" name="fuelType" value="D047"
+                                           checked={fuelType === 'D047'} onChange={() => setFuelType('D047')}/>
+                                    <span className={styles.checkmark}></span>
+                                    경유
+                                </label>
+                                <label>
+                                    <input type="radio" name="fuelType" value="B034"
+                                           checked={fuelType === 'B034'} onChange={() => setFuelType('B034')}/>
+                                    <span className={styles.checkmark}></span>
+                                    고급휘발유
+                                </label>
+                                <label>
+                                    <input type="radio" name="fuelType" value="C004"
+                                           checked={fuelType === 'C004'} onChange={() => setFuelType('C004')}/>
+                                    <span className={styles.checkmark}></span>
+                                    실내등유
+                                </label>
+                                <label>
+                                    <input type="radio" name="fuelType" value="K015"
+                                           checked={fuelType === 'K015'} onChange={() => setFuelType('K015')}/>
+                                    <span className={styles.checkmark}></span>
+                                    부탄
+                                </label>
+                            </div>
+                        )}
                         {/* 선택된 주유소 또는 충전소의 개수를 표시 */}
                         <h3 style={{color: '#a15ea5', position: 'absolute', left: '370px', top: '150px'}}>
                             {list1 === 1 ? gasStationCount : chargingStationCount}개
@@ -216,8 +244,8 @@ function MapUi() {
                             {list1 === 1 && gasStations.length > 0 ? (
                                 gasStations.map((station, index) => (
                                     <li key={index}>
-                                        <span style={{ fontSize: '16px'}}>{station.name} </span>
-                                        <span style={{fontSize: '16px',fontWeight: "bold"}}>{station.price}원   </span>
+                                        <span style={{fontSize: '16px'}}>{station.name} </span>
+                                        <span style={{fontSize: '16px', fontWeight: "bold"}}>{station.price}원   </span>
                                         <span
                                             style={{fontSize: '16px'}}>{convertMetersToKilometers(station.distance)}km</span>
                                     </li>
@@ -237,7 +265,6 @@ function MapUi() {
 
                 } {/*버튼으로 사이트 바 열고 닫는 자바스크랩트 닫는 괄호임*/}
 
-
                 {/* 주유소 또는 충전소를 지도에 표시하는 섹션 */}
                 {
                     list1 === 1 ? (
@@ -250,63 +277,31 @@ function MapUi() {
 
                         </section>
                     ) : (
-                        <section className={styles.section}><MapInfo/></section>
+                        <section className={styles.section}><MapInfo id={styles.mapinfo}/>   </section>
                     )}
-                {/* 연료 유형 선택 라디오 버튼 */}
-                {list1 === 1 && (
-                    <div className={styles.radioContainer}>
-                        <label>
-                            <input type="radio" name="fuelType" value="B027"
-                                   checked={fuelType === 'B027'} onChange={() => setFuelType('B027')}/>
-                            <span className={styles.checkmark}></span>
-                            휘발유
-                        </label>
-                        <label>
-                            <input type="radio" name="fuelType" value="D047"
-                                   checked={fuelType === 'D047'} onChange={() => setFuelType('D047')}/>
-                            <span className={styles.checkmark}></span>
-                            경유
-                        </label>
-                        <label>
-                            <input type="radio" name="fuelType" value="B034"
-                                   checked={fuelType === 'B034'} onChange={() => setFuelType('B034')}/>
-                            <span className={styles.checkmark}></span>
-                            고급 휘발유
-                        </label>
-                        <label>
-                            <input type="radio" name="fuelType" value="C004"
-                                   checked={fuelType === 'C004'} onChange={() => setFuelType('C004')}/>
-                            <span className={styles.checkmark}></span>
-                            실내등유
-                        </label>
-                        <label>
-                            <input type="radio" name="fuelType" value="K015"
-                                   checked={fuelType === 'K015'} onChange={() => setFuelType('K015')}/>
-                            <span className={styles.checkmark}></span>
-                            자동차 부탄
-                        </label>
-                    </div>
-                )}
-
-
             </div>
+        </SmoothScroll>
             {/*아이콘과 버튼을 포함한 선택 바*/}
             <div className={styles.select_bar}>
-                <div className={styles.select_item}>
-                    <img src="/img/fuel.png" alt="Icon 1" className={styles.icon}/>
-                    <p className={styles.text}>내 주변 주유소</p>
-                    <div className={styles.button1}>주유소</div>
-                </div>
-                <div className={styles.select_item}>
-                    <img src="/img/elc.png" alt="Icon 2" className={styles.icon}/>
-                    <p className={styles.text}>내 주변 충전소</p>
-                    <div className={styles.button2}>충전소</div>
-                </div>
-                <div className={styles.select_item}>
-                    <img src="/img/live.png" className={styles.icon2}/>
-                    <p className={styles.text2}>충전가능한 충전소보기</p>
-                    <div className={styles.button3}>충전가능한 충전소</div>
-                </div>
+                {/*<section className={styles.searchOilChange}>*/}
+                {/*   */}
+                {/*</section>*/}
+                    <div className={styles.select_item}>
+                {/*        <img src="/img/fuel.png" alt="Icon 1" className={styles.icon}/>*/}
+                {/*        <p className={styles.text}>내 주변 주유소</p>*/}
+                {/*        <div className={styles.button1}>주유소</div>*/}
+
+                    </div>
+                {/*    <div className={styles.select_item}>*/}
+                {/*        <img src="/img/elc.png" alt="Icon 2" className={styles.icon}/>*/}
+                {/*        <p className={styles.text}>내 주변 충전소</p>*/}
+                {/*        <div className={styles.button2}>충전소</div>*/}
+                {/*    </div>*/}
+                {/*    <div className={styles.select_item}>*/}
+                {/*        <img src="/img/live.png" className={styles.icon2}/>*/}
+                {/*        <p className={styles.text2}>충전가능한 충전소보기</p>*/}
+                {/*        <div className={styles.button3}>충전가능한 충전소</div>*/}
+                {/*    </div>*/}
             </div>
         </>
     )

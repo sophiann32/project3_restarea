@@ -3,6 +3,7 @@ import styles from './SearchOilCharge.module.css';
 import axios from "axios";
 import AudioSwitch from "./Media/AudioSwitch";
 
+
 function SearchOilCharge() {
     const [searchValue, setSearchValue] = useState('');
     const [Forwardings, setForwarding] = useState([]);
@@ -126,90 +127,92 @@ function SearchOilCharge() {
         }
     };
     return (
-            <div className={styles.smallbox1}>
-                <div className={styles.searchInputContainer}>
-                    <h2 className={styles.h2}>
-                        <AudioSwitch />
-                        ⛽ 전국 주유소,가스충전소 검색</h2>
+        <div className={styles.smallbox1}>
+            <video autoPlay muted loop className={styles.backgroundVideo}>
+                <source src="/oil_station.mp4" type="video/mp4"/>
+            </video>
 
-                    <input
-                        className={styles.searchInput}
-                        type="text"
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        placeholder="(상호명 2글자 이상 필수)"
-                    />
-                    <select
-                        className={styles.searchArea}
-                        value={selectedArea}
-                        onChange={(e) => setSelectedArea(e.target.value)}
-                    >
-                        <option value="">지역</option>
-                        <option value="01">서울</option>
-                        <option value="02">경기</option>
-                        <option value="03">강원</option>
-                        <option value="04">충북</option>
-                        <option value="05">충남</option>
-                        <option value="06">전북</option>
-                        <option value="07">전남</option>
-                        <option value="08">경북</option>
-                        <option value="09">경남</option>
-                        <option value="10">부산</option>
-                        <option value="11">제주</option>
-                        <option value="14">대구</option>
-                        <option value="15">인천</option>
-                        <option value="16">광주</option>
-                        <option value="17">대전</option>
-                        <option value="18">울산</option>
-                        <option value="19">세종</option>
-                    </select>
-                    <button
-                        className={styles.searchButton}
-                        onClick={handleSearch}
-                    >
-                        실시간 상세정보 확인
-                    </button>
-                    <AudioSwitch ref={audioRef} src="/a_car_whizzing_by슝.mp3" />
+            <div className={styles.searchInputContainer}>
+                    <span className={styles.theme}>
+                        <AudioSwitch/>
+                        전국 주유소명 상세 검색</span>
+                <input
+                    className={styles.searchInput}
+                    type="text"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    placeholder="(상호명 2글자 이상 필수)"
+                />
+                <select
+                    className={styles.searchArea}
+                    value={selectedArea}
+                    onChange={(e) => setSelectedArea(e.target.value)}
+                >
+                    <option value="">지역</option>
+                    <option value="01">서울</option>
+                    <option value="02">경기</option>
+                    <option value="03">강원</option>
+                    <option value="04">충북</option>
+                    <option value="05">충남</option>
+                    <option value="06">전북</option>
+                    <option value="07">전남</option>
+                    <option value="08">경북</option>
+                    <option value="09">경남</option>
+                    <option value="10">부산</option>
+                    <option value="11">제주</option>
+                    <option value="14">대구</option>
+                    <option value="15">인천</option>
+                    <option value="16">광주</option>
+                    <option value="17">대전</option>
+                    <option value="18">울산</option>
+                    <option value="19">세종</option>
+                </select>
+                <button
+                    className={styles.searchButton}
+                    onClick={handleSearch}
+                >
+                    실시간 상세정보 확인
+                </button>
+                <AudioSwitch ref={audioRef} src="/a_car_whizzing_by슝.mp3"/>
 
-                </div>
-
-                <div className={styles.chartContainer}>
-                    {Forwardings && Forwardings.map((Forwarding, index) => {
-                        return (
-
-                            <div className={styles.results} key={index} onClick={() => handleStationClick(Forwarding)}>
-                                {/*<span style={{color: "blueviolet", fontSize: "smaller"}}> 클릭 👀 더 자세한 내용을 확인하세요</span>*/}
-                                <span style={{color: "blueviolet", fontSize: "smaller"}}> 클릭 👀 더 자세한 내용을 확인하세요</span>
-                                <p>상호명: {Forwarding.name}</p>
-                                <p>주소: {Forwarding.address}</p>
-                                {(getGasTradeName(Forwarding['gas_trade_name']) !== '-') &&
-                                    <p>주유소 공급업체명: {getGasTradeName(Forwarding['gas_trade_name'])}</p>}
-                                {(getChargeTradeName(Forwarding['charge_trade_name']) !== '-') &&
-                                    <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['charge_trade_name'])}</p>}
-                                {selectedStation && selectedStation.uni_id === Forwarding.uni_id && (
-                                    <div>
-                                        <p>세차장: {IsCarWash === "Y" ? '있음🚿' : '없음'}</p>
-                                        <p>정비시설: {IsMaint.MAINT_YN === "Y" ? '있음🪧' : '없음'} </p>
-                                        <p>편의점: {IsCvs.CVS_YN === "Y" ? '있음🆗' : '없음'}</p>
-                                        {carWashInfo && (
-                                            <div>
-                                                <p>전화번호: {carWashInfo.tel}</p>
-                                                {carWashInfo.oilPrice.map((price, index) => (
-                                                    <p key={index}>
-                                                        {getProductName(price.productCode)}: {price.price.toLocaleString('ko-KR')}원
-                                                        <span style={{fontSize: "small"}}> ({price.tradeDate})</span>
-                                                    </p>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-
-                        );
-                    })}
-                </div>
             </div>
+
+            <div className={styles.chartContainer}>
+                {Forwardings && Forwardings.map((Forwarding, index) => {
+                    return (
+
+                        <div className={styles.results} key={index} onClick={() => handleStationClick(Forwarding)}>
+                            <span style={{color: "blueviolet", fontSize: "smaller"}}> 클릭 👀 더 자세한 내용을 확인하세요</span>
+                            <p>상호명: {Forwarding.name}</p>
+                            <p>주소: {Forwarding.address}</p>
+                            {(getGasTradeName(Forwarding['gas_trade_name']) !== '-') &&
+                                <p>주유소 공급업체명: {getGasTradeName(Forwarding['gas_trade_name'])}</p>}
+                            {(getChargeTradeName(Forwarding['charge_trade_name']) !== '-') &&
+                                <p>가스충전소 공급업체명: {getChargeTradeName(Forwarding['charge_trade_name'])}</p>}
+                            {selectedStation && selectedStation.uni_id === Forwarding.uni_id && (
+                                <div>
+                                    <p>세차장: {IsCarWash === "Y" ? '있음🚿' : '없음'}</p>
+                                    <p>정비시설: {IsMaint.MAINT_YN === "Y" ? '있음🪧' : '없음'} </p>
+                                    <p>편의점: {IsCvs.CVS_YN === "Y" ? '있음🆗' : '없음'}</p>
+                                    {carWashInfo && (
+                                        <div>
+                                            <p>전화번호: {carWashInfo.tel}</p>
+                                            {carWashInfo.oilPrice.map((price, index) => (
+                                                <p key={index}>
+                                                    {getProductName(price.productCode)}: {price.price.toLocaleString('ko-KR')}원
+                                                    <span style={{fontSize: "small"}}> ({price.tradeDate})</span>
+                                                </p>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+
+                    );
+                })}
+            </div>
+        </div>
     );
 }
 

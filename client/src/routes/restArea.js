@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 import RestAreaModalContent from '../kako_map/RestAreaModalContent';
 import { useParams } from 'react-router-dom';
 
+
 function RestArea() {
     const { route } = useParams();
     const decodedRoute = decodeURIComponent(route || ''); //url에서 'route' 파라미터를 가져옴.
@@ -181,6 +182,7 @@ function RestArea() {
                 <section className={styles.restAreaMap}>
                     <RestAreaDetail selectedRoute={selectedRoute} restAreas={restAreas}/>
                 </section>
+
             </div>
         </>
     );

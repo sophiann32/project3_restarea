@@ -1,18 +1,21 @@
 .smallbox1 {
-    display: grid;
-    max-width: 1200px; /* 전체 가로 크기 설정 */
-    height: 300px;
-    background-color: rgba(255, 254, 254, 0.71);
+    /*display: grid;*/
+    /*max-width: 500px; !* 전체 가로 크기 설정 *!*/
+    max-height: 80%;
+    /*background-color: rgba(255, 254, 254, 0.71);*/
     position: relative;
     bottom: 0;
-    left: 50%;
-    margin-left: -600px;
+    /*left: 50%;*/
+    /*margin-left: -600px;*/
+    grid-template-columns: 1fr; /* 1개의 컬럼으로 설정 */
     grid-template-areas:
-    'a b ';
-    grid-template-columns: 50% 50%;
+        'a'
+        'b';
     border-radius: 10px ;
     align-items: center;
     grid-gap: 0;
+    z-index: 999;
+    overflow-x: hidden;
 }
 /*.searchInputWrapper{*/
 .chartContainer {
@@ -22,7 +25,7 @@
     max-width: 400px;
     margin: 0 auto;
     /*padding: 20px;*/
-    height: 90%;
+    /*height: 90%;*/
     box-sizing: border-box;
 }
 
@@ -43,8 +46,7 @@
 }
 .results {
     display: block;
-    background-color: #faf8ed;
-    /*position: relative;*/
+    /*background-color: #faf8ed;*/
     margin-bottom: 10px;
     padding: 10px 17px;
     width: 100%;
@@ -57,7 +59,7 @@
     padding: 10px;
     width: 400px;
     height: 250px;
-    background: rgb(231, 231, 231);
+    /*background: rgb(231, 231, 231);*/
     grid-template-rows: auto auto;
     gap: 6px;
     margin: 0 auto;
@@ -68,17 +70,27 @@
     justify-items: start;
     grid-template-columns: 80% 20%;
     border-radius: 10px ;
+    overflow: hidden;
+    position: relative;
 
 }
-
-.h2{
+.backgroundVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 비디오를 요소 크기에 맞게 조정 */
+    z-index: -1; /* 비디오를 콘텐츠 뒤에 배치 */
+}
+.theme{
     font-weight: normal;
     grid-area: a;
+    z-index: 1;
 
 }
 .searchInput {
     grid-area: b;
-    /*width: 50px;*/
     height: 50px;
     font-size: 18px;
     background-color: #f0f0f0;
@@ -86,15 +98,15 @@
     border-radius: 5px;
     position: relative;
     display: block;
+    z-index: 1;
 }
 .searchArea {
     grid-area: c;
-    /*width: 70px;*/
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     height: 50px;
     font-size: 18px;
-    /*position: relative;*/
+    z-index: 1;
 
 }
 .searchButton {
@@ -107,9 +119,8 @@
     cursor: pointer;
     width: 95%;
     height: 50px;
-    /*transition: transform 0.3s ease-in-out;*/
-    /*transition: background-color 0.3s ease-in-out;*/
     transition: transform 0.667s cubic-bezier(0.19, 1, 0.22, 1) 0s, color 0.4s ease 0s, background-color 0.4s ease 0s;
+    z-index: 1;
 }
 
 
