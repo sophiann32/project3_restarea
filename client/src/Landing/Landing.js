@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Landing.module.css';
 import featureImage1 from './image/1.jpg';
-import featureImage2 from './image/2.jpg';
+import featureImage2 from './image/a.gif';
 import featureImage3 from './image/3.jpg';
 import expandImage from './image/4.jpg'
 import { FaYoutube, FaTwitter, FaInstagram } from 'react-icons/fa';
