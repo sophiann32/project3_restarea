@@ -127,19 +127,20 @@ function MapUi() {
     // 컴포넌트가 렌더링할 JSX 구조
     return (
         <><SmoothScroll>
-            <div style={{ height: '200vh', background: 'linear-gradient(180deg, #e66465, #9198e5)' }}>
-                <h1 style={{ margin: '50vh 0', textAlign: 'center', color: 'white' }}>Smooth Scroll Example</h1>
-            </div>
 
             <div id={styles.change}>
+                <video autoPlay muted loop className={styles.backgroundVideo}>
+                    <source src="/oil_station.mp4" type="video/mp4"/>
+                </video>
                 <SearchOilCharge id={styles.searchOilCharge}/>
                 <label className={styles.aside_button} onClick={toggleVisibility}>
                     {isVisible ? (
-                        <img src="https://images.emojiterra.com/twitter/v14.0/512px/274e.png" alt="button image"
-                             style={{width: 40, height: 40}}/>
+                        // <img src="https://images.emojiterra.com/twitter/v14.0/512px/274e.png" alt="button image"
+                        <img src="/cloud.png" alt="button image"
+                        style={{width: 50, height: 50}}/>
                     ) : (
-                        <img src="https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/2705.gif"
-                             alt="clicked image" style={{width: 40, height: 40}}/>
+                        <img src="/cloud1.png"
+                             alt="clicked image" id={styles.clicked_image} />
                     )}
                 </label>
                 {isVisible &&
@@ -157,7 +158,6 @@ function MapUi() {
                                 충전소
                             </button>
                         </div>
-
                         {/* 반경 선택 슬라이더 */}
                         <div className={styles.markings}>
                             <span className={styles.mark}>1km</span>
@@ -187,13 +187,13 @@ function MapUi() {
                             <div className={styles.sortButtons}>
                                 {list1 === 1 && (
                                     <button onClick={sortByPrice}
-                                            style={selectedSort === 'price' ? {backgroundColor: '#a25fa6'} : null}>
+                                            style={selectedSort === 'price' ? {backgroundColor: '#85abdd'} : null}>
                                         가격순
                                     </button>
                                 )}
                                 {list1 === 1 && (
                                     <button onClick={sortByDistance}
-                                            style={selectedSort === 'distance' ? {backgroundColor: '#a25fa6'} : null}>
+                                            style={selectedSort === 'distance' ? {backgroundColor: '#86acde'} : null}>
                                         거리순
                                     </button>
                                 )}
@@ -235,7 +235,7 @@ function MapUi() {
                             </div>
                         )}
                         {/* 선택된 주유소 또는 충전소의 개수를 표시 */}
-                        <h3 style={{color: '#a15ea5', position: 'absolute', left: '370px', top: '150px'}}>
+                        <h3 style={{color: 'rgb(133,171,221)', position: 'absolute', left: '370px', top: '150px'}}>
                             {list1 === 1 ? gasStationCount : chargingStationCount}개
                         </h3>
                         {/* 주유소 또는 충전소 리스트 */}
@@ -262,36 +262,32 @@ function MapUi() {
                             )}
                         </ul>
                     </div>
-
                 } {/*버튼으로 사이트 바 열고 닫는 자바스크랩트 닫는 괄호임*/}
-
                 {/* 주유소 또는 충전소를 지도에 표시하는 섹션 */}
+
                 {
                     list1 === 1 ? (
-                        <section className={styles.section}>
-                            <GasStation radius={radius} stations={gasStations}/>
+                        <section className={`${styles.section} ${styles.gasStation}`}>
+                            <GasStation radius={radius} stations={gasStations} />
                         </section>
                     ) : list1 === 2 ? (
-                        <section className={styles.section}>
-                            <Elec_station locations={chargingStations} radius={radius}/>
-
+                        <section className={`${styles.section} ${styles.elecStation}`}>
+                            <Elec_station locations={chargingStations} radius={radius} />
                         </section>
                     ) : (
-                        <section className={styles.section}><MapInfo id={styles.mapinfo}/>   </section>
-                    )}
+                        <section className={`${styles.section} ${styles.mapInfo}`}>
+                            <MapInfo id={styles.mapinfo} />
+                        </section>
+                    )
+                }
             </div>
         </SmoothScroll>
             {/*아이콘과 버튼을 포함한 선택 바*/}
-            <div className={styles.select_bar}>
-                {/*<section className={styles.searchOilChange}>*/}
-                {/*   */}
-                {/*</section>*/}
-                    <div className={styles.select_item}>
-                {/*        <img src="/img/fuel.png" alt="Icon 1" className={styles.icon}/>*/}
-                {/*        <p className={styles.text}>내 주변 주유소</p>*/}
-                {/*        <div className={styles.button1}>주유소</div>*/}
+            {/*<div className={styles.select_bar}>*/}
 
-                    </div>
+            {/*        <div className={styles.select_item}>*/}
+            {/* */}
+            {/*        </div>*/}
                 {/*    <div className={styles.select_item}>*/}
                 {/*        <img src="/img/elc.png" alt="Icon 2" className={styles.icon}/>*/}
                 {/*        <p className={styles.text}>내 주변 충전소</p>*/}
@@ -302,7 +298,7 @@ function MapUi() {
                 {/*        <p className={styles.text2}>충전가능한 충전소보기</p>*/}
                 {/*        <div className={styles.button3}>충전가능한 충전소</div>*/}
                 {/*    </div>*/}
-            </div>
+        {/*    </div>*/}
         </>
     )
 }

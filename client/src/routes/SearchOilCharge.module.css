@@ -1,59 +1,92 @@
 .smallbox1 {
-    /*display: grid;*/
-    /*max-width: 500px; !* 전체 가로 크기 설정 *!*/
-    max-height: 80%;
-    /*background-color: rgba(255, 254, 254, 0.71);*/
+    display: grid;
+    width: 80%;
+    height: 300px;
+    margin-top: 3%;
+
     position: relative;
     bottom: 0;
-    /*left: 50%;*/
-    /*margin-left: -600px;*/
-    grid-template-columns: 1fr; /* 1개의 컬럼으로 설정 */
+    padding: 10px;
     grid-template-areas:
-        'a'
-        'b';
+    'a b ';
+    grid-template-columns: 50% 50%;
     border-radius: 10px ;
-    align-items: center;
+    align-items:end;
     grid-gap: 0;
-    z-index: 999;
-    overflow-x: hidden;
+    z-index: 2;
 }
-/*.searchInputWrapper{*/
 .chartContainer {
     grid-area: b;
     overflow-y: auto;
     overflow-x: hidden;
     max-width: 400px;
     margin: 0 auto;
-    /*padding: 20px;*/
-    /*height: 90%;*/
+    padding: 20px;
+    height: 90%;
     box-sizing: border-box;
+    z-index: 3;
 }
 
 /* 스크롤 바 컨테이너 */
 .chartContainer::-webkit-scrollbar {
     width: 16px;
+    z-index: 3;
 }
 
 .chartContainer::-webkit-scrollbar-track {
     background: #f4fbff;
     border-radius: 10px;
+    z-index: 3;
 }
 
 .chartContainer::-webkit-scrollbar-thumb {
     background-color: #bad5d1;
     border-radius: 10px;
     border: 3px solid #eef6fb;
+    z-index: 3;
 }
 .results {
+    grid-area: b;
     display: block;
-    /*background-color: #faf8ed;*/
-    margin-bottom: 10px;
+    /*background: #ffffff;*/
+    background: radial-gradient(circle at 100px 50px, rgba(255, 255, 255, 0.75) 100%, transparent 70%);
+    margin-top: 10%;
     padding: 10px 17px;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 10px; /* 모서리를 둥글게 */
+    z-index: 3;
+    position: relative; /* ::after를 위한 상대적 위치 */
+    box-shadow:
+            20px 10px 0 0 rgba(192, 233, 234, 0),
+            40px 20px 0 0 rgba(192, 233, 234, 0),
+            60px 10px 0 0 rgba(192, 233, 234, 0),
+            30px -10px 0 0 rgba(192, 233, 234, 0),
+            50px -20px 0 0 rgba(192, 233, 234, 0),
+            0 0 20px 5px rgba(255, 255, 255, 0.5); /* 빛나는 효과 */
+    animation: float 6s ease-in-out infinite; /* 둥둥 떠다니는 애니메이션 */
 }
 
-.searchInputContainer {
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.7);
+    }
+}
+    .searchInputContainer {
     grid-area: a;
     display: grid;
     padding: 10px;
@@ -70,19 +103,9 @@
     justify-items: start;
     grid-template-columns: 80% 20%;
     border-radius: 10px ;
-    overflow: hidden;
-    position: relative;
 
 }
-.backgroundVideo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 비디오를 요소 크기에 맞게 조정 */
-    z-index: -1; /* 비디오를 콘텐츠 뒤에 배치 */
-}
+
 .theme{
     font-weight: normal;
     grid-area: a;
@@ -117,7 +140,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 95%;
+    width: 65%;
     height: 50px;
     transition: transform 0.667s cubic-bezier(0.19, 1, 0.22, 1) 0s, color 0.4s ease 0s, background-color 0.4s ease 0s;
     z-index: 1;

@@ -128,9 +128,6 @@ function SearchOilCharge() {
     };
     return (
         <div className={styles.smallbox1}>
-            <video autoPlay muted loop className={styles.backgroundVideo}>
-                <source src="/oil_station.mp4" type="video/mp4"/>
-            </video>
 
             <div className={styles.searchInputContainer}>
                     <span className={styles.theme}>
