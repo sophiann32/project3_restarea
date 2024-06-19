@@ -4,6 +4,8 @@ import Modal from './Modal';
 import { useNavigate } from 'react-router-dom';
 import ChatBot from '../chatbot/chat';
 import NearbyGasChart from '../routes/Chart/NearbyGasChart.js';
+import NationalGasPricesChart from '../routes/Chart/NationalGasPricesChart';
+import Chart7 from '../routes/Chart/Chart7';
 import axios from 'axios';
 
 function MainPage() {
@@ -89,6 +91,37 @@ function MainPage() {
         fetchLocationAndData();
     }, []);
 
+    const scrollToWhiteBackground = () => {
+        console.log('styles.white_background:', styles.white_background);
+        const whiteBackgroundElement = document.querySelector(`.${CSS.escape(styles.white_background)}`);
+        if (whiteBackgroundElement) {
+            whiteBackgroundElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.error('white_background element not found');
+        }
+    };
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add(styles.animate);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        const chartElements = document.querySelectorAll(`.${CSS.escape(styles.chart)}, .${CSS.escape(styles.chart2)}, .${CSS.escape(styles.chart3)}`);
+        chartElements.forEach(el => observer.observe(el));
+
+        return () => {
+            chartElements.forEach(el => observer.unobserve(el));
+        };
+    }, []);
+
     return (
         <div className={styles.main_page}>
             <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
@@ -157,6 +190,8 @@ function MainPage() {
                 </ul>
             </form>
 
+            <div className={styles.arrow_down} onClick={scrollToWhiteBackground}></div>
+
             <div className={styles.chat} onClick={toggleModal}>
                 CHAT BOT
             </div>
@@ -167,11 +202,43 @@ function MainPage() {
                 </Modal>
             )}
 
-            {/* 하얀 배경 부분 추가 */}
             <div className={styles.white_background}>
-                <div className={styles.chart_container}>
-                    <div className={styles.chart}>
-                        <NearbyGasChart data={gasStations} />
+                <div className={styles.outer}>
+                    {/* 첫번째 차트 */}
+                    <div className={styles.chart_container}>
+                        <div className={styles.chart}>
+                            <NearbyGasChart data={gasStations} />
+                        </div>
+                        <div className={styles.sub_box}>
+                            <div className={styles.chart_sub}>
+                                <h2>내 주변 주유소</h2>
+                                <span>테스트 글임 테스트 글임 테스트 글임 테스트 글임</span>
+                            </div>
+                        </div>
+                    </div>
+                    {/* 두번째 차트 */}
+                    <div className={styles.chart_container2}>
+                        <div className={styles.sub_box2}>
+                            <div className={styles.chart_sub2}>
+                                <h2>내 주변 주유소</h2>
+                                <span>테스트 글임 테스트 글임 테스트 글임 테스트 글임</span>
+                            </div>
+                            <div className={styles.chart2}>
+                                <NationalGasPricesChart />
+                            </div>
+                        </div>
+                    </div>
+                    {/* 세번째 차트 */}
+                    <div className={styles.chart_container3}>
+                        <div className={styles.chart3}>
+                            <Chart7 />
+                        </div>
+                        <div className={styles.sub_box3}>
+                            <div className={styles.chart_sub3}>
+                                <h2>내 주변 주유소</h2>
+                                <span>테스트 글임 테스트 글임 테스트 글임 테스트 글임</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
