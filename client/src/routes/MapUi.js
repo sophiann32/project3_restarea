@@ -1,7 +1,7 @@
 // React 및 관련 훅과 axios를 임포트함
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import SmoothScroll from './SmoothScroll';
+
 
 // 컴포넌트 및 스타일시트 파일 임포트
 import Elec_station from "../kako_map/elec_station";
@@ -126,7 +126,7 @@ function MapUi() {
 
     // 컴포넌트가 렌더링할 JSX 구조
     return (
-        <><SmoothScroll>
+        <>
 
             <div id={styles.change}>
                 <video autoPlay muted loop className={styles.backgroundVideo}>
@@ -281,7 +281,7 @@ function MapUi() {
                     )
                 }
             </div>
-        </SmoothScroll>
+
             {/*아이콘과 버튼을 포함한 선택 바*/}
             {/*<div className={styles.select_bar}>*/}
 
