@@ -1,43 +1,109 @@
-import React, { useState } from 'react';
-import styles from './main_page.module.css'
+import React, { useState, useEffect, useRef } from 'react';
+import styles from './main_page.module.css';
 import Modal from './Modal';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ChatBot from '../chatbot/chat';
+import NearbyGasChart from '../routes/Chart/NearbyGasChart.js';
+import axios from 'axios';
 
 function MainPage() {
     const [selectedRoute, setSelectedRoute] = useState('');
+    const [previousRoute, setPreviousRoute] = useState('');
+    const [gasStations, setGasStations] = useState(null); // 주유소 데이터를 위한 상태
     const navigate = useNavigate();
     const [isModalOpen, setModalOpen] = useState(false);
+    const [placeholderText, setPlaceholderText] = useState('');
+    const [isPlaceholderVisible, setPlaceholderVisible] = useState(true);
+    const intervalRef = useRef(null);
+    const blinkIntervalRef = useRef(null);
+    const fullPlaceholderText = "원 하는 도로의 휴게소 정보를 확인하세요...";
 
-    // const toggleModal = () => setModalOpen(!isModalOpen);
+    useEffect(() => {
+        let currentIndex = 0;
+
+        const addChar = () => {
+            if (currentIndex < fullPlaceholderText.length && currentIndex < 24) {
+                setPlaceholderText((prev) => prev + fullPlaceholderText[currentIndex]);
+                currentIndex++;
+            } else {
+                clearInterval(intervalRef.current);
+                blinkIntervalRef.current = setInterval(() => {
+                    setPlaceholderVisible(prev => !prev);
+                }, 500);
+            }
+        };
+
+        intervalRef.current = setInterval(addChar, 110);
+
+        return () => {
+            clearInterval(intervalRef.current);
+            clearInterval(blinkIntervalRef.current);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (selectedRoute && selectedRoute !== previousRoute) {
+            handleSubmit();
+        }
+    }, [selectedRoute, previousRoute]);
+
     const toggleModal = () => {
         const synth = window.speechSynthesis;
         synth.cancel();
         setModalOpen(!isModalOpen);
     };
+
     const handleRouteChange = (event) => {
+        setPreviousRoute(selectedRoute);
         setSelectedRoute(event.target.value);
         console.log("Route changed:", event.target.value);
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = () => {
         console.log("Form submitted. Selected Route:", selectedRoute);
-        if (selectedRoute) { // 사용자가 드롭다운에서 경로를 선택했는지 확인
+        if (selectedRoute) {
             navigate(`/restarea/${selectedRoute}`);
         }
     };
+
+    const fetchLocationAndData = () => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+            axios.post('http://localhost:5000/api/gas-stations', {
+                latitude,
+                longitude
+            })
+                .then(response => {
+                    setGasStations(response.data);
+                    console.log('넘어온 데이터:', response.data);
+                })
+                .catch(error => {
+                    console.error('데이터 에러:', error);
+                });
+        }, error => {
+            console.error('Error getting location:', error);
+        });
+    };
+
+    useEffect(() => {
+        fetchLocationAndData();
+    }, []);
+
     return (
-        <>
-            <div className={styles.main_page}>
-                <form className={styles.form} onSubmit={handleSubmit}>
-                    <ul>
-                        <li>
-                            <label className={styles.label} htmlFor="class">휴게소</label>
-                            <select id={styles.select} value={selectedRoute} onChange={handleRouteChange}>
-                                <option value="" disabled selected hidden>🔍 원하는 도로의 휴게소 정보를 확인하세요</option>
-                                {/* 고속도로 옵션들 */}
-                                <optgroup style={{color:'darkblue'}} >
+        <div className={styles.main_page}>
+            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+                <ul>
+                    <li>
+                        <div className={styles.select_container}>
+                            <select
+                                id={styles.select}
+                                value={selectedRoute}
+                                onChange={handleRouteChange}
+                            >
+                                <option value="" disabled hidden>
+                                    {placeholderText ? (isPlaceholderVisible ? placeholderText : "") : "로딩 중..."}
+                                </option>
+                                <optgroup style={{ color: 'darkblue' }}>
                                     <option value="동해선">동해선</option>
                                     <option value="중부내륙선">중부내륙선</option>
                                     <option value="호남선">호남선</option>
@@ -86,21 +152,30 @@ function MainPage() {
                                     <option value="서울외곽순환선">서울외곽순환선</option>
                                 </optgroup>
                             </select>
-                        </li>
-                    </ul>
+                        </div>
+                    </li>
+                </ul>
+            </form>
 
-                    <button className={styles.mainButton} type="submit">검색</button>
-                </form>
-                <div className={styles.chat} onClick={toggleModal}>
-                    CHAT BOT
-                </div>
-                {isModalOpen && (
-                    <Modal isOpen={isModalOpen} onClose={toggleModal}>
-                        <ChatBot />
-                    </Modal>
-                )}
+            <div className={styles.chat} onClick={toggleModal}>
+                CHAT BOT
             </div>
-        </>
+
+            {isModalOpen && (
+                <Modal isOpen={isModalOpen} onClose={toggleModal}>
+                    <ChatBot />
+                </Modal>
+            )}
+
+            {/* 하얀 배경 부분 추가 */}
+            <div className={styles.white_background}>
+                <div className={styles.chart_container}>
+                    <div className={styles.chart}>
+                        <NearbyGasChart data={gasStations} />
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 

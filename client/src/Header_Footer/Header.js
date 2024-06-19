@@ -86,11 +86,24 @@ function Header({ setIsLogin, setUser }) {
                   <div className={scrolled ? `${styles.nav_wrapscrolled} ` : `${styles.nav_wrap}`}>
                     <div className={styles.logo}>
                         <NavLink to='/'>
-                            <img src={"../img/logo1.png"} style={{width: '250px'}} alt="logo"/>
+                            {scrolled ? (
+
+                                    <img src={"../img/logo1.png"} style={{ width: '250px' }} alt="logo" />
+
+                            ) : (
+                                <div className={styles.logoborder}>
+                                <img src={"../img/logo1.png"} style={{ width: '250px' }} alt="logo" />
+                                </div>
+                            )}
+
+
+
+                                {/*<img src={"../img/logo1.png"} style={{width: '250px'}} alt="logo"/>*/}
+
 
                         </NavLink>
                     </div>
-                    <button className={styles.menu_button} onClick={() => setMenuOpen(!isMenuOpen)}>
+                      <button className={styles.menu_button} onClick={() => setMenuOpen(!isMenuOpen)}>
                         &#9776;
                     </button>
                     <div className={`${styles.menu_box} ${isMenuOpen ? styles.menu_open : styles.menu_closed}`}>

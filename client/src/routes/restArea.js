@@ -112,6 +112,47 @@ function RestArea() {
         setModalOpen(false);
     };
 
+    // 크롤링 데이터 자료 불러오기
+    const TopRestaurants = () => {
+        const [restaurants, setRestaurants] = useState([]);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(null);
+
+        useEffect(() => {
+            const fetchTopRestaurants = async () => {
+                try {
+                    const response = await axios.get('http://127.0.0.1:5000/api/top-restaurants');
+                    setRestaurants(response.data);
+                } catch (error) {
+                    setError(error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchTopRestaurants();
+        }, []);
+
+        if (loading) {
+            return <div>Loading...</div>;
+        }
+
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        }
+
+        return (
+            <div>
+                <h1>리뷰분석 추천 음식점</h1>
+                <ol>
+                    {restaurants.map((restaurant, index) => (
+                        <li key={index}>{restaurant.name}</li>
+                    ))}
+                </ol>
+            </div>
+        );
+    };
+    //////
 
 
     return (
@@ -177,6 +218,9 @@ function RestArea() {
                 </div>
                 <Modal isOpen={modalOpen} onClose={handleCloseModal}>
                     {selectedRestArea && <RestAreaModalContent area={selectedRestArea} />}
+                    {selectedRestArea && selectedRestArea.휴게소명 === '서울만남(부산)' && <TopRestaurants />}
+                    {/*<TopRestaurants/>*/}
+
                 </Modal>
 
                 <section className={styles.restAreaMap}>
