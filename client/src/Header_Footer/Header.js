@@ -28,6 +28,7 @@ function Header({ setIsLogin, setUser }) {
 
     // const headerClass = isRestArea || isJeju ? `${styles.nav_wrap} ${styles.specialAreaActive}` : styles.nav_wrap;
     const headerClass = isRestArea || isJeju || ismap || isboard  ? `${styles.nav_wrap} ${styles.specialAreaActive}` : styles.nav_wrap;
+    // const headerClass = isRestArea || isJeju || ismap || isboard  ? styles.nav_wrap : `${styles.nav_wrap} ${styles.specialAreaActive}` ;
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
 

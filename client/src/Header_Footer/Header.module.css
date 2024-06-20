@@ -199,6 +199,14 @@
 .nav_wrap.specialAreaActive {
     background-color: white;
 }
+.specialAreaActive .menu_box ul li a{
+    color: #1a0101;
+    /*text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;*/
+    text-shadow: none;
+}
+
+
+
 
 .nav_wrap.specialAreaActive .logo a,
 .nav_wrap.specialAreaActive li a,
