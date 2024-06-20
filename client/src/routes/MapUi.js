@@ -126,9 +126,8 @@ function MapUi() {
 
     // 컴포넌트가 렌더링할 JSX 구조
     return (
-        <><SmoothScroll>
-
-
+        <>
+            <SmoothScroll>
             <div id={styles.change}>
                 <SearchOilCharge id={styles.searchOilCharge}/>
                 <label className={styles.aside_button} onClick={toggleVisibility}>
@@ -155,7 +154,6 @@ function MapUi() {
                                 충전소
                             </button>
                         </div>
-
                         {/* 반경 선택 슬라이더 */}
                         <div className={styles.markings}>
                             <span className={styles.mark}>1km</span>
@@ -260,9 +258,7 @@ function MapUi() {
                             )}
                         </ul>
                     </div>
-
                 } {/*버튼으로 사이트 바 열고 닫는 자바스크랩트 닫는 괄호임*/}
-
                 {/* 주유소 또는 충전소를 지도에 표시하는 섹션 */}
                 {
                     list1 === 1 ? (
@@ -272,7 +268,6 @@ function MapUi() {
                     ) : list1 === 2 ? (
                         <section className={styles.section}>
                             <Elec_station locations={chargingStations} radius={radius}/>
-
                         </section>
                     ) : (
                         <section className={styles.section}><MapInfo id={styles.mapinfo}/>   </section>
@@ -280,27 +275,6 @@ function MapUi() {
             </div>
         </SmoothScroll>
             {/*아이콘과 버튼을 포함한 선택 바*/}
-            <div className={styles.select_bar}>
-                {/*<section className={styles.searchOilChange}>*/}
-                {/*   */}
-                {/*</section>*/}
-                    <div className={styles.select_item}>
-                {/*        <img src="/img/fuel.png" alt="Icon 1" className={styles.icon}/>*/}
-                {/*        <p className={styles.text}>내 주변 주유소</p>*/}
-                {/*        <div className={styles.button1}>주유소</div>*/}
-
-                    </div>
-                {/*    <div className={styles.select_item}>*/}
-                {/*        <img src="/img/elc.png" alt="Icon 2" className={styles.icon}/>*/}
-                {/*        <p className={styles.text}>내 주변 충전소</p>*/}
-                {/*        <div className={styles.button2}>충전소</div>*/}
-                {/*    </div>*/}
-                {/*    <div className={styles.select_item}>*/}
-                {/*        <img src="/img/live.png" className={styles.icon2}/>*/}
-                {/*        <p className={styles.text2}>충전가능한 충전소보기</p>*/}
-                {/*        <div className={styles.button3}>충전가능한 충전소</div>*/}
-                {/*    </div>*/}
-            </div>
         </>
     )
 }

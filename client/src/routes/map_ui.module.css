@@ -1,31 +1,30 @@
-/*}*/
 #change{
     width: 100%;
     background-color: white;
     display: grid;
     grid-template-areas:
         'a b';
-    grid-gap: 0;
-    grid-template-columns: 73% 27%;
+    grid-gap: 5px;
+    grid-template-columns: 80% 20%;
     grid-template-rows: 900px;
-
+    margin-top: 3%;
+    justify-items: end;
 }
 #searchOilCharge{
     z-index: 999;
     grid-area: b;
 }
 .section {
-    width: calc(100%); /* 총 너비에서 aside 너비와 여백을 제외 */
-    margin-left: 200px; /* aside 너비와 여백을 고려한 왼쪽 마진 */
-    height: 80vh; /* 뷰포트 높이를 전체 채움 */
-    margin-top: 5.5%;
-    background-color: #fffefe;
+    width: 100%;
+    /*width: calc(100%); !* 총 너비에서 aside 너비와 여백을 제외 *!*/
+    margin-left: 800px; /* aside 너비와 여백을 고려한 왼쪽 마진 */
+    height: 100vh; /* 뷰포트 높이를 전체 채움 */
+
+    background-color: #131381;
     position: relative; /* z-index를 위해 position 설정 필요 */
     z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
     grid-area: a;
 }
-
-
 .aside_button {
     position: absolute;
     display: inline-block;
@@ -62,7 +61,6 @@
         width: 400px;
     }
 
-
 }
 .aside::-webkit-scrollbar {
     width: 15px; /* 스크롤바 너비 */
@@ -75,7 +73,6 @@
 .aside::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
     background: rgba(0, 0, 255, 0.16); /* 스크롤바의 색상 */
-
     /*border-radius: 10px;*/
 }
 
@@ -109,7 +106,6 @@
 .slider:hover {
     opacity: 1; /* 마우스 오버 시 투명도 변경 */
 }
-
 /* 슬라이더 썸(핸들)에 대한 스타일 */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* 기본 스타일링 제거 */
@@ -137,7 +133,7 @@
 
 .sortButtons button {
     background-color: transparent;
-    color: #000000;
+    color: #313131;
     border: 2px solid rgba(93, 89, 89, 0.45);
     padding: 5px 10px;
     text-align: center;
@@ -174,15 +170,11 @@
     font-size: 13px;
 }
 
-
-
 .buttonContainer {
     display: flex; /* 버튼을 가로로 배치 */
     justify-content: space-around; /* 버튼 사이의 간격을 균등하게 조정 */
     padding: 10px 20px; /* 상하 패딩만 조정하여 버튼과 사이드바 사이의 공간 제거 */
-
     z-index: 3;
-
 }
 .button {
     border: none;
@@ -207,8 +199,6 @@
     background-color: #007BFF; /* 호버 색상 */
     color: white; /* 호버 시 글자 색상 */
 }
-
-
 
 
 
@@ -272,124 +262,17 @@
 }
 
 
-.select_bar {
-    /*display: grid;*/
-    /*grid-template-columns: repeat(3, 1fr); !* 3등분으로 나눔 *!*/
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-items: center; /* 가로 중앙 정렬 */
-    /*gap: 20px; !* 그리드 아이템 간격 *!*/
-    height: 230px;
-    background-color: white;
-    padding: 20px; /* 패딩 */
+/*.select_bar {*/
+/*    !*display: grid;*!*/
+/*    !*grid-template-columns: repeat(3, 1fr); !* 3등분으로 나눔 *!*!*/
+/*    align-items: center; !* 세로 중앙 정렬 *!*/
+/*    justify-items: center; !* 가로 중앙 정렬 *!*/
+/*    !*gap: 20px; !* 그리드 아이템 간격 *!*!*/
+/*    height: 230px;*/
+/*    background-color: white;*/
+/*    padding: 20px; !* 패딩 *!*/
+/*}*/
 
-}
-.mapinfo{}
-
-
-.icon_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-
-}
-
-.icon {
-     /*아이콘 스타일 */
-    width: 70px; /* 혹은 실제 아이콘 크기에 맞게 조절 */
-    height: 100px;
-    display: flex;
-    align-items: center;
-    margin-left: 65px;
-    justify-content: center;
-    margin-bottom: 10px; /* 아이콘과 텍스트 간격 */
-    /*width: 50px;*/
-
-    /*padding-left: 30px;*/
-    /*padding-top: 50px;*/
-
-}
-.icon2 {
-    /* 아이콘 스타일 */
-    width: 70px; /* 혹은 실제 아이콘 크기에 맞게 조절 */
-    height: 100px;
-    border-radius: 40%; /* 원형으로 */
-    display: flex;
-    align-items: center;
-    margin-left: 115px;
-    justify-content: center;
-    margin-bottom: 10px; /* 아이콘과 텍스트 간격 */
-}
-
-.text {
-     /* 아이콘 설명 텍스트 스타일 */
-     color: black;
-     margin-bottom: 15px;
-     margin-left: 50px/* 텍스트와 버튼 간격 */
-
-    /*color: white;*/
-    /*padding-left: 7px;*/
-
- }
-.text2 {
-    /* 아이콘 설명 텍스트 스타일 */
-    color: black;
-    margin-bottom: 15px;
-    margin-left: 76px/* 텍스트와 버튼 간격 */
-
-    /*color: white;*/
-    /*padding-left: 7px;*/
-}
-
-.button1 {
-    /* 버튼 스타일 */
-    border: none;
-    background-color: #FFAFAF; /* 버튼 배경 색상 */
-    color: white;
-    font-size: 20px;
-    border-radius: 25px;
-    padding: 30px 70px; /* 패딩 */
-    /*cursor: pointer; !* 마우스 오버 시 손가락 커서 표시 *!*/
-}
-.button2 {
-    /* 버튼 스타일 */
-    border: none;
-    font-size: 20px;
-    background-color: #FED700; /* 버튼 배경 색상 */
-    color: white;
-    border-radius: 25px;
-    padding: 30px 70px; /* 패딩 */
-    /*cursor: pointer; !* 마우스 오버 시 손가락 커서 표시 *!*/
-}
-.button3 {
-    /* 버튼 스타일 */
-    border: none;
-    font-size: 20px;
-    background-color: #DBDF23; /* 버튼 배경 색상 */
-    color: white;
-    border-radius: 25px;
-    padding: 30px 70px; /* 패딩 */
-    margin-right: 20px;
-    /*cursor: pointer; !* 마우스 오버 시 손가락 커서 표시 *!*/
-}
-
-/* 반응형 디자인을 위한 미디어 쿼리 */
-@media (max-width: 768px) {
-    .select_bar {
-        grid-template-columns: 1fr; /* 모바일에서는 한 열로 표시 */
-        height: auto; /* 높이를 내용에 맞게 자동으로 조정 */
-        gap: 10px; /* 아이템 간격 줄임 */
-    }
-
-    .icon_container {
-        flex-direction: row; /* 모바일에서는 가로로 배치 */
-    }
-
-    .icon_button {
-        padding: 5px 10px; /* 모바일에서 버튼 패딩 줄임 */
-    }
-}
 
 /* 반응형 미디어 쿼리 */
 @media (max-width: 768px) {
@@ -407,9 +290,7 @@
 @media (max-width: 480px) {
     .aside_button{
         z-index: 1000;
-
     }
-
     .aside {
         /* 가장 작은 뷰포트에 맞춤 */
         width: 400px; /* 화면 전체 너비를 차지하도록 함 */
@@ -428,8 +309,6 @@
     }
     .select_bar{
         margin-top: 13%;
-
-
     }
     .icon2{
         position: relative;

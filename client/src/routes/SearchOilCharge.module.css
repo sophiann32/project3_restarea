@@ -2,7 +2,7 @@
     /*display: grid;*/
     /*max-width: 500px; !* 전체 가로 크기 설정 *!*/
     max-height: 80%;
-    /*background-color: rgba(255, 254, 254, 0.71);*/
+    background-color: rgba(255, 254, 254, 0.71);
     position: relative;
     bottom: 0;
     /*left: 50%;*/
@@ -35,14 +35,14 @@
 }
 
 .chartContainer::-webkit-scrollbar-track {
-    background: #f4fbff;
+    background: rgb(195, 217, 174);
     border-radius: 10px;
 }
 
 .chartContainer::-webkit-scrollbar-thumb {
-    background-color: #bad5d1;
+    background-color: rgba(217, 176, 83, 0.6);
     border-radius: 10px;
-    border: 3px solid #eef6fb;
+    border: 3px solid #c3d9ae;
 }
 .results {
     display: block;
@@ -54,15 +54,16 @@
 }
 
 .searchInputContainer {
+    font-size: larger;
     grid-area: a;
     display: grid;
     padding: 10px;
-    width: 400px;
+    width: 350px;
     height: 250px;
     /*background: rgb(231, 231, 231);*/
     grid-template-rows: auto auto;
     gap: 6px;
-    margin: 0 auto;
+    margin-right: 10px;
     grid-template-areas:
     'a a '
     'b c '
@@ -87,7 +88,7 @@
     font-weight: normal;
     grid-area: a;
     z-index: 1;
-
+    align-content: center;
 }
 .searchInput {
     grid-area: b;
