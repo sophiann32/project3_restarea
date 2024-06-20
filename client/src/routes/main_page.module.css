@@ -1,128 +1,247 @@
-.main_page{
-    /*width: 1200px;*/
+.main_page {
     width: 100%;
-    height: 680px;
+    height: 2000px; /* 전체 높이를 2000px로 설정 */
     background-color: #e8fffc;
     margin: 0 auto;
-    background: linear-gradient(rgba(147, 197, 255, 0.1), rgba(124, 124, 124, 1)),url("../../public/img/road.jpg");
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(rgba(147, 197, 255, 0.1), rgba(124, 124, 124, 0.5)), url("../../public/img/highway.png") no-repeat;
+    background-size: contain;
+    background-position: center top;
     position: relative;
+    overflow: hidden;
+    animation: expand 1s ease-out forwards;
+    transform-origin: center;
+}
 
+@keyframes expand {
+    0% {
+        width: 0;
+        height: 1000px;
+        opacity: 0;
+    }
+    50% {
+        width: 100%;
+        height: 1900px;
+        opacity: 1;
+    }
+    100% {
+        width: 100%;
+        height: 2000px;
+        opacity: 1;
+    }
 }
 
 
-.form{
-    /*max-width: 1000px;*/
+/* 모던하고 시크한 드롭다운 스타일 */
+.select_container {
+    position: relative;
+    width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.select_container select {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 20px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.6); /* 어두운 배경 */
+    color: white;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+.select_container select:hover {
+    border-color: #4CAF50; /* 선택 박스를 호버할 때 테두리 색상 변경 */
+    background: rgba(255, 255, 255, 0.2); /* 배경색 변경 */
+}
+
+.select_container:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-top-color: white; /* 화살표 색상 */
+    pointer-events: none;
+}
+.select_container option {
+    background-color: #222; /* 옵션 배경 어둡게 */
+    color: white;
+    font-size: 18px;
+}
+
+
+.select_container select {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.select_container select:hover {
+    border: 1px solid #4CAF50; /* 선택 박스를 호버할 때 테두리 색상 변경 */
+    background: rgba(0, 0, 0, 0.8); /* 배경색 변경 */
+}
+
+.select_container select:focus {
+    border: 1px solid #4CAF50; /* 선택 박스를 포커스할 때 테두리 색상 변경 */
+    background: rgba(0, 0, 0, 0.9); /* 배경색 변경 */
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* 포커스 시 박스 그림자 효과 추가 */
+}
+
+.select_container option {
+    background-color: #333; /* 옵션 배경 어둡게 */
+    color: white;
+    padding: 10px;
+}
+
+/* 전체 스크롤바 스타일링 */
+::-webkit-scrollbar {
+    width: 10px; /* 스크롤바 너비 */
+    height: 10px; /* 수평 스크롤바 높이 */
+}
+
+/* 스크롤바 트랙 (배경) */
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* 트랙 배경 색상 */
+    border-radius: 10px; /* 둥근 모서리 */
+}
+
+/* 스크롤바 핸들 */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.4); /* 핸들 색상 */
+    border-radius: 10px; /* 둥근 모서리 */
+    border: 2px solid transparent; /* 핸들 내부에 여백 추가 */
+    background-clip: padding-box; /* 배경 클립 */
+}
+
+/* 스크롤바 핸들 호버 시 */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.6); /* 핸들 색상 변경 */
+}
+
+/* 스크롤바 핸들 활성화 시 */
+::-webkit-scrollbar-thumb:active {
+    background: rgba(0, 0, 0, 0.8); /* 핸들 색상 변경 */
+}
+
+
+.form {
     border: none;
     margin: 0 auto;
-    padding-top: 200px;
-
+    padding-top: 400px;
 }
 
-.main_page ul{
+.main_page ul {
     list-style-type: none;
     text-align: center;
 }
 
-.label{
-    /*padding-top: 500px;*/
+.label {
     font-size: 30px;
     font-weight: bold;
     text-align: center;
-    /*background-color: #fff;*/
-
-
 }
-#select{
-    width: 500px;
-    height: 50px;
-    font-size: 20px;
-    border-radius: 20px;
 
-}
-.mainButton{
+.mainButton {
     margin: 0 auto;
-    width: 500px;
-    border-radius: 20px;
-    margin-left: 70px;
+    width: 300px;
+}
+
+.typing-char {
+    display: inline-block;
+    opacity: 0;
+    animation: typingEffect 0.5s forwards;
+}
+
+@keyframes typingEffect {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .chat {
-
-    position: fixed; /* 위치를 고정시킵니다 */
-    right: 20px;     /* 오른쪽 끝에서 20px 떨어진 위치에 배치합니다 */
-    bottom: 20px;    /* 하단에서 20px 떨어진 위치에 배치합니다 */
-    width: 60px;     /* 버튼의 너비 */
-    height: 60px;    /* 버튼의 높이 */
-    background-color: #2d7dec; /* 배경색 설정 */
-    display: flex;   /* 내부 아이템을 중앙에 배치하기 위해 flex 사용 */
-    justify-content: center; /* 수평 중앙 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
-    border-radius: 50%; /* 버튼을 원형으로 만듭니다 */
-    color: white;    /* 글자색은 흰색 */
-    font-size: 16px; /* 글자 크기 */
-    text-decoration: none; /* 텍스트 밑줄 없애기 */
-    cursor: pointer; /* 마우스 오버 시 커서 변경 */
-
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #2d7dec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
     width: 100px;
     height: 100px;
-    /*background-color: #2d7dec;*/
     background-image: url("https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/1f47d.gif");
-    /*귀여운 외계인*/
-    /*background-image: url("https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/512px/1f937.png ");*/
-    /*모르는 사람 표정 */
-    /*background-image: url("https://images.emojiterra.com/google/noto-emoji/unicode-15/animated/1f916.gif"); */
-    /*움직이는 챗봇*/
-    background-size: cover; /* 이미지 크기 조절 */
-    background-position: center; /* 이미지 위치 조절 */
+    background-size: cover;
+    background-position: center;
 }
 
-@media (max-width: 1300px){   /*0 부터 1220까지 (노트북) */
-    /*1200으로 딱맞추면 중간에 살짝 스크롤이 생김*/
-    .nav {
-        /*max-width: 100%;*/
-        /*padding: 0 10px;*/
-    }
+.white_background {
+    position: absolute;
+    top: 1000px; /* 하얀 배경 시작 위치를 1000px로 설정 */
+    width: 100%;
+    height: 1000px;
+    background-color: white;
 }
-@media (max-width: 768px){   /*0 부터 768까지  (테블릿) */
 
+.chart_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* 페이지 하단에서 약간의 여백을 추가 */
 }
+
+.chart {
+    background-color: #fffefe;
+    position: relative;
+    margin-top: 100px;
+    padding: 10px 17px;
+    display: block;
+    transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
+    height: 455px;
+    width: 500px;
+    border-radius: 40px;
+}
+
+
+
+
+
+@media (max-width: 1300px) {
+    .nav {}
+}
+
+@media (max-width: 768px) {}
+
 @media (max-width: 480px) {
-    /*0 부터 480까지  (모바일) */
-
-    #select{
+    .select-container {
         width: 250px;
-        height: 40px;
-        font-size: 11px;
-        margin-right: 50px;
+    }
+
+    .select-container select {
+        font-size: 14px;
+        padding: 8px 10px;
     }
 }
 
-    .mainButton{
-        margin: 0 auto;
-        width: 80%;
-        border-radius: 20px;
-
-        margin-left: 80px;
-    }
-    .form li label{
-        padding-right: 50px;
-    }
-
-
-
-
-
-
-
-
-/*@media (max-width: 480px) {*/
-/*    !*0 부터 480까지  (모바일) *!*/
-/*    height: "100px"*/
-/*}*/
+.form li label {
+    padding-right: 50px;
+}
 
 .modal {
     position: relative;
 }
-
