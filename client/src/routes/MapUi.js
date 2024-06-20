@@ -127,9 +127,7 @@ function MapUi() {
     // 컴포넌트가 렌더링할 JSX 구조
     return (
         <><SmoothScroll>
-            <div style={{ height: '200vh', background: 'linear-gradient(180deg, #e66465, #9198e5)' }}>
-                <h1 style={{ margin: '50vh 0', textAlign: 'center', color: 'white' }}>Smooth Scroll Example</h1>
-            </div>
+
 
             <div id={styles.change}>
                 <SearchOilCharge id={styles.searchOilCharge}/>
