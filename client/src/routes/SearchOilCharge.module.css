@@ -1,7 +1,7 @@
 .smallbox1 {
     /*display: grid;*/
     /*max-width: 500px; !* 전체 가로 크기 설정 *!*/
-    max-height: 80%;
+    max-height: 100%;
     background-color: rgba(255, 254, 254, 0.71);
     position: relative;
     bottom: 0;
