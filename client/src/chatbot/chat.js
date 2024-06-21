@@ -342,9 +342,9 @@ function Chatbot({onClose}) {
 
             <div className={styles.user_input}>
 
-                <button id={"btn"} onClick={() => handleMessage('주유소')}>내 주변 주유소의 최신 가격</button>
-                <button id={"btn"} onClick={() => handleMessage('전기차')}>내 주변 전기차 충전소</button>
-                <container id={"con1"}>
+                <button onClick={() => handleMessage('주유소')}>내 주변 주유소의 최신 가격</button>
+                <button onClick={() => handleMessage('전기차')}>내 주변 전기차 충전소</button>
+                <container>
                     {/*<button id={"item1"} onClick={() => handleMessage('휴게소')}>휴게소로 이동</button>*/}
                     {/*<button id={"item2"} onClick={() => handleMessage('제주도')}>제주도으로 이동</button>*/}
                     {/*<button id={"item3"} onClick={() => handleMessage('유가')}>유가로 이동</button>*/}
@@ -353,7 +353,7 @@ function Chatbot({onClose}) {
                 <div id="bot-input-area">
                     <form className="test" onSubmit={(e) => {
                         e.preventDefault();
-                        handleSubmit(question);
+                        handleCommand(question);
                     }}>
                         <textarea className={"content"}
                                   value={question}
