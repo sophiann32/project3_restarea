@@ -385,21 +385,58 @@
 
 @media (max-width: 768px) {}
 
+/* 모바일용 스타일 */
 @media (max-width: 480px) {
-    .select-container {
-        width: 250px;
+    .top_box {
+        height: auto; /* 모바일에서 높이를 자동으로 설정 */
+        background-size: cover; /* 배경 이미지를 전체 영역에 맞춤 */
+        background-position: center center; /* 배경 이미지 위치 조정 */
     }
 
-    .select-container select {
+    .select_container {
+        width: 350px; /* 모바일에서 select_container의 너비 설정 */
+        position: relative;
+        right: 20px;
+    }
+
+    .select_container select {
+        width: 100%; /* select 요소의 너비를 부모 컨테이너에 맞춤 */
         font-size: 14px;
         padding: 8px 10px;
     }
-}
 
-.form li label {
-    padding-right: 50px;
-}
+    .select_container option {
+        font-size: 14px;
+        padding: 30px; /* 패딩 제거 */
+        width: 100%; /* option 요소의 너비를 부모 컨테이너에 맞춤 */
+        box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+    }
 
-.modal {
-    position: relative;
+
+    /* 수직 정렬을 위한 스타일 */
+    .chart_container, .chart_container2, .chart_container3 {
+        flex-direction: column; /* 수직 정렬 */
+        align-items: center; /* 수평 중앙 정렬 */
+        margin: 20px 0; /* 위아래 여백 추가 */
+    }
+
+    .sub_box, .sub_box2, .sub_box3 {
+        width: 90%; /* 너비를 부모 컨테이너의 90%로 설정 */
+        margin: 10px 0; /* 위아래 여백 추가 */
+        align-items: center; /* 수평 중앙 정렬 */
+    }
+
+    .chart, .chart2, .chart3 {
+        width: 90%; /* 너비를 부모 컨테이너의 90%로 설정 */
+        margin: 10px 0; /* 위아래 여백 추가 */
+    }
+
+    .outer {
+        display: flex;
+        flex-direction: column; /* 수직 정렬 */
+        align-items: center; /* 수평 중앙 정렬 */
+        width: 100%; /* 전체 너비 */
+    }
+
+    /* 추가적인 모바일 전용 스타일을 여기에 추가 */
 }
