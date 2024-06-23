@@ -1,4 +1,18 @@
 .main_page {
+    height: auto;
+    /*width: 100%;*/
+    /*height: 2200px; !* 전체 높이를 2000px로 설정 *!*/
+    /*background-color: #e8fffc;*/
+    /*margin: 0 auto;*/
+    /*background: linear-gradient(rgba(147, 197, 255, 0.1), rgba(124, 124, 124, 0.5)), url("../../public/img/highway.png") no-repeat;*/
+    /*background-size: contain;*/
+    /*background-position: center top;*/
+    /*position: relative;*/
+    /*overflow: hidden;*/
+    /*animation: expand 1s ease-out forwards;*/
+    /*transform-origin: center;*/
+}
+.top_box{
     width: 100%;
     height: 2200px; /* 전체 높이를 2000px로 설정 */
     background-color: #e8fffc;
@@ -211,7 +225,7 @@
     flex: 0 10 30%; /* 좌우에 20%의 공백을 설정 */
 }
 
-.chart_container, .chart_container2, .chart_container3 {
+.chart_container, .chart_container3 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -219,10 +233,45 @@
 
 }
 
-.chart, .sub_box,.chart2, .sub_box2 {
+.chart_container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* 페이지 하단에서 약간의 여백을 추가 */
+    flex-direction: row-reverse; /* 반대 방향으로 정렬 */
+}
+.chart2, .sub_box2{
+    flex: 0 0 30%;
+    margin: 200px 0 0 150px;
+}
+
+.chart_sub2 {
+    width: 200px;
+    display: flex;
+    flex-direction: row; /* 추가 */
+    font-size: 18px;
+    font-weight: bold;
+}
+.sub_box2{
+    width: 300px;
+    height: 420px;
+    background-color: #fff;
+    padding: 0;
+    display: flex; /* Flexbox 적용 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.chart_sub2 span {
+    margin-top: 0; /* 수직 마진 제거 또는 조정 */
+    margin-right: 50px; /* 필요 시 수평 마진 추가 */
+    font-weight: bold;
+
+
+}.chart, .sub_box,.chart3, .sub_box3 {
     flex: 0 0 30%; /* 45% 너비로 설정*/
     margin: 200px 0 0 100px; /* 두 요소 사이에 약간의 간격을 추가 */
 }
+
 .animate {
     animation: expandFromCenter 1s ease-in-out forwards;
 }
@@ -245,7 +294,7 @@
     padding: 10px 17px;
     display: block;
     transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
-    height: 400px;
+    height: 450px;
     width: 500px;
     border-radius: 10px;
 }
@@ -294,8 +343,22 @@
     }
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-.sub_box,.sub_box2,.sub_box3 {
+.fade-in {
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+.sub_box,.sub_box3 {
     width: 400px;
     height: 420px;
     background-color: #fff;
@@ -304,15 +367,16 @@
     align-items: center; /* 수직 중앙 정렬 */
 }
 
-.chart_sub,.chart_sub2,.chart_sub3 {
+.chart_sub,.chart_sub3 {
     font-size: 18px;
     font-weight: bold;
 }
-.chart_sub span, .chart_sub2 span, .chart_sub3 span{
+.chart_sub span, .chart_sub3 span{
     display: block;
     margin-top: 50px;
     font-weight: bold;
 }
+
 
 
 @media (max-width: 1300px) {
