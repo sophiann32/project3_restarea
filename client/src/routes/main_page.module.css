@@ -1,6 +1,20 @@
 .main_page {
+    height: auto;
+    /*width: 100%;*/
+    /*height: 2200px; !* 전체 높이를 2000px로 설정 *!*/
+    /*background-color: #e8fffc;*/
+    /*margin: 0 auto;*/
+    /*background: linear-gradient(rgba(147, 197, 255, 0.1), rgba(124, 124, 124, 0.5)), url("../../public/img/highway.png") no-repeat;*/
+    /*background-size: contain;*/
+    /*background-position: center top;*/
+    /*position: relative;*/
+    /*overflow: hidden;*/
+    /*animation: expand 1s ease-out forwards;*/
+    /*transform-origin: center;*/
+}
+.top_box{
     width: 100%;
-    height: 2000px; /* 전체 높이를 2000px로 설정 */
+    height: 2200px; /* 전체 높이를 2000px로 설정 */
     background-color: #e8fffc;
     margin: 0 auto;
     background: linear-gradient(rgba(147, 197, 255, 0.1), rgba(124, 124, 124, 0.5)), url("../../public/img/highway.png") no-repeat;
@@ -25,7 +39,7 @@
     }
     100% {
         width: 100%;
-        height: 2000px;
+        height: 2200px;
         opacity: 1;
     }
 }
@@ -192,32 +206,176 @@
 
 .white_background {
     position: absolute;
-    top: 1000px; /* 하얀 배경 시작 위치를 1000px로 설정 */
+    top: 1200px; /* 하얀 배경 시작 위치를 1000px로 설정 */
     width: 100%;
-    height: 1000px;
+    height: 2000px;
     background-color: white;
 }
 
-.chart_container {
+.outer {
+    flex-direction: column;
+    display: flex;
+    /*justify-content: space-between;*/
+    width: 100%;
+}
+
+.outer::before,
+.outer::after {
+    content: '';
+    flex: 0 10 30%; /* 좌우에 20%의 공백을 설정 */
+}
+
+.chart_container, .chart_container3 {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px; /* 페이지 하단에서 약간의 여백을 추가 */
+
+}
+
+.chart_container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* 페이지 하단에서 약간의 여백을 추가 */
+    flex-direction: row-reverse; /* 반대 방향으로 정렬 */
+}
+.chart2, .sub_box2{
+    flex: 0 0 30%;
+    margin: 200px 0 0 150px;
+}
+
+.chart_sub2 {
+    width: 200px;
+    display: flex;
+    flex-direction: row; /* 추가 */
+    font-size: 18px;
+    font-weight: bold;
+}
+.sub_box2{
+    width: 300px;
+    height: 420px;
+    background-color: #fff;
+    padding: 0;
+    display: flex; /* Flexbox 적용 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.chart_sub2 span {
+    margin-top: 0; /* 수직 마진 제거 또는 조정 */
+    margin-right: 50px; /* 필요 시 수평 마진 추가 */
+    font-weight: bold;
+
+
+}.chart, .sub_box,.chart3, .sub_box3 {
+    flex: 0 0 30%; /* 45% 너비로 설정*/
+    margin: 200px 0 0 100px; /* 두 요소 사이에 약간의 간격을 추가 */
+}
+
+.animate {
+    animation: expandFromCenter 1s ease-in-out forwards;
 }
 
 .chart {
-    background-color: #fffefe;
+    border: 1px solid black;
+    background-color: white;
     position: relative;
-    margin-top: 100px;
     padding: 10px 17px;
     display: block;
     transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
-    height: 455px;
+    height: 400px;
     width: 500px;
-    border-radius: 40px;
+    border-radius: 10px;
+}
+.chart2 {
+    border: 1px solid black;
+    background-color: white;
+    position: relative;
+    padding: 10px 17px;
+    display: block;
+    transition: all 0.3s ease-in-out; /* 전체 속성 변화에 대한 transition 설정 */
+    height: 450px;
+    width: 500px;
+    border-radius: 10px;
+}
+.arrow_down {
+    position: absolute;
+    bottom: 1300px;
+    left: 50%;
+    z-index: 1;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: moveDown 3s infinite;
 }
 
+.arrow_down::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 30px solid white;
+}
 
+@keyframes moveDown {
+    0%, 100% {
+        transform: translate(-50%, 0);
+    }
+    50% {
+        transform: translate(-50%, 10px);
+    }
+}
+
+@keyframes expandFromCenter {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+.sub_box,.sub_box3 {
+    width: 400px;
+    height: 420px;
+    background-color: #fff;
+    padding: 0;
+    display: flex; /* Flexbox 적용 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.chart_sub,.chart_sub3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+.chart_sub span, .chart_sub3 span{
+    display: block;
+    margin-top: 50px;
+    font-weight: bold;
+}
 
 
 
@@ -227,21 +385,58 @@
 
 @media (max-width: 768px) {}
 
+/* 모바일용 스타일 */
 @media (max-width: 480px) {
-    .select-container {
-        width: 250px;
+    .top_box {
+        height: auto; /* 모바일에서 높이를 자동으로 설정 */
+        background-size: cover; /* 배경 이미지를 전체 영역에 맞춤 */
+        background-position: center center; /* 배경 이미지 위치 조정 */
     }
 
-    .select-container select {
+    .select_container {
+        width: 350px; /* 모바일에서 select_container의 너비 설정 */
+        position: relative;
+        right: 20px;
+    }
+
+    .select_container select {
+        width: 100%; /* select 요소의 너비를 부모 컨테이너에 맞춤 */
         font-size: 14px;
         padding: 8px 10px;
     }
-}
 
-.form li label {
-    padding-right: 50px;
-}
+    .select_container option {
+        font-size: 14px;
+        padding: 30px; /* 패딩 제거 */
+        width: 100%; /* option 요소의 너비를 부모 컨테이너에 맞춤 */
+        box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+    }
 
-.modal {
-    position: relative;
+
+    /* 수직 정렬을 위한 스타일 */
+    .chart_container, .chart_container2, .chart_container3 {
+        flex-direction: column; /* 수직 정렬 */
+        align-items: center; /* 수평 중앙 정렬 */
+        margin: 20px 0; /* 위아래 여백 추가 */
+    }
+
+    .sub_box, .sub_box2, .sub_box3 {
+        width: 90%; /* 너비를 부모 컨테이너의 90%로 설정 */
+        margin: 10px 0; /* 위아래 여백 추가 */
+        align-items: center; /* 수평 중앙 정렬 */
+    }
+
+    .chart, .chart2, .chart3 {
+        width: 90%; /* 너비를 부모 컨테이너의 90%로 설정 */
+        margin: 10px 0; /* 위아래 여백 추가 */
+    }
+
+    .outer {
+        display: flex;
+        flex-direction: column; /* 수직 정렬 */
+        align-items: center; /* 수평 중앙 정렬 */
+        width: 100%; /* 전체 너비 */
+    }
+
+    /* 추가적인 모바일 전용 스타일을 여기에 추가 */
 }
