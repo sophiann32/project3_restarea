@@ -272,20 +272,17 @@
     .section {
         margin-left: 0; /* aside가 전체 너비를 차지하므로 마진을 제거 */
         width: 100%; /* 화면 전체 너비를 사용 */
-        height: 400px;
+        height: 350px;
         grid-area: a;
         position: relative; /* z-index를 위해 position 설정 필요 */
         z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
+
     }
     .select_bar{
         margin-top: 13%;
     }
-    .icon2{
-        position: relative;
-        left: 10px;
-    }
     .radioContainer{
-        position: absolute;
+        position: relative;
         padding: 0;
         /*bottom: 100px;*/
         flex-wrap: nowrap;
@@ -300,9 +297,13 @@
         grid-template-columns: 1fr; /* 1개의 컬럼으로 설정 */
         grid-gap: 5px;
         margin-top: 3%;
+        grid-template-rows: 80%;
+        justify-items: center;
+        height: 600px;
     }
     #searchOilCharge{
         z-index: 999;
+        width: 100%;
         grid-area: b;
         max-width: inherit; /* set max-width to 430px */
         grid-auto-flow: column; /* add this line */
@@ -313,10 +314,7 @@
         position: relative;
     }
     .gasStationList {
-        /*display: flex;*/
-        /*flex-wrap: wrap;*/
-        /*list-style: none;*/
         margin-top: 40px;
-
+        *overflow-x: hidden;
     }
     }

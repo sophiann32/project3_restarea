@@ -3,29 +3,19 @@
     background-color: rgba(255, 254, 254, 0.71);
     position: relative;
     bottom: 0;
-    /*grid-template-columns: 1fr; !* 1개의 컬럼으로 설정 *!*/
-    /*grid-template-areas:*/
-    /*    'a'*/
-    /*    'b';*/
     border-radius: 10px ;
-    /*align-items: center;*/
-    /*grid-gap: 0;*/
     z-index: 999;
-    overflow-x: hidden;
     margin-right: 10px;
+    overflow-y: auto;
 }
-/*.searchInputWrapper{*/
 .chartContainer {
     grid-area: b;
     overflow-y: auto;
     overflow-x: hidden;
     max-width: 400px;
     margin: 0 auto;
-    /*padding: 20px;*/
-    /*height: 90%;*/
     box-sizing: border-box;
 }
-
 /* 스크롤 바 컨테이너 */
 .chartContainer::-webkit-scrollbar {
     width: 16px;
@@ -65,21 +55,10 @@
     'a a '
     'b c '
     'd d';
-    /*justify-items: start;*/
     grid-template-columns: 80% 20%;
     border-radius: 10px ;
     overflow: hidden;
     position: relative;
-
-}
-.backgroundVideo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 비디오를 요소 크기에 맞게 조정 */
-    z-index: -1; /* 비디오를 콘텐츠 뒤에 배치 */
 }
 .theme{
     font-weight: normal;
@@ -122,14 +101,11 @@
     z-index: 1;
     font-size: 14px;
 }
-
-
 .searchButton:hover {
     background-color: #42c6b8;
     transform: scale(1.01);
 
 }
-
 @media screen and (max-width: 769px) {
 
     .searchInputContainer, .chartContainer {
@@ -166,6 +142,7 @@
         align-content: space-between;
         align-items: start;
         /*max-width: fit-content;*/
+        /*height: 90px;*/
 
     }
     .searchInputContainer {
@@ -173,24 +150,44 @@
         display: grid;
         padding: 10px;
         width:310px;
-        height: 50%;
+        height: 85px;
+        grid-template-areas:
+    'b c '
+    'd d';
     }
     .results {
         width: fit-content;
+        overflow-y: auto;
     }
     .searchInput {
         font-size: 70%;
+        height: 46px;
     }
     .searchArea {
         font-size: 70%;
     }
     .h2{
         font-size: inherit;
-
     }
     .searchButton{
         width: 95%;
         height: 80%;
     }
+    .chartContainer::-webkit-scrollbar {
+        width: 12px;
+    }
 
+    .chartContainer::-webkit-scrollbar-track {
+        background: rgb(195, 217, 174);
+        border-radius: 10px;
+    }
+
+    .chartContainer::-webkit-scrollbar-thumb {
+        background-color: rgba(217, 176, 83, 0.6);
+        border-radius: 10px;
+        border: 3px solid #c3d9ae;
+    }
+    .theme{
+        display: none;
+    }
 }
