@@ -5,18 +5,20 @@ import featureImage1 from './image/1.jpg';
 import featureImage2 from './image/a.gif';
 import featureImage3 from './image/3.jpg';
 import expandImage from './image/g.gif';
-import Modal from './Modal'; // 모달 컴포넌트 import
+import Modal from './Modal';
 import { FaYoutube, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 function LandingPage() {
     const videoUrl = "./image/elecvery.mp4";
+    const newVideoUrl = "./image/elecvery.mp4";
+
     const scrollExpandSectionRef = useRef(null);
     const featureItemsRef = useRef([]);
-    const [expandImageWidth, setExpandImageWidth] = useState('70%'); // 초기 너비
-    const [showModal, setShowModal] = useState(false); // 모달 상태 관리
+    const [expandImageWidth, setExpandImageWidth] = useState('70%');
+    const [showModal, setShowModal] = useState(false);
+    const [modalVideoUrl, setModalVideoUrl] = useState(videoUrl);
 
     useEffect(() => {
-        // 스크롤 이벤트 및 IntersectionObserver 설정
         const handleScroll = () => {
             featureItemsRef.current.forEach(item => {
                 if (item) {
@@ -35,7 +37,7 @@ function LandingPage() {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    const newWidth = `${70 + entry.intersectionRatio * 35}%`; // 80%에서 100%까지
+                    const newWidth = `${70 + entry.intersectionRatio * 35}%`;
                     setExpandImageWidth(newWidth);
                 }
             },
@@ -63,7 +65,11 @@ function LandingPage() {
         }
     };
 
-    const openModal = () => setShowModal(true);
+    const openModal = () => {
+        setModalVideoUrl(newVideoUrl);
+        setShowModal(true);
+    };
+
     const closeModal = () => setShowModal(false);
 
     return (
@@ -76,11 +82,11 @@ function LandingPage() {
                     <nav className={styles.landingNav}>
                         <ul className={styles.navLinks}>
                             <li><a onClick={() => handleSmoothScroll('features')} className={styles.smoothScroll}>Features</a></li>
-                            <li><a onClick={() => handleSmoothScroll('about')} className={styles.smoothScroll}>About</a></li>
                             <li><a onClick={() => handleSmoothScroll('contact')} className={styles.smoothScroll}>Contact</a></li>
+                            <li><a onClick={() => handleSmoothScroll('about')} className={styles.smoothScroll}>About</a></li>
                         </ul>
                     </nav>
-                    <Link to="/main" className={styles.ctaButton}>Get Started</Link>
+                    <Link to="/main" className={styles.ctaButton}>Get Started <span className="arrow">→</span></Link>
                 </header>
             </section>
             <section id="features" className={styles.landingFeatures}>
@@ -115,12 +121,18 @@ function LandingPage() {
                     </div>
                 </div>
             </section>
-            <section id="about" className={styles.landingAbout}>
-                <h2>About Us</h2>
-                <p>온디멘드</p>
-            </section>
             <section id="contact" className={styles.landingContact}>
-                <h2>Contact Us</h2>
+                <h2>Scan Us</h2>
+                <div className={styles.contactDetails}>
+                    <p>전기차 충전 및 배송 서비스에 대한 자세한 정보와 문의는 언제든지 가능합니다. 아래 연락처를 통해 문의해 주세요</p>
+                    <ul>
+                        <li>Email: info@yourcompany.com</li>
+                        <li>전화번호: 010-1234-5678</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="about" className={styles.landingContact}>
+                <h2>About Us</h2>
                 <section id="expandFeature" ref={scrollExpandSectionRef} className={`${styles.scrollExpandSection} ${styles.expandFeatureSection}`}>
                     <h2>전기차 충전소의 모든 정보</h2>
                     <p>주유소 및 휴게소 정보 제공 사이트에 오신 것을 환영합니다. <br />저희는 사용자들에게 실시간 정보를 제공하여 여행을 더욱 편리하게 만듭니다.</p>
@@ -130,7 +142,7 @@ function LandingPage() {
                             <div className={styles.wave}></div>
                         </button>
                     </div>
-                    {showModal && <Modal onClose={closeModal} videoUrl={videoUrl} />}
+                    {showModal && <Modal onClose={closeModal} videoUrl={modalVideoUrl} />}
                     <img src={expandImage} alt="Expand Feature" className={styles.expandFeatureImage} style={{ width: expandImageWidth }} />
                 </section>
             </section>
