@@ -1,185 +1,133 @@
-#change {
-    width: 1905px;
-    /*background-color: white;*/
-    display: grid;
-    grid-template-areas: 'a' 'b';
-    grid-gap: 0;
-    background-color: rgba(255, 254, 254, 0.51);
-    /*grid-template-rows: 1600px;*/
-    z-index: 0;
-}
-.backgroundVideo {
-    position: absolute;
-
-    top: 0;
-    left: 0;
+#change{
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* 비디오를 요소 크기에 맞게 조정 */
-    z-index: -1; /* 비디오를 콘텐츠 뒤에 배치 */
+    background-color: white;
+    display: grid;
+    grid-template-areas:
+        'a b';
+    grid-gap: 5px;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 900px;
+    margin-top: 3%;
+    justify-items: end;
 }
-.mapinfo {
-    grid-area: b;
-
-}
-
-#searchOilCharge {
+#searchOilCharge{
     z-index: 999;
+    grid-area: b;
+}
+.section {
+    width: 100%;
+    /*width: calc(100%); !* 총 너비에서 aside 너비와 여백을 제외 *!*/
+    margin-left: 800px; /* aside 너비와 여백을 고려한 왼쪽 마진 */
+    height: 95vh; /* 뷰포트 높이를 전체 채움 */
+
+    background-color: #131381;
+    position: relative; /* z-index를 위해 position 설정 필요 */
+    z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
     grid-area: a;
 }
-
-.section {
-    width: 60%; /* Full width for the section */
-    height: 60vh;
-    margin-left: 25%;
-    position: relative;
-    z-index: 1;
-    border-radius: 180px;
-    background: radial-gradient(circle at 100px 50px, rgba(255, 255, 255, 0.75) 100%, transparent 70%);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Optional: slight shadow for depth */
-    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.2));
-}
-
-.mapinfo {
-    grid-area: b;
-}
-
-.gasStation, .elecStation, .mapInfo {
-    backdrop-filter: blur(10px); /* Apply a blur effect to the background */
-}
-
 .aside_button {
     position: absolute;
     display: inline-block;
     cursor: pointer;
     padding: 10px;
     transition: transform 0.2s ease-in-out;
-    top: 25%;
+    top: 5%;
     left: 1%;
     z-index: 3;
 }
-
 .aside_button:hover {
     transform: scale(1.05);
 }
-#clicked_image{
-    width: 50px;
-    height: 50px;
-    animation: float 6s ease-in-out infinite; /* 둥둥 떠다니는 애니메이션 */
-}
-@keyframes float {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-@keyframes glow {
-    0% {
-        box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
-    }
-    100% {
-        box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.7);
-    }
-}
 .aside {
-    position: fixed; /* Fixed position to overlay on the map */
-    /*margin-top: 10%;*/
-    width: 475px;
-    /*left: 1%;*/
-    height: 55%;
-    top: 40%;
-    padding: 5px;
+    position: absolute; /* 또는 fixed, 만약 스크롤 시에도 고정되길 원한다면 */
+    width: 450px; /* 사이드바 너비 */
+    left: 1%;
+    height: 45%;
+    top: 5%;
+    padding: 5px; /* 사이드바 내부 패딩 */
     background-color: #f4f4f4;
     border-radius: 20px;
-    z-index: 2;
-    overflow-y: auto;
-    box-shadow: inset 0 -3em 3em rgba(109, 199, 255, 0.47), 0 0 0 2px white, 0.3em 0.3em 1em rgba(0, 33, 200, 0.27);
+    z-index: 2; /* 다른 내용물 위에 오도록 z-index 설정 */
+    overflow-y: auto; /* 내용이 많을 경우 스크롤바 표시 */
+    box-shadow:
+            inset 0 -3em 3em rgba(0, 200, 0, 0.09),
+            0 0 0 2px white,
+            0.3em 0.3em 1em rgba(163, 0, 200, 0.27);
 }
-
-@media (max-width: 480px) {
-    .aside {
-        width: 400px;
-    }
-}
-
 .aside::-webkit-scrollbar {
-    width: 15px;
+    width: 13px; /* 스크롤바 너비 */
 }
-
 .aside::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: #fff7ec; /* 스크롤바 트랙 배경색 */
 }
 
 .aside::-webkit-scrollbar-thumb {
-    height: 30%;
-    background: rgba(109, 211, 255, 0.47);
+    height: 30%; /* 스크롤바의 길이 */
+    background: rgba(0, 0, 255, 0.16); /* 스크롤바의 색상 */
+    /*border-radius: 10px;*/
 }
 
 .aside::-webkit-scrollbar-thumb:hover {
-    background: rgb(192, 233, 234);
+    background: rgb(193, 154, 216); /* 스크롤바 호버 시 색상 */
 }
 
 .markings {
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 20px; /* 게이지 바의 양 끝과 맞추기 위해 패딩 설정 */
 }
 
 .mark {
-    color: rgba(93, 89, 89, 0.93);
+    color: rgba(93, 89, 89, 0.93); /* 눈금 색상 */
 }
 
 .slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 15px;
-    border-radius: 5px;
-    background: linear-gradient(to right, rgba(109, 199, 255, 0.47), rgb(102, 106, 117));
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
+    -webkit-appearance: none; /* 기본 스타일링 제거 */
+    width: 100%; /* 전체 너비 */
+    height: 13px; /* 슬라이더 두께 */
+    border-radius: 5px; /* 슬라이더 둥근 모서리 */
+    background: linear-gradient(to right, #ffc7d3, rgba(0, 0, 255, 0.2)); /* 그라데이션 적용 */
+    outline: none; /* 클릭 시 외곽선 제거 */
+    opacity: 0.7; /* 투명도 설정 */
+    -webkit-transition: .2s; /* 전환 효과 */
     transition: opacity .2s;
 }
 
 .slider:hover {
-    opacity: 1;
+    opacity: 1; /* 마우스 오버 시 투명도 변경 */
 }
-
+/* 슬라이더 썸(핸들)에 대한 스타일 */
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    -webkit-appearance: none; /* 기본 스타일링 제거 */
     appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #b9e5f3;
-    cursor: pointer;
+    width: 25px; /* 썸의 너비 */
+    height: 25px; /* 썸의 높이 */
+    border-radius: 50%; /* 원형 모양 */
+    background: #ad8cc1; /* 썸 색상 */
+    cursor: pointer; /* 커서 모양 변경 */
 }
 
 .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #fff;
-    cursor: pointer;
+    width: 25px; /* 썸의 너비 */
+    height: 25px; /* 썸의 높이 */
+    border-radius: 50%; /* 원형 모양 */
+    background: #fff; /* 썸 색상 */
+    cursor: pointer; /* 커서 모양 변경 */
 }
-
 .sortButtons {
     display: flex;
+    /*justify-content: space-between;*/
     width: 200px;
     margin-bottom: 10px;
 }
 
 .sortButtons button {
     background-color: transparent;
-    color: #000000;
+    color: #313131;
     border: 2px solid rgba(93, 89, 89, 0.45);
     padding: 5px 10px;
     text-align: center;
+    text-decoration: none;
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
@@ -190,76 +138,80 @@
 }
 
 .sortButtons button:hover {
-    background-color: rgb(70, 184, 255);
+    background-color: rgba(0, 0, 255, 0.2);
 }
 
 .gasStationList {
-    width: 400px;
+    /*width: 400px;*/
     display: flex;
     flex-wrap: wrap;
     list-style: none;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
+
+
 }
 
 .gasStationList li {
     align-items: center;
-    background-color: rgb(255, 254, 254);
-    color: #000000;
-    padding: 10px;
+    background-color: rgb(255, 254, 254); /* 사이드바와 동일한 배경색 설정 */
+    color: #000000; /* 글자색 설정 */
+    padding: 10px; /* 내부 패딩 */
     box-shadow: 12px 12px 2px 1px rgba(107, 107, 159, 0.28);
     font-size: 13px;
 }
 
 .buttonContainer {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 20px;
+    display: flex; /* 버튼을 가로로 배치 */
+    justify-content: space-around; /* 버튼 사이의 간격을 균등하게 조정 */
+    padding: 10px 20px; /* 상하 패딩만 조정하여 버튼과 사이드바 사이의 공간 제거 */
     z-index: 3;
 }
-
 .button {
     border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    background-color: white;
-    color: black;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    outline: none;
+    padding: 10px 20px; /* 버튼 내부 패딩 조절 */
+    margin: 10px; /* 주변 요소와의 간격 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    background-color: white; /* 기본 배경 색상 설정 */
+    color: black; /* 글자 색상 설정 */
+    font-size: 1em; /* 글자 크기 */
+    cursor: pointer; /* 호버 시 커서 변경 */
+    transition: background-color 0.3s; /* 배경 색상 변화 애니메이션 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 상자 그림자 효과 */
+    outline: none; /* 포커스 시 테두리 제거 */
 }
-
 .buttonActive {
-    background-color: rgba(109, 199, 255, 0.47);
-    color: white;
+    background-color: #c19ad8; /* 활성 상태일 때 배경색 설정 */
+    color: white; /* 활성 상태일 때 글자색 설정 */
 }
 
+ 마우스 호버 시 버튼 스타일
 .button:hover {
-    background-color: #436d88;
-    color: white;
+    background-color: #007BFF; /* 호버 색상 */
+    color: white; /* 호버 시 글자 색상 */
 }
 
+/*==================================연료버튼===============================================*/
 .radioContainer {
     box-sizing: border-box;
     display: flex;
     width: 100%;
     flex-direction: row;
-    gap: 15px;
-    padding: 20px;
+    gap: 2px; /* 각 라디오 버튼 사이의 간격 */
+    padding: 13px;
     border-radius: 8px;
     background-color: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
 }
 
 .radioContainer label {
     display: block;
     position: relative;
-    padding-left: 35px;
+    padding-left: 32px;
+    padding-right: 2px;
     cursor: pointer;
     font-size: 15px;
-    user-select: none;
+    user-select: none; /* 텍스트 선택 방지 */
     color: #474545;
 }
 
@@ -281,7 +233,7 @@
 }
 
 .radioContainer input:checked ~ .checkmark {
-    background-color: #87addf;
+    background-color: #c187df;
 }
 
 .radioContainer .checkmark:after {
@@ -289,148 +241,80 @@
     position: absolute;
     display: none;
 }
-
-@media (max-width: 480px) {
-    .radioContainer {
-        position: absolute;
-        padding: 0;
-    }
-}
-
-.select_bar {
-    align-items: center;
-    justify-items: center;
-    height: 230px;
-    background-color: white;
-    padding: 20px;
-}
-
-.icon_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon {
-    width: 70px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    margin-left: 65px;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.icon2 {
-    width: 70px;
-    height: 100px;
-    border-radius: 40%;
-    display: flex;
-    align-items: center;
-    margin-left: 115px;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.text {
-    color: black;
-    margin-bottom: 15px;
-    margin-left: 50px;
-}
-
-.text2 {
-    color: black;
-    margin-bottom: 15px;
-    margin-left: 76px;
-}
-
-/*.button1 {*/
-/*    border: none;*/
-/*    background-color: #cae9f2;*/
-/*    color: white;*/
-/*    font-size: 20px;*/
-/*    border-radius: 25px;*/
-/*    padding: 30px 70px;*/
-/*}*/
-
-/*.button2 {*/
-/*    border: none;*/
-/*    font-size: 20px;*/
-/*    background-color: #cae9f2;*/
-/*    color: white;*/
-/*    border-radius: 25px;*/
-/*    padding: 30px 70px;*/
-/*}*/
-
-/*.button3 {*/
-/*    border: none;*/
-/*    font-size: 20px;*/
-/*    background-color: #1e1f22;*/
-/*    color: white;*/
-/*    border-radius: 25px;*/
-/*    padding: 30px 70px;*/
-/*    margin-right: 20px;*/
-/*}*/
-
-@media (max-width: 768px) {
-/*    .select_bar {*/
-/*        grid-template-columns: 1fr;*/
-/*        height: auto;*/
-/*        gap: 10px;*/
-/*    }*/
-
-/*    .icon_container {*/
-/*        flex-direction: row;*/
-/*    }*/
-
-/*    .icon_button {*/
-/*        padding: 5px 10px;*/
-/*    }*/
-/*}*/
+/* 반응형 미디어 쿼리 */
 
 @media (max-width: 768px) {
     .aside {
-        width: 150px;
-        padding: 15px;
+        /* 중간 크기의 뷰포트에 맞춤 */
+        width: 150px; /* 사이드바 너비를 줄임 */
+        padding: 10px; /* 패딩을 줄임 */
     }
-
     .section {
-        width: calc(100% - 30px - 150px);
-        margin-left: 180px;
-        z-index: 1;
+        width: calc(100% - 30px - 150px); /* 새로운 aside 너비에 맞춤 */
+        margin-left: 180px; /* 새로운 aside 너비와 패딩에 맞춤 */
     }
 }
-
-@media (max-width: 480px) {
-    .aside_button {
+@media (max-width: 430px) {
+    .aside_button{
         z-index: 1000;
     }
-
     .aside {
-        width: 100%;
-        height: 400px;
-        position: fixed;
+        /* 가장 작은 뷰포트에 맞춤 */
+        width: 390px; /* 화면 전체 너비를 차지하도록 함 */
+        height: 400px; /* 내용에 맞게 높이를 조정 */
+        position: fixed; /* 화면 하단에 고정 */
         bottom: 0;
         left: 0;
-        border-radius: 0;
-        padding: 10px;
-        z-index: 3;
+        border-radius: 0; /* 둥근 모서리 제거 */
+        padding: 10px; /* 패딩 줄임 */
+        z-index: 3; /* 내용 위에 오도록 z-index를 높임 */
     }
-
     .section {
-        margin-left: 0;
+        margin-left: 0; /* aside가 전체 너비를 차지하므로 마진을 제거 */
+        width: 100%; /* 화면 전체 너비를 사용 */
+        height: 350px;
+        grid-area: a;
+        position: relative; /* z-index를 위해 position 설정 필요 */
+        z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
+
+    }
+    .select_bar{
+        margin-top: 13%;
+    }
+    .radioContainer{
+        position: relative;
+        padding: 0;
+        /*bottom: 100px;*/
+        flex-wrap: nowrap;
+    }
+    #change{
         width: 100%;
-        height: 400px;
-        z-index: 1;
+        background-color: white;
+        display: grid;
+        grid-template-areas:
+        'a'
+        'b';
+        grid-template-columns: 1fr; /* 1개의 컬럼으로 설정 */
+        grid-gap: 5px;
+        margin-top: 3%;
+        grid-template-rows: 80%;
+        justify-items: center;
+        height: 600px;
     }
-
-    /*.select_bar {*/
-    /*    margin-top: 13%;*/
-    /*}*/
-
-/*    .icon2 {*/
-/*        position: relative;*/
-/*        left: 10px;*/
+    #searchOilCharge{
+        z-index: 999;
+        width: 100%;
+        grid-area: b;
+        max-width: inherit; /* set max-width to 430px */
+        grid-auto-flow: column; /* add this line */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+        position: relative;
     }
-}
+    .gasStationList {
+        margin-top: 40px;
+        *overflow-x: hidden;
+    }
+    }

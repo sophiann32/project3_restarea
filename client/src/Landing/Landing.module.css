@@ -40,9 +40,7 @@ body {
 }
 
 .navLinks {
-
     transform: translateY(100px);
-
     list-style: none;
     display: flex;
     gap: 20px;
@@ -52,13 +50,9 @@ body {
     color: white;
     text-decoration: none;
     font-weight: bold;
-
 }
 
 .cta-button {
-
-    transform: translateY(100px);
-
     color: white;
     border: 3px solid white;
     border-radius: 5px;
@@ -97,12 +91,11 @@ body {
     color: white;
 }
 
-.landingAbout, .landingContact, .scrollExpandSection {
+.landingAbout {
     padding: 50px 20px;
 }
 
 .landingFeatures {
-    /*padding: 50px 20px;*/
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -132,17 +125,126 @@ body {
     transform: translateY(0);
 }
 
-.featureImage {
+.featureImageContainer {
     flex: 1;
-    max-width: 100%;
-    height: auto;
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.featureTextContainer {
+    flex: 1;
+    margin-right: 100px;
+}
+
+.featureTextContainer2 {
+    flex: 1;
+    margin-right: 50px;
+}
+
+.featureTextContainer3 {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.featureTextContainer h3 {
+    font-size: 1.5em;
+}
+
+.featureTextContainer p {
+    font-size: 1.1em;
     margin-top: 20px;
 }
 
-.expandFeatureImage {
-    max-width: 100%;
+.featureTextContainer2 p {
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+.featureTextContainer3 p {
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+.featureImage {
+    max-width: 80%;
     height: auto;
     margin-top: 20px;
+    margin-left: 200px;
+}
+
+.aGifImage {
+    max-width: 30%;
+    height: auto;
+    margin-top: 20px;
+    margin-right: 130px;
+}
+
+.aGifSection {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.expandFeatureImage {
+    margin-bottom: 100px;
+    height: 100%;
+    object-fit: cover;
+    transition: width 0.3s ease;
+    z-index: -1;
+    opacity: 0.9;
+}
+.landingContact h2 {
+    margin-top: 70px;
+    font-size: 30px;
+}
+
+.landingContact p {
+    margin-bottom: 80px;
+    font-size: 25px;
+}
+
+.expandButtonContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.expandButton {
+    background-color: transparent;
+    border: none;
+    padding: 15px 30px;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin-top: 150px;
+}
+
+.expandButton span {
+    position: relative;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.wave {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #fff 10%, transparent 30%);
+    transform: translateX(-100%);
+    transition: transform 0.8s;
+}
+
+.featureText {
+    margin-left: 20px;
+    font-size: 20px;
 }
 
 .landingFooter {
@@ -192,6 +294,27 @@ form button:hover {
     transition: transform 0.3s ease;
 }
 
+.scrollExpandSection h2 {
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    position: absolute;
+}
+
+.scrollExpandSection p {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    position: absolute;
+}
+
+.scrollExpandSection h2,
+.scrollExpandSection p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .scrollExpandSection:before {
     content: '';
     position: absolute;
@@ -199,11 +322,14 @@ form button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
 }
 
 .scrollExpandSection.expand {
+    transform: scale(1.1);
+}
+
+.scrollExpandSection.expand img {
     transform: scale(1.1);
 }
 
@@ -225,4 +351,12 @@ form button:hover {
 
 .socialSidebar a:hover {
     transform: scale(1.2);
+}
+
+.smoothScroll {
+    cursor: pointer;
+}
+
+.expandButton:hover .wave {
+    transform: translateX(0);
 }

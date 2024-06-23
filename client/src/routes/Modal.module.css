@@ -17,6 +17,7 @@
     visibility: visible;
     opacity: 1;
     position: fixed;
+
 }
 
 
@@ -31,4 +32,5 @@
 }
 .chat_app {
     margin-right: 20px; /* Chatbot과 모달 콘텐츠 사이의 간격을 조정합니다 */
+
 }

@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import styles from './SearchOilCharge.module.css';
 import axios from "axios";
 import AudioSwitch from "./Media/AudioSwitch";
-import SmoothScroll from './SmoothScroll';
 
 
 function SearchOilCharge() {
@@ -129,6 +128,9 @@ function SearchOilCharge() {
     };
     return (
         <div className={styles.smallbox1}>
+            {/*<video autoPlay muted loop className={styles.backgroundVideo}>*/}
+            {/*    <source src="/oil_station.mp4" type="video/mp4"/>*/}
+            {/*</video>*/}
 
             <div className={styles.searchInputContainer}>
                     <span className={styles.theme}>
@@ -178,7 +180,7 @@ function SearchOilCharge() {
             <div className={styles.chartContainer}>
                 {Forwardings && Forwardings.map((Forwarding, index) => {
                     return (
-                        <SmoothScroll>
+
                         <div className={styles.results} key={index} onClick={() => handleStationClick(Forwarding)}>
                             <span style={{color: "blueviolet", fontSize: "smaller"}}> 클릭 👀 더 자세한 내용을 확인하세요</span>
                             <p>상호명: {Forwarding.name}</p>
@@ -206,7 +208,6 @@ function SearchOilCharge() {
                                 </div>
                             )}
                         </div>
-                </SmoothScroll>
                     );
                 })}
             </div>
