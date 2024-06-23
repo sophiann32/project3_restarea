@@ -1,21 +1,18 @@
 .smallbox1 {
-    /*display: grid;*/
-    /*max-width: 500px; !* 전체 가로 크기 설정 *!*/
     max-height: 100%;
     background-color: rgba(255, 254, 254, 0.71);
     position: relative;
     bottom: 0;
-    /*left: 50%;*/
-    /*margin-left: -600px;*/
-    grid-template-columns: 1fr; /* 1개의 컬럼으로 설정 */
-    grid-template-areas:
-        'a'
-        'b';
+    /*grid-template-columns: 1fr; !* 1개의 컬럼으로 설정 *!*/
+    /*grid-template-areas:*/
+    /*    'a'*/
+    /*    'b';*/
     border-radius: 10px ;
-    align-items: center;
-    grid-gap: 0;
+    /*align-items: center;*/
+    /*grid-gap: 0;*/
     z-index: 999;
     overflow-x: hidden;
+    margin-right: 10px;
 }
 /*.searchInputWrapper{*/
 .chartContainer {

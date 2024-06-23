@@ -18,7 +18,7 @@
     width: 100%;
     /*width: calc(100%); !* 총 너비에서 aside 너비와 여백을 제외 *!*/
     margin-left: 800px; /* aside 너비와 여백을 고려한 왼쪽 마진 */
-    height: 100vh; /* 뷰포트 높이를 전체 채움 */
+    height: 95vh; /* 뷰포트 높이를 전체 채움 */
 
     background-color: #131381;
     position: relative; /* z-index를 위해 position 설정 필요 */
@@ -38,7 +38,6 @@
 .aside_button:hover {
     transform: scale(1.05);
 }
-
 .aside {
     position: absolute; /* 또는 fixed, 만약 스크롤 시에도 고정되길 원한다면 */
     width: 450px; /* 사이드바 너비 */
@@ -55,17 +54,9 @@
             0 0 0 2px white,
             0.3em 0.3em 1em rgba(163, 0, 200, 0.27);
 }
-
-@media (max-width: 480px) {
-    .aside{
-        width: 400px;
-    }
-
-}
 .aside::-webkit-scrollbar {
     width: 13px; /* 스크롤바 너비 */
 }
-
 .aside::-webkit-scrollbar-track {
     background: #fff7ec; /* 스크롤바 트랙 배경색 */
 }
@@ -79,7 +70,6 @@
 .aside::-webkit-scrollbar-thumb:hover {
     background: rgb(193, 154, 216); /* 스크롤바 호버 시 색상 */
 }
-
 
 .markings {
     display: flex;
@@ -151,13 +141,13 @@
     background-color: rgba(0, 0, 255, 0.2);
 }
 
-
 .gasStationList {
     /*width: 400px;*/
     display: flex;
     flex-wrap: wrap;
     list-style: none;
     /*margin-left: 10px;*/
+
 
 }
 
@@ -200,9 +190,6 @@
     color: white; /* 호버 시 글자 색상 */
 }
 
-
-
-/*========================================================================================*/
 /*==================================연료버튼===============================================*/
 .radioContainer {
     box-sizing: border-box;
@@ -254,29 +241,8 @@
     position: absolute;
     display: none;
 }
-
-@media (max-width: 480px){
-    .radioContainer{
-        position: absolute;
-        padding: 0;
-        /*bottom: 100px;*/
-    }
-}
-
-
-/*.select_bar {*/
-/*    !*display: grid;*!*/
-/*    !*grid-template-columns: repeat(3, 1fr); !* 3등분으로 나눔 *!*!*/
-/*    align-items: center; !* 세로 중앙 정렬 *!*/
-/*    justify-items: center; !* 가로 중앙 정렬 *!*/
-/*    !*gap: 20px; !* 그리드 아이템 간격 *!*!*/
-/*    height: 230px;*/
-/*    background-color: white;*/
-/*    padding: 20px; !* 패딩 *!*/
-/*}*/
-
-
 /* 반응형 미디어 쿼리 */
+
 @media (max-width: 768px) {
     .aside {
         /* 중간 크기의 뷰포트에 맞춤 */
@@ -288,14 +254,13 @@
         margin-left: 180px; /* 새로운 aside 너비와 패딩에 맞춤 */
     }
 }
-
-@media (max-width: 480px) {
+@media (max-width: 430px) {
     .aside_button{
         z-index: 1000;
     }
     .aside {
         /* 가장 작은 뷰포트에 맞춤 */
-        width: 400px; /* 화면 전체 너비를 차지하도록 함 */
+        width: 390px; /* 화면 전체 너비를 차지하도록 함 */
         height: 400px; /* 내용에 맞게 높이를 조정 */
         position: fixed; /* 화면 하단에 고정 */
         bottom: 0;
@@ -308,6 +273,9 @@
         margin-left: 0; /* aside가 전체 너비를 차지하므로 마진을 제거 */
         width: 100%; /* 화면 전체 너비를 사용 */
         height: 400px;
+        grid-area: a;
+        position: relative; /* z-index를 위해 position 설정 필요 */
+        z-index: 1; /* 사이드바 아래에 오도록 z-index 설정 */
     }
     .select_bar{
         margin-top: 13%;
@@ -316,4 +284,39 @@
         position: relative;
         left: 10px;
     }
-}
+    .radioContainer{
+        position: absolute;
+        padding: 0;
+        /*bottom: 100px;*/
+        flex-wrap: nowrap;
+    }
+    #change{
+        width: 100%;
+        background-color: white;
+        display: grid;
+        grid-template-areas:
+        'a'
+        'b';
+        grid-template-columns: 1fr; /* 1개의 컬럼으로 설정 */
+        grid-gap: 5px;
+        margin-top: 3%;
+    }
+    #searchOilCharge{
+        z-index: 999;
+        grid-area: b;
+        max-width: inherit; /* set max-width to 430px */
+        grid-auto-flow: column; /* add this line */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+        position: relative;
+    }
+    .gasStationList {
+        /*display: flex;*/
+        /*flex-wrap: wrap;*/
+        /*list-style: none;*/
+        margin-top: 40px;
+
+    }
+    }
