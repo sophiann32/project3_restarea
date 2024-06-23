@@ -89,13 +89,13 @@ export default function SignInSide({ setIsLogin, setUser, closeDrawer }) {
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: 4,
+                        padding: 1,
                     }}
                 >
                     <Box
                         sx={{
-                            my: 8,
-                            mx: 6,
+                            my: 2,
+                            mx: 1,
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
