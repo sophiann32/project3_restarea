@@ -41,7 +41,7 @@
 
 .aside {
     position: absolute; /* 또는 fixed, 만약 스크롤 시에도 고정되길 원한다면 */
-    width: 470px; /* 사이드바 너비 */
+    width: 450px; /* 사이드바 너비 */
     left: 1%;
     height: 45%;
     top: 5%;
@@ -63,7 +63,7 @@
 
 }
 .aside::-webkit-scrollbar {
-    width: 15px; /* 스크롤바 너비 */
+    width: 13px; /* 스크롤바 너비 */
 }
 
 .aside::-webkit-scrollbar-track {
@@ -94,7 +94,7 @@
 .slider {
     -webkit-appearance: none; /* 기본 스타일링 제거 */
     width: 100%; /* 전체 너비 */
-    height: 15px; /* 슬라이더 두께 */
+    height: 13px; /* 슬라이더 두께 */
     border-radius: 5px; /* 슬라이더 둥근 모서리 */
     background: linear-gradient(to right, #ffc7d3, rgba(0, 0, 255, 0.2)); /* 그라데이션 적용 */
     outline: none; /* 클릭 시 외곽선 제거 */
@@ -153,11 +153,11 @@
 
 
 .gasStationList {
-    width: 400px;
+    /*width: 400px;*/
     display: flex;
     flex-wrap: wrap;
     list-style: none;
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 
 }
 
@@ -209,17 +209,19 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    gap: 15px; /* 각 라디오 버튼 사이의 간격 */
-    padding: 20px;
+    gap: 2px; /* 각 라디오 버튼 사이의 간격 */
+    padding: 13px;
     border-radius: 8px;
     background-color: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
 }
 
 .radioContainer label {
     display: block;
     position: relative;
-    padding-left: 35px;
+    padding-left: 32px;
+    padding-right: 2px;
     cursor: pointer;
     font-size: 15px;
     user-select: none; /* 텍스트 선택 방지 */
@@ -279,7 +281,7 @@
     .aside {
         /* 중간 크기의 뷰포트에 맞춤 */
         width: 150px; /* 사이드바 너비를 줄임 */
-        padding: 15px; /* 패딩을 줄임 */
+        padding: 10px; /* 패딩을 줄임 */
     }
     .section {
         width: calc(100% - 30px - 150px); /* 새로운 aside 너비에 맞춤 */
