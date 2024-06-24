@@ -307,7 +307,7 @@ function Chatbot({onClose}) {
 
     return (
         <div className={styles.chat_app}>
-            <span className={styles.close_button} onClick={onClose}>&times;</span>
+            <h1 className={styles.close_button} onClick={onClose}>&times;</h1>
             <div className={styles.chat_container}>
                 {messages.map(msg => (
                     <div key={msg.id} className={`${styles.message} ${styles[msg.sender]}`}

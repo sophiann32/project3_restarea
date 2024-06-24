@@ -83,6 +83,7 @@ body {
     justify-content: center;
     gap: 20px; /* 버튼 사이의 간격을 20px로 설정 */
     margin-top: 20px; /* 채팅 박스와의 간격 */
+
 }
 .App-header {
     background-color: var(--primary-color);
@@ -185,7 +186,7 @@ body {
     z-index: 1;
     bottom: 125%;
     left: 50%;
-    margin-left: -140px;
+    margin-left: -470px;
     opacity: 0;
     transition: opacity 0.3s;
     font-size: 17px;
@@ -218,7 +219,7 @@ body {
 .close_button {
     position: absolute;
     top: 10px;
-    right: 10px;
+    margin-right: 25px;
     cursor: pointer;
     font-size: 24px;
     z-index: 10; /* Ensure the button is above other content */
@@ -258,6 +259,8 @@ body {
     flex-wrap: wrap;
     margin : 10px;
     padding: 10px;
+    flex-direction: column;
+
 }
 .user_input {
 }
