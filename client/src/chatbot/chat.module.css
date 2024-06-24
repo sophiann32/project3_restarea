@@ -260,17 +260,12 @@ body {
     margin : 10px;
     padding: 10px;
     flex-direction: column;
-
 }
-.user_input {
-}
-    /*grid-template-areas:*/
-    /*grid-template-columns: 1fr;*/
-
 
 textarea {
     border-radius: 6px;
     height: 31px;
+    width: 80%;
 }
 
 .chat_container {
@@ -298,4 +293,85 @@ textarea {
     /*bottom: 0;*/
     /*right: 0;*/
     /*background: #fff;*/
+}
+@media (max-width: 768px) {
+    .chat_app {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .chat_container {
+        width: 100%;
+        height: calc(100% - 120px); /* 입력 영역을 고려한 높이 조정 */
+    }
+    .close_button {
+        position: absolute;
+        top: 10px;
+        margin-right: 25px;
+        cursor: pointer;
+        font-size: 24px;
+        z-index: 10; /* Ensure the button is above other content */
+    }
+    .user_input {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        width: 350px;
+        border-radius: 25px;
+    }
+}
+@media (max-width: 480px) {
+    .chat_app {
+        width: 90%; /* 화면 양쪽에 약간의 여백을 줍니다 */
+        height: 80vh; /* 전체 높이의 80%로 설정 */
+        position: fixed;
+        top: 15%; /* 상단에서 15% 떨어진 위치에 배치 */
+        left: 50%; /* 왼쪽에서 50% 위치에 배치 */
+        transform: translateX(-50%); /* 중앙 정렬을 위해 자신의 너비의 반만큼 왼쪽으로 이동 */
+        margin: 0 auto; /* 좌우 마진을 자동으로 설정하여 가운데 정렬 */
+        border-radius: 10px; /* 모서리를 둥글게 처리 */
+    }
+
+    .chat_container {
+
+    }
+    .chat_container {
+
+        height: calc(60%); /* 입력 영역을 고려하여 높이 조정 */
+        border: none;
+    }
+
+
+
+    .user_input {
+        position: absolute; /* fixed에서 absolute로 변경 */
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: none;
+        padding: 10px;
+    }
+    textarea {
+        border-radius: 6px;
+        height: 31px;
+
+    }
+    .close_button {
+        position: absolute;
+        top: 10px;
+        margin-top: 1px;
+        cursor: pointer;
+        font-size: 24px;
+        z-index: 10; /* Ensure the button is above other content */
+    }
+
 }
