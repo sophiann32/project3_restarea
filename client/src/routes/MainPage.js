@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useCallback } from 'react';
 import styles from './main_page.module.css';
 import Modal from './Modal';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,28 @@ import NearbyGasChart from '../routes/Chart/NearbyGasChart.js';
 import NationalGasPricesChart from '../routes/Chart/NationalGasPricesChart';
 import Chart7 from '../routes/Chart/Chart7';
 import axios from 'axios';
+import { lazy, Suspense } from 'react';
+
+
+// 텍스트 애니메이션 컴포넌트
+const AnimatedPlaceholder = ({ text }) => {
+    const [placeholder, setPlaceholder] = useState('');
+    const [index, setIndex] = useState(0);
+
+    const animatePlaceholder = useCallback(() => {
+        if (index < text.length) {
+            setPlaceholder(prev => prev + text[index]);
+            setIndex(index + 1);
+            requestAnimationFrame(animatePlaceholder);
+        }
+    }, [text, index]);
+
+    useEffect(() => {
+        requestAnimationFrame(animatePlaceholder);
+    }, [animatePlaceholder]);
+
+    return placeholder;
+};
 
 function MainPage() {
     const [selectedRoute, setSelectedRoute] = useState('');
@@ -18,30 +40,59 @@ function MainPage() {
     const [isPlaceholderVisible, setPlaceholderVisible] = useState(true);
     const intervalRef = useRef(null);
     const blinkIntervalRef = useRef(null);
-    const fullPlaceholderText = "원 하는 도로의 휴게소 정보를 확인하세요...";
+    const fullPlaceholderText = "원하는 도로의 휴게소 정보를 확인하세요...";
+
+    const currentIndexRef = useRef(0);
+    const animationFrameRef = useRef(null);
+
+    const animatePlaceholder = useCallback(() => {
+        if (currentIndexRef.current < fullPlaceholderText.length) {
+            setPlaceholderText(fullPlaceholderText.slice(0, currentIndexRef.current + 1));
+            currentIndexRef.current++;
+            animationFrameRef.current = requestAnimationFrame(animatePlaceholder);
+        } else {
+            // 애니메이션 완료 후 처리
+            setInterval(() => {
+                setPlaceholderVisible(prev => !prev);
+            }, 500);
+        }
+    }, [fullPlaceholderText]);
 
     useEffect(() => {
-        let currentIndex = 0;
-
-        const addChar = () => {
-            if (currentIndex < fullPlaceholderText.length && currentIndex < 24) {
-                setPlaceholderText((prev) => prev + fullPlaceholderText[currentIndex]);
-                currentIndex++;
-            } else {
-                clearInterval(intervalRef.current);
-                blinkIntervalRef.current = setInterval(() => {
-                    setPlaceholderVisible(prev => !prev);
-                }, 500);
-            }
-        };
-
-        intervalRef.current = setInterval(addChar, 110);
+        animationFrameRef.current = requestAnimationFrame(animatePlaceholder);
 
         return () => {
-            clearInterval(intervalRef.current);
-            clearInterval(blinkIntervalRef.current);
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
         };
-    }, []);
+    }, [animatePlaceholder]);
+
+
+
+    //
+    // useEffect(() => {
+    //     let currentIndex = 0;
+    //
+    //     const addChar = () => {
+    //         if (currentIndex < fullPlaceholderText.length && currentIndex < 24) {
+    //             setPlaceholderText((prev) => prev + fullPlaceholderText[currentIndex]);
+    //             currentIndex++;
+    //         } else {
+    //             clearInterval(intervalRef.current);
+    //             blinkIntervalRef.current = setInterval(() => {
+    //                 setPlaceholderVisible(prev => !prev);
+    //             }, 500);
+    //         }
+    //     };
+    //
+    //     intervalRef.current = setInterval(addChar, 110);
+    //
+    //     return () => {
+    //         clearInterval(intervalRef.current);
+    //         clearInterval(blinkIntervalRef.current);
+    //     };
+    // }, []);
 
     useEffect(() => {
         if (selectedRoute && selectedRoute !== previousRoute) {
@@ -140,9 +191,9 @@ function MainPage() {
                                     onChange={handleRouteChange}
                                 >
                                     <option value="" disabled hidden>
-                                        {placeholderText ? (isPlaceholderVisible ? placeholderText : "") : "로딩 중..."}
+                                        {isPlaceholderVisible ? placeholderText : ""}
                                     </option>
-                                    <optgroup style={{ color: 'darkblue' }}>
+                                    <optgroup style={{color: 'darkblue'}}>
                                         <option value="동해선">동해선</option>
                                         <option value="중부내륙선">중부내륙선</option>
                                         <option value="호남선">호남선</option>
