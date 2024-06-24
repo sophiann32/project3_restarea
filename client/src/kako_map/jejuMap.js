@@ -43,8 +43,9 @@ function JejuMap({ spots, filteredSpots, selectedSpot, onSelectSpot, categories,
                                 onMouseOver={() => handleMouseOver(spot)}
                                 onMouseOut={handleMouseOut}
                                 image={{
-                                    src: '/img/관광지.png',
-                                    size: { width: 50, height: 50 }
+                                    src: '/img/orange.png',
+                                    // src: '/img/관광지.png',
+                                    size: { width: 20, height: 20 }
                                 }}
                             />
                             {hoveredSpot === spot && (  <CustomOverlayMap

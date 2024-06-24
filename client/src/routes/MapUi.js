@@ -127,7 +127,7 @@ function MapUi() {
     // 컴포넌트가 렌더링할 JSX 구조
     return (
         <>
-            <SmoothScroll>
+            {/*<SmoothScroll>*/}
             <div id={styles.change}>
                 <SearchOilCharge id={styles.searchOilCharge}/>
                 <label className={styles.aside_button} onClick={toggleVisibility}>
@@ -273,8 +273,7 @@ function MapUi() {
                         <section className={styles.section}><MapInfo id={styles.mapinfo}/>   </section>
                     )}
             </div>
-        </SmoothScroll>
-            {/*아이콘과 버튼을 포함한 선택 바*/}
+        {/*</SmoothScroll>*/}
         </>
     )
 }
