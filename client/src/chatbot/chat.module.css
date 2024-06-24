@@ -373,5 +373,8 @@ textarea {
         font-size: 24px;
         z-index: 10; /* Ensure the button is above other content */
     }
+    .tooltip .tooltiptext {
 
+        margin-left: -100px;
+    }
 }
