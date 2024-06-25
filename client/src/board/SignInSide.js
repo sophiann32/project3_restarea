@@ -99,6 +99,7 @@ export default function SignInSide({ setIsLogin, setUser, closeDrawer }) {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            width: '80%',
                         }}
                     >
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -151,6 +152,29 @@ export default function SignInSide({ setIsLogin, setUser, closeDrawer }) {
                             >
                                 회원가입
                             </Button>
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    mb: 2,
+                                    mt: 3,
+                                }}
+                            >
+                                <Button
+                                    onClick={closeDrawer}
+                                    variant="contained"
+                                    sx={{
+                                        bgcolor: 'red',
+                                        color: 'white',
+                                        '&:hover': {
+                                            bgcolor: 'darkred',
+                                        },
+                                    }}
+                                >
+                                    닫기
+                                </Button>
+                            </Box>
                         </Box>
                     </Box>
                 </Grid>
