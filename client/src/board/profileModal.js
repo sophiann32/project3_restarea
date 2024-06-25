@@ -62,9 +62,7 @@ function ProfileModal({ open,  onClose }) {
         }
     };
 
-    const close = () => {
-        navigate('/main');
-    };
+
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -147,7 +145,7 @@ function ProfileModal({ open,  onClose }) {
                             }}
                         >
                             <Button
-                                onClick={close}
+                                onClick={onclose}
                                 variant="contained"
                                 sx={{
                                     bgcolor: 'red',
