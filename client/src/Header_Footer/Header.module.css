@@ -322,8 +322,12 @@
     .menu_closed{
         display: none;
     }
-
-
+    .username {
+        display: none;
+    }
+    .logout_button {
+        display: none;
+    }
 }
 
 
@@ -333,9 +337,12 @@
         text-align: center;
 
 
+
     }
     .logo img{
         width: 200px;
+        /*margin-left: -30px;*/
+
     }
     .menu_button {
         margin-top: 10px;
@@ -396,7 +403,17 @@
     .menu_closed{
         display: none;
     }
-
+    .username {
+        display: none;
+    }
+    .logout_button {
+        display: none;
+    }
+    .loggedInBox {
+        display: flex;
+        align-items: center;
+        flex-direction: column-reverse;
+    }
 
 }
 

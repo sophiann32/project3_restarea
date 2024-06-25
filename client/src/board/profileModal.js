@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
 
-function ProfileModal({ open, onClose }) {
+function ProfileModal({ open,  onClose }) {
     const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -61,6 +61,8 @@ function ProfileModal({ open, onClose }) {
             onClose(); // 업로드 후 모달 닫기
         }
     };
+
+
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -131,6 +133,29 @@ function ProfileModal({ open, onClose }) {
                                 sx={{ mt: 1, mb: 1 }}
                             >
                                 로그아웃
+                            </Button>
+                        </Box>
+                        <Box
+                            sx={{
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                mb: 2,
+                                mt: 3,
+                            }}
+                        >
+                            <Button
+                                onClick={onclose}
+                                variant="contained"
+                                sx={{
+                                    bgcolor: 'red',
+                                    color: 'white',
+                                    '&:hover': {
+                                        bgcolor: 'darkred',
+                                    },
+                                }}
+                            >
+                                닫기
                             </Button>
                         </Box>
                     </Grid>
