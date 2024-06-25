@@ -78,7 +78,7 @@ function Header({ setIsLogin, setUser }) {
         <div className={scrolled ? `${styles.nav_wrapscrolled}` : `${headerClass}`}>
             <div className={styles.logo}>
                 <NavLink to='/'>
-                    <img src={"../img/logo1.png"} style={{ width: '250px' }} alt="logo" />
+                    <img src={"../img/logo1.png"} alt="logo" />
                 </NavLink>
             </div>
             <button className={styles.menu_button} onClick={() => setMenuOpen(!isMenuOpen)}>
