@@ -24,24 +24,6 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.chat-container {
-    background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
-    /*background-image: url("https://cdn.builder.io/api/v1/image/assets/TEMP/0b95d0a932e9465f2287ef7167b12906ee35ec2eeb6bb640180c0b8caff5383f?");*/
-    /*background-size: cover;*/
-    margin: 10px;
-    /*height: 47vh;*/
-    width: 330px;
-    overflow-y: auto;
-    border: 10px solid #30313b;
-    border-radius: 25px  ;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    color: var(--text-color);
-    font-family: var(--font-family);
-    height: calc(100% - 40px);
-
-}
-
 .message {
     margin: 5px 10px;
     padding: 10px;
@@ -51,11 +33,6 @@ body {
     animation: fadeIn 0.3s;
     font-size: 19px;
 }
-/*.message.user {*/
-/*    !* Add this CSS to hide the message bubble by default *!*/
-/*    display: none;*/
-/*}*/
-
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -223,16 +200,7 @@ body {
     font-size: 24px;
     z-index: 10; /* Ensure the button is above other content */
 }
-@media (max-width: 480px) {
-    .chat_app{
-        width: 400px;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        margin-right: 10px;
 
-    }
-}
 .close_button {
     position: absolute;
     top: 10px;
@@ -242,7 +210,7 @@ body {
     z-index: 10; /* Ensure the button is above other content */
 }
 .test {
-    /*unicode-bidi: normal !important;*/
+
     height: 200px;
     display: contents;
 }
@@ -261,7 +229,7 @@ textarea {
     width: 80%;
 }
 
-.chat_container {
+.chatContainer {
     background: linear-gradient(rgba(147, 197, 255, 1), rgba(124, 124, 124, 1));
     margin: 10px;
     /*height: 47vh;*/
@@ -297,7 +265,7 @@ textarea {
         border-radius: 0;
     }
 
-    .chat_container {
+    .chatContainer {
         width: 100%;
         height: calc(100% - 120px); /* 입력 영역을 고려한 높이 조정 */
     }
@@ -331,7 +299,7 @@ textarea {
         margin: 0 auto; /* 좌우 마진을 자동으로 설정하여 가운데 정렬 */
         border-radius: 10px; /* 모서리를 둥글게 처리 */
     }
-       .chat_container {
+       .chatContainer {
         height: calc(55%); /* 입력 영역을 고려하여 높이 조정 */
         border: none;
     }

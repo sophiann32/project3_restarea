@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-// import './chat.module.css';
+
 import styles from './chat.module.css';
 import { FaMicrophone } from 'react-icons/fa';
 import { Link,useNavigate } from 'react-router-dom';
@@ -70,13 +70,13 @@ function Chatbot({onClose}) {
         setMessages([initialMessage]);
         speak(initialMessage.spokenText);
 
-        const chatContainer = document.querySelector(`.${styles.chat_container}`);
+        const chatContainer = document.querySelector(`.${styles.chatContainer}`);
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }, []);
 
 
     useEffect(() => {
-        const chatContainer = document.querySelector(`.${styles.chat_container}`);
+        const chatContainer = document.querySelector(`.${styles.chatContainer}`);
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }, [messages]);
 
@@ -308,7 +308,7 @@ function Chatbot({onClose}) {
     return (
         <div className={styles.chat_app}>
             <h1 className={styles.close_button} onClick={onClose}>&times;</h1>
-            <div className={styles.chat_container}>
+            <div className={styles.chatContainer}>
                 {messages.map(msg => (
                     <div key={msg.id} className={`${styles.message} ${styles[msg.sender]}`}
                          style={{whiteSpace: 'pre-line'}}>
