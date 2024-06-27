@@ -92,6 +92,7 @@ GPT-4의 기능을 추가하여 사용자의 구체적인 요구사항을 들어
 
 
 ![image](./readmeImg/충전소코드.png)
+![Animation](https://s5.ezgif.com/tmp/ezgif-5-251fbdb3f4.gif)
 
 
 사용자의 현재 위치를 받고 그위치로 서버에다 요청을하고
