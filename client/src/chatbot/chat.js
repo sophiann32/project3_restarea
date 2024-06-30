@@ -17,6 +17,7 @@ function Chatbot({onClose}) {
     const [isFetching, setIsFetching] = useState(false);
     const [dots, setDots] = useState('');
     const audioRef = useRef(null);
+    const chatContainerRef = useRef(null); // useRef로 chatContainer 요소 참조
     useEffect(() => {
         if (isFetching) {
             const interval = setInterval(() => {
@@ -54,30 +55,39 @@ function Chatbot({onClose}) {
     const hasRun = useRef(false);
 
     useEffect(() => {
+        if (isFetching) {
+            const interval = setInterval(() => {
+                setDots(prevDots => (prevDots.length < 3 ? prevDots + '.' : '.'));
+            }, 500);
+
+            return () => clearInterval(interval);
+        } else {
+            setDots('');
+        }
+    }, [isFetching]);
+
+    useEffect(() => {
         if (hasRun.current) return;
         hasRun.current = true;
 
         const initialMessage = {
             id: Date.now(),
-            text: '안녕하세요! Stop Scan입니다.\n' +
-                '주유소와 충전소의 실시간 정보를 확인해 보세요.\n' +
-                '휴게소 정보를 한눈에!\n' +
-                '제주도의 관광명소와 전기충전소 상태를 실시간으로 확인하세요.\n' +
-                '회원제 주유소 게시판도 이용해 보세요.',
+            text: '안녕하세요! Stop Scan입니다.\n주유소와 충전소의 실시간 정보를 확인해 보세요.\n휴게소 정보를 한눈에!\n제주도의 관광명소와 전기충전소 상태를 실시간으로 확인하세요.\n회원제 주유소 게시판도 이용해 보세요.',
             spokenText: '안녕하세요.',
             sender: 'bot'
         };
         setMessages([initialMessage]);
         speak(initialMessage.spokenText);
 
-        const chatContainer = document.querySelector(`.${styles.chatContainer}`);
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
     }, []);
 
-
     useEffect(() => {
-        const chatContainer = document.querySelector(`.${styles.chatContainer}`);
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
     }, [messages]);
 
     const speak = (text) => {
