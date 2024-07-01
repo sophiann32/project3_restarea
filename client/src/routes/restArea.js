@@ -145,7 +145,7 @@ function RestArea() {
             <div>
                 <h1>리뷰분석 추천 음식점</h1>
                 <ol>
-                    {restaurants.map((restaurant, index) => (
+                    {restaurants.slice(0, 3).map((restaurant, index) => (
                         <li key={index}>{restaurant.name}</li>
                     ))}
                 </ol>
