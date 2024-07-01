@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/project3_restarea.iml" filepath="$PROJECT_DIR$/project3_restarea.iml" />
       <module fileurl="file://$PROJECT_DIR$/rest_area.iml" filepath="$PROJECT_DIR$/rest_area.iml" />
     </modules>
   </component>

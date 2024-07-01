@@ -42,31 +42,31 @@
 
 ### 휴게소 찾기
 
-![image](./readmeImg/메인화면검색.png)
+![image](readmeImg/메인화면검색.png)
 
 사용자가 원하는 도로를 선택할 수 있는 드롭다운 메뉴 제공.
 사용자가 도로를 선택하고 "검색" 버튼을 클릭하면, 선택된 도로에 해당하는 휴게소 페이지(/restarea/${selectedRoute})로 네비게이션   
 
-![image](./readmeImg/동해.png)
+![image](readmeImg/동해.png)
 
 넘어온 URL 에서 도로 이름 추출하고 해당 도로에 있는 휴게소 정보를 서버에서 가져옴
 axios를 사용하여 휴게소정보외에도 브랜드,연료가격,시설,인기음식 등에 대한 추가데이터를 비동기적으로 가져옴.   
 
 
 ### 제주관광안내
-![image](./readmeImg/제주관광.png)
+![image](readmeImg/제주관광.png)
 
 카테고리별 선택, 태그별 선택으로 관광지 정보제공
 
 ### 제주 전기차충전소찾기
-![image](./readmeImg/제주전기차충전소.png)
+![image](readmeImg/제주전기차충전소.png)
 
 
-![image](./readmeImg/제주전기차충전소.png)
+![image](readmeImg/제주전기차충전소.png)
 
 제주도 전기차 충전소 상태 제공
 
-![image](./readmeImg/통계.png)
+![image](readmeImg/통계.png)
 #### * 검색
 전국 주유소,충전소의 상호명으로 주소와 공급업체 확인 가능
 #### * 실시간 차트
@@ -79,8 +79,8 @@ axios를 사용하여 휴게소정보외에도 브랜드,연료가격,시설,인
   |---|---|
 |상품별 가격 추세 확인   |(슬롯수 제공업체가 많다는 가정)
 
-![Animation](./readmeImg/chatbot2.gif)
-![image](./readmeImg/chat4.png)
+![Animation](readmeImg/chatbot2.gif)
+![image](readmeImg/chat4.png)
 
 #### 챗봇
 Geolocation 함수를 이용하여 실시간 사용자의 위치를 기반으로 가장 가까운 주유소 가격 정보와 전기차 충전소의 위치 정보를 제공.
@@ -91,7 +91,7 @@ GPT-4의 기능을 추가하여 사용자의 구체적인 요구사항을 들어
 
 
 
-![image](./readmeImg/충전소코드.png)
+![image](readmeImg/충전소코드.png)
 ![Animation](https://s5.ezgif.com/tmp/ezgif-5-251fbdb3f4.gif)
 
 
@@ -100,7 +100,7 @@ GPT-4의 기능을 추가하여 사용자의 구체적인 요구사항을 들어
 
 
 
-![image](./readmeImg/충전소서버코드.png)
+![image](readmeImg/충전소서버코드.png)
 
 
 파이썬으로 api를 요청해 적재한 30만개의 충전소 정보 데이터와
@@ -145,7 +145,7 @@ GPT-4의 기능을 추가하여 사용자의 구체적인 요구사항을 들어
 - 전역 상태 유지
 - redux-persist를 사용하여 redux의 state 저장소를 local storage로 사용
 - ex)사용자가 response로 받아오는 jwt 정보를 local storage에 저장
-  ![image](./readmeImg/localStorage.PNG)
+  ![image](readmeImg/localStorage.PNG)
 
 ### axios
 - HTTP request & respose
@@ -180,23 +180,23 @@ GPT-4의 기능을 추가하여 사용자의 구체적인 요구사항을 들어
 
 
 ## 배포구조
-![image](./readmeImg/구조.PNG)   
+![image](readmeImg/구조.PNG)   
 * #### `aws`에 배포시 구조입니다
 
 
 
 ## 프로젝트 관리 
 
-![image](./readmeImg/1.png)   
+![image](readmeImg/1.png)   
 각 서버를 효율적으로 관리하기 위해, React, Express, 그리고 Flask를 사용하는 세 개의 서버에 각각 원격 레포지토리를 생성   
 https://github.com/UHB4/rest_area_flask   
 https://github.com/UHB4/rest_area_express
 
    
-![image](./readmeImg/2.png)   
+![image](readmeImg/2.png)   
 각자가 자신의 브랜치를 만들어 작업하고, 마스터 브랜치에 업데이트하는 방식으로 작업을 진행
 
-![image](./readmeImg/3.png)
+![image](readmeImg/3.png)
 
 
 
