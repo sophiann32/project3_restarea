@@ -16,7 +16,9 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'https://stopscan.shop',
+    // origin: 'https://stopscan.shop',
+    // origin: 'http://13.124.184.40:3000/',
+    origin: 'http://localhost:3001',
     methods: ['GET', 'POST','PUT','DELETE'],
     credentials: true // 쿠키를 사용하도록 설정
 }));
