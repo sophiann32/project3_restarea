@@ -79,8 +79,7 @@ axios를 사용하여 휴게소정보외에도 브랜드,연료가격,시설,인
   |---|---|
 |상품별 가격 추세 확인   |(슬롯수 제공업체가 많다는 가정)
 
-![Animation](readmeImg/chatbot2.gif)
-![image](readmeImg/chat4.png)
+
 
 #### 챗봇
 Geolocation 함수를 이용하여 실시간 사용자의 위치를 기반으로 가장 가까운 주유소 가격 정보와 전기차 충전소의 위치 정보를 제공.
@@ -89,7 +88,8 @@ STT와 TTS 기능을 추가하여 챗봇을 고도화함. 음성인식 기능을
 우리 사이트의 주요 페이지를 간편하게 바로 들어갈 수 있도록 버튼을 누르면 채팅 메시지로 링크가 표시되도록 구현함.
 GPT-4의 기능을 추가하여 사용자의 구체적인 요구사항을 들어줄 수 있음.
 
-
+![Animation](readmeImg/chatbot2.gif)
+![image](readmeImg/chat4.png)
 
 ![image](readmeImg/충전소코드.png)
 
