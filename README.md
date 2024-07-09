@@ -42,34 +42,33 @@
 
 ### 휴게소 찾기
 
-![image](readmeImg/메인화면검색.png)
+![image](readmeImg/main.png)
 
 사용자가 원하는 도로를 선택할 수 있는 드롭다운 메뉴 제공.
 사용자가 도로를 선택하고 "검색" 버튼을 클릭하면, 선택된 도로에 해당하는 휴게소 페이지(/restarea/${selectedRoute})로 네비게이션   
 
-![image](readmeImg/동해.png)
+![image](readmeImg/Breaks.png)
 
 넘어온 URL 에서 도로 이름 추출하고 해당 도로에 있는 휴게소 정보를 서버에서 가져옴
 axios를 사용하여 휴게소정보외에도 브랜드,연료가격,시설,인기음식 등에 대한 추가데이터를 비동기적으로 가져옴.   
 
 
 ### 제주관광안내
-![image](readmeImg/제주관광.png)
+![image](readmeImg/JejuTourism.png)
 
 카테고리별 선택, 태그별 선택으로 관광지 정보제공
 
 ### 제주 전기차충전소찾기
-![image](readmeImg/제주전기차충전소.png)
-
-
-![image](readmeImg/제주전기차충전소.png)
+![image](readmeImg/JejuElectricChargingStations.png)
 
 제주도 전기차 충전소 상태 제공
 
-![image](readmeImg/통계.png)
 #### * 검색
 전국 주유소,충전소의 상호명으로 주소와 공급업체 확인 가능
 #### * 실시간 차트
+
+![image](readmeImg/chart.png)
+
 | 전국 주유소 평균가격     | 내 주변 주유소,충전소 가격 |
   |---|---|
 |전반적인 상품별 가격 확인    | 가격순 (색상,크기로 확인) |
@@ -88,10 +87,9 @@ STT와 TTS 기능을 추가하여 챗봇을 고도화함. 음성인식 기능을
 우리 사이트의 주요 페이지를 간편하게 바로 들어갈 수 있도록 버튼을 누르면 채팅 메시지로 링크가 표시되도록 구현함.
 GPT-4의 기능을 추가하여 사용자의 구체적인 요구사항을 들어줄 수 있음.
 
-![Animation](readmeImg/chatbot2.gif)
-![image](readmeImg/chat4.png)
+![Animation](readmeImg/chatbot2.gif) ![image](readmeImg/chat4.png)
 
-![image](readmeImg/충전소코드.png)
+![image](readmeImg/Chargingstationcode.png)
 
 
 사용자의 현재 위치를 받고 그위치로 서버에다 요청을하고
@@ -99,20 +97,12 @@ GPT-4의 기능을 추가하여 사용자의 구체적인 요구사항을 들어
 
 
 
-![image](readmeImg/충전소서버코드.png)
+![image](readmeImg/Chargingservercode.png)
 
 
 파이썬으로 api를 요청해 적재한 30만개의 충전소 정보 데이터와
 실시간으로 서버에서 요청한 충전소 상태 api의 statid를 매칭해 일치하는 데이터만 맵과 리스트의
 표시
-
-
-
-
-
-
-
-
 
 
 
@@ -179,7 +169,7 @@ GPT-4의 기능을 추가하여 사용자의 구체적인 요구사항을 들어
 
 
 ## 배포구조
-![image](readmeImg/구조.PNG)   
+![image](readmeImg/Structure.PNG)   
 * #### `aws`에 배포시 구조입니다
 
 
